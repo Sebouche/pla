@@ -21,7 +21,7 @@ Idee du jeu : jeu de survie tower defense et jeu de minage
 -Fer
 -Charbon
 -Cuivre
--uranium
+-Uranium
 
 -Echelle		craft : 2 terre
 -mur			craft : 1 a 5 ressource
