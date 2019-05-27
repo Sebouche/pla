@@ -1,0 +1,45 @@
+Idee du jeu : jeu de survie tower defense et jeu de minage
+
+-Survie : 
+	-jeu vue du dessus
+	-placer des tourelles et des murs de protection
+	-vagues d'ennemi qui arrivent des extremités
+
+
+-Minage : 
+	-vue de coté
+	-collecte des ressources pour creer les defenses
+	-sous terrain regénéré a chaque debut de journée
+	
+
+
+
+
+
+-Terre
+-Pierre
+-Fer
+-Charbon
+-Cuivre
+-uranium
+
+-Echelle		craft : 2 terre
+-mur			craft : 1 a 5 ressource
+-barbele		craft : 1 fer
+-tourelle		craft : 2 fer 2 cuivre
+-Pylône			craft : 1 fer 1 cuivre (alimentation 1 charbon)
+-Pioche			craft : 1 fer pour ameliorer pioche
+-coffre
+-acier			craft 1 charbon 1 fer
+-bombe atomique		craft : 50 uranium 50 fer
+
+
+
+-Taupe
+-Chauve-souris
+
+-Chien
+-lapin
+-tortue
+-souris
+
