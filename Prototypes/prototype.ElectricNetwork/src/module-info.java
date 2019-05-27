@@ -1,0 +1,2 @@
+module prototype.ElectricNetwork {
+}
