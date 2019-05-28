@@ -1,12 +1,17 @@
-Idee du jeu : jeu de survie tower defense et jeu de minage
+Idee du jeu : 
 
--Survie : 
+jeu de survie "tower defense" et jeu de minage.
+
+Le but du jeu est de se defendre des attaques des animaux-robots en construisant des tourelles et des defenses (dans le premier monde ) a partir des minerais miné dans le sous-terrain (deuxieme monde), le jeu s'arrete lorsque le joueur meurt ou que la maison est detruite ou que le joueur construise la bombe pour detruire les animaux.
+
+
+-Survie (premier monde): 
 	-jeu vue du dessus
 	-placer des tourelles et des murs de protection
 	-vagues d'ennemi qui arrivent des extremités
 
 
--Minage : 
+-Minage (deuxieme monde): 
 	-vue de coté
 	-collecte des ressources pour creer les defenses
 	-sous terrain regénéré a chaque debut de journée
@@ -15,6 +20,7 @@ Idee du jeu : jeu de survie tower defense et jeu de minage
 
 
 
+Idée materiaux et ennemis : 
 
 -Terre
 -Pierre
@@ -23,15 +29,15 @@ Idee du jeu : jeu de survie tower defense et jeu de minage
 -Cuivre
 -uranium
 
--Echelle		craft : 2 terre
--mur			craft : 1 a 5 ressource
--barbele		craft : 1 fer
--tourelle		craft : 2 fer 2 cuivre
--Pylône			craft : 1 fer 1 cuivre (alimentation 1 charbon)
--Pioche			craft : 1 fer pour ameliorer pioche
+-Echelle		Fabrication : 2 terre
+-mur			Fabrication : 1 a 5 ressource
+-barbele		Fabrication : 1 fer
+-tourelle		Fabrication : 2 fer 2 cuivre
+-Pylône			Fabrication : 1 fer 1 cuivre (alimentation 1 charbon)
+-Pioche			Fabrication : 1 fer pour ameliorer pioche
 -coffre
--acier			craft 1 charbon 1 fer
--bombe atomique		craft : 50 uranium 50 fer
+-acier			Fabrication 1 charbon 1 fer
+-bombe atomique		Fabrication : 50 uranium 50 fer
 
 
 
