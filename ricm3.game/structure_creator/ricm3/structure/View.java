@@ -82,8 +82,14 @@ public class View extends GameView {
 						Options.BLOCK_SIZE);
 			}
 		}
+		/*
 		Graphics g_child = g.create(camera_x, camera_y, Options.BLOCK_SIZE * m_model.m_structure.m_width, Options.BLOCK_SIZE * m_model.m_structure.m_height);
 		m_model.m_structure.paint(g_child);
 		g_child.dispose();
+		*/
+		Graphics g_child = g.create(camera_x, camera_y, Options.BLOCK_SIZE * m_model.m_structure.m_width, Options.BLOCK_SIZE * m_model.m_structure.m_height);
+		m_model.m_level.paint(g_child);
+		g_child.dispose();
+		
 	}
 }

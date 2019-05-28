@@ -33,13 +33,14 @@ import edu.ricm3.game.GameModel;
 public class Model extends GameModel {
 	Random rand = new Random();
 	Structure m_structure;
+	Level m_level;
 	Camera m_camera;
 	
 	public Model() {
 		loadSprites();
 		m_structure=new Structure(this);
+		m_level=new Level(this);
 		m_camera = new Camera(this);
-
 	}
 
 	@Override
