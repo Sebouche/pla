@@ -32,37 +32,53 @@ public class Level {
 	int[][] m_level;
 	int m_width, m_height;
 	Model m_model;
-	Random m_rand=new Random();
+	Random m_rand = new Random();
 
 	Level(Model model) {
 		m_model = model;
 		m_level = new int[90][90];
-		generate_level();
-		m_width = 90;
+		m_width = 60;
 		m_height = 90;
+		generate_level();
 	}
 
 	void generate_level() {
 		int randint;
 		for (int i = 0; i < m_height; i++) {
 			for (int j = 0; j < m_width; j++) {
-				randint=m_rand.nextInt(1001);
-				if(randint>=0 && randint<700) {
-				m_level[i][j] = 1;
-				}
-				if(randint>=700 && randint<950) {
-				m_level[i][j] = 2;
-				}
-				if(randint>=950 && randint<=999) {
 				m_level[i][j] = 0;
-				}
-				if(randint>=1000) {
-				m_level[i][j] = 3;
+			}
+		}
+		for (int i = 0; i < m_height; i++) {
+			for (int j = 0; j < m_width; j++) {
+				if (m_level[i][j] == 0) {
+					randint = m_rand.nextInt(1001);
+					if (randint >= 0 && randint < 900) {
+						m_level[i][j] = 1;
+					}
+					if (randint >= 900 && randint < 950) {
+						m_level[i][j] = 2;
+						for (int k = -1; k <= 1; k ++) {
+							int randint2 = m_rand.nextInt(10);
+							if (randint2 <= 3 && i + k >= 0 && i + k < m_height) {
+								m_level[i + k][j] = 2;
+							}
+							randint2 = m_rand.nextInt(10);
+							if (randint2 <= 3 && j + k >= 0 && j + k < m_width) {
+								m_level[i][j+k] = 2;
+							}
+						}
+					}
+					if (randint >= 950 && randint < 999) {
+						m_level[i][j] = 0;
+					}
+					if (randint >= 999) {
+						m_level[i][j] = 3;
+					}
 				}
 			}
 		}
 	}
-
 
 	/**
 	 * Simulation step. This is essentially a finite state automaton. Here, you
@@ -79,14 +95,14 @@ public class Level {
 				Graphics g_child = g.create(j * Options.BLOCK_SIZE, i * Options.BLOCK_SIZE, Options.BLOCK_SIZE,
 						Options.BLOCK_SIZE);
 				if (m_level[i][j] != 0) {
-					if(m_level[i][j]==1) {
-						g_child.setColor(new Color(0,0,0));
+					if (m_level[i][j] == 1) {
+						g_child.setColor(new Color(0, 0, 0));
 					}
-					if(m_level[i][j]==2) {
-						g_child.setColor(new Color(255,0,0));
+					if (m_level[i][j] == 2) {
+						g_child.setColor(new Color(255, 0, 0));
 					}
-					if(m_level[i][j]==3) {
-						g_child.setColor(new Color(0,255,0));
+					if (m_level[i][j] == 3) {
+						g_child.setColor(new Color(0, 255, 0));
 					}
 					g_child.fillRect(0, 0, Options.BLOCK_SIZE, Options.BLOCK_SIZE);
 				}

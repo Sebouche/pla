@@ -22,5 +22,5 @@ public class Options {
 	public static final boolean ECHO_MOUSE = false;
 	public static final boolean ECHO_MOUSE_MOTION = false;
 	public static final boolean ECHO_KEYBOARD = false;
-	public static final int BLOCK_SIZE = 100;
+	public static final int BLOCK_SIZE = 32;
 }
