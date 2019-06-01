@@ -18,34 +18,19 @@ Le but du jeu est de se defendre des attaques des animaux-robots en construisant
 	
 
 
-
-
-Idée materiaux et ennemis : 
-
--Terre
--Pierre
--Fer
--Charbon
--Cuivre
--Uranium
-
--Echelle		Fabrication : 2 terre
--mur			Fabrication : 1 a 5 ressource
--barbele		Fabrication : 1 fer
--tourelle		Fabrication : 2 fer 2 cuivre
--Pylône			Fabrication : 1 fer 1 cuivre (alimentation 1 charbon)
--Pioche			Fabrication : 1 fer pour ameliorer pioche
--coffre
--acier			Fabrication 1 charbon 1 fer
--bombe atomique		Fabrication : 50 uranium 50 fer
+Prototypes à realiser : -generer aleatoirement une grille de sous-terrain avec des probabilités et des regles d'apparition
+	                -Realisation d'automates interagissant entre eux
+	                -Gerer un graphe d'objets pour representer notre reseau electrique
+		        -Gerer le systeme de fabrication des objets
 
 
 
--Taupe
--Chauve-souris
+Etapes importantes : -Creer nos classes entités dont la plupart des elements vont avoir besoin
+		     -Gestion de l'affichage autour du joueur
+		     -Generation du sous-terrain
+		     -Gestion du temps
+		     -Sauvegarde des parametres du jeu et de l'etat de la partie (pour continuer au meme stade lorsque l'on reprend le jeu)
+		     -Graphe du reseau electrique
 
--Chien
--lapin
--tortue
--souris
+
 
