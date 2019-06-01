@@ -1,4 +1,4 @@
-package ricm3.game;
+package ricm3.automates;
 
 public class State {
 
