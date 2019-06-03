@@ -31,10 +31,16 @@ import edu.ricm3.game.GameModel;
 
 
 public class Model extends GameModel {
-	Random rand = new Random();
+	Player m_player;
+	SurfaceWorld m_surfaceworld;
+	UndergroundWorld m_undergroundworld;
+	World m_currentworld;
 	
 	public Model() {
 		loadSprites();
+		m_surfaceworld=new SurfaceWorld(this);
+		m_undergroundworld=new UndergroundWorld(this);
+		m_player=new Player(0,0,9999);
 	}
 
 	@Override
@@ -48,6 +54,8 @@ public class Model extends GameModel {
 	 */
 	@Override
 	public void step(long now) {
+		m_player.step();
+		m_currentworld.step();
 	}
 
 	private void loadSprites() {
