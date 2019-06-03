@@ -8,7 +8,7 @@ public class IAutomaton {
 	IState current ;
 	List<IBehaviour> behaviours ;
 	
-	IAutomaton(String name, IState initial, List<IBehaviour> behaviours){
+	public IAutomaton(String name, IState initial, List<IBehaviour> behaviours){
 		this.name = name;
 		this.current = initial ;
 		this.behaviours = behaviours ;

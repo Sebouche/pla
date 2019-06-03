@@ -7,7 +7,7 @@ public class IState {
 	String name ;
 	// Le nom de l'état (Waiting, Hungry, Angry, ...) peut vous servir à adapter la représentation de l'entité à son humeur. 
 	
-	IState(String name){
+	public IState(String name){
 		this.name = name ;
 	}
 }

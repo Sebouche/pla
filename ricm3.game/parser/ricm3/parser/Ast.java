@@ -1,5 +1,6 @@
 package ricm3.parser;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -51,8 +52,9 @@ public class Ast {
 
 	public Object make() {
 		List<IAutomaton> automate = new LinkedList<IAutomaton>();
-
-		return automate; // TODO à définir dans la plupart des classes internes ci-dessous.
+		AI_Definitions aidef = (AI_Definitions)this;
+		automate = aidef.make();
+		return automate;
 	}
 
 	public static class Terminal extends Ast {
@@ -71,6 +73,11 @@ public class Ast {
 			String value_id = Dot.node_id(-this.id);
 			return Dot.declare_node(value_id, value, "shape=none, fontsize=10, fontcolor=blue")
 					+ Dot.edge(this.dot_id(), value_id);
+		}
+		
+		public String make() {
+			return value;
+			
 		}
 	}
 
@@ -95,6 +102,11 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
+		
+		public Object make() {
+			return null;
+			
+		}
 	}
 
 	public static class Variable extends Value {
@@ -112,6 +124,11 @@ public class Ast {
 
 		public String toString() {
 			return name.toString();
+		}
+		
+		public Object make() {
+			return null;
+			
 		}
 	}
 
@@ -133,6 +150,11 @@ public class Ast {
 		public String toString() {
 			return "_";
 		}
+		
+		public Object make() {
+			return null;
+			
+		}
 	}
 
 	public static class Number_as_String extends Parameter {
@@ -150,6 +172,11 @@ public class Ast {
 
 		public String toString() {
 			return value.toString();
+		}
+		
+		public Object make() {
+			return null;
+			
 		}
 	}
 
@@ -169,6 +196,11 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
+		
+		public Object make() {
+			return null;
+			
+		}
 	}
 
 	public static class Direction extends Parameter {
@@ -187,6 +219,11 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
+		
+		public Object make() {
+			return null;
+			
+		}
 	}
 
 	public static class Entity extends Parameter {
@@ -204,6 +241,11 @@ public class Ast {
 
 		public String toString() {
 			return value.toString();
+		}
+		
+		public Object make() {
+			return null;
+			
 		}
 	}
 
@@ -232,6 +274,11 @@ public class Ast {
 		public String toString() {
 			return operator + "(" + operand + ")";
 		}
+		
+		public Object make() {
+			return null;
+			
+		}
 	}
 
 	public static class BinaryOp extends Expression {
@@ -254,6 +301,11 @@ public class Ast {
 
 		public String toString() {
 			return "(" + left_operand + " " + operator + " " + right_operand + ")";
+		}
+		
+		public Object make() {
+			return null;
+			
 		}
 	}
 
@@ -291,6 +343,11 @@ public class Ast {
 			}
 			return name + "(" + string + ")";
 		}
+		
+		public Object make() {
+			return null;
+			
+		}
 	}
 
 	public static class Condition extends Ast {
@@ -309,6 +366,11 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
+		
+		public ICondition make() {
+			return null;
+			
+		}
 	}
 
 	public static class Action extends Ast {
@@ -326,6 +388,11 @@ public class Ast {
 
 		public String toString() {
 			return expression.toString();
+		}
+		
+		public IAction make() {
+			return null;
+			
 		}
 	}
 
@@ -348,6 +415,11 @@ public class Ast {
 
 		public String as_state_of(Automaton automaton) {
 			return Dot.declare_node(this.dot_id_of_state_of(automaton), name.toString(), "shape=circle, fontsize=4");
+		}
+		
+		public IState make() {
+			return new IState(name.make());
+			
 		}
 	}
 
@@ -382,6 +454,18 @@ public class Ast {
 				string += automaton.as_dot_aut();
 			}
 			return Dot.graph("Automata", string);
+		}
+		
+		public List<IAutomaton> make() {
+			Iterator<Automaton> iter = automata.iterator();
+			List<IAutomaton> Automates = new LinkedList<IAutomaton>();
+			Automaton current;
+			while (iter.hasNext()) {
+				current = iter.next();
+				Automates.add(current.make());
+			}
+			
+			return Automates;
 		}
 
 	}
@@ -428,8 +512,17 @@ public class Ast {
 			return Dot.subgraph(this.id, string);
 		}
 		
-		public IAutomaton make() {
-			
+		public IAutomaton make() {	
+			String nom = name.make();
+			IState etat = entry.make();
+			Iterator<Behaviour> iter = behaviours.iterator();
+			List<IBehaviour> lbehaviour = new LinkedList<IBehaviour>();
+			Behaviour current;
+			while (iter.hasNext()) {
+				current = iter.next();
+				lbehaviour.add(current.make());
+			}
+			return new IAutomaton(nom,etat,lbehaviour);
 		}
 
 	}
@@ -465,6 +558,21 @@ public class Ast {
 			}
 			return source.as_state_of(automaton) + string;
 		}
+		
+		
+		public IBehaviour make() {	
+			IState etat = source.make();
+			List<ITransition> transition = new LinkedList<ITransition>();
+			Iterator<Transition> iter = transitions.iterator();
+			Transition current;
+			while(iter.hasNext()) {
+				current = iter.next();
+				transition.add(current.make());
+			}
+			
+			return new IBehaviour(etat,transition);
+			
+		}
 	}
 
 	public static class Transition extends Ast {
@@ -499,6 +607,14 @@ public class Ast {
 			string += Dot.edge(source.dot_id_of_state_of(automaton), this.dot_id());
 			string += Dot.edge(this.dot_id(), target.dot_id_of_state_of(automaton));
 			return string;
+		}
+		
+		public ITransition make() {	
+			ICondition cond = condition.make();
+			IAction act = action.make();
+			IState etat = target.make();
+			return new ITransition(cond,act,etat);
+			
 		}
 	}
 }
