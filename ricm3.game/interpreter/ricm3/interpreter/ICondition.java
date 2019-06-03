@@ -37,7 +37,7 @@ public class ICondition {
 		}
 	}
 	
-	public class GotPower extends Condition {
+	public class GotPower extends ICondition {
 		GotPower(){}
 		boolean eval(Entity e) {
 			return (e.power > 0) ;

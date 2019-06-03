@@ -4,10 +4,12 @@ import java.util.List;
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IAutomaton {
+	String name;
 	IState current ;
 	List<IBehaviour> behaviours ;
 	
-	IAutomaton(IState initial, List<IBehaviour> behaviours){
+	IAutomaton(String name, IState initial, List<IBehaviour> behaviours){
+		this.name = name;
 		this.current = initial ;
 		this.behaviours = behaviours ;
 	}
