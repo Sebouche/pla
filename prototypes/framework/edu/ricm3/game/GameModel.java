@@ -15,12 +15,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ricm3.game;
+package edu.ricm3.game;
 
-public class Options {
-	public static final boolean USE_DOUBLE_BUFFERING = true;
-	public static final boolean ECHO_MOUSE = false;
-	public static final boolean ECHO_MOUSE_MOTION = false;
-	public static final boolean ECHO_KEYBOARD = false;
-	public static final int BLOCK_SIZE = 100;
+public abstract class GameModel {
+
+  protected GameUI m_game;
+
+  protected GameModel() {
+  }
+
+  public GameUI getGameUI() {
+    return m_game;
+  }
+  
+  /**
+   * Simulation step.
+   * 
+   * @param now
+   *          is the current time in milliseconds.
+   */
+  public abstract void step(long now);
+  
+  public abstract void shutdown();
 }

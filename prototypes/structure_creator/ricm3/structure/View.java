@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ricm3.game;
+package ricm3.structure;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -74,6 +74,7 @@ public class View extends GameView {
 			camera_y = m_model.m_camera.m_y;
 		}
 		
+		/*
 		g.drawRect(camera_x, camera_y, Options.BLOCK_SIZE * m_model.m_structure.m_width,
 				Options.BLOCK_SIZE * m_model.m_structure.m_height);
 		for (int i = 0; i < m_model.m_structure.m_height; i++) {
@@ -82,8 +83,23 @@ public class View extends GameView {
 						Options.BLOCK_SIZE);
 			}
 		}
+		
 		Graphics g_child = g.create(camera_x, camera_y, Options.BLOCK_SIZE * m_model.m_structure.m_width, Options.BLOCK_SIZE * m_model.m_structure.m_height);
 		m_model.m_structure.paint(g_child);
 		g_child.dispose();
+		*/
+		
+		g.drawRect(camera_x, camera_y, Options.BLOCK_SIZE * m_model.m_level.m_width,
+				Options.BLOCK_SIZE * m_model.m_level.m_height);
+		for (int i = 0; i < m_model.m_level.m_height; i++) {
+			for (int j = 0; j < m_model.m_level.m_width; j++) {
+				g.drawRect(camera_x + j * Options.BLOCK_SIZE, camera_y + i * Options.BLOCK_SIZE, Options.BLOCK_SIZE,
+						Options.BLOCK_SIZE);
+			}
+		}
+		Graphics g_child = g.create(camera_x, camera_y, Options.BLOCK_SIZE * m_model.m_level.m_width, Options.BLOCK_SIZE * m_model.m_level.m_height);
+		m_model.m_level.paint(g_child);
+		g_child.dispose();
+		
 	}
 }

@@ -15,47 +15,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ricm3.game;
+package edu.ricm3.game;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Random;
+import java.awt.event.WindowEvent;
 
-import javax.imageio.ImageIO;
+public class WindowListener implements java.awt.event.WindowListener {
+  GameModel m_model;
+  WindowListener(GameModel m) {
+    m_model = m;
+  }
+  @Override
+  public void windowOpened(WindowEvent e) {
+  }
 
-import edu.ricm3.game.GameModel;
+  @Override
+  public void windowClosing(WindowEvent e) {
+    m_model.shutdown();
+    System.exit(0);
+  }
 
+  @Override
+  public void windowClosed(WindowEvent e) {
+  }
 
-public class Model extends GameModel {
-	Random rand = new Random();
-	Structure m_structure;
-	Camera m_camera;
-	
-	public Model() {
-		loadSprites();
-		m_structure=new Structure(this);
-		m_camera = new Camera(this);
+  @Override
+  public void windowIconified(WindowEvent e) {
+  }
 
-	}
+  @Override
+  public void windowDeiconified(WindowEvent e) {
+  }
 
-	@Override
-	public void shutdown() {
-	}
+  @Override
+  public void windowActivated(WindowEvent e) {
+  }
 
-	/**
-	 * Simulation step.
-	 * 
-	 * @param now is the current time in milliseconds.
-	 */
-	@Override
-	public void step(long now) {
-	}
+  @Override
+  public void windowDeactivated(WindowEvent e) {
+  }
 
-	private void loadSprites() {
-
-	}
 }

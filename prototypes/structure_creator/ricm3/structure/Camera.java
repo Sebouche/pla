@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ricm3.game;
+package ricm3.structure;
 
 /**
  * This class is to illustrate a simple animated character. It does not much,
