@@ -33,4 +33,6 @@ Houda : -Conception du prototype pour la fabrication des objets
 
 -29/05 apres-midi : Travail sur les prototypes
 
-
+-03/06 matin : -Adrien et Sebastian : Travail sur la presentation
+	       -Houda : Travail sur la fabrication des objets
+	       -Nicolas : Interpreteur automates
