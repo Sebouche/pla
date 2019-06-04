@@ -14,7 +14,8 @@ public class GameEntity {
 	int m_hp;
 	int m_idsprite;
 
-	public GameEntity(int x, int y, int hp) {
+	public GameEntity(Model model,int x, int y, int hp) {
+		m_model=model;
 		m_x = x;
 		m_y = y;
 		m_hp = hp;

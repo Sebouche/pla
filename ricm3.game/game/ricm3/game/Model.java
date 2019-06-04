@@ -35,12 +35,15 @@ public class Model extends GameModel {
 	SurfaceWorld m_surfaceworld;
 	UndergroundWorld m_undergroundworld;
 	World m_currentworld;
+	Camera m_camera;
 	
 	public Model() {
 		loadSprites();
 		m_surfaceworld=new SurfaceWorld(this);
 		m_undergroundworld=new UndergroundWorld(this);
-		m_player=new Player(0,0,9999);
+		m_currentworld=m_surfaceworld;
+		m_player=new Player(this,0,0,9999);
+		m_camera=new Camera(this,m_player);
 	}
 
 	@Override
@@ -55,10 +58,22 @@ public class Model extends GameModel {
 	@Override
 	public void step(long now) {
 		m_player.step();
-		m_currentworld.step();
+		m_undergroundworld.step();
+		m_surfaceworld.step();
 	}
 
 	private void loadSprites() {
-
+		File imageFile;
+		
+		/*
+		 * Recopier ces ligne en remplacant par le sprite a importer
+		imageFile = new File("game/sprites/.png");
+		try {
+			m_spritename = ImageIO.read(imageFile);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		*/
 	}
 }

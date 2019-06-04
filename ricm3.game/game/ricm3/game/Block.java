@@ -2,7 +2,7 @@ package ricm3.game;
 
 public class Block extends GameEntity{
 
-	public Block(int x,int y,int hp) {
-		super(x,y,hp);
+	public Block(Model model,int x,int y,int hp) {
+		super(model,x,y,hp);
 	}
 }

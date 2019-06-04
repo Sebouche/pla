@@ -62,6 +62,8 @@ public class View extends GameView {
 		// erase background
 		g.setColor(m_background);
 		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		
 		Graphics g_child = g.create(0, 0, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);
 		g_child.dispose();
