@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class GameEntity {
 
-	int m_x, m_y, m_h, m_w;
+	int m_x, m_y;
 	BufferedImage[] m_sprites;
 	Model m_model;
 	// Automate m_automate;
@@ -14,8 +14,8 @@ public class GameEntity {
 	int m_hp;
 	int m_idsprite;
 
-	public GameEntity(Model model,int x, int y, int hp) {
-		m_model=model;
+	public GameEntity(Model model, int x, int y, int hp) {
+		m_model = model;
 		m_x = x;
 		m_y = y;
 		m_hp = hp;
@@ -33,11 +33,20 @@ public class GameEntity {
 	public void hit() {
 	}
 
-	public void step() {		
+	public void step() {
 	}
-	
+
+	public void egg() {
+	}
+
 	public void paint(Graphics g) {
-		g.drawImage(m_sprites[m_idsprite], 0, 0,null);
+		g.drawImage(m_sprites[m_idsprite], 0, 0, null);
+	}
+
+	//////////////////////
+
+	double distance(GameEntity e) {
+		return Math.sqrt((m_x - e.m_x) * (m_x - e.m_x) + (m_y - e.m_y) * (m_y - e.m_y));
 	}
 
 }
