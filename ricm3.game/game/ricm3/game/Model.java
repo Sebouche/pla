@@ -77,7 +77,96 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		
 		*/
+		imageFile = new File("game/sprites/bat.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("bat",m_spritename,3,2);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/block.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("block",m_spritename,3,3);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/dirtbg.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("dirtbg",m_spritename,1,1);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/dog.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("dog",m_spritename,5,5);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/grassbg.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("grassbg",m_spritename,1,1);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/house.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("house",m_spritename,5,3);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/mouse.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("mouse",m_spritename,4,4);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/rabbit.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("rabbit",m_spritename,4,5);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/scientist.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("scientist",m_spritename,7,6);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/spawner.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("spawner",m_spritename,2,2);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("game/sprites/turtle.png");
+		try {
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("turtle",m_spritename,5,4);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 	}
 	
 	void splitSprite(String name,BufferedImage sprite,int rows,int cols) {
