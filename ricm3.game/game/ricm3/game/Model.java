@@ -36,6 +36,7 @@ public class Model extends GameModel {
 	UndergroundWorld m_undergroundworld;
 	World m_currentworld;
 	Camera m_camera;
+	BufferedImage[][] m_sprites=new BufferedImage[20][20];
 	
 	public Model() {
 		loadSprites();
@@ -70,10 +71,28 @@ public class Model extends GameModel {
 		imageFile = new File("game/sprites/.png");
 		try {
 			m_spritename = ImageIO.read(imageFile);
+			splitSprite(m_spritename,rows,cols,id);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		*/
 	}
+	
+	void splitSprite(BufferedImage sprite,int rows,int cols,int id) {
+		int width = sprite.getWidth(null);
+		int height = sprite.getHeight(null);
+		BufferedImage[] sprites = new BufferedImage[rows * cols];
+		int w = width / cols;
+		int h = height / rows;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				int x = j * w;
+				int y = i * h;
+				sprites[(i * cols) + j] = sprite.getSubimage(x, y, w, h);
+			}
+		}
+		m_sprites[id]=sprites;
+	}
+	
 }
