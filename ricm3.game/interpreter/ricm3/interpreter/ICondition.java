@@ -18,10 +18,5 @@ public class ICondition {
 
 	boolean eval(Entity e) {
 		return true;
-	} // à redéfinir dans chaque sous-classe
-
+	} 
 }
-
-// Ajouter une classe IFunCall et IOperator
-// Ajouter des champs list IFunCall et list IOperator dans ICondition
-// ICondition n'extend plus true, cell, ...
