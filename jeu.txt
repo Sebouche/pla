@@ -27,7 +27,7 @@ Idée materiaux et ennemis :
 -Fer
 -Charbon
 -Cuivre
--uranium
+-Uranium
 
 -Echelle		Fabrication : 2 terre
 -mur			Fabrication : 1 a 5 ressource

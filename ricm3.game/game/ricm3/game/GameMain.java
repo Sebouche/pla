@@ -20,9 +20,9 @@ package ricm3.game;
 import java.awt.Dimension;
 
 import edu.ricm3.game.GameUI;
-import ricm3.structure.Controller;
-import ricm3.structure.Model;
-import ricm3.structure.View;
+//import ricm3.structure.Controller;
+//import ricm3.structure.Model;
+//import ricm3.structure.View;
 
 public class GameMain {
 
