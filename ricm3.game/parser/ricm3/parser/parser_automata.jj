@@ -10,7 +10,7 @@
 
 PARSER_BEGIN(AutomataParser)
 
-package ricm3.parser;
+package parser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -621,4 +621,3 @@ Parameter P_Parameter():
 
 
 	
-	  
