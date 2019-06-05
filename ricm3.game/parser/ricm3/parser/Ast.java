@@ -104,7 +104,7 @@ public class Ast {
 		}
 		
 		public Object make() {
-			return null;
+			return value.make();
 			
 		}
 	}
@@ -127,7 +127,7 @@ public class Ast {
 		}
 		
 		public Object make() {
-			return null;
+			return name.make();
 			
 		}
 	}
@@ -275,7 +275,7 @@ public class Ast {
 			return operator + "(" + operand + ")";
 		}
 		
-		public Object make() {
+		public ICondition make() {
 			return null;
 			
 		}
@@ -303,7 +303,7 @@ public class Ast {
 			return "(" + left_operand + " " + operator + " " + right_operand + ")";
 		}
 		
-		public Object make() {
+		public ICondition make() {
 			return null;
 			
 		}
@@ -344,7 +344,7 @@ public class Ast {
 			return name + "(" + string + ")";
 		}
 		
-		public Object make() {
+		public ICondition make() {
 			return null;
 			
 		}
@@ -368,7 +368,15 @@ public class Ast {
 		}
 		
 		public ICondition make() {
-			return null;
+			if(expression instanceof FunCall) {		
+				return ((FunCall)expression).make();
+			}
+			else if(expression instanceof BinaryOp) {		
+				return ((BinaryOp)expression).make();
+			}
+			else {
+				return ((UnaryOp)expression).make();
+			}
 			
 		}
 	}

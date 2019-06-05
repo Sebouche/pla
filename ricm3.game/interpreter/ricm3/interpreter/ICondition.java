@@ -12,15 +12,38 @@ public class ICondition {
 
 	public class True extends ICondition {
 		True(){}
-		boolean eval(Entity e) { return true; }
+/*		boolean eval(GameEntity e) { 
+			return true; 
+		}*/
+	}
+	
+	public class KeyP extends ICondition{
+		
+		Key k;
+		
+		KeyP(Key k){
+			this.k = k;
+		}
+		
+/*		boolean eval(GameEntity e) {
+			
+		}*/
+	}
+	
+	public class MyDir extends ICondition {
+		Direction direction;
+		
+		MyDir(Direction dir){
+			this.direction = dir;
+		}
 	}
 
 	public class Cell extends ICondition {
 		Direction direction ;
 		Kind kind ;
-		Distance distance ;
+		int distance ;
 		
-		Cell(Direction direction, Kind kind, Distance distance){
+		Cell(Direction direction, Kind kind, int distance){
 			this.direction = direction ;
 			this.kind = kind ;
 			this.distance = distance ;
@@ -32,16 +55,38 @@ public class ICondition {
 			this.distance = 1 ;
 		}
 		
-		boolean eval(Entity e) { 
-			return is_Kind(this.kind, this.direction, this.distance, e.position, e.map) ;
+//		boolean eval(GameEntity e) { 
+//			return is_Kind(this.kind, this.direction, this.distance, e.position, e.map) ;
+//		}
+	}
+	
+	public class Closest extends ICondition{
+		Entity e;
+		Direction dir;
+		
+		Closest(Entity e, Direction dir){
+			this.e = e;
+			this.dir = dir;
 		}
+		
+//		boolean eval(GameEntity e) {
+//		return ;
+//		}
 	}
 	
 	public class GotPower extends ICondition {
 		GotPower(){}
-		boolean eval(Entity e) {
-			return (e.power > 0) ;
-		}
+//		boolean eval(GameEntity e) {
+//			return (e.power > 0) ;
+//		}
+	}
+	
+	public class GotStuff extends ICondition {
+		GotStuff(){}
+		
+//		boolean eval(GameEntity e) {
+//		return ;
+//		}
 	}
 
 }
