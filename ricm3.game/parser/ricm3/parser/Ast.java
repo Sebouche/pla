@@ -52,7 +52,7 @@ public class Ast {
 
 	public Object make() {
 		List<IAutomaton> automate = new LinkedList<IAutomaton>();
-		AI_Definitions aidef = (AI_Definitions)this;
+		AI_Definitions aidef = (AI_Definitions) this;
 		automate = aidef.make();
 		return automate;
 	}
@@ -74,10 +74,10 @@ public class Ast {
 			return Dot.declare_node(value_id, value, "shape=none, fontsize=10, fontcolor=blue")
 					+ Dot.edge(this.dot_id(), value_id);
 		}
-		
+
 		public String make() {
 			return value;
-			
+
 		}
 	}
 
@@ -102,10 +102,10 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
-		
-		public Object make() {
+
+		public String make() {
 			return value.make();
-			
+
 		}
 	}
 
@@ -125,10 +125,10 @@ public class Ast {
 		public String toString() {
 			return name.toString();
 		}
-		
-		public Object make() {
+
+		public String make() {
 			return name.make();
-			
+
 		}
 	}
 
@@ -150,10 +150,10 @@ public class Ast {
 		public String toString() {
 			return "_";
 		}
-		
-		public Object make() {
-			return null;
-			
+
+		public String make() {
+			return "_";
+
 		}
 	}
 
@@ -173,10 +173,10 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
-		
+
 		public Object make() {
-			return null;
-			
+			return Integer.parseInt(value.make());
+
 		}
 	}
 
@@ -196,10 +196,10 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
-		
-		public Object make() {
-			return null;
-			
+
+		public String make() {
+			return value.make();
+
 		}
 	}
 
@@ -219,10 +219,14 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
-		
-		public Object make() {
-			return null;
-			
+
+		public String make() {
+			if(value instanceof Constant) {
+				return ((Constant)value).make();
+			}
+			else {
+				return ((Variable)value).make();
+			}
 		}
 	}
 
@@ -242,10 +246,14 @@ public class Ast {
 		public String toString() {
 			return value.toString();
 		}
-		
-		public Object make() {
-			return null;
-			
+
+		public String make() {
+			if(value instanceof Constant) {
+				return ((Constant)value).make();
+			}
+			else {
+				return ((Variable)value).make();
+			}
 		}
 	}
 
@@ -274,10 +282,10 @@ public class Ast {
 		public String toString() {
 			return operator + "(" + operand + ")";
 		}
-		
+
 		public ICondition make() {
 			return null;
-			
+
 		}
 	}
 
@@ -302,10 +310,10 @@ public class Ast {
 		public String toString() {
 			return "(" + left_operand + " " + operator + " " + right_operand + ")";
 		}
-		
+
 		public ICondition make() {
 			return null;
-			
+
 		}
 	}
 
@@ -343,10 +351,23 @@ public class Ast {
 			}
 			return name + "(" + string + ")";
 		}
-		
+
 		public ICondition make() {
-			return null;
-			
+			switch(name.make()) {
+			case("True"): return new True();
+			case("Key"): return new KeyP((Key)parameters.get(0));
+			case("MyDir"): return new MyDir((Direction)parameters.get(0));
+			case("Cell"): 
+				if(parameters.size() == 2) {
+					return new Cell((Direction)parameters.get(0), ((Entity)parameters.get(1)).make());
+				}
+				else
+					return new Cell((Direction)parameters.get(0), ((Entity)parameters.get(1)).make(), (int)((Number_as_String)parameters.get(1)).make());
+			case("Closest"): return new Closest((Entity)parameters.get(0), (Direction)parameters.get(1));
+			case("GotPower"): return new GotPower();
+			case("GotStuff"): return new GotStuff();
+			default: return null;
+			}			
 		}
 	}
 
@@ -366,18 +387,16 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
-		
+
 		public ICondition make() {
-			if(expression instanceof FunCall) {		
-				return ((FunCall)expression).make();
+			if (expression instanceof FunCall) {
+				return ((FunCall) expression).make();
+			} else if (expression instanceof BinaryOp) {
+				return ((BinaryOp) expression).make();
+			} else {
+				return ((UnaryOp) expression).make();
 			}
-			else if(expression instanceof BinaryOp) {		
-				return ((BinaryOp)expression).make();
-			}
-			else {
-				return ((UnaryOp)expression).make();
-			}
-			
+
 		}
 	}
 
@@ -397,10 +416,10 @@ public class Ast {
 		public String toString() {
 			return expression.toString();
 		}
-		
+
 		public IAction make() {
 			return null;
-			
+
 		}
 	}
 
@@ -424,10 +443,10 @@ public class Ast {
 		public String as_state_of(Automaton automaton) {
 			return Dot.declare_node(this.dot_id_of_state_of(automaton), name.toString(), "shape=circle, fontsize=4");
 		}
-		
+
 		public IState make() {
 			return new IState(name.make());
-			
+
 		}
 	}
 
@@ -463,7 +482,7 @@ public class Ast {
 			}
 			return Dot.graph("Automata", string);
 		}
-		
+
 		public List<IAutomaton> make() {
 			Iterator<Automaton> iter = automata.iterator();
 			List<IAutomaton> Automates = new LinkedList<IAutomaton>();
@@ -472,7 +491,7 @@ public class Ast {
 				current = iter.next();
 				Automates.add(current.make());
 			}
-			
+
 			return Automates;
 		}
 
@@ -519,8 +538,8 @@ public class Ast {
 			}
 			return Dot.subgraph(this.id, string);
 		}
-		
-		public IAutomaton make() {	
+
+		public IAutomaton make() {
 			String nom = name.make();
 			IState etat = entry.make();
 			Iterator<Behaviour> iter = behaviours.iterator();
@@ -530,7 +549,7 @@ public class Ast {
 				current = iter.next();
 				lbehaviour.add(current.make());
 			}
-			return new IAutomaton(nom,etat,lbehaviour);
+			return new IAutomaton(nom, etat, lbehaviour);
 		}
 
 	}
@@ -566,20 +585,19 @@ public class Ast {
 			}
 			return source.as_state_of(automaton) + string;
 		}
-		
-		
-		public IBehaviour make() {	
+
+		public IBehaviour make() {
 			IState etat = source.make();
 			List<ITransition> transition = new LinkedList<ITransition>();
 			Iterator<Transition> iter = transitions.iterator();
 			Transition current;
-			while(iter.hasNext()) {
+			while (iter.hasNext()) {
 				current = iter.next();
 				transition.add(current.make());
 			}
-			
-			return new IBehaviour(etat,transition);
-			
+
+			return new IBehaviour(etat, transition);
+
 		}
 	}
 
@@ -616,13 +634,13 @@ public class Ast {
 			string += Dot.edge(this.dot_id(), target.dot_id_of_state_of(automaton));
 			return string;
 		}
-		
-		public ITransition make() {	
+
+		public ITransition make() {
 			ICondition cond = condition.make();
 			IAction act = action.make();
 			IState etat = target.make();
-			return new ITransition(cond,act,etat);
-			
+			return new ITransition(cond, act, etat);
+
 		}
 	}
 }
