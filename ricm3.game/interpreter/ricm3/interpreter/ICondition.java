@@ -4,7 +4,7 @@ import ricm3.parser.Ast.*;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
-public class ICondition {
+public class ICondition extends IExpression{
 
 	public ICondition expr1;
 	public ICondition expr2;

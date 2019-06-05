@@ -1,20 +1,19 @@
 package ricm3.interpreter;
 
-import ricm3.parser.Ast.Direction;
 
 public class Cell extends ICondition {
 	Direction direction ;
 	String kind ;
 	int distance ;
 	
-	public Cell(Direction direction, String kind, int distance){
-		this.direction = direction ;
+	public Cell(String direction, String kind, int distance){
+		this.direction = Direction.strToDir(direction) ;
 		this.kind = kind ;
 		this.distance = distance ;
 	}
 	
-	public Cell(Direction direction, String kind){
-		this.direction = direction ;
+	public Cell(String string, String kind){
+		this.direction = Direction.strToDir(string) ;
 		this.kind = kind ;
 		this.distance = 1 ;
 	}

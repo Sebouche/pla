@@ -1,12 +1,10 @@
 package ricm3.interpreter;
 
-import ricm3.parser.Ast.Direction;
-
 public class Move extends IAction {
 	Direction direction ;
 	
-	Move(){
-		// this.direction = ;// Front par défaut
+	public Move(){
+		 this.direction = Direction.FRONT;
 	}
 	
 	Move(Direction direction){

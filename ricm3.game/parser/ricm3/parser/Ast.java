@@ -221,11 +221,10 @@ public class Ast {
 		}
 
 		public String make() {
-			if(value instanceof Constant) {
-				return ((Constant)value).make();
-			}
-			else {
-				return ((Variable)value).make();
+			if (value instanceof Constant) {
+				return ((Constant) value).make();
+			} else {
+				return ((Variable) value).make();
 			}
 		}
 	}
@@ -248,11 +247,10 @@ public class Ast {
 		}
 
 		public String make() {
-			if(value instanceof Constant) {
-				return ((Constant)value).make();
-			}
-			else {
-				return ((Variable)value).make();
+			if (value instanceof Constant) {
+				return ((Constant) value).make();
+			} else {
+				return ((Variable) value).make();
 			}
 		}
 	}
@@ -284,12 +282,12 @@ public class Ast {
 		}
 
 		public ICondition make() {
-			ICondition cond = new ICondition();	
+			ICondition cond = new ICondition();
 			cond.op = new IOperator(operator.make());
 			if (operand instanceof FunCall) {
-				cond.expr1 = ((FunCall)operand).make();
+				cond.expr1 = (ICondition) ((FunCall) operand).make();
 			} else if (operand instanceof BinaryOp) {
-				cond.expr1 = ((BinaryOp)operand).make();
+				cond.expr1 = ((BinaryOp) operand).make();
 			} else {
 				cond.expr1 = ((UnaryOp) operand).make();
 			}
@@ -324,16 +322,16 @@ public class Ast {
 			ICondition cond = new ICondition();
 			cond.op = new IOperator(operator.make());
 			if (left_operand instanceof FunCall) {
-				cond.expr1 = ((FunCall)left_operand).make();
+				cond.expr1 = (ICondition) ((FunCall) left_operand).make();
 			} else if (left_operand instanceof BinaryOp) {
-				cond.expr1 = ((BinaryOp)left_operand).make();
+				cond.expr1 = ((BinaryOp) left_operand).make();
 			} else {
 				cond.expr1 = ((UnaryOp) left_operand).make();
 			}
 			if (right_operand instanceof FunCall) {
-				cond.expr2 = ((FunCall)right_operand).make();
+				cond.expr2 = (ICondition) ((FunCall) right_operand).make();
 			} else if (right_operand instanceof BinaryOp) {
-				cond.expr2 = ((BinaryOp)right_operand).make();
+				cond.expr2 = ((BinaryOp) right_operand).make();
 			} else {
 				cond.expr2 = ((UnaryOp) right_operand).make();
 			}
@@ -376,22 +374,62 @@ public class Ast {
 			return name + "(" + string + ")";
 		}
 
-		public ICondition make() {
-			switch(name.make()) {
-			case("True"): return new True();
-			case("Key"): return new KeyP((Key)parameters.get(0));
-			case("MyDir"): return new MyDir((Direction)parameters.get(0));
-			case("Cell"): 
-				if(parameters.size() == 2) {
-					return new Cell((Direction)parameters.get(0), ((Entity)parameters.get(1)).make());
-				}
-				else
-					return new Cell((Direction)parameters.get(0), ((Entity)parameters.get(1)).make(), (int)((Number_as_String)parameters.get(1)).make());
-			case("Closest"): return new Closest((Entity)parameters.get(0), (Direction)parameters.get(1));
-			case("GotPower"): return new GotPower();
-			case("GotStuff"): return new GotStuff();
-			default: return null;
-			}			
+		public IExpression make() {
+			switch (name.make()) {
+			case ("True"):
+				return new True();
+			case ("Key"):
+				return new KeyP((Key) parameters.get(0));
+			case ("MyDir"):
+				return new MyDir((Direction) parameters.get(0));
+			case ("Cell"):
+				if (parameters.size() == 2) {
+					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make());
+				} else
+					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make(),
+							(int) ((Number_as_String) parameters.get(1)).make());
+			case ("Closest"):
+				return new Closest((Entity) parameters.get(0), (Direction) parameters.get(1));
+			case ("GotPower"):
+				return new GotPower();
+			case ("GotStuff"):
+				return new GotStuff();
+			
+			
+			
+			case ("Wait"):
+				return new Wait();
+			case ("Pop"):
+				return new Pop();
+			case ("Wizz"):
+				return new Wizz();
+			case ("Move"):
+				return new Move();
+			case ("Jump"):
+				return new Jump();
+			case ("Turn"):
+				return new Turn();
+			case ("Hit"):
+				return new Hit();
+			case ("Protect"):
+				return new Protect();
+			case ("Pick"):
+				return new Pick();
+			case ("Throw"):
+				return new Throw();
+			case ("Store"):
+				return new Store();
+			case ("Get"):
+				return new Get();
+			case ("Power"):
+				return new Power();
+			case ("Kamikaze"):
+				return new Kamikaze();
+			case ("Egg"):
+				return new Egg();
+			default:
+				return null;
+			}
 		}
 	}
 
@@ -415,7 +453,7 @@ public class Ast {
 		public ICondition make() {
 			if (expression instanceof FunCall) {
 				ICondition cond = new ICondition();
-				cond.expr1 = ((FunCall)expression).make();
+				cond.expr1 = (ICondition) ((FunCall) expression).make();
 				return cond;
 
 			} else if (expression instanceof BinaryOp) {
@@ -445,8 +483,7 @@ public class Ast {
 		}
 
 		public IAction make() {
-			return null;
-
+			return (IAction) expression.make();
 		}
 	}
 

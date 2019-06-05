@@ -1,25 +1,25 @@
 package ricm3.interpreter;
 
-import ricm3.parser.Ast.Direction;
-
 public class Hit extends IAction {
-	Direction direction ;
+	Direction direction;
 	Integer power;
-	
-	Hit(Direction direction, Integer power){
-		this.direction = direction ;
+
+	public Hit(Direction direction, Integer power) {
+		this.direction = direction;
 		this.power = power;
 	}
-	Hit(Direction direction){
-		this.direction = direction ;
-		this.power = 1 ; // valeur par défaut
+
+	public Hit(Direction direction) {
+		this.direction = direction;
+		this.power = 1;
 	}
-	Hit(){
-	//	this.direction = Direction.Front // Front par défaut
-		this.power = 1 ; // puissance par défaut
+
+	public Hit() {
+		this.direction = Direction.FRONT;
+		this.power = 1;
 	}
-	
-/*		boolean exec(Entity e){
-		e.hit(this.direction, max(e.power,this.power));
-	}*/
+
+	/*
+	 * boolean exec(Entity e){ e.hit(this.direction, max(e.power,this.power)); }
+	 */
 }

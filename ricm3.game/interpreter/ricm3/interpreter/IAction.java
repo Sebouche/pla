@@ -4,7 +4,7 @@ package ricm3.interpreter;
 
 import ricm3.parser.Ast.*;
 
-public class IAction {
+public class IAction extends IExpression{
 	
 	IAction(){}
 	
