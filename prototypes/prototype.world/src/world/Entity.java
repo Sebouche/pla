@@ -1,4 +1,4 @@
-package prototype.world;
+package world;
 
 public class Entity {
 	int m_x, m_y, m_w, m_h;
