@@ -321,8 +321,23 @@ public class Ast {
 		}
 
 		public ICondition make() {
-			return null;
-
+			ICondition cond = new ICondition();
+			cond.op = new IOperator(operator.make());
+			if (left_operand instanceof FunCall) {
+				cond.expr1 = ((FunCall)left_operand).make();
+			} else if (left_operand instanceof BinaryOp) {
+				cond.expr1 = ((BinaryOp)left_operand).make();
+			} else {
+				cond.expr1 = ((UnaryOp) left_operand).make();
+			}
+			if (right_operand instanceof FunCall) {
+				cond.expr2 = ((FunCall)right_operand).make();
+			} else if (right_operand instanceof BinaryOp) {
+				cond.expr2 = ((BinaryOp)right_operand).make();
+			} else {
+				cond.expr2 = ((UnaryOp) right_operand).make();
+			}
+			return cond;
 		}
 	}
 
