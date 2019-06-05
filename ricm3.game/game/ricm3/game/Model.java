@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
@@ -36,7 +37,7 @@ public class Model extends GameModel {
 	UndergroundWorld m_undergroundworld;
 	World m_currentworld;
 	Camera m_camera;
-	BufferedImage[][] m_sprites=new BufferedImage[20][20];
+	Hashtable<String,BufferedImage[]> m_sprites=new Hashtable<String,BufferedImage[]>();
 	
 	public Model() {
 		loadSprites();
@@ -67,11 +68,11 @@ public class Model extends GameModel {
 		File imageFile;
 		
 		/*
-		 * Recopier ces ligne en remplacant par le sprite a importer
+		// Recopier ces ligne en remplacant par le sprite a importer
 		imageFile = new File("game/sprites/.png");
 		try {
-			m_spritename = ImageIO.read(imageFile);
-			splitSprite(m_spritename,rows,cols,id);
+			BufferedImage m_spritename = ImageIO.read(imageFile);
+			splitSprite("name",m_spritename,rows,cols);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -79,7 +80,7 @@ public class Model extends GameModel {
 		*/
 	}
 	
-	void splitSprite(BufferedImage sprite,int rows,int cols,int id) {
+	void splitSprite(String name,BufferedImage sprite,int rows,int cols) {
 		int width = sprite.getWidth(null);
 		int height = sprite.getHeight(null);
 		BufferedImage[] sprites = new BufferedImage[rows * cols];
@@ -92,7 +93,7 @@ public class Model extends GameModel {
 				sprites[(i * cols) + j] = sprite.getSubimage(x, y, w, h);
 			}
 		}
-		m_sprites[id]=sprites;
+		m_sprites.put(name, sprites);
 	}
 	
 }
