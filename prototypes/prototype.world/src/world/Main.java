@@ -1,4 +1,4 @@
-package prototype.world;
+package world;
 
 public class Main {
 	static int radius = 10;
