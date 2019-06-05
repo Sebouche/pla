@@ -17,8 +17,6 @@
  */
 package ricm3.game;
 
-import java.lang.reflect.Constructor;
-
 public class Options {
 	public static final boolean USE_DOUBLE_BUFFERING = true;
 	public static final boolean ECHO_MOUSE = false;
