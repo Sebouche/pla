@@ -2,7 +2,7 @@ package ricm3.interpreter;
 
 import ricm3.parser.Ast.Direction;
 
-public class MyDir extends ICondition {
+public class MyDir extends IFunCall {
 	Direction direction;
 	
 	public MyDir(Direction dir){

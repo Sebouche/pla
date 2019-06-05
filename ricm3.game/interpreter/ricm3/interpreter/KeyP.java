@@ -2,7 +2,7 @@ package ricm3.interpreter;
 
 import ricm3.parser.Ast.Key;
 
-public class KeyP extends ICondition{
+public class KeyP extends IFunCall{
 	
 	Key k;
 	

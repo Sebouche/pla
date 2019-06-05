@@ -284,6 +284,8 @@ public class Ast {
 		}
 
 		public ICondition make() {
+		//	ICondition cond = new ICondition();
+			
 			return null;
 
 		}
@@ -352,7 +354,7 @@ public class Ast {
 			return name + "(" + string + ")";
 		}
 
-		public ICondition make() {
+		public IFunCall make() {
 			switch(name.make()) {
 			case("True"): return new True();
 			case("Key"): return new KeyP((Key)parameters.get(0));
@@ -390,7 +392,10 @@ public class Ast {
 
 		public ICondition make() {
 			if (expression instanceof FunCall) {
-				return ((FunCall) expression).make();
+				ICondition cond = new ICondition();
+				cond.funcalls.add(((FunCall)expression).make());
+				return cond;
+
 			} else if (expression instanceof BinaryOp) {
 				return ((BinaryOp) expression).make();
 			} else {
