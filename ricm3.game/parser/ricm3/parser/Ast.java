@@ -284,9 +284,16 @@ public class Ast {
 		}
 
 		public ICondition make() {
-		//	ICondition cond = new ICondition();
-			
-			return null;
+			ICondition cond = new ICondition();	
+			cond.op = new IOperator(operator.make());
+			if (operand instanceof FunCall) {
+				cond.expr1 = ((FunCall)operand).make();
+			} else if (operand instanceof BinaryOp) {
+				cond.expr1 = ((BinaryOp)operand).make();
+			} else {
+				cond.expr1 = ((UnaryOp) operand).make();
+			}
+			return cond;
 
 		}
 	}
@@ -354,7 +361,7 @@ public class Ast {
 			return name + "(" + string + ")";
 		}
 
-		public IFunCall make() {
+		public ICondition make() {
 			switch(name.make()) {
 			case("True"): return new True();
 			case("Key"): return new KeyP((Key)parameters.get(0));
@@ -393,7 +400,7 @@ public class Ast {
 		public ICondition make() {
 			if (expression instanceof FunCall) {
 				ICondition cond = new ICondition();
-				cond.funcalls.add(((FunCall)expression).make());
+				cond.expr1 = ((FunCall)expression).make();
 				return cond;
 
 			} else if (expression instanceof BinaryOp) {

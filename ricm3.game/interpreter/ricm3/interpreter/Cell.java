@@ -2,7 +2,7 @@ package ricm3.interpreter;
 
 import ricm3.parser.Ast.Direction;
 
-public class Cell extends IFunCall {
+public class Cell extends ICondition {
 	Direction direction ;
 	String kind ;
 	int distance ;

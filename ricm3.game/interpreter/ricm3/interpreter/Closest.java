@@ -3,7 +3,7 @@ package ricm3.interpreter;
 import ricm3.parser.Ast.Direction;
 import ricm3.parser.Ast.Entity;
 
-public class Closest extends IFunCall{
+public class Closest extends ICondition{
 	Entity e;
 	Direction dir;
 	
