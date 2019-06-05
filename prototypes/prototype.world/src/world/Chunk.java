@@ -1,4 +1,4 @@
-package prototype.world;
+package world;
 
 import java.awt.image.BufferedImage;
 import java.util.Random;
