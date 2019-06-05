@@ -1,4 +1,4 @@
-package prototype.world;
+package world;
 
 public class Spawner extends Entity {
 	Chunk m_c;
