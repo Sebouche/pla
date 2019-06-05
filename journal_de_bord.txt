@@ -1,15 +1,15 @@
 Journal de bord :
 
--24/05 : -conception du jeu (description du jeu dans jeu.txt)
+-27/05 : -conception du jeu (description du jeu dans jeu.txt)
 	 -Creation du projet et d'un github
 
 
--25/05 matin :	-conception du logiciel : 
+-28/05 matin :	-conception du logiciel : 
 			Nous avons pensé a la disposition de nos classes, les champs qu'elles contiendront et l'interaction entre le modele et l'affichage, ainsi que ce que feront les differentes actions pop et wizz pour nos differentes entités
 		-recherche des etapes critiques du developpement : 
 			Nous avons trouvé a partir de la conception precedente les parties les plus difficiles a realiser dont nous allons faire des prototypes (generer aleatoirement le sous-terrain, integrer les automates a nos classes, gerer le reseau electrique ainsi que le systeme de fabrication)
 
--25/05 apres-midi : -repartition du travail pour les prototypes que nous presenteront :
+-28/05 apres-midi : -repartition du travail pour les prototypes que nous presenteront :
 						-Sebastian : developpement d'un generateur de grille avec des probabilités variables pour les differents minerais que l'on peut trouver dans le sous-terrain
 						-Samuel et Nicolas : comprehension des automates et realisation de quelques automates de bases de differentes entités
 						-Sacha : conception d'un graphe qui nous permettra de representer le reseau electrique pour alimenter les tourelles (ainsi couper une zone de l'alimentation coupe les zones directement reliées)
@@ -28,7 +28,13 @@ Adrien : -Creation des sprites de plusieurs personnages et blocs du jeu
 
 Houda : -Conception du prototype pour la fabrication des objets
 			
-		    -
+		    
+-29/05 matin : -Travail sur les  differents prototypes
 
+-29/05 apres-midi : Travail sur les prototypes
 
-
+-03/06 matin : -Adrien et Samuel : Travail sur la presentation
+	       -Houda : Travail sur la fabrication des objets
+	       -Nicolas : Interpreteur automates
+	       -Sacha : PathFinding
+	       -Sebastian : Creation des classes principales
