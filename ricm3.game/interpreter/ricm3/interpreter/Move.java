@@ -7,9 +7,10 @@ public class Move extends IAction {
 		 this.direction = Direction.FRONT;
 	}
 	
-	Move(Direction direction){
-		this.direction = direction ;
+	public Move(String direction){
+		this.direction = Direction.strToDir(direction) ;
 	}
+
 
 	
 /*	boolean exec(Entity e){
