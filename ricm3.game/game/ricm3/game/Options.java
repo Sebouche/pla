@@ -17,8 +17,6 @@
  */
 package ricm3.game;
 
-import java.lang.reflect.Constructor;
-
 public class Options {
 	public static final boolean USE_DOUBLE_BUFFERING = true;
 	public static final boolean ECHO_MOUSE = false;
@@ -31,4 +29,6 @@ public class Options {
 	public static int[] spawnerProba = { 60, 25, 5, 10 }; // Chien, Tortue, Souris, Lapin
 	public static String[] spawnerType = { "Dog", "Turtle", "Mouse", "Rabbit" };
 	public static int[] HP = {25, 100, 2, 10};
+	
+	public static boolean begin = false;	//permet de gérer l'état du jeu sur le menu de démarrage
 }
