@@ -67,7 +67,7 @@ public class View extends GameView {
 		Graphics g_child = g.create(0, 0, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);
 		g_child.dispose();
-		g_child = g.create(m_model.m_player.m_x, m_model.m_player.m_y, m_model.m_player.m_w, m_model.m_player.m_h);
+		g_child = g.create(m_model.m_player.m_x, m_model.m_player.m_y, Options.Entity_size, Options.Entity_size);
 		m_model.m_player.paint(g_child);
 		g_child.dispose();
 	}
