@@ -42,7 +42,7 @@ public class Model extends GameModel {
 	Hashtable<String,BufferedImage[]> m_sprites=new Hashtable<String,BufferedImage[]>();
 	
 	JPanel starting_menu;
-	PopupMenu options_menu;
+	JPanel options_menu;
 	
 	public Model() {
 		loadSprites();
