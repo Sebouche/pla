@@ -22,7 +22,7 @@ Bat(E1){
 	| True ? Pop() :(E2)
 	* (E2):
 	| !GotPower() ? Kamikaze :() 
-	| Cell(F,V) | Cell(F,O) ? Move(F) :(E1)
+	| Cell(F,V) ? Move(F) :(E1)
 	| Cell(F,@) ? Hit() :(E1)
 	| True ? Pop() :(E2)
 	* ()
@@ -82,6 +82,9 @@ Player(Surface){
 	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
 	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
-	| Key(m) 
+	| Key(m) & Cell(F,T,1) ? Throw(F) :(Menu)
+	* (Menu):
+	| Key(ESCAPE) ? Throw(F) :(Surface)
+	| Key(ENTER) ? Throw(F) :(Surface)
 	* ()
 }
