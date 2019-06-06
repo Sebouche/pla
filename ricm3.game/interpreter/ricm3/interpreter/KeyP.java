@@ -4,9 +4,9 @@ import ricm3.parser.Ast.Key;
 
 public class KeyP extends ICondition{
 	
-	Key k;
+	String k;
 	
-	public KeyP(Key k){
+	public KeyP(String k){
 		this.k = k;
 	}
 	

@@ -374,7 +374,7 @@ public class Ast {
 			case ("True"):
 				return new True();
 			case ("Key"):
-				return new KeyP((Key) parameters.get(0));
+				return new KeyP(((Key) parameters.get(0)).make());
 			case ("MyDir"):
 				return new MyDir(((Direction) parameters.get(0)).make());
 			case ("Cell"):

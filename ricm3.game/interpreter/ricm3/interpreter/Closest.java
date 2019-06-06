@@ -3,11 +3,11 @@ package ricm3.interpreter;
 import ricm3.game.GameEntity;
 
 public class Closest extends ICondition{
-	String e;
+	Type e;
 	Direction dir;
 	
 	public Closest(String e, String dir){
-		this.e = e;
+		this.e = Type.strToType(e);
 		this.dir = Direction.strToDir(dir);
 	}
 	
