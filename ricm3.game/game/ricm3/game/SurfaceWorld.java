@@ -100,7 +100,7 @@ public class SurfaceWorld extends World {
 		}
 
 		@Override
-		public void egg() {
+		public boolean egg() {
 			Random r = new Random();
 			if ((r.nextInt() % 100) == 0) {
 				int type;
@@ -130,8 +130,10 @@ public class SurfaceWorld extends World {
 				}
 				if (e != null) {
 					entities.add(e);
+					return true;
 				}
 			}
+			return false;
 		}
 	}
 
