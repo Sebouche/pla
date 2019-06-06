@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.Direction;
+import ricm3.interpreter.Keys;
 
 public class GameEntity {
 
@@ -17,6 +18,7 @@ public class GameEntity {
 	int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
+	Keys m_key;
 
 	public GameEntity(Model model, int x, int y, int hp) {
 		m_model = model;
@@ -37,6 +39,10 @@ public class GameEntity {
 	
 	public Direction dir() {
 		return this.m_dir;
+	}
+	
+	public Keys keys() {
+		return this.m_key;
 	}
 
 	///////////////////////////
