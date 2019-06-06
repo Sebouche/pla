@@ -209,7 +209,8 @@ public class Controller extends GameController implements ActionListener {
 		m1_button3.addActionListener(this);
 		m1_button3.setAlignmentX(m_model.starting_menu.CENTER_ALIGNMENT);
 		m_model.starting_menu.add(m1_button3);
-
+		
+		
 		North.add(m_model.starting_menu);
 		m_game.addNorth(North);
 		
