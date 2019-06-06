@@ -1,15 +1,14 @@
 package ricm3.interpreter;
 
-import ricm3.parser.Ast.Direction;
-import ricm3.parser.Ast.Entity;
+import ricm3.game.GameEntity;
 
 public class Closest extends ICondition{
-	Entity e;
+	String e;
 	Direction dir;
 	
-	public Closest(Entity e, Direction dir){
+	public Closest(String e, String dir){
 		this.e = e;
-		this.dir = dir;
+		this.dir = Direction.strToDir(dir);
 	}
 	
 //	boolean eval(GameEntity e) {
