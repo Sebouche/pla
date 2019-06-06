@@ -44,6 +44,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.ricm3.game.GameController;
+import ricm3.interpreter.Keys;
 
 /**
  * This class is to illustrate the most simple game controller. It does not
@@ -92,12 +93,18 @@ public class Controller extends GameController implements ActionListener {
 	public void keyPressed(KeyEvent e) {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyPressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		Keys k = Keys.strToKeys(Character.toString(e.getKeyChar()));
+		if (!m_model.m_player.m_keys.contains(k)) {
+			m_model.m_player.m_keys.add(k);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyReleased: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		Keys k = Keys.strToKeys(Character.toString(e.getKeyChar()));
+		m_model.m_player.m_keys.remove(k);
 	}
 
 	@Override
