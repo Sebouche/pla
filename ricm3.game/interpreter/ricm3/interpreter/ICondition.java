@@ -4,8 +4,8 @@ import ricm3.game.GameEntity;
 
 public class ICondition extends IExpression {
 
-	public ICondition expr1;
-	public ICondition expr2;
+	public IExpression expr1;
+	public IExpression expr2;
 	public IOperator op;
 
 	public ICondition() {
@@ -13,7 +13,8 @@ public class ICondition extends IExpression {
 		expr2 = null;
 		op = null;
 	}
-
+	
+	@Override
 	public boolean eval(GameEntity e) {
 		if (op == null) {
 			return expr1.eval(e);
