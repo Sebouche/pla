@@ -59,19 +59,27 @@ public class View extends GameView {
 	protected void _paint(Graphics g) {
 		computeFPS();
 
-		for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
-			for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
-				g.drawImage(m_model.m_sprites.get("grassbg")[0], (int) (i * Options.Entity_size * Options.Scale),
-						(int) (j * Options.Entity_size * Options.Scale), (int) Options.Scale * Options.Entity_size,
-						(int) Options.Scale * Options.Entity_size, null);
+		if (m_model.m_currentworld instanceof SurfaceWorld) {
+			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
+				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
+					g.drawImage(m_model.m_sprites.get("grassbg")[0], (int) (i * Options.Entity_size * Options.Scale),
+							(int) (j * Options.Entity_size * Options.Scale), (int) Options.Scale * Options.Entity_size,
+							(int) Options.Scale * Options.Entity_size, null);
 
+				}
 			}
 		}
-		Graphics g_child = g.create(0, 0, getWidth(), getHeight());
+
+		int cam_x = m_model.m_camera.m_watched.m_x;
+		int cam_y = m_model.m_camera.m_watched.m_y;
+		int width = getWidth()-(int)(Options.Entity_size*Options.Scale);
+		int height = getHeight()-(int)(Options.Entity_size*Options.Scale);
+		Graphics g_child = g.create(width / 2 - cam_x, height / 2 - cam_y, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);
 		g_child.dispose();
-		g_child = g.create(m_model.m_player.m_x, m_model.m_player.m_y, Options.Entity_size, Options.Entity_size);
-		// m_model.m_player.paint(g_child);
+		g_child = g.create(width / 2, height / 2, (int) (Options.Entity_size * Options.Scale),
+				(int) (Options.Entity_size * Options.Scale));
+		m_model.m_camera.m_watched.paint(g_child);
 		g_child.dispose();
 	}
 }
