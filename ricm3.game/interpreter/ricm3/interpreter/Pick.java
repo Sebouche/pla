@@ -1,8 +1,21 @@
 package ricm3.interpreter;
 
-public class Pick extends IAction{
+import ricm3.game.GameEntity;
+
+public class Pick extends IAction {
+
+	Direction dir;
 
 	public Pick() {
-		
+		this.dir = Direction.FRONT;
+	}
+
+	public Pick(String str) {
+		this.dir = Direction.strToDir(str);
+	}
+	
+	@Override
+	public boolean exec(GameEntity e) {
+		return e.pick(dir);
 	}
 }

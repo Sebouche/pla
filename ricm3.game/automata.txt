@@ -1,0 +1,75 @@
+Turner0(Turn_0){
+  * (Turn_0): True ? Turn(R) :(Turn_1)
+  * (Turn_1): True ? Turn(R) :(Turn_2)
+  * (Turn_2): True ? Turn(R) :(Turn_3)
+  * (Turn_3): True ? Turn(R) :(Turn_4)
+  * (Turn_4): True ? Kamikaze :()
+  * ()
+}
+
+Turner1(Turn_0){
+  * (Turn_0): True ? Turn(R) :(Turn_1)
+  * (Turn_1): True ? Turn(R) :(Turn_2)
+  * (Turn_2): True ? Turn(R) :(Turn_3)
+  * (Turn_3): True ? Turn(R) :(Turn_4)
+  * (Turn_4): True ? Kamikaze :()
+  * ()
+}
+
+Bat(1){
+	* (1):
+	| !GotPower() :()
+	| True ? Pop() :(2)
+	* (2):
+	| !GotPower() :() 
+	| Cell(F,V) | Cell(F,O) ? Move(F) :(1)
+	| Cell(F,@) ? Hit() :(1)
+	| True ? Pop() :(2)
+	* ()
+}
+
+Mole(1){
+	* (1): True ? Pop() :(2)
+	* (2):
+	| Cell(S,V,1) ? Move(S) :(1)
+	| Cell(F,V) ? Wizz() :(1)
+	| True ? Move(F) :(2)
+}
+
+Mouse(3){
+	* (1):
+	| !GotPower() :()
+	| Cell(F,O,1) ? Hit() :(2)
+	| Cell(F,A,1) ? Hit() :(3)
+	| True ? Egg() :(4)
+	* (2): 
+	| !GotPower() :()
+	| Cell(F,O,1) ? Hit() :(2)
+	| Cell(F,V) ? Move(F) / Egg() :(4)
+	* (3):
+	| !GotPower() :()
+	| Cell(F,@,1) ? Hit() :(3)
+	| True ? Pop() :(1)
+	* (4):
+	| !GotPower() :()
+	| Cell(F,@,1) ? Hit() :(1)
+	| !Cell(F,@,1) ? Pop() :(1)
+	* ()
+}
+
+Dog(Init){
+	* (Init): True ? Pop() :(1)
+	* (1):
+	| !GotPower() :()
+	| Cell(F,O,1) ? Hit() :(4)
+	| Cell(F,A,1) ? Hit() :(2)
+	| Cell(F,V,1) ? Move(F) :(2)
+	* (2):
+	| !GotPower() :()
+	| Cell(F,A,1) ? Hit() :(2)
+	| True ? Pop() :(1)
+	* (4):
+	| !GotPower() :()
+	| Cell(F,A,1) ? Hit :(4)
+	| True ? Move(F) :(2)
+}

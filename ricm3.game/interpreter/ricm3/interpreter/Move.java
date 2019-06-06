@@ -1,5 +1,7 @@
 package ricm3.interpreter;
 
+import ricm3.game.GameEntity;
+
 public class Move extends IAction {
 	Direction direction ;
 	
@@ -7,12 +9,12 @@ public class Move extends IAction {
 		 this.direction = Direction.FRONT;
 	}
 	
-	Move(Direction direction){
-		this.direction = direction ;
+	public Move(String direction){
+		this.direction = Direction.strToDir(direction) ;
 	}
 
-	
-/*	boolean exec(Entity e){
-		e.move(this.direction) ;
-	}*/
+	@Override
+	public boolean exec(GameEntity e){
+		return e.move(this.direction) ;
+	}
 }

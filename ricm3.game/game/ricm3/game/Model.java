@@ -26,12 +26,13 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
-
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import edu.ricm3.game.GameModel;
-
+import ricm3.interpreter.IAutomaton;
+import ricm3.parser.*;
 
 public class Model extends GameModel {
 	Player m_player;
@@ -39,18 +40,26 @@ public class Model extends GameModel {
 	UndergroundWorld m_undergroundworld;
 	World m_currentworld;
 	Camera m_camera;
-	Hashtable<String,BufferedImage[]> m_sprites=new Hashtable<String,BufferedImage[]>();
-	
+	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
+	List<IAutomaton> m_automatons;
 	JPanel starting_menu;
-	PopupMenu options_menu;
-	
+	JPanel options_menu;
+
 	public Model() {
+		Ast arbre;
+		try {
+			arbre = AutomataParser.from_file("automata.txt");
+			m_automatons = (List<IAutomaton>) arbre.make();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		loadSprites();
-		m_surfaceworld=new SurfaceWorld(this);
-		m_undergroundworld=new UndergroundWorld(this);
-		m_currentworld=m_surfaceworld;
-		m_player=new Player(this,0,0,9999);
-		m_camera=new Camera(this,m_player);
+		m_surfaceworld = new SurfaceWorld(10, this);
+		m_undergroundworld = new UndergroundWorld(this);
+		//m_currentworld = m_surfaceworld;
+		m_currentworld = m_undergroundworld;
+		m_player = new Player(this, 128, 128, 9999, m_sprites.get("scientist"));
+		m_camera = new Camera(this, m_player);
 	}
 
 	@Override
@@ -73,23 +82,18 @@ public class Model extends GameModel {
 
 	private void loadSprites() {
 		File imageFile;
-		
+
 		/*
-		// Recopier ces ligne en remplacant par le sprite a importer
-		imageFile = new File("game/sprites/.png");
-		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("name",m_spritename,rows,cols);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.exit(-1);
-		}
-		
-		*/
+		 * // Recopier ces ligne en remplacant par le sprite a importer imageFile = new
+		 * File("game/sprites/.png"); try { BufferedImage m_spritename =
+		 * ImageIO.read(imageFile); splitSprite("name",m_spritename,rows,cols); } catch
+		 * (IOException ex) { ex.printStackTrace(); System.exit(-1); }
+		 * 
+		 */
 		imageFile = new File("sprites/bat.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("bat",m_spritename,3,2);
+			splitSprite("bat", m_spritename, 3, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -97,7 +101,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/block.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("block",m_spritename,3,3);
+			splitSprite("block", m_spritename, 3, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -105,7 +109,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/dirtbg.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("dirtbg",m_spritename,1,1);
+			splitSprite("dirtbg", m_spritename, 1, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -113,7 +117,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/dog.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("dog",m_spritename,5,5);
+			splitSprite("dog", m_spritename, 5, 5);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -121,7 +125,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/grassbg.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("grassbg",m_spritename,1,1);
+			splitSprite("grassbg", m_spritename, 1, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -129,7 +133,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/house.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("house",m_spritename,5,3);
+			splitSprite("house", m_spritename, 5, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -137,7 +141,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/mouse.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("mouse",m_spritename,4,4);
+			splitSprite("mouse", m_spritename, 4, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -145,7 +149,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/rabbit.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("rabbit",m_spritename,4,5);
+			splitSprite("rabbit", m_spritename, 4, 5);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -153,7 +157,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/scientist.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("scientist",m_spritename,7,6);
+			splitSprite("scientist", m_spritename, 7, 6);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -161,7 +165,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/spawner.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("spawner",m_spritename,2,2);
+			splitSprite("spawner", m_spritename, 2, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -169,14 +173,14 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/turtle.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("turtle",m_spritename,5,4);
+			splitSprite("turtle", m_spritename, 5, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 	}
-	
-	void splitSprite(String name,BufferedImage sprite,int rows,int cols) {
+
+	void splitSprite(String name, BufferedImage sprite, int rows, int cols) {
 		int width = sprite.getWidth(null);
 		int height = sprite.getHeight(null);
 		BufferedImage[] sprites = new BufferedImage[rows * cols];
@@ -191,5 +195,5 @@ public class Model extends GameModel {
 		}
 		m_sprites.put(name, sprites);
 	}
-	
+
 }

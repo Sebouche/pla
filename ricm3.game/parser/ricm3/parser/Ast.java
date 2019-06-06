@@ -7,11 +7,6 @@ import java.util.ListIterator;
 
 import ricm3.interpreter.*;
 
-/* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, june 2018
- *
- * Constructors of the Abstract Syntax Tree of Game Automata
- */
-
 public class Ast {
 
 	// All this is only for the graphical .dot output of the Abstract Syntax Tree
@@ -379,43 +374,71 @@ public class Ast {
 			case ("True"):
 				return new True();
 			case ("Key"):
-				return new KeyP((Key) parameters.get(0));
+				return new KeyP(((Key) parameters.get(0)).make());
 			case ("MyDir"):
-				return new MyDir((Direction) parameters.get(0));
+				return new MyDir(((Direction) parameters.get(0)).make());
 			case ("Cell"):
 				if (parameters.size() == 2) {
 					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make());
 				} else
 					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make(),
-							(int) ((Number_as_String) parameters.get(1)).make());
+							(int) ((Number_as_String) parameters.get(2)).make());
 			case ("Closest"):
-				return new Closest((Entity) parameters.get(0), (Direction) parameters.get(1));
+				return new Closest(((Entity) parameters.get(0)).make(), ((Direction) parameters.get(1)).make());
 			case ("GotPower"):
 				return new GotPower();
 			case ("GotStuff"):
 				return new GotStuff();
-			
-			
-			
+
 			case ("Wait"):
 				return new Wait();
 			case ("Pop"):
+				if (parameters.size() == 1) {
+					return new Pop(((Direction) parameters.get(0)).make());
+				}
 				return new Pop();
 			case ("Wizz"):
+				if (parameters.size() == 1) {
+					return new Wizz(((Direction) parameters.get(0)).make());
+				}
 				return new Wizz();
 			case ("Move"):
+				if (parameters.size() == 1) {
+					return new Move(((Direction) parameters.get(0)).make());
+				}
 				return new Move();
 			case ("Jump"):
+				if (parameters.size() == 1) {
+					return new Jump(((Direction) parameters.get(0)).make());
+				}
 				return new Jump();
 			case ("Turn"):
+				if (parameters.size() == 1) {
+					return new Turn(((Direction) parameters.get(0)).make());
+				}
 				return new Turn();
 			case ("Hit"):
+				if (parameters.size() == 1) {
+					return new Hit(((Direction) parameters.get(0)).make());
+				} else if (parameters.size() == 2) {
+					return new Hit(((Direction) parameters.get(0)).make(),
+							(int) ((Number_as_String) parameters.get(1)).make());
+				}
 				return new Hit();
 			case ("Protect"):
+				if (parameters.size() == 1) {
+					return new Protect(((Direction) parameters.get(0)).make());
+				}
 				return new Protect();
 			case ("Pick"):
+				if (parameters.size() == 1) {
+					return new Pick(((Direction) parameters.get(0)).make());
+				}
 				return new Pick();
 			case ("Throw"):
+				if (parameters.size() == 1) {
+					return new Throw(((Direction) parameters.get(0)).make());
+				}
 				return new Throw();
 			case ("Store"):
 				return new Store();
