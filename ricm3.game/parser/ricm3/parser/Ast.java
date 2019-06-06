@@ -7,11 +7,6 @@ import java.util.ListIterator;
 
 import ricm3.interpreter.*;
 
-/* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, june 2018
- *
- * Constructors of the Abstract Syntax Tree of Game Automata
- */
-
 public class Ast {
 
 	// All this is only for the graphical .dot output of the Abstract Syntax Tree
@@ -379,9 +374,9 @@ public class Ast {
 			case ("True"):
 				return new True();
 			case ("Key"):
-				return new KeyP((Key) parameters.get(0));
+				return new KeyP(((Key) parameters.get(0)).make());
 			case ("MyDir"):
-				return new MyDir((Direction) parameters.get(0));
+				return new MyDir(((Direction) parameters.get(0)).make());
 			case ("Cell"):
 				if (parameters.size() == 2) {
 					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make());
@@ -389,7 +384,7 @@ public class Ast {
 					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make(),
 							(int) ((Number_as_String) parameters.get(2)).make());
 			case ("Closest"):
-				return new Closest((Entity) parameters.get(0), (Direction) parameters.get(1));
+				return new Closest(((Entity) parameters.get(0)).make(), ((Direction) parameters.get(1)).make());
 			case ("GotPower"):
 				return new GotPower();
 			case ("GotStuff"):

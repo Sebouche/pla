@@ -1,19 +1,28 @@
 package ricm3.interpreter;
 
-import ricm3.parser.Ast.Direction;
-import ricm3.parser.Ast.Entity;
+import java.util.Iterator;
 
-public class Closest extends ICondition{
-	Entity e;
+import ricm3.game.GameEntity;
+
+public class Closest extends ICondition {
+	Type e;
 	Direction dir;
-	
-	public Closest(Entity e, Direction dir){
-		this.e = e;
-		this.dir = dir;
+
+	public Closest(String e, String dir) {
+		this.e = Type.strToType(e);
+		this.dir = Direction.strToDir(dir);
 	}
-	
-//	boolean eval(GameEntity e) {
-//	return ;
-//	}
+
+/*	@Override
+	public boolean eval(GameEntity e) {
+		Iterator<GameEntity> iter = e.entities().iterator();
+		while (iter.hasNext()) {
+			GameEntity f = iter.next();
+		}
+		
+		return;
+	}*/
 }
 
+
+// vraie si la plus proche entité est dans la direction

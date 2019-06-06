@@ -1,5 +1,7 @@
 package ricm3.interpreter;
 
+import ricm3.game.GameEntity;
+
 public class Turn extends IAction {
 
 	Direction dir;
@@ -15,5 +17,10 @@ public class Turn extends IAction {
 		} else {
 			this.dir = Direction.FRONT;
 		}
+	}
+	
+	@Override
+	public boolean exec(GameEntity e) {
+		return e.turn(dir);
 	}
 }

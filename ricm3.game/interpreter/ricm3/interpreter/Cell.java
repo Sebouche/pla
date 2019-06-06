@@ -1,23 +1,55 @@
 package ricm3.interpreter;
 
+import java.util.Iterator;
+
+import ricm3.game.GameEntity;
+
 public class Cell extends ICondition {
 	Direction direction;
-	String kind;
+	Type kind;
 	int distance;
 
 	public Cell(String direction, String kind, int distance) {
 		this.direction = Direction.strToDir(direction);
-		this.kind = kind;
+		this.kind = Type.strToType(kind);
 		this.distance = distance;
 	}
 
 	public Cell(String string, String kind) {
 		this.direction = Direction.strToDir(string);
-		this.kind = kind;
+		this.kind = Type.strToType(kind);
 		this.distance = 1;
 	}
 
-//	boolean eval(GameEntity e) { 
-//		return is_Kind(this.kind, this.direction, this.distance, e.position, e.map) ;
-//	}
+	@Override
+	public boolean eval(GameEntity e) {
+		Direction dir = Direction.entityDir(e, direction);
+		int cellx = e.x();
+		int celly = e.y();
+		switch (dir) {
+		case NORTH:
+			celly -= distance;
+			break;
+		case SOUTH:
+			celly += distance;
+			break;
+		case WEST:
+			cellx -= distance;
+			break;
+		case EAST:
+			cellx += distance;
+			break;
+		default:
+			break;
+		}
+		Iterator<GameEntity> iter = e.entities().iterator();
+		while (iter.hasNext()) {
+			GameEntity f = iter.next();
+			if (isInside(f, cellx, celly)) {
+				if (e.type() == f.type())
+					return true;
+			}
+		}
+		return false;
+	}
 }
