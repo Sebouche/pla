@@ -36,6 +36,8 @@ import ricm3.parser.*;
 
 public class Model extends GameModel {
 	Player m_player;
+	int m_width;
+	int m_height;
 	SurfaceWorld m_surfaceworld;
 	UndergroundWorld m_undergroundworld;
 	World m_currentworld;
@@ -56,9 +58,9 @@ public class Model extends GameModel {
 		loadSprites();
 		m_surfaceworld = new SurfaceWorld(10, this);
 		m_undergroundworld = new UndergroundWorld(this);
-		//m_currentworld = m_surfaceworld;
-		m_currentworld = m_undergroundworld;
-		m_player = new Player(this, 128, 128, 9999, m_sprites.get("scientist"));
+		m_currentworld = m_surfaceworld;
+		//m_currentworld = m_undergroundworld;
+		m_player = new Player(this, 64, 64, 9999, m_sprites.get("scientist"));
 		m_camera = new Camera(this, m_player);
 	}
 
@@ -101,7 +103,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/block.png");
 		try {
 			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("block", m_spritename, 3, 3);
+			splitSprite("block", m_spritename, 4, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
