@@ -5,8 +5,8 @@ import ricm3.game.Options;
 
 public class ICondition extends IExpression {
 
-	public ICondition expr1;
-	public ICondition expr2;
+	public IExpression expr1;
+	public IExpression expr2;
 	public IOperator op;
 
 	public ICondition() {
@@ -20,6 +20,8 @@ public class ICondition extends IExpression {
 				&& e.y() + Options.Entity_size * Options.Scale >= y;
 	}
 
+	
+	@Override
 	public boolean eval(GameEntity e) {
 		if (op == null) {
 			return expr1.eval(e);

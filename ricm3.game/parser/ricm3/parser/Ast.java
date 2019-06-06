@@ -317,14 +317,14 @@ public class Ast {
 			ICondition cond = new ICondition();
 			cond.op = new IOperator(operator.make());
 			if (left_operand instanceof FunCall) {
-				cond.expr1 = (ICondition) ((FunCall) left_operand).make();
+				cond.expr1 = ((FunCall) left_operand).make();
 			} else if (left_operand instanceof BinaryOp) {
 				cond.expr1 = ((BinaryOp) left_operand).make();
 			} else {
 				cond.expr1 = ((UnaryOp) left_operand).make();
 			}
 			if (right_operand instanceof FunCall) {
-				cond.expr2 = (ICondition) ((FunCall) right_operand).make();
+				cond.expr2 = ((FunCall) right_operand).make();
 			} else if (right_operand instanceof BinaryOp) {
 				cond.expr2 = ((BinaryOp) right_operand).make();
 			} else {
@@ -379,9 +379,9 @@ public class Ast {
 				return new MyDir(((Direction) parameters.get(0)).make());
 			case ("Cell"):
 				if (parameters.size() == 2) {
-					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make());
+					return new Cell( (String) parameters.get(0).make(),  (String) parameters.get(1).make());
 				} else
-					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make(),
+					return new Cell( (String) parameters.get(0).make(),  (String) parameters.get(1).make(),
 							(int) ((Number_as_String) parameters.get(2)).make());
 			case ("Closest"):
 				return new Closest(((Entity) parameters.get(0)).make(), ((Direction) parameters.get(1)).make());
