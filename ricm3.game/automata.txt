@@ -1,0 +1,17 @@
+Turner0(Turn_0){
+  * (Turn_0): True ? Turn(R) :(Turn_1)
+  * (Turn_1): True ? Turn(R) :(Turn_2)
+  * (Turn_2): True ? Turn(R) :(Turn_3)
+  * (Turn_3): True ? Turn(R) :(Turn_4)
+  * (Turn_4): True ? Kamikaze :()
+  * ()
+}
+
+Turner1(Turn_0){
+  * (Turn_0): True ? Turn(R) :(Turn_1)
+  * (Turn_1): True ? Turn(R) :(Turn_2)
+  * (Turn_2): True ? Turn(R) :(Turn_3)
+  * (Turn_3): True ? Turn(R) :(Turn_4)
+  * (Turn_4): True ? Kamikaze :()
+  * ()
+}
