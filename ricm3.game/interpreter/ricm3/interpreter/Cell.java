@@ -3,6 +3,7 @@ package ricm3.interpreter;
 import java.util.Iterator;
 
 import ricm3.game.GameEntity;
+import ricm3.game.Options;
 
 public class Cell extends ICondition {
 	Direction direction;
@@ -19,6 +20,11 @@ public class Cell extends ICondition {
 		this.direction = Direction.strToDir(string);
 		this.kind = Type.strToType(kind);
 		this.distance = 1;
+	}
+
+	boolean isInside(GameEntity e, int x, int y) {
+		return e.x() < x && e.x() + Options.Entity_size * Options.Scale > x && e.y() < y
+				&& e.y() + Options.Entity_size * Options.Scale > y;
 	}
 
 	@Override
@@ -45,7 +51,7 @@ public class Cell extends ICondition {
 		Iterator<GameEntity> iter = e.entities().iterator();
 		while (iter.hasNext()) {
 			GameEntity f = iter.next();
-			if (f.x() == cellx && f.y() == celly) {
+			if (isInside(f, cellx, celly)) {
 				if (e.type() == f.type())
 					return true;
 			}
