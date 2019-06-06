@@ -17,15 +17,10 @@
  */
 package ricm3.game;
 
-import java.awt.Color;
-import java.awt.PopupMenu;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Random;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -44,8 +39,8 @@ public class Model extends GameModel {
 	Camera m_camera;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	List<IAutomaton> m_automatons;
-	JPanel starting_menu;
-	JPanel options_menu;
+	JPanel m_starting_menu;
+	JPanel m_options_menu;
 
 	public Model() {
 		Ast arbre;
@@ -94,88 +89,88 @@ public class Model extends GameModel {
 		 */
 		imageFile = new File("sprites/bat.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("bat", m_spritename, 3, 2);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("bat", spritename, 3, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/block.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("block", m_spritename, 4, 3);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("block", spritename, 4, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/dirtbg.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("dirtbg", m_spritename, 1, 1);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("dirtbg", spritename, 1, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/dog.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("dog", m_spritename, 5, 5);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("dog", spritename, 5, 5);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/grassbg.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("grassbg", m_spritename, 1, 1);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("grassbg", spritename, 1, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/house.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("house", m_spritename, 5, 3);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("house", spritename, 5, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/mouse.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("mouse", m_spritename, 4, 4);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("mouse", spritename, 4, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/rabbit.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("rabbit", m_spritename, 4, 5);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("rabbit", spritename, 4, 5);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/scientist.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("scientist", m_spritename, 7, 6);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("scientist", spritename, 7, 6);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/spawner.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("spawner", m_spritename, 2, 2);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("spawner", spritename, 2, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
 		imageFile = new File("sprites/turtle.png");
 		try {
-			BufferedImage m_spritename = ImageIO.read(imageFile);
-			splitSprite("turtle", m_spritename, 5, 4);
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("turtle", spritename, 5, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
