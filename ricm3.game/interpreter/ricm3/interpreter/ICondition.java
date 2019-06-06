@@ -1,10 +1,8 @@
 package ricm3.interpreter;
 
-import ricm3.parser.Ast.*;
+import ricm3.game.GameEntity;
 
-/* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
-
-public class ICondition extends IExpression{
+public class ICondition extends IExpression {
 
 	public ICondition expr1;
 	public ICondition expr2;
@@ -16,7 +14,19 @@ public class ICondition extends IExpression{
 		op = null;
 	}
 
-	boolean eval(Entity e) {
+	public boolean eval(GameEntity e) {
+		if (op == null) {
+			return expr1.eval(e);
+		}
+		if (op.operator == "!") {
+			return !expr1.eval(e);
+		}
+		if (op.operator == "&&") {
+			return expr1.eval(e) && expr2.eval(e);
+		}
+		if (op.operator == "||") {
+			return expr1.eval(e) || expr2.eval(e);
+		}
 		return true;
-	} 
+	}
 }

@@ -1,5 +1,7 @@
 package ricm3.interpreter;
 
+import ricm3.game.GameEntity;
+
 public class Hit extends IAction {
 	Direction direction;
 	Integer power;
@@ -19,7 +21,14 @@ public class Hit extends IAction {
 		this.power = 1;
 	}
 
-	/*
-	 * boolean exec(Entity e){ e.hit(this.direction, max(e.power,this.power)); }
-	 */
+	@Override
+	public boolean exec(GameEntity e) {
+		return e.hit(this.direction, max(e.dmgs(), this.power));
+	}
+
+	private int max(int dmg, Integer power) {
+		if (dmg >= power)
+			return dmg;
+		return power;
+	}
 }

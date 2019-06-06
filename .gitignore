@@ -1,3 +1,10 @@
 .metadata/
 ricm3.game/bin/
 prototypes/bin/
+ricm3.game/parser/ricm3/parser/AutomataParser.java
+ricm3.game/parser/ricm3/parser/AutomataParserTokenManager.java
+ricm3.game/parser/ricm3/parser/ParseException.java
+ricm3.game/parser/ricm3/parser/AutomataParserConstants.java
+ricm3.game/parser/ricm3/parser/SimpleCharStream.java
+ricm3.game/parser/ricm3/parser/Token.java
+ricm3.game/parser/ricm3/parser/TokenMgrError.java
