@@ -33,7 +33,7 @@ public class SurfaceWorld extends World {
 		entities = new LinkedList<GameEntity>();
 		chunklists = new LinkedList<ChunkList>();
 		add(new Chunk(this, 0, 0, 2));
-		entities.add(new House(m_model, 50, 50, 2000, m_model.m_sprites.get("house")));
+		entities.add(new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house")));
 		Random r = new Random();
 		int y;
 		int x;
@@ -152,7 +152,7 @@ public class SurfaceWorld extends World {
 				Random r = new Random();
 				type = (((r.nextInt()) % 10) + 1) / 10;
 				if (type == 1) {
-					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32, (r.nextInt() % (m_size - 64)) + 32, this,
+					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32+m_x*2048, (r.nextInt() % (m_size - 64)) + 32+m_y*2048, this,
 							m_model.m_sprites.get("spawner"));
 				}
 			}
