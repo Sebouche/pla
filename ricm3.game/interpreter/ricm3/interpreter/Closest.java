@@ -5,23 +5,26 @@ import java.util.Iterator;
 import ricm3.game.GameEntity;
 
 public class Closest extends ICondition {
-	Type e;
+	Type type;
 	Direction dir;
 
 	public Closest(String e, String dir) {
-		this.e = Type.strToType(e);
+		this.type = Type.strToType(e);
 		this.dir = Direction.strToDir(dir);
 	}
 
-/*	@Override
+	@Override
 	public boolean eval(GameEntity e) {
 		Iterator<GameEntity> iter = e.entities().iterator();
 		while (iter.hasNext()) {
 			GameEntity f = iter.next();
+			if(f.type() == type) {
+				
+			}
 		}
 		
-		return;
-	}*/
+		return false;
+	}
 }
 
 
