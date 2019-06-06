@@ -16,62 +16,62 @@ Turner1(Turn_0){
   * ()
 }
 
-Bat(e1){
-	* (e1):
+Bat(E1){
+	* (E1):
 	| !GotPower() :()
-	| True ? Pop() :(e2)
-	* (e2):
+	| True ? Pop() :(E2)
+	* (E2):
 	| !GotPower() :() 
-	| Cell(F,V) | Cell(F,O) ? Move(F) :(e1)
-	| Cell(F,@) ? Hit() :(e1)
-	| True ? Pop() :(e2)
+	| Cell(F,V) | Cell(F,O) ? Move(F) :(E1)
+	| Cell(F,@) ? Hit() :(E1)
+	| True ? Pop() :(E2)
 	* ()
 }
 
-Mole(e1){
-	* (e1): True ? Pop() :(e2)
-	* (e2):
-	| Cell(S,V,1) ? Move(S) :(e1)
-	| Cell(F,V) ? Wizz() :(e1)
-	| True ? Move(F) :(e2)
+Mole(E1){
+	* (E1): True ? Pop() :(E2)
+	* (E2):
+	| Cell(S,V,1) ? Move(S) :(E1)
+	| Cell(F,V) ? Wizz() :(E1)
+	| True ? Move(F) :(E2)
 }
 
-Mouse(e3){
-	* (e1):
+Mouse(E3){
+	* (E1):
 	| !GotPower() :()
-	| Cell(F,O,1) ? Hit() :(e2)
-	| Cell(F,A,1) ? Hit() :(e3)
-	| True ? Egg() :(e4)
-	* (e2):
+	| Cell(F,O,1) ? Hit() :(E2)
+	| Cell(F,A,1) ? Hit() :(E3)
+	| True ? Egg() :(E4)
+	* (E2):
 	| !GotPower() :()
-	| Cell(F,O,1) ? Hit() :(e2)
-	| Cell(F,V) ? Move(F) / Egg() :(e4)
-	* (e3):
+	| Cell(F,O,1) ? Hit() :(E2)
+	| Cell(F,V) ? Move(F) / Egg() :(E4)
+	* (E3):
 	| !GotPower() :()
-	| Cell(F,@,1) ? Hit() :(e3)
-	| True ? Pop() :(e1)
-	* (e4):
+	| Cell(F,@,1) ? Hit() :(E3)
+	| True ? Pop() :(E1)
+	* (E4):
 	| !GotPower() :()
-	| Cell(F,@,1) ? Hit() :(e1)
-	| !Cell(F,@,1) ? Pop() :(e1)
+	| Cell(F,@,1) ? Hit() :(E1)
+	| !Cell(F,@,1) ? Pop() :(E1)
 	* ()
 }
 
 Dog(Init){
-	* (Init): True ? Pop() :(e1)
-	* (e1):
+	* (Init): True ? Pop() :(E1)
+	* (E1):
 	| !GotPower() :()
-	| Cell(F,O,1) ? Hit() :(e3)
-	| Cell(F,A,1) ? Hit() :(e2)
-	| Cell(F,V,1) ? Move(F) :(e2)
-	* (e2):
+	| Cell(F,O,1) ? Hit() :(E3)
+	| Cell(F,A,1) ? Hit() :(E2)
+	| Cell(F,V,1) ? Move(F) :(E2)
+	* (E2):
 	| !GotPower() :()
-	| Cell(F,A,1) ? Hit() :(e2)
-	| True ? Pop() :(e1)
-	* (e3):
+	| Cell(F,A,1) ? Hit() :(E2)
+	| True ? Pop() :(E1)
+	* (E3):
 	| !GotPower() :()
-	| Cell(F,A,1) ? Hit :(e3)
-	| True ? Move(F) :(e2)
+	| Cell(F,A,1) ? Hit :(E3)
+	| True ? Move(F) :(E2)
 	* ()
 }
 
