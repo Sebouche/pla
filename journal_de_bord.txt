@@ -38,3 +38,19 @@ Houda : -Conception du prototype pour la fabrication des objets
 	       -Nicolas : Interpreteur automates
 	       -Sacha : PathFinding
 	       -Sebastian : Creation des classes principales
+
+-04/06 : -Presentation
+
+-05/06 : -Nicolas : Interpreteur automates
+	 -Adrien : Sprites
+	 -Samuel : Travail sur le menu
+	 -Sacha : Pathfinding et integration du monde exterieur
+	 -Houda : Travail sur la fabrication d'objets
+	 -Sebastian : Travail sur la generation du monde sous-terrain
+
+-06/06 : -Sacha : Travail sur les automates de la chauve-souris et la taupe
+	 -Samuel : Travail sur le menu et sur la gestion du temps
+	 -Adrien : Travail sur les sprites
+	 -Houda : Travail sur les automates des blocs
+	 -Sebastian : Travail sur l'affichage et sur la classe de la maison
+	 -Nicolas : Travail sur l'interpreteur d'automates

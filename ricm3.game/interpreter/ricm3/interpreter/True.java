@@ -6,7 +6,8 @@ public class True extends ICondition {
 	public True() {
 	}
 
-	boolean eval(GameEntity e) {
+	@Override
+	public boolean eval(GameEntity e) {
 		return true;
 	}
 }

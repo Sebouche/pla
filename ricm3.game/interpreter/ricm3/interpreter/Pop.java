@@ -14,7 +14,8 @@ public class Pop extends IAction{
 		this.dir = Direction.strToDir(dir);
 	}
 	
-	boolean exec(GameEntity e){
+	@Override
+	public boolean exec(GameEntity e){
 		return e.pop(this.dir) ;
 	}
 	

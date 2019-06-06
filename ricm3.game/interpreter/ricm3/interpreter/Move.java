@@ -13,8 +13,8 @@ public class Move extends IAction {
 		this.direction = Direction.strToDir(direction) ;
 	}
 
-
-	boolean exec(GameEntity e){
+	@Override
+	public boolean exec(GameEntity e){
 		return e.move(this.direction) ;
 	}
 }

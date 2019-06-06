@@ -14,7 +14,8 @@ public class Pick extends IAction {
 		this.dir = Direction.strToDir(str);
 	}
 	
-	boolean exec(GameEntity e) {
+	@Override
+	public boolean exec(GameEntity e) {
 		return e.pick(dir);
 	}
 }

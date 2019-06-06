@@ -7,7 +7,8 @@ public class GotPower extends ICondition {
 	public GotPower() {
 	}
 	
-	boolean eval(GameEntity e) {
+	@Override
+	public boolean eval(GameEntity e) {
 		return (e.hps() > 0) ;
 	}
 }

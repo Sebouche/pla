@@ -14,6 +14,7 @@ public class Wizz extends IAction{
 		this.dir = Direction.strToDir(str);
 	}
 	
+	@Override
 	public boolean exec(GameEntity e) {
 		return e.wizz(dir);
 	}

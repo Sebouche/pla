@@ -1,8 +1,9 @@
 package ricm3.interpreter;
 
-import ricm3.parser.Ast.*;
+import ricm3.game.GameEntity;
+import ricm3.game.Options;
 
-public class ICondition extends IExpression{
+public class ICondition extends IExpression {
 
 	public ICondition expr1;
 	public ICondition expr2;
@@ -13,8 +14,25 @@ public class ICondition extends IExpression{
 		expr2 = null;
 		op = null;
 	}
+	
+	boolean isInside(GameEntity e, int x, int y) {
+		return e.x() <= x && e.x() + Options.Entity_size * Options.Scale >= x && e.y() <= y
+				&& e.y() + Options.Entity_size * Options.Scale >= y;
+	}
 
-	boolean eval(Entity e) {
+	public boolean eval(GameEntity e) {
+		if (op == null) {
+			return expr1.eval(e);
+		}
+		if (op.operator == "!") {
+			return !expr1.eval(e);
+		}
+		if (op.operator == "&&") {
+			return expr1.eval(e) && expr2.eval(e);
+		}
+		if (op.operator == "||") {
+			return expr1.eval(e) || expr2.eval(e);
+		}
 		return true;
-	} 
+	}
 }

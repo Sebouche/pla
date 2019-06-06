@@ -44,20 +44,21 @@ public class Model extends GameModel {
 	List<IAutomaton> m_automatons;
 	JPanel starting_menu;
 	JPanel options_menu;
-	
+
 	public Model() {
 		Ast arbre;
-			try {
-				arbre = AutomataParser.from_file("automata.txt");
-				m_automatons=(List<IAutomaton>)arbre.make();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			arbre = AutomataParser.from_file("automata.txt");
+			m_automatons = (List<IAutomaton>) arbre.make();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		loadSprites();
-		m_surfaceworld = new SurfaceWorld(this);
+		m_surfaceworld = new SurfaceWorld(10, this);
 		m_undergroundworld = new UndergroundWorld(this);
-		m_currentworld = m_surfaceworld;
-		m_player = new Player(this, 0, 0, 9999);
+		//m_currentworld = m_surfaceworld;
+		m_currentworld = m_undergroundworld;
+		m_player = new Player(this, 128, 128, 9999, m_sprites.get("scientist"));
 		m_camera = new Camera(this, m_player);
 	}
 
