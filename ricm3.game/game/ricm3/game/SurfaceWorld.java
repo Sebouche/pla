@@ -128,9 +128,10 @@ public class SurfaceWorld extends World {
 				}
 				if (e != null) {
 					m_entities.add(e);
+					return true;
 				}
 			}
-			return true;
+			return false;
 		}
 	}
 

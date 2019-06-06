@@ -33,14 +33,14 @@ public class View extends GameView {
 	int m_fps;
 	Model m_model;
 	// Controller m_ctr;
-
+	
 	public View(Model m) {
 		m_model = m;
 		// m_ctr = c;
 	}
 
 	public void step(long now) {
-
+		
 	}
 
 	private void computeFPS() {
@@ -51,7 +51,7 @@ public class View extends GameView {
 			m_npaints = 0;
 		}
 		m_game.setFPS(m_fps, null);
-		// m_game.setFPS(m_fps, "npaints=" + m_npaints);
+		//m_game.setFPS(m_fps, "npaints=" + m_npaints);
 		m_npaints++;
 	}
 
@@ -92,6 +92,7 @@ public class View extends GameView {
 		int width = getWidth() - (int) (Options.Entity_size * Options.Scale);
 		int height = getHeight() - (int) (Options.Entity_size * Options.Scale);
 		
+		if (Options.begin) {
 		Graphics g_child = g.create(width / 2 - cam_x, height / 2 - cam_y, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);
 		g_child.dispose();
@@ -100,5 +101,6 @@ public class View extends GameView {
 				(int) (Options.Entity_size * Options.Scale));
 		m_model.m_camera.m_watched.paint(g_child);
 		g_child.dispose();
+		}
 	}
 }
