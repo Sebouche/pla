@@ -39,6 +39,7 @@ import java.util.Iterator;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -60,8 +61,10 @@ public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 
+	JPanel m1_automata_panel;
 	JLabel m1_title;
 	JButton Non, m1_button1, m1_button2, m1_button3;
+	JComboBox m1_combo1;
 	MenuItem m2_button1;
 
 	public Controller(Model model, View view) {
@@ -143,14 +146,15 @@ public class Controller extends GameController implements ActionListener {
 		// Menu de démarrage
 		JPanel North = new JPanel();
 		North.setLayout(new FlowLayout(FlowLayout.CENTER));
-		North.setBackground(Color.WHITE);
+		North.setBackground(m_view.m_background);
 
 		m_model.starting_menu = new JPanel();
 		m_model.starting_menu.setLayout(new BoxLayout(m_model.starting_menu, BoxLayout.Y_AXIS));
-		m_model.starting_menu.setBackground(Color.WHITE);
+		m_model.starting_menu.setBackground(m_view.m_background);
 
 		Font f1 = new Font(Font.SERIF, Font.BOLD, 64);
 		Font f2 = new Font(Font.MONOSPACED, Font.BOLD, 32);
+		Font f3 = new Font(Font.MONOSPACED, Font.BOLD, 16);
 
 		Component PaddingUp = Box.createRigidArea(new Dimension(0, m_view.getHeight() / 2 - 150));
 
@@ -171,11 +175,32 @@ public class Controller extends GameController implements ActionListener {
 
 		m_model.starting_menu.add(Box.createRigidArea(new Dimension(0, 10)));
 
+		JPanel m1_options_panel = new JPanel();
+		m1_options_panel.setLayout(new FlowLayout());
+		m1_options_panel.setBackground(m_view.m_background);
 		m1_button2 = new JButton("Options");
 		m1_button2.setFont(f2);
 		m1_button2.addActionListener(this);
 		m1_button2.setAlignmentX(m_model.starting_menu.CENTER_ALIGNMENT);
-		m_model.starting_menu.add(m1_button2);
+		m1_options_panel.add(m1_button2);
+		
+		m1_automata_panel = new JPanel();
+		m1_automata_panel.setLayout(new BoxLayout(m1_automata_panel, BoxLayout.Y_AXIS));
+		m1_automata_panel.setBackground(m_view.m_background);
+		
+		JLabel choose_your_automaton = new JLabel("Choix de l'automate du joueur");
+		choose_your_automaton.setFont(f3);
+		m1_automata_panel.add(choose_your_automaton);
+		
+		String[] automata = { "Bat", "Dog", "Otto", "Rabbit", "Mouse" };
+		m1_combo1 = new JComboBox(automata);
+		m1_combo1.setSelectedIndex(4);
+		m1_combo1.addActionListener(this);
+		m1_automata_panel.add(m1_combo1);
+
+		m1_options_panel.add(m1_automata_panel);
+		m1_automata_panel.setVisible(false);
+		m_model.starting_menu.add(m1_options_panel);
 
 		m_model.starting_menu.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -187,12 +212,15 @@ public class Controller extends GameController implements ActionListener {
 
 		North.add(m_model.starting_menu);
 		m_game.addNorth(North);
+		
+		
+		
+		
+		// Menu popup
+		/*m_model.options_menu = new PopupMenu();
 
-		// Menu choix automate
-		m_model.options_menu = new PopupMenu();
-
-		Font f3 = new Font(Font.SERIF, Font.BOLD, 64);
-		Font f4 = new Font(Font.MONOSPACED, Font.BOLD, 32);
+		Font f3 = new Font(Font.SERIF, Font.BOLD, 32);
+		Font f4 = new Font(Font.MONOSPACED, Font.BOLD, 16);
 
 		MenuItem m2_label1 = new MenuItem("Oui (label)");
 		m2_label1.setFont(f4);
@@ -208,6 +236,8 @@ public class Controller extends GameController implements ActionListener {
 		m_model.options_menu.setEnabled(true);
 
 		m_view.add(m_model.options_menu);
+		
+		m_model.options_menu.show(m_view, 0, 0);*/
 
 	}
 
@@ -218,7 +248,7 @@ public class Controller extends GameController implements ActionListener {
 			Options.begin = true;
 			m_model.starting_menu.setVisible(false);
 		} else if (s == m1_button2) {
-			m_model.options_menu.show(m_view, 0, 0);
+			m1_automata_panel.setVisible(!m1_automata_panel.isVisible());
 		} else if (s == m1_button3) {
 			System.exit(0);
 		} else if (s == m2_button1) {

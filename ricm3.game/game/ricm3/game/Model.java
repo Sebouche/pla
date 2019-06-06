@@ -43,8 +43,8 @@ public class Model extends GameModel {
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	List<IAutomaton> m_automatons;
 	JPanel starting_menu;
-	PopupMenu options_menu;
-
+	JPanel options_menu;
+	
 	public Model() {
 		Ast arbre;
 			try {
