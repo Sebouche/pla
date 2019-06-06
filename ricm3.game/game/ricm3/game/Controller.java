@@ -143,11 +143,11 @@ public class Controller extends GameController implements ActionListener {
 		// Menu de démarrage
 		JPanel North = new JPanel();
 		North.setLayout(new FlowLayout(FlowLayout.CENTER));
-		North.setBackground(Color.WHITE);
+		North.setBackground(m_view.m_background);
 
 		m_model.starting_menu = new JPanel();
 		m_model.starting_menu.setLayout(new BoxLayout(m_model.starting_menu, BoxLayout.Y_AXIS));
-		m_model.starting_menu.setBackground(Color.WHITE);
+		m_model.starting_menu.setBackground(m_view.m_background);
 
 		Font f1 = new Font(Font.SERIF, Font.BOLD, 64);
 		Font f2 = new Font(Font.MONOSPACED, Font.BOLD, 32);
