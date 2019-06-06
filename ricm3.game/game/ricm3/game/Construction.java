@@ -1,8 +1,10 @@
 package ricm3.game;
 
-public class Construction extends Ally{
+import java.awt.image.BufferedImage;
 
-	public Construction(Model model,int x,int y,int hp) {
-		super(model,x,y,hp);
+public class Construction extends Ally {
+
+	public Construction(Model model, int x, int y, int hp, BufferedImage[] sprites) {
+		super(model, x, y, hp, sprites);
 	}
 }

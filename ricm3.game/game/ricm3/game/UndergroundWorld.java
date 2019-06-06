@@ -6,46 +6,56 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
-
-public class UndergroundWorld extends World{
+public class UndergroundWorld extends World {
 
 	Player m_player;
-	LinkedList<GameEntity> m_entity;
 	GameEntity[][] m_grid;
-	Random m_rand=new Random();
-	
-	
+	Random m_rand = new Random();
+
 	public UndergroundWorld(Model model) {
 		super(model);
-		m_entity=new LinkedList<GameEntity>();
-		m_grid=new GameEntity[20][60];
+		m_grid = new GameEntity[20][60];
+		generate_level();
 	}
-	
+
 	void generate_level() {
 		int randint;
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 60; j++) {
-				//m_grid[i][j] = new BackBlock(m_model,i*Options.Entity_size,j,0);
-				m_grid[i][j]= null;
+				m_grid[i][j] = null;
 			}
 		}
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 60; j++) {
-				if (m_grid[i][j] instanceof FrontBlock) {
+				if (m_grid[i][j] == null) {
 					randint = m_rand.nextInt(1001);
 					if (randint >= 0 && randint < 900) {
-						m_grid[i][j] = null;
+						Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
+								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"));
+						b.set_idsprite(0);
+						m_grid[i][j] = b;
 					}
 					if (randint >= 900 && randint < 950) {
-						m_grid[i][j] = null;
-						for (int k = -1; k <= 1; k ++) {
+						Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
+								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"));
+						b.set_idsprite(3);
+						m_grid[i][j] = b;
+						for (int k = -1; k <= 1; k++) {
 							int randint2 = m_rand.nextInt(10);
 							if (randint2 <= 3 && i + k >= 0 && i + k < 20) {
-								m_grid[i + k][j] = null;
+								b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
+										(int) ((i + k) * Options.Entity_size * Options.Scale), 300,
+										m_model.m_sprites.get("block"));
+								b.set_idsprite(3);
+								m_grid[i][j] = b;
 							}
 							randint2 = m_rand.nextInt(10);
 							if (randint2 <= 3 && j + k >= 0 && j + k < 60) {
-								m_grid[i][j+k] = null;
+								b = new Block(m_model, (int) ((j + k) * Options.Entity_size * Options.Scale),
+										(int) (i * Options.Entity_size * Options.Scale), 300,
+										m_model.m_sprites.get("block"));
+								b.set_idsprite(3);
+								m_grid[i][j] = b;
 							}
 						}
 					}
@@ -53,39 +63,60 @@ public class UndergroundWorld extends World{
 						m_grid[i][j] = null;
 					}
 					if (randint >= 999) {
-						m_grid[i][j] = null;
+						m_grid[i][j] = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
+								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("grassbg"));
 					}
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void step() {
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 60; j++) {
-				m_grid[i][j].step();
+		int distance = 10;
+		int pos_x = (int) (m_model.m_player.m_x / (Options.Entity_size * Options.Scale));
+		int pos_y = (int) (m_model.m_player.m_y / (Options.Entity_size * Options.Scale));
+		for (int i = -distance; i <= distance; i++) {
+			for (int j = -distance; j <= distance; j++) {
+				if (m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)] != null) {
+					m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].step();
+				}
 			}
 		}
-		Iterator<GameEntity> iter=m_entity.iterator();
+		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;
-		while(iter.hasNext()) {
-			E=iter.next();
+		while (iter.hasNext()) {
+			E = iter.next();
 			E.step();
 		}
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 60; j++) {
-				//Graphics g_child = g.create(j * Options.Entity_size, i * Options.Entity_size, Options.Entity_size,
-				//		Options.Entity_size);
-				//m_grid[i][j].paint(g_child);
-				//g_child.dispose();
+		int distance = 10;
+		int pos_x = (int) (m_model.m_player.m_x / (Options.Entity_size * Options.Scale));
+		int pos_y = (int) (m_model.m_player.m_y / (Options.Entity_size * Options.Scale));
+		for (int i = -distance; i <= distance; i++) {
+			for (int j = -distance; j <= distance; j++) {
+				if (m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)] != null) {
+					Graphics g_child = g.create(
+							pos_x+(int)(j*(Options.Entity_size * Options.Scale)),
+							m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].m_y,
+							(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
+					m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].paint(g_child);
+					g_child.dispose();
+				}
 			}
 		}
+		Iterator<GameEntity> iter = m_entities.iterator();
+		GameEntity E;
+		while (iter.hasNext()) {
+			E = iter.next();
+			Graphics g_child = g.create(E.m_x, E.m_y, (int) (Options.Entity_size * Options.Scale),
+					(int) (Options.Entity_size * Options.Scale));
+			E.paint(g_child);
+			g_child.dispose();
+		}
 	}
+
 }
-
-
