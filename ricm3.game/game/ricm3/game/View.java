@@ -59,16 +59,19 @@ public class View extends GameView {
 	protected void _paint(Graphics g) {
 		computeFPS();
 
-		// erase background
-		g.setColor(m_background);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		
-		
+		for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
+			for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
+				g.drawImage(m_model.m_sprites.get("grassbg")[0], (int) (i * Options.Entity_size * Options.Scale),
+						(int) (j * Options.Entity_size * Options.Scale), (int) Options.Scale * Options.Entity_size,
+						(int) Options.Scale * Options.Entity_size, null);
+
+			}
+		}
 		Graphics g_child = g.create(0, 0, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);
 		g_child.dispose();
 		g_child = g.create(m_model.m_player.m_x, m_model.m_player.m_y, Options.Entity_size, Options.Entity_size);
-		//m_model.m_player.paint(g_child);
+		// m_model.m_player.paint(g_child);
 		g_child.dispose();
 	}
 }

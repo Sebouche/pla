@@ -54,10 +54,10 @@ public class Model extends GameModel {
 				e.printStackTrace();
 			}
 		loadSprites();
-		m_surfaceworld = new SurfaceWorld(this);
+		m_surfaceworld = new SurfaceWorld(10,this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
-		m_player = new Player(this, 0, 0, 9999);
+		m_player = new Player(this, 0, 0, 9999,m_sprites.get("scientist"));
 		m_camera = new Camera(this, m_player);
 	}
 
