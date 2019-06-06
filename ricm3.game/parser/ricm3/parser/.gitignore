@@ -1,6 +1,7 @@
-/MaNouvGrammaireConstants.java
-/MaNouvGrammaireTokenManager.java
 /ParseException.java
-/SimpleCharStream.java
-/Token.java
+/AutomataParserTokenManager.java
 /TokenMgrError.java
+/Token.java
+/AutomataParser.java
+/AutomataParserConstants.java
+/SimpleCharStream.java
