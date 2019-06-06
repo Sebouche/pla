@@ -25,12 +25,10 @@ public class SurfaceWorld extends World {
 		}
 	}
 
-	List<GameEntity> entities;
 	List<ChunkList> chunklists;
 
 	public SurfaceWorld(int radius, Model m) {
 		super(m);
-		entities = new LinkedList<GameEntity>();
 		chunklists = new LinkedList<ChunkList>();
 		add(new Chunk(this, 0, 0, 2));
 		Random r = new Random();
@@ -96,7 +94,7 @@ public class SurfaceWorld extends World {
 			super(c.world.m_model, x, y, 1);
 			m_c = c;
 			m_sprites = m_model.m_sprites.get("Spawner");
-			c.world.entities.add(this);
+			c.world.m_entities.add(this);
 		}
 
 		@Override
@@ -129,7 +127,7 @@ public class SurfaceWorld extends World {
 					break;
 				}
 				if (e != null) {
-					entities.add(e);
+					m_entities.add(e);
 				}
 			}
 			return true;

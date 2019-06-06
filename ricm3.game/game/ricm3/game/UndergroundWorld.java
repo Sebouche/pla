@@ -10,14 +10,12 @@ import java.util.Random;
 public class UndergroundWorld extends World{
 
 	Player m_player;
-	LinkedList<GameEntity> m_entity;
 	GameEntity[][] m_grid;
 	Random m_rand=new Random();
 	
 	
 	public UndergroundWorld(Model model) {
 		super(model);
-		m_entity=new LinkedList<GameEntity>();
 		m_grid=new GameEntity[20][60];
 	}
 	
@@ -67,7 +65,7 @@ public class UndergroundWorld extends World{
 				m_grid[i][j].step();
 			}
 		}
-		Iterator<GameEntity> iter=m_entity.iterator();
+		Iterator<GameEntity> iter=m_entities.iterator();
 		GameEntity E;
 		while(iter.hasNext()) {
 			E=iter.next();

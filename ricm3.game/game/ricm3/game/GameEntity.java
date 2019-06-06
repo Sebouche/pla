@@ -4,14 +4,13 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-import ricm3.interpreter.Direction;
-import ricm3.interpreter.Keys;
+import ricm3.interpreter.*;
 
 public class GameEntity {
 
 	int m_x, m_y;
 	BufferedImage[] m_sprites;
-	Model m_model;
+	public Model m_model;
 	// Automate m_automate;
 	// State m_state;
 	// m_sound;
@@ -19,6 +18,7 @@ public class GameEntity {
 	int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
+	Type m_type;
 	LinkedList<Keys> m_keys;
 
 	public GameEntity(Model model, int x, int y, int hp) {
@@ -30,6 +30,14 @@ public class GameEntity {
 	}
 	
 	///////////////////////////
+	
+	public int x() {
+		return this.m_x;
+	}
+	
+	public int y() {
+		return this.m_y;
+	}
 	
 	public int hps() {
 		return this.m_hp;
@@ -43,8 +51,16 @@ public class GameEntity {
 		return this.m_dir;
 	}
 	
+	public Type type() {
+		return this.m_type;
+	}
+	
 	public LinkedList<Keys> keys() {
 		return this.m_keys;
+	}
+	
+	public LinkedList<GameEntity> entities(){
+		return this.m_model.m_currentworld.m_entities;
 	}
 
 	///////////////////////////
