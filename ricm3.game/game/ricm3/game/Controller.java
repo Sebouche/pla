@@ -64,7 +64,7 @@ public class Controller extends GameController implements ActionListener {
 	JPanel m1_automata_panel;
 	JLabel m1_title;
 	JButton Non, m1_button1, m1_button2, m1_button3;
-	JComboBox m1_combo1;
+	JComboBox<String> m1_combo1;
 	MenuItem m2_button1;
 
 	public Controller(Model model, View view) {
@@ -150,7 +150,7 @@ public class Controller extends GameController implements ActionListener {
 
 		m_model.starting_menu = new JPanel();
 		m_model.starting_menu.setLayout(new BoxLayout(m_model.starting_menu, BoxLayout.Y_AXIS));
-		m_model.starting_menu.setBackground(m_view.m_background);
+		m_model.starting_menu.setOpaque(false);
 
 		Font f1 = new Font(Font.SERIF, Font.BOLD, 64);
 		Font f2 = new Font(Font.MONOSPACED, Font.BOLD, 32);
@@ -177,7 +177,7 @@ public class Controller extends GameController implements ActionListener {
 
 		JPanel m1_options_panel = new JPanel();
 		m1_options_panel.setLayout(new FlowLayout());
-		m1_options_panel.setBackground(m_view.m_background);
+		m1_options_panel.setOpaque(false);
 		m1_button2 = new JButton("Options");
 		m1_button2.setFont(f2);
 		m1_button2.addActionListener(this);
@@ -186,14 +186,14 @@ public class Controller extends GameController implements ActionListener {
 		
 		m1_automata_panel = new JPanel();
 		m1_automata_panel.setLayout(new BoxLayout(m1_automata_panel, BoxLayout.Y_AXIS));
-		m1_automata_panel.setBackground(m_view.m_background);
+		m1_automata_panel.setOpaque(false);
 		
 		JLabel choose_your_automaton = new JLabel("Choix de l'automate du joueur");
 		choose_your_automaton.setFont(f3);
 		m1_automata_panel.add(choose_your_automaton);
 		
 		String[] automata = { "Bat", "Dog", "Otto", "Rabbit", "Mouse" };
-		m1_combo1 = new JComboBox(automata);
+		m1_combo1 = new JComboBox<String>(automata);
 		m1_combo1.setSelectedIndex(4);
 		m1_combo1.addActionListener(this);
 		m1_automata_panel.add(m1_combo1);
@@ -210,9 +210,9 @@ public class Controller extends GameController implements ActionListener {
 		m1_button3.setAlignmentX(m_model.starting_menu.CENTER_ALIGNMENT);
 		m_model.starting_menu.add(m1_button3);
 
+		
 		North.add(m_model.starting_menu);
 		m_game.addNorth(North);
-		
 		
 		
 		
@@ -249,6 +249,10 @@ public class Controller extends GameController implements ActionListener {
 			m_model.starting_menu.setVisible(false);
 		} else if (s == m1_button2) {
 			m1_automata_panel.setVisible(!m1_automata_panel.isVisible());
+		} else if (s == m1_combo1) {
+			JComboBox<String> cb = (JComboBox<String>) s;
+			String automaton = (String) cb.getSelectedItem();
+			System.out.println(automaton);
 		} else if (s == m1_button3) {
 			System.exit(0);
 		} else if (s == m2_button1) {
