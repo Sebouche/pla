@@ -68,12 +68,28 @@ public class View extends GameView {
 
 				}
 			}
+		} else {
+			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
+				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
+					if (j <= 3) {
+						g.drawImage(m_model.m_sprites.get("block")[5], (int) (i * Options.Entity_size * Options.Scale),
+								(int) (j * Options.Entity_size * Options.Scale),
+								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
+								null);
+					} else {
+						g.drawImage(m_model.m_sprites.get("dirtbg")[0], (int) (i * Options.Entity_size * Options.Scale),
+								(int) (j * Options.Entity_size * Options.Scale),
+								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
+								null);
+					}
+				}
+			}
 		}
 
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
-		int width = getWidth()-(int)(Options.Entity_size*Options.Scale);
-		int height = getHeight()-(int)(Options.Entity_size*Options.Scale);
+		int width = getWidth() - (int) (Options.Entity_size * Options.Scale);
+		int height = getHeight() - (int) (Options.Entity_size * Options.Scale);
 		Graphics g_child = g.create(width / 2 - cam_x, height / 2 - cam_y, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);
 		g_child.dispose();

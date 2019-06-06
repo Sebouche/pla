@@ -25,15 +25,13 @@ public class SurfaceWorld extends World {
 		}
 	}
 
-	List<GameEntity> entities;
 	List<ChunkList> chunklists;
 
 	public SurfaceWorld(int radius, Model m) {
 		super(m);
-		entities = new LinkedList<GameEntity>();
 		chunklists = new LinkedList<ChunkList>();
 		add(new Chunk(this, 0, 0, 2));
-		entities.add(new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house")));
+		m_entities.add(new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house")));
 		Random r = new Random();
 		int y;
 		int x;
@@ -96,7 +94,7 @@ public class SurfaceWorld extends World {
 		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites) {
 			super(c.world.m_model, x, y, 100, sprites);
 			m_c = c;
-			c.world.entities.add(this);
+			c.world.m_entities.add(this);
 		}
 
 		@Override
@@ -129,7 +127,7 @@ public class SurfaceWorld extends World {
 					break;
 				}
 				if (e != null) {
-					entities.add(e);
+					m_entities.add(e);
 				}
 			}
 		}
@@ -170,7 +168,7 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void paint(Graphics g) {
-		Iterator<GameEntity> iter = entities.iterator();
+		Iterator<GameEntity> iter = m_entities.iterator();
 		while (iter.hasNext()) {
 			GameEntity e = iter.next();
 			Graphics g_child;
