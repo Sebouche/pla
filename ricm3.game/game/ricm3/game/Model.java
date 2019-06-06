@@ -96,7 +96,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/block.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("block", spritename, 3, 3);
+			splitSprite("block", spritename, 4, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
