@@ -16,6 +16,7 @@ public class GameEntity {
 	int m_hp;
 	int m_idsprite;
 	int m_dmg;
+	Direction m_dir;
 
 	public GameEntity(Model model, int x, int y, int hp) {
 		m_model = model;
@@ -32,6 +33,10 @@ public class GameEntity {
 
 	public int dmgs() {
 		return this.m_dmg;
+	}
+	
+	public Direction dir() {
+		return this.m_dir;
 	}
 
 	///////////////////////////

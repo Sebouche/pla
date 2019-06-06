@@ -11,7 +11,8 @@ public class Closest extends ICondition{
 		this.dir = Direction.strToDir(dir);
 	}
 	
-//	boolean eval(GameEntity e) {
+//	@Override	
+//	public boolean eval(GameEntity e) {
 //	return ;
 //	}
 }

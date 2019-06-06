@@ -8,6 +8,7 @@ public class Egg extends IAction{
 		
 	}
 	
+	@Override
 	public boolean exec(GameEntity e) {
 		return e.egg();
 	}

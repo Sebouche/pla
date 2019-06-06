@@ -9,7 +9,8 @@ public class MyDir extends ICondition {
 		this.direction = Direction.strToDir(dir);
 	}
 
-	boolean eval(GameEntity e) {
-		return true;
+	@Override
+	public boolean eval(GameEntity e) {
+		return e.dir() == direction;
 	}
 }

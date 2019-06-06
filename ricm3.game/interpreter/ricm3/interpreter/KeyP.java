@@ -10,7 +10,8 @@ public class KeyP extends ICondition{
 		this.k = k;
 	}
 	
-/*		boolean eval(GameEntity e) {
+//	@Override
+/*	public boolean eval(GameEntity e) {
 		
 	}*/
 }

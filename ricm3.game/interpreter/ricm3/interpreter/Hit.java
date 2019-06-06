@@ -21,7 +21,8 @@ public class Hit extends IAction {
 		this.power = 1;
 	}
 
-	boolean exec(GameEntity e) {
+	@Override
+	public boolean exec(GameEntity e) {
 		return e.hit(this.direction, max(e.dmgs(), this.power));
 	}
 

@@ -1,7 +1,6 @@
 package ricm3.interpreter;
 
 import ricm3.game.GameEntity;
-import ricm3.parser.Ast.*;
 
 public class ICondition extends IExpression {
 
@@ -15,7 +14,7 @@ public class ICondition extends IExpression {
 		op = null;
 	}
 
-	boolean eval(GameEntity e) {
+	public boolean eval(GameEntity e) {
 		if (op == null) {
 			return expr1.eval(e);
 		}

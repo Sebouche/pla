@@ -19,7 +19,8 @@ public class Turn extends IAction {
 		}
 	}
 	
-	boolean exec(GameEntity e) {
+	@Override
+	public boolean exec(GameEntity e) {
 		return e.turn(dir);
 	}
 }

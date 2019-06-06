@@ -19,7 +19,8 @@ public class Cell extends ICondition {
 		this.distance = 1;
 	}
 
-//	boolean eval(GameEntity e) { 
+//	@Override
+//	public boolean eval(GameEntity e) { 
 //		return is_Kind(this.kind, this.direction, this.distance, e.position, e.map) ;
 //	}
 }
