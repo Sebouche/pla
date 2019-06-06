@@ -4,13 +4,13 @@ public class Hit extends IAction {
 	Direction direction;
 	Integer power;
 
-	public Hit(Direction direction, Integer power) {
-		this.direction = direction;
+	public Hit(String direction, Integer power) {
+		this.direction = Direction.strToDir(direction);
 		this.power = power;
 	}
 
-	public Hit(Direction direction) {
-		this.direction = direction;
+	public Hit(String direction) {
+		this.direction = Direction.strToDir(direction);
 		this.power = 1;
 	}
 
