@@ -1,5 +1,7 @@
 package ricm3.interpreter;
 
+import ricm3.game.GameEntity;
+
 public class Throw extends IAction {
 
 	Direction dir;
@@ -12,4 +14,8 @@ public class Throw extends IAction {
 		this.dir = Direction.strToDir(str);
 	}
 
+	boolean exec(GameEntity e) {
+		return e.Throw(dir);
+	}
+	
 }

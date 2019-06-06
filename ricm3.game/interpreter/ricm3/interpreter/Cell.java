@@ -1,19 +1,21 @@
 package ricm3.interpreter;
 
+import ricm3.game.GameEntity;
+
 public class Cell extends ICondition {
 	Direction direction;
-	String kind;
+	Type kind;
 	int distance;
 
 	public Cell(String direction, String kind, int distance) {
 		this.direction = Direction.strToDir(direction);
-		this.kind = kind;
+		this.kind = Type.strToType(kind);
 		this.distance = distance;
 	}
 
 	public Cell(String string, String kind) {
 		this.direction = Direction.strToDir(string);
-		this.kind = kind;
+		this.kind = Type.strToType(kind);
 		this.distance = 1;
 	}
 
