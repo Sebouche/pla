@@ -31,6 +31,7 @@ public class SurfaceWorld extends World {
 		super(m);
 		chunklists = new LinkedList<ChunkList>();
 		add(new Chunk(this, 0, 0, 2));
+		m_entities.add(new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house")));
 		Random r = new Random();
 		int y;
 		int x;
@@ -90,10 +91,9 @@ public class SurfaceWorld extends World {
 	private class Spawner extends GameEntity {
 		Chunk m_c;
 
-		public Spawner(int x, int y, Chunk c) {
-			super(c.world.m_model, x, y, 1);
+		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites) {
+			super(c.world.m_model, x, y, 100, sprites);
 			m_c = c;
-			m_sprites = m_model.m_sprites.get("Spawner");
 			c.world.m_entities.add(this);
 		}
 
@@ -111,16 +111,16 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y);
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"));
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y);
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"));
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y);
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"));
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y);
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"));
 					break;
 				default:
 					e = null;
@@ -143,17 +143,19 @@ public class SurfaceWorld extends World {
 
 		public Chunk(SurfaceWorld w, int x, int y, int t) {
 			type = t;
+			m_x = x;
+			m_y = y;
+			world = w;
+			sprite = world.m_model.m_sprites.get("grassbg")[0];
 			if (type < 0) {
 				Random r = new Random();
 				type = (((r.nextInt()) % 10) + 1) / 10;
 				if (type == 1) {
-					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32, (r.nextInt() % (m_size - 64)) + 32, this);
+					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32+m_x*2048, (r.nextInt() % (m_size - 64)) + 32+m_y*2048, this,
+							m_model.m_sprites.get("spawner"));
 				}
 			}
-			m_x = x;
-			m_y = y;
-			world = w;
-			sprite = world.m_model.m_sprites.get("Chunk")[0];
+
 		}
 	}
 
@@ -167,5 +169,19 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void paint(Graphics g) {
+		Iterator<GameEntity> iter = m_entities.iterator();
+		while (iter.hasNext()) {
+			GameEntity e = iter.next();
+			Graphics g_child;
+			if (e instanceof House) {
+				g_child = g.create(e.m_x, e.m_y, (int) (Options.Entity_size * Options.Scale) * 9,
+						(int) (Options.Entity_size * Options.Scale) * 9);
+			} else {
+				g_child = g.create(e.m_x, e.m_y, (int) (Options.Entity_size * Options.Scale),
+						(int) (Options.Entity_size * Options.Scale));
+			}
+			e.paint(g_child);
+			g_child.dispose();
+		}
 	}
 }
