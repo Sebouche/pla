@@ -7,7 +7,7 @@ public class KeyP extends ICondition{
 	Keys k;
 	
 	public KeyP(String k){
-//		this.k = strToKeys(k);
+		this.k = Keys.strToKeys(k);
 	}
 	
 	@Override
