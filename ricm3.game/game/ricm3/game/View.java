@@ -19,7 +19,6 @@ package ricm3.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Iterator;
 
 import edu.ricm3.game.GameView;
 
