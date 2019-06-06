@@ -2,6 +2,7 @@ package ricm3.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.Keys;
@@ -18,13 +19,14 @@ public class GameEntity {
 	int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
-	Keys m_key;
+	LinkedList<Keys> m_keys;
 
 	public GameEntity(Model model, int x, int y, int hp) {
 		m_model = model;
 		m_x = x;
 		m_y = y;
 		m_hp = hp;
+		m_keys = new LinkedList<Keys>();
 	}
 	
 	///////////////////////////
@@ -41,8 +43,8 @@ public class GameEntity {
 		return this.m_dir;
 	}
 	
-	public Keys keys() {
-		return this.m_key;
+	public LinkedList<Keys> keys() {
+		return this.m_keys;
 	}
 
 	///////////////////////////
