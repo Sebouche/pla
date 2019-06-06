@@ -14,11 +14,13 @@ public class GameEntity {
 	int m_hp;
 	int m_idsprite;
 
-	public GameEntity(Model model, int x, int y, int hp) {
+	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites) {
 		m_model = model;
 		m_x = x;
 		m_y = y;
 		m_hp = hp;
+		m_idsprite=0;
+		m_sprites=sprites;
 	}
 
 	public void pop() {
@@ -40,8 +42,8 @@ public class GameEntity {
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(m_sprites[m_idsprite], 0, 0, null);
-	}
+		g.drawImage(m_sprites[m_idsprite], 0, 0, (int) Options.Scale * Options.Entity_size,
+				(int) Options.Scale * Options.Entity_size, null);	}
 
 	//////////////////////
 
