@@ -136,7 +136,7 @@ public class GameEntity {
 
 	//////////////////////
 
-	double distance(GameEntity e) {
+	public double distance(GameEntity e) {
 		return Math.sqrt((m_x - e.m_x) * (m_x - e.m_x) + (m_y - e.m_y) * (m_y - e.m_y));
 	}
 

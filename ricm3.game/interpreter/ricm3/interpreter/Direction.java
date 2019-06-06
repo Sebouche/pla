@@ -14,7 +14,7 @@ public enum Direction {
 			return Direction.SOUTH;
 		case ("E"):
 			return Direction.EAST;
-		case ("W"):
+		case ("O"):
 			return Direction.WEST;
 		case ("F"):
 			return Direction.FRONT;
