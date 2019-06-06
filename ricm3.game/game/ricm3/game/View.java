@@ -69,9 +69,10 @@ public class View extends GameView {
 				}
 			}
 		} else {
+			int profondeur=(int) (m_model.m_player.m_y/(Options.Entity_size * Options.Scale));
 			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
 				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
-					if (j <= 3) {
+					if (j-profondeur<=0) {
 						g.drawImage(m_model.m_sprites.get("block")[5], (int) (i * Options.Entity_size * Options.Scale),
 								(int) (j * Options.Entity_size * Options.Scale),
 								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
@@ -90,9 +91,11 @@ public class View extends GameView {
 		int cam_y = m_model.m_camera.m_watched.m_y;
 		int width = getWidth() - (int) (Options.Entity_size * Options.Scale);
 		int height = getHeight() - (int) (Options.Entity_size * Options.Scale);
+		
 		Graphics g_child = g.create(width / 2 - cam_x, height / 2 - cam_y, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);
 		g_child.dispose();
+
 		g_child = g.create(width / 2, height / 2, (int) (Options.Entity_size * Options.Scale),
 				(int) (Options.Entity_size * Options.Scale));
 		m_model.m_camera.m_watched.paint(g_child);

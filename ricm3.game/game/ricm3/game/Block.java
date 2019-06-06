@@ -15,4 +15,8 @@ public class Block extends GameEntity {
 		g.drawImage(m_sprites[m_idsprite], 0, 0, (int) Options.Scale * Options.Entity_size,
 				(int) Options.Scale * Options.Entity_size, null);
 	}
+	
+	public void set_idsprite(int id) {
+		m_idsprite=id;
+	}
 }

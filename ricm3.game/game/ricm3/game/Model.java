@@ -58,7 +58,7 @@ public class Model extends GameModel {
 		m_undergroundworld = new UndergroundWorld(this);
 		//m_currentworld = m_surfaceworld;
 		m_currentworld = m_undergroundworld;
-		m_player = new Player(this, 0, 0, 9999, m_sprites.get("scientist"));
+		m_player = new Player(this, 128, 128, 9999, m_sprites.get("scientist"));
 		m_camera = new Camera(this, m_player);
 	}
 
