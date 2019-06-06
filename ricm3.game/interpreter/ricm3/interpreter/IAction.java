@@ -4,7 +4,9 @@ import ricm3.game.GameEntity;
 
 public class IAction extends IExpression{
 	
-	IAction(){}
+	public IAction(){
+		super();
+	}
 
 	public boolean exec(GameEntity e) {
 		return true;
