@@ -33,7 +33,7 @@ public class View extends GameView {
 	int m_fps;
 	Model m_model;
 	// Controller m_ctr;
-
+	
 	public View(Model m) {
 		m_model = m;
 		// m_ctr = c;
