@@ -41,20 +41,18 @@ public class Model extends GameModel {
 	World m_currentworld;
 	Camera m_camera;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
-	LinkedList<IAutomaton> m_automatons;
+	List<IAutomaton> m_automatons;
 	JPanel starting_menu;
 	PopupMenu options_menu;
 
 	public Model() {
-		LinkedList<Ast> test=new LinkedList<Ast>();
-		test.add(null);
 		Ast arbre;
-		try {
-			arbre = AutomataParser.from_file("automata.txt");
-			m_automatons=(LinkedList<IAutomaton>) arbre.make();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			try {
+				arbre = AutomataParser.from_file("automata.txt");
+				m_automatons=(List<IAutomaton>)arbre.make();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		loadSprites();
 		m_surfaceworld = new SurfaceWorld(this);
 		m_undergroundworld = new UndergroundWorld(this);
