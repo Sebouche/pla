@@ -94,7 +94,7 @@ public class Model extends GameModel {
 		File imageFile;
 
 		/*
-		 * // Recopier ces ligne en remplacant par le sprite a importer imageFile = new
+		 * // Recopier ces lignes en remplacant par le sprite a importer imageFile = new
 		 * File("game/sprites/.png"); try { BufferedImage m_spritename =
 		 * ImageIO.read(imageFile); splitSprite("name",m_spritename,rows,cols); } catch
 		 * (IOException ex) { ex.printStackTrace(); System.exit(-1); }
