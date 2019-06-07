@@ -19,14 +19,14 @@ public class TestsExpressions {
 	}
 	
 	public static void testActions() {
-		GameEntity e = new GameEntity(null, 0, 0, 0, null);
+		GameEntity e = new GameEntity(null, 0, 0, 0, null,null);
 		IAction act = new Pop();
 		act.act = new Wizz();
 		ensure(act.exec(e));
 	}
 	
 	public static void testConditionsTrueMyDirGotPower() {
-		GameEntity e = new GameEntity(null, 0, 0, 0, null);
+		GameEntity e = new GameEntity(null, 0, 0, 0, null,null);
 		ICondition cond = new ICondition();
 		cond.op = new IOperator("&&");
 		cond.expr1 = new True();
@@ -49,7 +49,7 @@ public class TestsExpressions {
 	}
 	
 	public static void testConditionKey() {
-		GameEntity e = new GameEntity(null, 0, 0, 0, null);
+		GameEntity e = new GameEntity(null, 0, 0, 0, null,null);
 		ICondition cond = new KeyP("b");
 		ICondition cond2 = new KeyP("a");
 		ensure(!cond.eval(e) && cond2.eval(e));

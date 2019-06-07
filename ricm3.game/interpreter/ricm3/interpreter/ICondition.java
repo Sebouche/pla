@@ -16,6 +16,8 @@ public class ICondition extends IExpression {
 	
 	public ICondition(ICondition condition) {
 		super(condition);
+		expr1=condition.expr1;
+		expr2=condition.expr2;
 	}
 
 	boolean isInside(GameEntity e, int x, int y) {

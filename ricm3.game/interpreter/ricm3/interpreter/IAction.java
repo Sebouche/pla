@@ -13,6 +13,7 @@ public class IAction extends IExpression {
 	
 	public IAction(IAction action) {
 		super(action);
+		act=action.act;
 	}
 
 	@Override

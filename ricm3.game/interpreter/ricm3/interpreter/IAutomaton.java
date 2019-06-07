@@ -38,7 +38,7 @@ public class IAutomaton {
 		Iterator<IBehaviour> iter=behaviours.iterator();
 		while(iter.hasNext()) {
 			IBehaviour b=iter.next();
-			if(b.source==current) {
+			if(b.source.name.equals(current.name)) {
 					IState target=b.step(e);
 					if(target!=null) {
 						current=target;
