@@ -6,7 +6,7 @@ import ricm3.interpreter.IAutomaton;
 
 public class Enemy extends MovingEntity{
 
-	public Enemy(Model model,int x,int y,int hp,BufferedImage[] sprites,IAutomaton automate) {
-		super(model,x,y,hp,sprites,automate);
+	public Enemy(Model model,int x,int y,int hp,BufferedImage[] sprites,IAutomaton automate,World originWorld) {
+		super(model,x,y,hp,sprites,automate,originWorld);
 	}
 }

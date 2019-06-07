@@ -1,6 +1,7 @@
 package ricm3.game;
 
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
@@ -8,10 +9,9 @@ import ricm3.interpreter.IAutomaton;
 public class MovingEntity extends GameEntity {
 
 	int m_dx, m_dy;
-	int m_damage;
 
-	public MovingEntity(Model model, int x, int y, int hp, BufferedImage[] sprites) {
-		super(model, x, y, hp, sprites);
+	public MovingEntity(Model model,int x,int y,int hp,BufferedImage[] sprites,IAutomaton automate, World originWorld) {
+		super(model,x,y,hp,sprites,automate,originWorld);
 	}
 
 	boolean collision(GameEntity ge, int x, int y) {
@@ -21,7 +21,7 @@ public class MovingEntity extends GameEntity {
 		if (!(this.m_y + y > ge.m_y + entity_size || this.m_y + entity_size + y < ge.m_y)) { // collision
 			this.m_dy = 0;
 			coll = true;
-		} 
+		}
 		if (!(this.m_x + x > ge.m_x + entity_size || this.m_x + entity_size + x < ge.m_x)) {
 			this.m_dx = 0;
 			coll = true;
@@ -31,14 +31,18 @@ public class MovingEntity extends GameEntity {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean move(Direction dir) {
+		Iterator<GameEntity> iter = m_originWorld.m_entities.iterator();
+		GameEntity E;
+		while (iter.hasNext()) {
+			E = iter.next();
+			collision(E, m_dx, m_dy);
+		}
 		return true;
-	public MovingEntity(Model model,int x,int y,int hp,BufferedImage[] sprites,IAutomaton automate) {
-		super(model,x,y,hp,sprites,automate);
 	}
-	
+
 	@Override
 	public void step() {
 	}

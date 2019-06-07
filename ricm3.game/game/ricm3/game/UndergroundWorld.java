@@ -16,7 +16,7 @@ public class UndergroundWorld extends World {
 	public UndergroundWorld(Model model) {
 		super(model);
 		m_grid = new GameEntity[20][60];
-		m_player = new Player(m_model, 10, 10, 9999, m_model.m_sprites.get("scientist"));
+		m_player = new Player(m_model, 10, 10, 9999, m_model.m_sprites.get("scientist"), null, this);
 		generate_level();
 		m_bgmfile = new File("sprites/bgm_underground.wav");
 	}
@@ -34,13 +34,13 @@ public class UndergroundWorld extends World {
 					randint = m_rand.nextInt(1001);
 					if (randint >= 0 && randint < 900) {
 						Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)));
+								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
 						b.set_idsprite(0);
 						m_grid[i][j] = b;
 					}
 					if (randint >= 900 && randint < 950) {
 						Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)));
+								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)),m_model.m_undergroundworld);
 						b.set_idsprite(5);
 						m_grid[i][j] = b;
 						for (int k = -1; k <= 1; k++) {
@@ -48,7 +48,7 @@ public class UndergroundWorld extends World {
 							if (randint2 <= 3 && i + k >= 0 && i + k < 20) {
 								b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 										(int) ((i + k) * Options.Entity_size * Options.Scale), 300,
-										m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)));
+										m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)),m_model.m_undergroundworld);
 								b.set_idsprite(5);
 								m_grid[i][j] = b;
 							}
@@ -56,7 +56,7 @@ public class UndergroundWorld extends World {
 							if (randint2 <= 3 && j + k >= 0 && j + k < 60) {
 								b = new Block(m_model, (int) ((j + k) * Options.Entity_size * Options.Scale),
 										(int) (i * Options.Entity_size * Options.Scale), 300,
-										m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)));
+										m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)),m_model.m_undergroundworld);
 								b.set_idsprite(5);
 								m_grid[i][j] = b;
 							}
@@ -67,7 +67,7 @@ public class UndergroundWorld extends World {
 					}
 					if (randint >= 999) {
 						m_grid[i][j] = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("grassbg"),new IAutomaton(m_model.m_automatons.get(0)));
+								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("grassbg"),new IAutomaton(m_model.m_automatons.get(0)),m_model.m_undergroundworld);
 					}
 				}
 			}
