@@ -15,8 +15,8 @@ public class House extends Ally {
 		m_blocks = new LinkedList<Block>();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				Block b = new Block(m_model, (int) (x + j * Options.Entity_size * Options.Scale),
-						(int) (y + i * Options.Entity_size * Options.Scale), 0, sprites);
+				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
+						(int) (i * Options.Entity_size * Options.Scale), 0, sprites);
 				b.m_idsprite = i * 3 + j;
 				m_blocks.add(b);
 			}
