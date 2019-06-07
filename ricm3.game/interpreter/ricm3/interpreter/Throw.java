@@ -16,7 +16,9 @@ public class Throw extends IAction {
 
 	@Override
 	public boolean exec(GameEntity e) {
+		if (act != null)
+			return e.Throw(dir) && act.exec(e);
 		return e.Throw(dir);
 	}
-	
+
 }
