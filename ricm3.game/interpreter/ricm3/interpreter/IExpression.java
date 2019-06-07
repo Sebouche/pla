@@ -11,6 +11,12 @@ public class IExpression {
 		op = null;
 	}
 
+	public IExpression(IExpression expression) {
+		if (expression != null) {
+			op=expression.op;		
+		}
+	}
+
 	public boolean eval(GameEntity e) {
 		return true;
 	}

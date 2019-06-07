@@ -1,5 +1,6 @@
 package ricm3.interpreter;
 
+import ricm3.game.GameEntity;
 import ricm3.parser.Ast.Entity;
 
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
@@ -15,14 +16,22 @@ public class ITransition {
 		this.target = target ;
 	}
 	
-	boolean feasible(Entity e) {
-		// teste si la condition de la transition est satisfaite
-		return true ;
+	public ITransition(ITransition transition) {
+		this.condition=new ICondition(transition.condition);
+		this.action=new IAction(transition.action);
+		this.target=new IState(transition.target);
 	}
 	
-	IState exec(Entity e) {
+
+	boolean feasible(GameEntity e) {
+		// teste si la condition de la transition est satisfaite
+		return condition.eval(e) ;
+	}
+	
+	IState exec(GameEntity e) {
 		// execute l'action
 		// return l'état cible de la transition 
-		return null ;
+		action.exec(e);
+		return target ;
 	}
 }
