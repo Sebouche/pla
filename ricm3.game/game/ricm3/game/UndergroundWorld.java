@@ -1,6 +1,7 @@
 package ricm3.game;
 
 import java.awt.Graphics;
+import java.io.File;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -14,6 +15,7 @@ public class UndergroundWorld extends World {
 		super(model);
 		m_grid = new GameEntity[20][60];
 		generate_level();
+		m_bgmfile = new File("sprites/bgm_underground.wav");
 	}
 
 	void generate_level() {

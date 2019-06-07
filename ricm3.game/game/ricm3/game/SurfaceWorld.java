@@ -2,15 +2,16 @@ package ricm3.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.io.File;
 
 import ricm3.game.Options;
 
 public class SurfaceWorld extends World {
+
 	private class ChunkList {
 		List<Chunk> chunks;
 		int m_y;
@@ -41,6 +42,8 @@ public class SurfaceWorld extends World {
 		} while ((x == 0) && (y == 0));
 		add(new Chunk(this, x, y, 1));
 		generateChunks(0, 0, radius);
+
+		m_bgmfile = new File("sprites/bgm_surface.wav");
 	}
 
 	public void add(Chunk c) {
@@ -152,8 +155,8 @@ public class SurfaceWorld extends World {
 				Random r = new Random();
 				type = (((r.nextInt()) % 10) + 1) / 10;
 				if (type == 1) {
-					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32+m_x*2048, (r.nextInt() % (m_size - 64)) + 32+m_y*2048, this,
-							m_model.m_sprites.get("spawner"));
+					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
+							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"));
 				}
 			}
 
@@ -177,11 +180,12 @@ public class SurfaceWorld extends World {
 			GameEntity e = iter.next();
 			Graphics g_child;
 			if (e instanceof House) {
-				g_child = g.create(e.m_x-cam_x+m_model.m_width/2, e.m_y-cam_y+m_model.m_height/2, (int) (Options.Entity_size * Options.Scale) * 9,
+				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
+						(int) (Options.Entity_size * Options.Scale) * 9,
 						(int) (Options.Entity_size * Options.Scale) * 9);
 			} else {
-				g_child = g.create(e.m_x-cam_x+m_model.m_width/2, e.m_y-cam_y+m_model.m_height/2, (int) (Options.Entity_size * Options.Scale),
-						(int) (Options.Entity_size * Options.Scale));
+				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
+						(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			}
 			e.paint(g_child);
 			g_child.dispose();

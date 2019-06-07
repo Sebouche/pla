@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.media.Time;
 import javax.swing.JPanel;
 
 import edu.ricm3.game.GameModel;
@@ -60,6 +61,7 @@ public class Model extends GameModel {
 		m_camera = new Camera(this, m_player);
 		File file;
 		file = new File("sprites/menumusic.wav");
+
 		try {
 			m_bgm = new Music(file);
 			m_bgm.start();

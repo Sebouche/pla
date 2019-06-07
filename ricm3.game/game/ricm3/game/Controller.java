@@ -182,15 +182,15 @@ public class Controller extends GameController implements ActionListener {
 		m_m1_button2.addActionListener(this);
 		m_m1_button2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		m1_options_panel.add(m_m1_button2);
-		
+
 		m_m1_automata_panel = new JPanel();
 		m_m1_automata_panel.setLayout(new BoxLayout(m_m1_automata_panel, BoxLayout.Y_AXIS));
 		m_m1_automata_panel.setOpaque(false);
-		
+
 		JLabel choose_your_automaton = new JLabel("Choix de l'automate du joueur");
 		choose_your_automaton.setFont(f3);
 		m_m1_automata_panel.add(choose_your_automaton);
-		
+
 		String[] automata = { "Bat", "Dog", "Otto", "Rabbit", "Mouse" };
 		m_m1_combo1 = new JComboBox<String>(automata);
 		m_m1_combo1.setSelectedIndex(4);
@@ -209,34 +209,29 @@ public class Controller extends GameController implements ActionListener {
 		m_m1_button3.setAlignmentX(Component.CENTER_ALIGNMENT);
 		m_model.m_starting_menu.add(m_m1_button3);
 
-		
 		North.add(m_model.m_starting_menu);
 		m_game.addNorth(North);
-		
-		
-		
+
 		// Menu popup
-		/*m_model.options_menu = new PopupMenu();
-
-		Font f3 = new Font(Font.SERIF, Font.BOLD, 32);
-		Font f4 = new Font(Font.MONOSPACED, Font.BOLD, 16);
-
-		MenuItem m2_label1 = new MenuItem("Oui (label)");
-		m2_label1.setFont(f4);
-		m_model.options_menu.add(m2_label1);
-
-		m2_button1 = new MenuItem("Non (button)");
-		m2_button1.setFont(f4);
-		m2_button1.addActionListener(this);
-		m_model.options_menu.add(m2_button1);
-
-		m_model.options_menu.setLabel("Choix automate (?)");
-		m_model.options_menu.setFont(f3);
-		m_model.options_menu.setEnabled(true);
-
-		m_view.add(m_model.options_menu);
-		
-		m_model.options_menu.show(m_view, 0, 0);*/
+		/*
+		 * m_model.options_menu = new PopupMenu();
+		 * 
+		 * Font f3 = new Font(Font.SERIF, Font.BOLD, 32); Font f4 = new
+		 * Font(Font.MONOSPACED, Font.BOLD, 16);
+		 * 
+		 * MenuItem m2_label1 = new MenuItem("Oui (label)"); m2_label1.setFont(f4);
+		 * m_model.options_menu.add(m2_label1);
+		 * 
+		 * m2_button1 = new MenuItem("Non (button)"); m2_button1.setFont(f4);
+		 * m2_button1.addActionListener(this); m_model.options_menu.add(m2_button1);
+		 * 
+		 * m_model.options_menu.setLabel("Choix automate (?)");
+		 * m_model.options_menu.setFont(f3); m_model.options_menu.setEnabled(true);
+		 * 
+		 * m_view.add(m_model.options_menu);
+		 * 
+		 * m_model.options_menu.show(m_view, 0, 0);
+		 */
 
 	}
 
@@ -248,11 +243,10 @@ public class Controller extends GameController implements ActionListener {
 			m_model.m_starting_menu.setVisible(false);
 			try {
 				m_model.m_bgm.stop();
-				File file = new File("sprites/bgmusic.wav");
-				m_model.m_bgm = new Music(file);
+				m_model.m_bgm = new Music(m_model.m_currentworld.m_bgmfile);
 				m_model.m_bgm.start();
 			} catch (Exception ex) {
-				
+
 			}
 		} else if (s == m_m1_button2) {
 			m_m1_automata_panel.setVisible(!m_m1_automata_panel.isVisible());
