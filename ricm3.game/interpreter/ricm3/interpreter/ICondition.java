@@ -13,6 +13,12 @@ public class ICondition extends IExpression {
 		expr1 = null;
 		expr2 = null;
 	}
+	
+	public ICondition(ICondition condition) {
+		super(condition);
+		expr1=condition.expr1;
+		expr2=condition.expr2;
+	}
 
 	boolean isInside(GameEntity e, int x, int y) {
 		return e.x() <= x && e.x() + Options.Entity_size * Options.Scale >= x && e.y() <= y
