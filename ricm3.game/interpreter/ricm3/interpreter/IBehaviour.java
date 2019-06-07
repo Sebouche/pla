@@ -1,4 +1,5 @@
 package ricm3.interpreter;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -11,6 +12,15 @@ public class IBehaviour {
 	public IBehaviour(IState source, List<ITransition> transitions){
 		this.source = source ; 
 		this.transitions = transitions ;
+	}
+	
+	public IBehaviour(IBehaviour behaviour) {
+		this.source=new IState(behaviour.source);
+		Iterator<ITransition> iter = behaviour.transitions.iterator();
+		while (iter.hasNext()) {
+			ITransition b = iter.next();
+			this.transitions.add(new ITransition(b));
+		}
 	}
 	
 	IState step() {

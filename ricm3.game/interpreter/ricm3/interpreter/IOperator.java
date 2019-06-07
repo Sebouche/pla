@@ -16,6 +16,10 @@ public class IOperator {
 		}	
 	}
 	
+	public IOperator(IOperator operator) {
+		this.operator=operator.operator;
+	}
+	
 	public String strOp() {
 		return operator;
 	}

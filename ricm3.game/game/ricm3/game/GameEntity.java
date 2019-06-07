@@ -11,8 +11,8 @@ public class GameEntity {
 	int m_x, m_y;
 	BufferedImage[] m_sprites;
 	public Model m_model;
-	// Automate m_automate;
-	// State m_state;
+	IAutomaton m_automate;
+	IState m_state;
 	// m_sound;
 	int m_hp;
 	int m_idsprite;
@@ -134,6 +134,7 @@ public class GameEntity {
 				(int) Options.Scale * Options.Entity_size, null);	}
 
 	public void step() {
+		//m_automate.step();
 	}
 
 	//////////////////////

@@ -15,6 +15,12 @@ public class ITransition {
 		this.target = target ;
 	}
 	
+	public ITransition(ITransition transition) {
+		this.condition=new ICondition(transition.condition);
+		this.action=new IAction(transition.action);
+		this.target=new IState(transition.target);
+	}
+	
 	boolean feasible(Entity e) {
 		// teste si la condition de la transition est satisfaite
 		return true ;

@@ -152,8 +152,8 @@ public class SurfaceWorld extends World {
 				Random r = new Random();
 				type = (((r.nextInt()) % 10) + 1) / 10;
 				if (type == 1) {
-					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32+m_x*2048, (r.nextInt() % (m_size - 64)) + 32+m_y*2048, this,
-							m_model.m_sprites.get("spawner"));
+					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
+							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"));
 				}
 			}
 
@@ -166,6 +166,11 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void step() {
+		Iterator<GameEntity> iter = m_entities.iterator();
+		while (iter.hasNext()) {
+			GameEntity e = iter.next();
+			e.step();
+		}
 	}
 
 	@Override
@@ -177,11 +182,12 @@ public class SurfaceWorld extends World {
 			GameEntity e = iter.next();
 			Graphics g_child;
 			if (e instanceof House) {
-				g_child = g.create(e.m_x-cam_x+m_model.m_width/2, e.m_y-cam_y+m_model.m_height/2, (int) (Options.Entity_size * Options.Scale) * 9,
+				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
+						(int) (Options.Entity_size * Options.Scale) * 9,
 						(int) (Options.Entity_size * Options.Scale) * 9);
 			} else {
-				g_child = g.create(e.m_x-cam_x+m_model.m_width/2, e.m_y-cam_y+m_model.m_height/2, (int) (Options.Entity_size * Options.Scale),
-						(int) (Options.Entity_size * Options.Scale));
+				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
+						(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			}
 			e.paint(g_child);
 			g_child.dispose();
