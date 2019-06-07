@@ -5,15 +5,16 @@ public class IOperator {
 	String operator;
 
 	public IOperator(String op) {
-		if (op == "!") {
+		if (op.equals("!")) {
 			this.operator = op;
 		}
-		if (op == "&") {
+		else if (op.equals("&")) {
 			this.operator = "&&";
 		}
-		if (op == "/") {
+		else if (op.equals("/")) {
 			this.operator = "||";
 		}
+		else this.operator = op;
 	}
 
 	public IOperator(IOperator operator) {
