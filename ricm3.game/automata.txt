@@ -16,60 +16,71 @@ Turner1(Turn_0){
   * ()
 }
 
-Bat(1){
-	* (1):
-	| !GotPower() :()
-	| True ? Pop() :(2)
-	* (2):
-	| !GotPower() :() 
-	| Cell(F,V) | Cell(F,O) ? Move(F) :(1)
-	| Cell(F,@) ? Hit() :(1)
-	| True ? Pop() :(2)
+Bat(E1){
+	* (E1):
+	| !GotPower() ? Kamikaze :()
+	| True ? Pop() :(E2)
+	* (E2):
+	| !GotPower() ? Kamikaze :() 
+	| Cell(F,V) / Cell(F,O) ? Move(F) :(E1)
+	| Cell(F,@) ? Hit() :(E1)
+	| True ? Pop() :(E2)
 	* ()
 }
 
-Mole(1){
-	* (1): True ? Pop() :(2)
-	* (2):
-	| Cell(S,V,1) ? Move(S) :(1)
-	| Cell(F,V) ? Wizz() :(1)
-	| True ? Move(F) :(2)
+Mole(E1){
+	* (E1): True ? Pop() :(E2)
+	* (E2):
+	| Cell(S,V,1) ? Move(S) :(E1)
+	| Cell(F,V) ? Wizz() :(E1)
+	| True ? Move(F) :(E2)
 }
 
-Mouse(3){
-	* (1):
-	| !GotPower() :()
-	| Cell(F,O,1) ? Hit() :(2)
-	| Cell(F,A,1) ? Hit() :(3)
-	| True ? Egg() :(4)
-	* (2): 
-	| !GotPower() :()
-	| Cell(F,O,1) ? Hit() :(2)
-	| Cell(F,V) ? Move(F) / Egg() :(4)
-	* (3):
-	| !GotPower() :()
-	| Cell(F,@,1) ? Hit() :(3)
-	| True ? Pop() :(1)
-	* (4):
-	| !GotPower() :()
-	| Cell(F,@,1) ? Hit() :(1)
-	| !Cell(F,@,1) ? Pop() :(1)
+Mouse(E3){
+	* (E1):
+	| !GotPower() ? Kamikaze :()
+	| Cell(F,O,1) ? Hit() :(E2)
+	| Cell(F,A,1) ? Hit() :(E3)
+	| True ? Egg() :(E4)
+	* (E2):
+	| !GotPower() ? Kamikaze :()
+	| Cell(F,O,1) ? Hit() :(E2)
+	| Cell(F,V) ? Move(F) / Egg() :(E4)
+	* (E3):
+	| !GotPower() ? Kamikaze :()
+	| Cell(F,@,1) ? Hit() :(E3)
+	| True ? Pop() :(E1)
+	* (E4):
+	| !GotPower() ? Kamikaze :()
+	| Cell(F,@,1) ? Hit() :(E1)
+	| !Cell(F,@,1) ? Pop() :(E1)
 	* ()
 }
 
 Dog(Init){
-	* (Init): True ? Pop() :(1)
-	* (1):
-	| !GotPower() :()
-	| Cell(F,O,1) ? Hit() :(4)
-	| Cell(F,A,1) ? Hit() :(2)
-	| Cell(F,V,1) ? Move(F) :(2)
-	* (2):
-	| !GotPower() :()
-	| Cell(F,A,1) ? Hit() :(2)
-	| True ? Pop() :(1)
-	* (4):
-	| !GotPower() :()
-	| Cell(F,A,1) ? Hit :(4)
-	| True ? Move(F) :(2)
+	* (Init): True ? Pop() :(E1)
+	* (E1):
+	| !GotPower() ? Kamikaze :()
+	| Cell(F,O,1) ? Hit() :(E3)
+	| Cell(F,A,1) ? Hit() :(E2)
+	| Cell(F,V,1) ? Move(F) :(E2)
+	* (E2):
+	| !GotPower() ? Kamikaze :()
+	| Cell(F,A,1) ? Hit() :(E2)
+	| True ? Pop() :(E1)
+	* (E3):
+	| !GotPower() ? Kamikaze :()
+	| Cell(F,A,1) ? Hit :(E3)
+	| True ? Move(F) :(E2)
+	* ()
+}
+
+Player(Surface){
+	* (Surface):
+	| Key(z) & Cell(N,G,1) ? Pick(N) :()
+	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
+	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
+	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
+	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface) 
+	* ()
 }

@@ -313,24 +313,77 @@ public class Ast {
 			return "(" + left_operand + " " + operator + " " + right_operand + ")";
 		}
 
-		public ICondition make() {
-			ICondition cond = new ICondition();
-			cond.op = new IOperator(operator.make());
+		public IExpression make() {
+			
+			IAction act = null;
+			ICondition cond = null;
+			IExpression tmp = new IExpression();
 			if (left_operand instanceof FunCall) {
-				cond.expr1 = (ICondition) ((FunCall) left_operand).make();
+				tmp = ((FunCall) left_operand).make();
+				if(tmp instanceof IAction) {
+					act = new IAction();
+					act.act = tmp;
+				}
+				else {
+					cond = new ICondition();
+					cond.expr1 = tmp;
+				}
+				
 			} else if (left_operand instanceof BinaryOp) {
-				cond.expr1 = ((BinaryOp) left_operand).make();
+				tmp = ((BinaryOp) left_operand).make();
+				if(tmp instanceof IAction) {
+					act = new IAction();
+					act.act = tmp;
+				}
+				else {
+					cond = new ICondition();
+					cond.expr1 = tmp;
+				}
 			} else {
-				cond.expr1 = ((UnaryOp) left_operand).make();
+				tmp = ((UnaryOp) left_operand).make();
+				if(tmp instanceof IAction) {
+					act = new IAction();
+					act.act = tmp;
+				}
+				else {
+					cond = new ICondition();
+					cond.expr1 = tmp;
+				}
 			}
 			if (right_operand instanceof FunCall) {
-				cond.expr2 = (ICondition) ((FunCall) right_operand).make();
+				tmp = ((FunCall) right_operand).make();
+				if(tmp instanceof IAction) {
+					act = new IAction();
+					act.act = tmp;
+				}
+				else {
+					cond = new ICondition();
+					cond.expr1 = tmp;
+				}
+				
 			} else if (right_operand instanceof BinaryOp) {
-				cond.expr2 = ((BinaryOp) right_operand).make();
+				tmp = ((BinaryOp) right_operand).make();
+				if(tmp instanceof IAction) {
+					act = new IAction();
+					act.act = tmp;
+				}
+				else {
+					cond = new ICondition();
+					cond.expr1 = tmp;
+				}
 			} else {
-				cond.expr2 = ((UnaryOp) right_operand).make();
+				tmp = ((UnaryOp) right_operand).make();
+				if(tmp instanceof IAction) {
+					act = new IAction();
+					act.act = tmp;
+				}
+				else {
+					cond = new ICondition();
+					cond.expr1 = tmp;
+				}
 			}
-			return cond;
+			if (cond == null) return (IExpression) act;
+			return (IExpression) cond;
 		}
 	}
 
@@ -379,9 +432,9 @@ public class Ast {
 				return new MyDir(((Direction) parameters.get(0)).make());
 			case ("Cell"):
 				if (parameters.size() == 2) {
-					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make());
+					return new Cell( (String) parameters.get(0).make(),  (String) parameters.get(1).make());
 				} else
-					return new Cell(((Direction) parameters.get(0)).make(), ((Entity) parameters.get(1)).make(),
+					return new Cell( (String) parameters.get(0).make(),  (String) parameters.get(1).make(),
 							(int) ((Number_as_String) parameters.get(2)).make());
 			case ("Closest"):
 				return new Closest(((Entity) parameters.get(0)).make(), ((Direction) parameters.get(1)).make());
@@ -480,7 +533,7 @@ public class Ast {
 				return cond;
 
 			} else if (expression instanceof BinaryOp) {
-				return ((BinaryOp) expression).make();
+				return (ICondition) ((BinaryOp) expression).make();
 			} else {
 				return ((UnaryOp) expression).make();
 			}
@@ -506,7 +559,14 @@ public class Ast {
 		}
 
 		public IAction make() {
-			return (IAction) expression.make();
+			if(expression instanceof FunCall) {
+				IAction act = new IAction();
+				act.act = ((IAction)expression.make());
+				return act;
+			}
+			else {
+				return (IAction) ((BinaryOp) expression).make();
+			}
 		}
 	}
 
