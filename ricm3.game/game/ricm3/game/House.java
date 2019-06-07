@@ -21,7 +21,7 @@ public class House extends Ally {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 						(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate,originWorld);
 				b.m_idsprite = i * 3 + j;
-				m_blocks.add(b);
+				originWorld.m_entities.add(b);
 			}
 		}
 	}
