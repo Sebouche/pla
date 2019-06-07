@@ -89,6 +89,7 @@ public class GameEntity {
 	}
 
 	public boolean turn(Direction dir) {
+		System.out.printf("test\n");
 		return true;
 	}
 

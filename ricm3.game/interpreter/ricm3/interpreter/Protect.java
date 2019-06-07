@@ -13,9 +13,11 @@ public class Protect extends IAction {
 	public Protect(String str) {
 		this.dir = Direction.strToDir(str);
 	}
-	
+
 	@Override
 	public boolean exec(GameEntity e) {
+		if (act != null)
+			return e.protect(dir) && act.exec(e);
 		return e.protect(dir);
 	}
 
