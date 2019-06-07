@@ -41,7 +41,8 @@ public class Model extends GameModel {
 	List<IAutomaton> m_automatons;
 	JPanel m_starting_menu;
 	JPanel m_options_menu;
-
+	Music m_bgm;
+	
 	public Model() {
 		Ast arbre;
 		try {
@@ -58,6 +59,15 @@ public class Model extends GameModel {
 		m_player = new Player(this, 64, 64, 9999, m_sprites.get("scientist"),m_automatons.get(0));
 		m_player.m_automate = new IAutomaton(m_automatons.get(0));
 		m_camera = new Camera(this, m_player);
+		File file;
+		file = new File("sprites/menumusic.wav");
+
+		try {
+			m_bgm = new Music(file);
+			m_bgm.start();
+		} catch (Exception ex) {
+			
+		}
 	}
 
 	@Override
