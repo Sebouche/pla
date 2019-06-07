@@ -5,7 +5,8 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Random;
 
-import ricm3.interpreter.IAutomaton;
+import game.blocks.*;
+import ricm3.interpreter.*;
 
 public class UndergroundWorld extends World {
 
