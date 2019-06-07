@@ -5,7 +5,8 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Random;
 
-import ricm3.interpreter.IAutomaton;
+import game.blocks.*;
+import ricm3.interpreter.*;
 
 public class UndergroundWorld extends World {
 
@@ -34,7 +35,6 @@ public class UndergroundWorld extends World {
 					if (randint >= 0 && randint < 900) {
 						Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"),new IAutomaton(m_model.m_automatons.get(0)));
-						b.set_idsprite(0);
 						m_grid[i][j] = b;
 					}
 					if (randint >= 900 && randint < 950) {

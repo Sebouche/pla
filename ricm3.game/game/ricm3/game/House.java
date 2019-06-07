@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import game.blocks.*;
 import ricm3.interpreter.IAutomaton;
 
 public class House extends Ally {
@@ -35,7 +36,7 @@ public class House extends Ally {
 		Iterator<Block> iter = m_blocks.iterator();
 		while (iter.hasNext()) {
 			Block b = iter.next();
-			Graphics g_child = g.create(b.m_x, b.m_y, (int) (Options.Entity_size * Options.Scale),
+			Graphics g_child = g.create(b.x(), b.y(), (int) (Options.Entity_size * Options.Scale),
 					(int) (Options.Entity_size * Options.Scale));
 			b.paint(g_child);
 			g_child.dispose();

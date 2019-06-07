@@ -1,8 +1,9 @@
-package ricm3.game;
+package game.blocks;
 
 import java.awt.image.BufferedImage;
 
-import ricm3.interpreter.IAutomaton;
+import ricm3.game.*;
+import ricm3.interpreter.*;
 
 public class BackBlock extends Block {
 
