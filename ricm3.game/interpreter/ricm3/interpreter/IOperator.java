@@ -16,7 +16,7 @@ public class IOperator {
 		}	
 	}
 	
-	public String strOp() {
+	public String Op() {
 		return operator;
 	}
 	
