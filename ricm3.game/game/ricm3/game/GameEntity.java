@@ -11,8 +11,8 @@ public class GameEntity {
 	int m_x, m_y;
 	BufferedImage[] m_sprites;
 	public Model m_model;
-	IAutomaton m_automate;
-	IState m_state;
+	// Automate m_automate;
+	// State m_state;
 	// m_sound;
 	int m_hp;
 	int m_idsprite;
@@ -21,7 +21,7 @@ public class GameEntity {
 	Type m_type;
 	LinkedList<Keys> m_keys;
 
-	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites,IAutomaton automate) {
+	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites) {
 		m_model = model;
 		m_x = x;
 		m_y = y;
@@ -29,7 +29,6 @@ public class GameEntity {
 		m_idsprite=0;
 		m_sprites=sprites;
 		m_keys = new LinkedList<Keys>();
-		m_automate=automate;
 	}
 	
 	///////////////////////////
@@ -89,7 +88,6 @@ public class GameEntity {
 	}
 
 	public boolean turn(Direction dir) {
-		System.out.printf("test\n");
 		return true;
 	}
 
@@ -136,7 +134,6 @@ public class GameEntity {
 				(int) Options.Scale * Options.Entity_size, null);	}
 
 	public void step() {
-		m_automate.step(this);
 	}
 
 	//////////////////////

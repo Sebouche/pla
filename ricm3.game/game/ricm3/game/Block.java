@@ -4,12 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
-import ricm3.interpreter.IAutomaton;
-
 public class Block extends GameEntity {
 
-	public Block(Model model, int x, int y, int hp, BufferedImage[] sprites,IAutomaton automate) {
-		super(model, x, y, hp, sprites,automate);
+	public Block(Model model, int x, int y, int hp, BufferedImage[] sprites) {
+		super(model, x, y, hp, sprites);
 	}
 
 	@Override

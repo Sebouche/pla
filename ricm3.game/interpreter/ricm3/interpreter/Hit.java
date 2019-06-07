@@ -23,8 +23,6 @@ public class Hit extends IAction {
 
 	@Override
 	public boolean exec(GameEntity e) {
-		if (act != null)
-			return e.hit(this.direction, max(e.dmgs(), this.power)) && act.exec(e);
 		return e.hit(this.direction, max(e.dmgs(), this.power));
 	}
 
