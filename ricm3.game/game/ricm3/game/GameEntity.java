@@ -21,7 +21,7 @@ public class GameEntity {
 	Type m_type;
 	LinkedList<Keys> m_keys;
 
-	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites) {
+	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites,IAutomaton automate) {
 		m_model = model;
 		m_x = x;
 		m_y = y;
@@ -29,6 +29,7 @@ public class GameEntity {
 		m_idsprite=0;
 		m_sprites=sprites;
 		m_keys = new LinkedList<Keys>();
+		m_automate=automate;
 	}
 	
 	///////////////////////////
@@ -134,7 +135,7 @@ public class GameEntity {
 				(int) Options.Scale * Options.Entity_size, null);	}
 
 	public void step() {
-		//m_automate.step();
+		m_automate.step(this);
 	}
 
 	//////////////////////

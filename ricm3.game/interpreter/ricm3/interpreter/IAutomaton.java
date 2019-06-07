@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import ricm3.game.GameEntity;
+
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IAutomaton {
@@ -28,11 +30,22 @@ public class IAutomaton {
 		}
 	}
 
-	boolean step() {
+	public boolean step(GameEntity e) {
 		// - selectionne le comportement en fonction de l'état courant
 		// - effectue une transition
 		// - met à jour l'état courant
 		// - gère l'exception "aucune transition possible"
+		Iterator<IBehaviour> iter=behaviours.iterator();
+		while(iter.hasNext()) {
+			IBehaviour b=iter.next();
+			if(b.source==current) {
+					IState target=b.step(e);
+					if(target!=null) {
+						current=target;
+						return true;
+					}
+				}
+			}
 		return false; // true si une transition effectuée, false si aucune transition possible (=?=
 						// mort de l'automate ?)
 	}
