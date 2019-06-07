@@ -245,6 +245,13 @@ public class Controller extends GameController implements ActionListener {
 		if (s == m_m1_button1) {
 			Options.begin = true;
 			m_model.m_starting_menu.setVisible(false);
+			try {
+				m_model.m_bgm.stop();
+				m_model.m_bgm = new Music(m_model.m_currentworld.m_bgmfile);
+				m_model.m_bgm.start();
+			} catch (Exception ex) {
+
+			}
 		} else if (s == m_m1_button2) {
 			m_m1_automata_panel.setVisible(!m_m1_automata_panel.isVisible());
 		} else if (s == m_m1_combo1) {
