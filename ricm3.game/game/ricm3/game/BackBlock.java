@@ -1,8 +1,10 @@
 package ricm3.game;
 
-public class BackBlock extends Block{
+import java.awt.image.BufferedImage;
 
-	public BackBlock(Model model,int x,int y,int hp) {
-		super(model,x,y,hp);
+public class BackBlock extends Block {
+
+	public BackBlock(Model model, int x, int y, int hp, BufferedImage[] sprites) {
+		super(model, x, y, hp, sprites);
 	}
 }

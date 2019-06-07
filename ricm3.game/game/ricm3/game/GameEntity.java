@@ -2,14 +2,15 @@ package ricm3.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
-import ricm3.interpreter.Direction;
+import ricm3.interpreter.*;
 
 public class GameEntity {
 
 	int m_x, m_y;
 	BufferedImage[] m_sprites;
-	Model m_model;
+	public Model m_model;
 	// Automate m_automate;
 	// State m_state;
 	// m_sound;
@@ -17,15 +18,28 @@ public class GameEntity {
 	int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
+	Type m_type;
+	LinkedList<Keys> m_keys;
 
-	public GameEntity(Model model, int x, int y, int hp) {
+	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites) {
 		m_model = model;
 		m_x = x;
 		m_y = y;
 		m_hp = hp;
+		m_idsprite=0;
+		m_sprites=sprites;
+		m_keys = new LinkedList<Keys>();
 	}
 	
 	///////////////////////////
+	
+	public int x() {
+		return this.m_x;
+	}
+	
+	public int y() {
+		return this.m_y;
+	}
 	
 	public int hps() {
 		return this.m_hp;
@@ -37,6 +51,18 @@ public class GameEntity {
 	
 	public Direction dir() {
 		return this.m_dir;
+	}
+	
+	public Type type() {
+		return this.m_type;
+	}
+	
+	public LinkedList<Keys> keys() {
+		return this.m_keys;
+	}
+	
+	public LinkedList<GameEntity> entities(){
+		return this.m_model.m_currentworld.m_entities;
 	}
 
 	///////////////////////////
@@ -104,15 +130,15 @@ public class GameEntity {
 	////////////////////////////
 
 	public void paint(Graphics g) {
-		g.drawImage(m_sprites[m_idsprite], 0, 0, null);
-	}
+		g.drawImage(m_sprites[m_idsprite], 0, 0, (int) Options.Scale * Options.Entity_size,
+				(int) Options.Scale * Options.Entity_size, null);	}
 
 	public void step() {
 	}
 
 	//////////////////////
 
-	double distance(GameEntity e) {
+	public double distance(GameEntity e) {
 		return Math.sqrt((m_x - e.m_x) * (m_x - e.m_x) + (m_y - e.m_y) * (m_y - e.m_y));
 	}
 

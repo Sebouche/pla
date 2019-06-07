@@ -1,18 +1,18 @@
 package ricm3.interpreter;
 
-import ricm3.parser.Ast.Key;
+import ricm3.game.GameEntity;
 
 public class KeyP extends ICondition{
 	
-	String k;
+	Keys k;
 	
 	public KeyP(String k){
-		this.k = k;
+		this.k = Keys.strToKeys(k);
 	}
 	
-//	@Override
-/*	public boolean eval(GameEntity e) {
-		
-	}*/
+	@Override
+	public boolean eval(GameEntity e) {
+		return e.keys().contains(k);
+	}
 }
 

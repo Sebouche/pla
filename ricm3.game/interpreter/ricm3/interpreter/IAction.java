@@ -2,20 +2,20 @@ package ricm3.interpreter;
 
 import ricm3.game.GameEntity;
 
-/* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
+public class IAction extends IExpression {
 
-import ricm3.parser.Ast.*;
+	public IExpression act;
 
-public class IAction extends IExpression{
-	
-	IAction(){}
-	
-	boolean exec(Entity e){
-		return true;
+	public IAction() {
+		super();
+		act = null;
 	}
 
+	@Override
 	public boolean exec(GameEntity e) {
+		if (act != null)
+			return act.exec(e);
 		return true;
 	}
-		
+
 }
