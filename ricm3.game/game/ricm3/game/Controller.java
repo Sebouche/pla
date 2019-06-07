@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -245,6 +246,14 @@ public class Controller extends GameController implements ActionListener {
 		if (s == m_m1_button1) {
 			Options.begin = true;
 			m_model.m_starting_menu.setVisible(false);
+			try {
+				m_model.m_bgm.stop();
+				File file = new File("sprites/bgmusic.wav");
+				m_model.m_bgm = new Music(file);
+				m_model.m_bgm.start();
+			} catch (Exception ex) {
+				
+			}
 		} else if (s == m_m1_button2) {
 			m_m1_automata_panel.setVisible(!m_m1_automata_panel.isVisible());
 		} else if (s == m_m1_combo1) {
