@@ -170,15 +170,17 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void paint(Graphics g) {
+		int cam_x = m_model.m_camera.m_watched.m_x;
+		int cam_y = m_model.m_camera.m_watched.m_y;
 		Iterator<GameEntity> iter = m_entities.iterator();
 		while (iter.hasNext()) {
 			GameEntity e = iter.next();
 			Graphics g_child;
 			if (e instanceof House) {
-				g_child = g.create(e.m_x, e.m_y, (int) (Options.Entity_size * Options.Scale) * 9,
+				g_child = g.create(e.m_x-cam_x+m_model.m_width/2, e.m_y-cam_y+m_model.m_height/2, (int) (Options.Entity_size * Options.Scale) * 9,
 						(int) (Options.Entity_size * Options.Scale) * 9);
 			} else {
-				g_child = g.create(e.m_x, e.m_y, (int) (Options.Entity_size * Options.Scale),
+				g_child = g.create(e.m_x-cam_x+m_model.m_width/2, e.m_y-cam_y+m_model.m_height/2, (int) (Options.Entity_size * Options.Scale),
 						(int) (Options.Entity_size * Options.Scale));
 			}
 			e.paint(g_child);
