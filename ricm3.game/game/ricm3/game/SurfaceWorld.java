@@ -32,7 +32,7 @@ public class SurfaceWorld extends World {
 		super(m);
 		chunklists = new LinkedList<ChunkList>();
 		add(new Chunk(this, 0, 0, 2));
-		m_entities.add(new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house"), this));
+		new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house"), this);
 		Random r = new Random();
 		int y;
 		int x;
