@@ -2,17 +2,24 @@ package ricm3.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+
+import ricm3.interpreter.*;
 
 public class GameEntity {
 
 	int m_x, m_y;
 	BufferedImage[] m_sprites;
-	Model m_model;
+	public Model m_model;
 	// Automate m_automate;
 	// State m_state;
 	// m_sound;
 	int m_hp;
 	int m_idsprite;
+	int m_dmg;
+	Direction m_dir;
+	Type m_type;
+	LinkedList<Keys> m_keys;
 
 	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites) {
 		m_model = model;
@@ -21,33 +28,117 @@ public class GameEntity {
 		m_hp = hp;
 		m_idsprite=0;
 		m_sprites=sprites;
+		m_keys = new LinkedList<Keys>();
+	}
+	
+	///////////////////////////
+	
+	public int x() {
+		return this.m_x;
+	}
+	
+	public int y() {
+		return this.m_y;
+	}
+	
+	public int hps() {
+		return this.m_hp;
 	}
 
-	public void pop() {
+	public int dmgs() {
+		return this.m_dmg;
+	}
+	
+	public Direction dir() {
+		return this.m_dir;
+	}
+	
+	public Type type() {
+		return this.m_type;
+	}
+	
+	public LinkedList<Keys> keys() {
+		return this.m_keys;
+	}
+	
+	public LinkedList<GameEntity> entities(){
+		return this.m_model.m_currentworld.m_entities;
 	}
 
-	public void wizz() {
+	///////////////////////////
+	
+	public boolean Wait() {
+		return true;
 	}
 
-	public void move() {
+	public boolean pop(Direction dir) {
+		return true;
 	}
 
-	public void hit() {
+	public boolean wizz(Direction dir) {
+		return true;
 	}
 
-	public void step() {
+	public boolean move(Direction dir) {
+		return true;
 	}
 
-	public void egg() {
+	public boolean jump(Direction dir) {
+		return true;
 	}
+
+	public boolean turn(Direction dir) {
+		return true;
+	}
+
+	public boolean hit(Direction dir, int power) {
+		return true;
+	}
+
+	public boolean protect(Direction dir) {
+		return true;
+	}
+
+	public boolean pick(Direction dir) {
+		return true;
+	}
+
+	public boolean Throw(Direction dir) {
+		return true;
+	}
+
+	public boolean store() {
+		return true;
+	}
+
+	public boolean get() {
+		return true;
+	}
+
+	public boolean power() {
+		return true;
+	}
+
+	public boolean kamikaze() {
+		return true;
+	}
+
+	public boolean egg() {
+		return true;
+	}
+
+	////////////////////////////
 
 	public void paint(Graphics g) {
 		g.drawImage(m_sprites[m_idsprite], 0, 0, (int) Options.Scale * Options.Entity_size,
 				(int) Options.Scale * Options.Entity_size, null);	}
 
+	public void step() {
+	}
+
 	//////////////////////
 
-	double distance(GameEntity e) {
+	public double distance(GameEntity e) {
 		return Math.sqrt((m_x - e.m_x) * (m_x - e.m_x) + (m_y - e.m_y) * (m_y - e.m_y));
 	}
 

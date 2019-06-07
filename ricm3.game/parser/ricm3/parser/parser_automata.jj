@@ -10,7 +10,7 @@
 
 PARSER_BEGIN(AutomataParser)
 
-package parser;
+package ricm3.parser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -63,7 +63,7 @@ public class AutomataParser {
    	}
   	return 0 ;
   }
-  
+
   public static void main(String[] args) throws Exception {
         Ast ast ;
         int i = index_of_input(args) ;
@@ -76,7 +76,6 @@ public class AutomataParser {
         else
             System.out.println("// THE PARSED AUTOMATA in DOT FORMAT \n" + ast.as_dot_aut()) ;
    }
-	
 }
 
 PARSER_END(AutomataParser)
@@ -117,7 +116,7 @@ TOKEN:
 
 TOKEN:
 { < INT: (<DIGIT>)+ > }
-   
+
 /* == The grammar for writing automata
 
 Run
@@ -155,7 +154,7 @@ State_Identifier
 Some_Transitions
   | Transition  Some_Transitions 
   | epsilon
-  
+
 Transition
   | Opt_Bar  Condition "?" Action ":"  State
 
@@ -175,7 +174,7 @@ Op_Condition
 
 Atomic_Condition
   | Available_Condition Opt_Parameters
-  
+
 Available_Condition
   | Identifier 
 
@@ -185,13 +184,13 @@ Action
 Op_Action
   | "/" Action
   | epsilon 
-   
+
 Atomic_Action
   | Available_Action  Opt_Parameters
 
 Available_Action
   |  Identifier 
-    
+
 Opt_Parameters
   | "(" Some_Parameters ")"
   | epsilon
@@ -203,13 +202,13 @@ Some_Parameters
 More_Parameters
   | ","  Parameter  More_Parameters 
   | epsilon
-      
+
 Parameters
   | Direction
   | "Opp" "(" Direction ")"
   | Entity
   |  "_"
-  
+
 Direction
   | "N" | "S" | "O" | "E"
   | "F" = Front
@@ -405,7 +404,7 @@ List<Transition> P_Some_Transitions(List<Transition> input_list):
    	{ return input_list ; }
 }
 
-  
+
 /* Transition
  * | Opt_Bar  Condition "?" Action ":"  State
  */
@@ -419,7 +418,7 @@ Transition P_Transition():
   ":"
   state = P_State()
   	{ return new Transition(condition,action,state) ; }
-}  
+}
 
 
 /* Opt_Bar
@@ -430,7 +429,7 @@ Void P_Opt_Bar():
 { }
 { "|"         { return null; }
 | /*epsilon*/ { return null; }
-}  
+}
 
 
 /* Condition
@@ -451,8 +450,8 @@ Action P_Action():
 { expression = P_Expression()
 	{ return new Action(expression) ; }
 }
-	   
-  
+
+
 /* Expression
    | "(" Expression ")" Op_Expression
    | <UNARYOP> Expression 
@@ -465,11 +464,9 @@ Expression P_Expression():
   ")"
   expression = P_Op_Expression(expression)
   	{ return expression ; } 	
-
 | token = <UNARY>
   expression = P_Expression()
 	{ return new UnaryOp(token.image,expression) ; }
-	
 | funcall = P_FunCall()
   expression = P_Op_Expression(funcall)
   	{ return expression ; }
@@ -503,15 +500,12 @@ FunCall P_FunCall():
   key = P_Key_Name()	
   ")"
    	{ parameters.add(key) ; return new FunCall("Key", parameters) ; }
-   	
 | token = <CONDITION>
   parameters = P_Opt_Parameters( parameters )
   	{ return new FunCall(token.image, parameters) ; }
-
 | token = <ACTION>
   parameters = P_Opt_Parameters( parameters )
   	{ return new FunCall(token.image, parameters) ; }
-
 }
 
 
@@ -527,22 +521,16 @@ Key P_Key_Name():
 { Token token ; }
 { token = <INT>
 	{ return new Key(token.image) ; }
-
 | token = <LOWERCASE>
 	{ return new Key(token.image) ; }
-
 | token = <DIRVAR>
 	{ return new Key(token.image) ; }
-
 | token = <ENTVAR>
 	{ return new Key(token.image) ; }
-
 | token = <SPECIAL_KEY>
 	{ return new Key(token.image) ; }
-
 | "_"
 	{ return new Key("_") ; }
-	
 }
 
 
@@ -607,7 +595,6 @@ Parameter P_Parameter():
 { Token token ; Parameter parameter ; }
 { parameter = P_Direction()
 	{ return parameter ; }
- 
 | parameter = P_Entity()
 	{ return parameter ; }
 
@@ -616,8 +603,4 @@ Parameter P_Parameter():
 
 | "_"
 	{ return new Underscore() ; }
-	   
 }
-
-
-	

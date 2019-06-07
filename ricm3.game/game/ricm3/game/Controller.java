@@ -17,24 +17,15 @@
  */
 package ricm3.game;
 
-import java.awt.Button;
-import java.awt.Checkbox;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Label;
 import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.Iterator;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -44,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.ricm3.game.GameController;
+import ricm3.interpreter.Keys;
 
 /**
  * This class is to illustrate the most simple game controller. It does not
@@ -61,11 +53,11 @@ public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 
-	JPanel m1_automata_panel;
-	JLabel m1_title;
-	JButton Non, m1_button1, m1_button2, m1_button3;
-	JComboBox m1_combo1;
-	MenuItem m2_button1;
+	JPanel m_m1_automata_panel;
+	JLabel m_m1_title;
+	JButton m_m1_button1, m_m1_button2, m_m1_button3;
+	JComboBox<String> m_m1_combo1;
+	MenuItem m_m2_button1;
 
 	public Controller(Model model, View view) {
 		m_model = model;
@@ -92,12 +84,18 @@ public class Controller extends GameController implements ActionListener {
 	public void keyPressed(KeyEvent e) {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyPressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		Keys k = Keys.strToKeys(Character.toString(e.getKeyChar()));
+		if (!m_model.m_player.m_keys.contains(k)) {
+			m_model.m_player.m_keys.add(k);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyReleased: " + e.getKeyChar() + " code=" + e.getKeyCode());
+		Keys k = Keys.strToKeys(Character.toString(e.getKeyChar()));
+		m_model.m_player.m_keys.remove(k);
 	}
 
 	@Override
@@ -148,9 +146,9 @@ public class Controller extends GameController implements ActionListener {
 		North.setLayout(new FlowLayout(FlowLayout.CENTER));
 		North.setBackground(m_view.m_background);
 
-		m_model.starting_menu = new JPanel();
-		m_model.starting_menu.setLayout(new BoxLayout(m_model.starting_menu, BoxLayout.Y_AXIS));
-		m_model.starting_menu.setBackground(m_view.m_background);
+		m_model.m_starting_menu = new JPanel();
+		m_model.m_starting_menu.setLayout(new BoxLayout(m_model.m_starting_menu, BoxLayout.Y_AXIS));
+		m_model.m_starting_menu.setOpaque(false);
 
 		Font f1 = new Font(Font.SERIF, Font.BOLD, 64);
 		Font f2 = new Font(Font.MONOSPACED, Font.BOLD, 32);
@@ -158,61 +156,61 @@ public class Controller extends GameController implements ActionListener {
 
 		Component PaddingUp = Box.createRigidArea(new Dimension(0, m_view.getHeight() / 2 - 150));
 
-		m_model.starting_menu.add(PaddingUp);
+		m_model.m_starting_menu.add(PaddingUp);
 
-		m1_title = new JLabel("Automatak");
-		m1_title.setFont(f1);
-		m1_title.setAlignmentX(m_model.starting_menu.CENTER_ALIGNMENT);
-		m_model.starting_menu.add(m1_title);
+		m_m1_title = new JLabel("Automatak");
+		m_m1_title.setFont(f1);
+		m_m1_title.setAlignmentX(Component.CENTER_ALIGNMENT);
+		m_model.m_starting_menu.add(m_m1_title);
 
-		m_model.starting_menu.add(Box.createRigidArea(new Dimension(0, 50)));
+		m_model.m_starting_menu.add(Box.createRigidArea(new Dimension(0, 50)));
 
-		m1_button1 = new JButton("Nouvelle partie");
-		m1_button1.setFont(f2);
-		m1_button1.addActionListener(this);
-		m1_button1.setAlignmentX(m_model.starting_menu.CENTER_ALIGNMENT);
-		m_model.starting_menu.add(m1_button1);
+		m_m1_button1 = new JButton("Nouvelle partie");
+		m_m1_button1.setFont(f2);
+		m_m1_button1.addActionListener(this);
+		m_m1_button1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		m_model.m_starting_menu.add(m_m1_button1);
 
-		m_model.starting_menu.add(Box.createRigidArea(new Dimension(0, 10)));
+		m_model.m_starting_menu.add(Box.createRigidArea(new Dimension(0, 10)));
 
 		JPanel m1_options_panel = new JPanel();
 		m1_options_panel.setLayout(new FlowLayout());
-		m1_options_panel.setBackground(m_view.m_background);
-		m1_button2 = new JButton("Options");
-		m1_button2.setFont(f2);
-		m1_button2.addActionListener(this);
-		m1_button2.setAlignmentX(m_model.starting_menu.CENTER_ALIGNMENT);
-		m1_options_panel.add(m1_button2);
+		m1_options_panel.setOpaque(false);
+		m_m1_button2 = new JButton("Options");
+		m_m1_button2.setFont(f2);
+		m_m1_button2.addActionListener(this);
+		m_m1_button2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		m1_options_panel.add(m_m1_button2);
 		
-		m1_automata_panel = new JPanel();
-		m1_automata_panel.setLayout(new BoxLayout(m1_automata_panel, BoxLayout.Y_AXIS));
-		m1_automata_panel.setBackground(m_view.m_background);
+		m_m1_automata_panel = new JPanel();
+		m_m1_automata_panel.setLayout(new BoxLayout(m_m1_automata_panel, BoxLayout.Y_AXIS));
+		m_m1_automata_panel.setOpaque(false);
 		
 		JLabel choose_your_automaton = new JLabel("Choix de l'automate du joueur");
 		choose_your_automaton.setFont(f3);
-		m1_automata_panel.add(choose_your_automaton);
+		m_m1_automata_panel.add(choose_your_automaton);
 		
 		String[] automata = { "Bat", "Dog", "Otto", "Rabbit", "Mouse" };
-		m1_combo1 = new JComboBox(automata);
-		m1_combo1.setSelectedIndex(4);
-		m1_combo1.addActionListener(this);
-		m1_automata_panel.add(m1_combo1);
+		m_m1_combo1 = new JComboBox<String>(automata);
+		m_m1_combo1.setSelectedIndex(4);
+		m_m1_combo1.addActionListener(this);
+		m_m1_automata_panel.add(m_m1_combo1);
 
-		m1_options_panel.add(m1_automata_panel);
-		m1_automata_panel.setVisible(false);
-		m_model.starting_menu.add(m1_options_panel);
+		m1_options_panel.add(m_m1_automata_panel);
+		m_m1_automata_panel.setVisible(false);
+		m_model.m_starting_menu.add(m1_options_panel);
 
-		m_model.starting_menu.add(Box.createRigidArea(new Dimension(0, 10)));
+		m_model.m_starting_menu.add(Box.createRigidArea(new Dimension(0, 10)));
 
-		m1_button3 = new JButton("Quitter");
-		m1_button3.setFont(f2);
-		m1_button3.addActionListener(this);
-		m1_button3.setAlignmentX(m_model.starting_menu.CENTER_ALIGNMENT);
-		m_model.starting_menu.add(m1_button3);
+		m_m1_button3 = new JButton("Quitter");
+		m_m1_button3.setFont(f2);
+		m_m1_button3.addActionListener(this);
+		m_m1_button3.setAlignmentX(Component.CENTER_ALIGNMENT);
+		m_model.m_starting_menu.add(m_m1_button3);
 
-		North.add(m_model.starting_menu);
-		m_game.addNorth(North);
 		
+		North.add(m_model.m_starting_menu);
+		m_game.addNorth(North);
 		
 		
 		
@@ -244,14 +242,18 @@ public class Controller extends GameController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
-		if (s == m1_button1) {
+		if (s == m_m1_button1) {
 			Options.begin = true;
-			m_model.starting_menu.setVisible(false);
-		} else if (s == m1_button2) {
-			m1_automata_panel.setVisible(!m1_automata_panel.isVisible());
-		} else if (s == m1_button3) {
+			m_model.m_starting_menu.setVisible(false);
+		} else if (s == m_m1_button2) {
+			m_m1_automata_panel.setVisible(!m_m1_automata_panel.isVisible());
+		} else if (s == m_m1_combo1) {
+			JComboBox<String> cb = (JComboBox<String>) s;
+			String automaton = (String) cb.getSelectedItem();
+			System.out.println(automaton);
+		} else if (s == m_m1_button3) {
 			System.exit(0);
-		} else if (s == m2_button1) {
+		} else if (s == m_m2_button1) {
 			System.out.println("NYI");
 		}
 	}

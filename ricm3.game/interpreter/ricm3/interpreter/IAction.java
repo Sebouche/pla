@@ -1,14 +1,14 @@
 package ricm3.interpreter;
 
-/* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
-
-import ricm3.parser.Ast.*;
+import ricm3.game.GameEntity;
 
 public class IAction extends IExpression{
 	
-	IAction(){}
-	
-	boolean exec(Entity e){
+	public IAction(){
+		super();
+	}
+
+	public boolean exec(GameEntity e) {
 		return true;
 	}
 		
