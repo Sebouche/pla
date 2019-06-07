@@ -34,6 +34,9 @@ public class MovingEntity extends GameEntity {
 
 	@Override
 	public boolean move(Direction dir) {
+		m_dx = 0;
+		m_dy = 0;
+		System.out.println("oui");
 		switch(Direction.entityDir(this, dir)) {
 		case NORTH:
 			m_dy = -1;
@@ -47,20 +50,20 @@ public class MovingEntity extends GameEntity {
 		case EAST:
 			m_dx = 1;
 			break;
+		default:
+			break;
 		}
-		Iterator<GameEntity> iter = m_originWorld.m_entities.iterator();
+		/*Iterator<GameEntity> iter = m_originWorld.m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {
 			E = iter.next();
 			if (collision(E, m_dx, m_dy))
 				return false;
-		}
+		}*/
 		m_x += m_dx;
 		m_y += m_dy;
 		return true;
 	}
 
-	@Override
-	public void step() {
-	}
+
 }

@@ -91,7 +91,7 @@ public class UndergroundWorld extends World {
 				}
 			}
 		}
-		
+		/*
 		//collision avec les blocs autour du joueur
 		if (m_grid[pos_y - 1][pos_x] != null)
 			m_player.collision(m_grid[pos_y - 1][pos_x], m_player.m_dx, m_player.m_dy);
@@ -109,7 +109,7 @@ public class UndergroundWorld extends World {
 			m_player.collision(m_grid[pos_y_d + 1][pos_x], m_player.m_dx, m_player.m_dy);
 		if (m_grid[pos_y_d + 1][pos_x_r] != null)
 			m_player.collision(m_grid[pos_y_d + 1][pos_x_r], m_player.m_dx, m_player.m_dy);
-		
+		*/
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {

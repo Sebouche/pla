@@ -32,6 +32,7 @@ public class GameEntity {
 		m_sprites=sprites;
 		m_keys = new LinkedList<Keys>();
 		m_automate=automate;
+		m_dir = Direction.NORTH;
 	}
 	
 	///////////////////////////
