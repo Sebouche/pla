@@ -9,17 +9,17 @@ import ricm3.interpreter.*;
 public class GameEntity {
 
 	int m_x, m_y;
-	BufferedImage[] m_sprites;
+	public BufferedImage[] m_sprites;
 	public Model m_model;
 	IAutomaton m_automate;
 	IState m_state;
 	// m_sound;
 	World m_originWorld;
 	int m_hp;
-	int m_idsprite;
+	public int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
-	Type m_type;
+	Type m_type;  
 	LinkedList<Keys> m_keys;
 
 	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites,IAutomaton automate, World originWorld) {
