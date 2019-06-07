@@ -71,9 +71,14 @@ public class UndergroundWorld extends World {
 
 	@Override
 	public void step() {
+		gravity(m_player);
+		
+		int entity_size = (int) (Options.Scale * Options.Entity_size);
 		int distance = 10;
 		int pos_x = (int) (m_model.m_player.m_x / (Options.Entity_size * Options.Scale));
 		int pos_y = (int) (m_model.m_player.m_y / (Options.Entity_size * Options.Scale));
+		int pos_x_r = (int) ((m_model.m_player.m_x + entity_size) / (Options.Entity_size * Options.Scale));
+		int pos_y_d = (int) ((m_model.m_player.m_y + entity_size) / (Options.Entity_size * Options.Scale));
 		for (int i = -distance; i <= distance; i++) {
 			for (int j = -distance; j <= distance; j++) {
 				if (m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)] != null) {
@@ -81,18 +86,35 @@ public class UndergroundWorld extends World {
 				}
 			}
 		}
+		
+		m_player.collision(m_grid[pos_y - 1][pos_x], m_player.m_dx, m_player.m_dy);
+		m_player.collision(m_grid[pos_y - 1][pos_x_r], m_player.m_dx, m_player.m_dy);
+		m_player.collision(m_grid[pos_y][Math.floorMod((pos_x - 1), 60)], m_player.m_dx, m_player.m_dy);
+		m_player.collision(m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)], m_player.m_dx, m_player.m_dy);
+		m_player.collision(m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)], m_player.m_dx, m_player.m_dy);
+		m_player.collision(m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)], m_player.m_dx, m_player.m_dy);
+		m_player.collision(m_grid[pos_y_d + 1][pos_x], m_player.m_dx, m_player.m_dy);
+		m_player.collision(m_grid[pos_y_d + 1][pos_x_r], m_player.m_dx, m_player.m_dy);
+		
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {
 			E = iter.next();
 			E.step();
 		}
+		
+	}
+
+	void gravity(MovingEntity ge) {
+		if (ge.m_dy < 20) {
+			ge.m_dy++;
+		}
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		int distance = 10;
-		int k=0;
+		int k = 0;
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
 		int pos_x = (int) (m_model.m_player.m_x / (Options.Entity_size * Options.Scale));
@@ -101,21 +123,22 @@ public class UndergroundWorld extends World {
 			for (int j = -distance; j <= distance; j++) {
 				k++;
 				if (m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)] != null) {
-					Graphics g_child = g.create(k*(int) (Options.Entity_size * Options.Scale)-cam_x,
-							m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].m_y-cam_y+m_model.m_height/2+2,
+					Graphics g_child = g.create(k * (int) (Options.Entity_size * Options.Scale) - cam_x,
+							m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].m_y - cam_y
+									+ m_model.m_height / 2 + 2,
 							(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 					m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].paint(g_child);
 					g_child.dispose();
 				}
 			}
-			k=0;
+			k = 0;
 		}
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {
 			E = iter.next();
-			Graphics g_child = g.create(E.m_x-cam_x+m_model.m_width/2, E.m_y-cam_y+m_model.m_height/2, (int) (Options.Entity_size * Options.Scale),
-					(int) (Options.Entity_size * Options.Scale));
+			Graphics g_child = g.create(E.m_x - cam_x + m_model.m_width / 2, E.m_y - cam_y + m_model.m_height / 2,
+					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			E.paint(g_child);
 			g_child.dispose();
 		}
