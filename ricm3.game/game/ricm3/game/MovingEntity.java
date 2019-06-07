@@ -36,7 +36,6 @@ public class MovingEntity extends GameEntity {
 	public boolean move(Direction dir) {
 		m_dx = 0;
 		m_dy = 0;
-		System.out.println("oui");
 		switch(Direction.entityDir(this, dir)) {
 		case NORTH:
 			m_dy = -1;

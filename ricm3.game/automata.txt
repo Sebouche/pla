@@ -94,18 +94,21 @@ Block(Init){
     | !GotPower() ? Pop() :()
 	| True ? Wizz() :(Init)
 	* ()
+}
 	
-barbed(Init){
+Barbed(Init){
     * (Init): 
-    | !GotPower() ? wizz() :()
-	| True ? pop() :(Init)
+    | !GotPower() ? Wizz() :()
+	| True ? Pop() :(Init)
 	* ()
+}
 
-wall(Init){
+Wall(Init){
 	* (Init): 
     | !GotPower() ? Pop() :()
 	| True ? Wizz() :(Init)
 	* ()
+}
 	
 PlayerS(Surface){
 	* (Surface):
