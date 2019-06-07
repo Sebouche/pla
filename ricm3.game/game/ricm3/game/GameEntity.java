@@ -14,6 +14,7 @@ public class GameEntity {
 	IAutomaton m_automate;
 	IState m_state;
 	// m_sound;
+	World m_originWorld;
 	int m_hp;
 	public int m_idsprite;
 	int m_dmg;
@@ -21,15 +22,17 @@ public class GameEntity {
 	Type m_type;  
 	LinkedList<Keys> m_keys;
 
-	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites,IAutomaton automate) {
+	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites,IAutomaton automate, World originWorld) {
 		m_model = model;
 		m_x = x;
 		m_y = y;
+		m_originWorld = originWorld;
 		m_hp = hp;
 		m_idsprite=0;
 		m_sprites=sprites;
 		m_keys = new LinkedList<Keys>();
 		m_automate=automate;
+		m_dir = Direction.NORTH;
 	}
 	
 	///////////////////////////

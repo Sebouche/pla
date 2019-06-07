@@ -84,7 +84,7 @@ public class Controller extends GameController implements ActionListener {
 	public void keyPressed(KeyEvent e) {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyPressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
-		Keys k = Keys.strToKeys(Character.toString(e.getKeyChar()));
+		Keys k = Keys.keyEventToKeys(e);
 		if (!m_model.m_player.m_keys.contains(k)) {
 			m_model.m_player.m_keys.add(k);
 		}
@@ -94,7 +94,7 @@ public class Controller extends GameController implements ActionListener {
 	public void keyReleased(KeyEvent e) {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyReleased: " + e.getKeyChar() + " code=" + e.getKeyCode());
-		Keys k = Keys.strToKeys(Character.toString(e.getKeyChar()));
+		Keys k = Keys.keyEventToKeys(e);
 		m_model.m_player.m_keys.remove(k);
 	}
 
