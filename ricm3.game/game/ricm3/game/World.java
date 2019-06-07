@@ -10,7 +10,6 @@ public class World {
 	LinkedList<GameEntity> m_entities;
 	File m_bgmfile;
 	
-	
 	public World(Model model) {
 		m_model = model;
 		m_entities = new LinkedList<GameEntity>();

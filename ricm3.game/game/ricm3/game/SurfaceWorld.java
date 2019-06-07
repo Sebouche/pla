@@ -2,6 +2,8 @@ package ricm3.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +44,6 @@ public class SurfaceWorld extends World {
 		} while ((x == 0) && (y == 0));
 		add(new Chunk(this, x, y, 1));
 		generateChunks(0, 0, radius);
-
 		m_bgmfile = new File("sprites/bgm_surface.wav");
 	}
 
