@@ -13,6 +13,7 @@ public class UndergroundWorld extends World {
 	public UndergroundWorld(Model model) {
 		super(model);
 		m_grid = new GameEntity[20][60];
+		m_player = new Player(m_model, 10, 10, 9999, m_model.m_sprites.get("scientist"));
 		generate_level();
 	}
 
@@ -87,14 +88,23 @@ public class UndergroundWorld extends World {
 			}
 		}
 		
-		m_player.collision(m_grid[pos_y - 1][pos_x], m_player.m_dx, m_player.m_dy);
-		m_player.collision(m_grid[pos_y - 1][pos_x_r], m_player.m_dx, m_player.m_dy);
-		m_player.collision(m_grid[pos_y][Math.floorMod((pos_x - 1), 60)], m_player.m_dx, m_player.m_dy);
-		m_player.collision(m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)], m_player.m_dx, m_player.m_dy);
-		m_player.collision(m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)], m_player.m_dx, m_player.m_dy);
-		m_player.collision(m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)], m_player.m_dx, m_player.m_dy);
-		m_player.collision(m_grid[pos_y_d + 1][pos_x], m_player.m_dx, m_player.m_dy);
-		m_player.collision(m_grid[pos_y_d + 1][pos_x_r], m_player.m_dx, m_player.m_dy);
+		//collision avec les blocs autour du joueur
+		if (m_grid[pos_y - 1][pos_x] != null)
+			m_player.collision(m_grid[pos_y - 1][pos_x], m_player.m_dx, m_player.m_dy);
+		if (m_grid[pos_y - 1][pos_x_r] != null)
+			m_player.collision(m_grid[pos_y - 1][pos_x_r], m_player.m_dx, m_player.m_dy);
+		if (m_grid[pos_y][Math.floorMod((pos_x - 1), 60)] != null)
+			m_player.collision(m_grid[pos_y][Math.floorMod((pos_x - 1), 60)], m_player.m_dx, m_player.m_dy);
+		if (m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)] != null)
+			m_player.collision(m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)], m_player.m_dx, m_player.m_dy);
+		if (m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)] != null)
+			m_player.collision(m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)], m_player.m_dx, m_player.m_dy);
+		if (m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)] != null)
+			m_player.collision(m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)], m_player.m_dx, m_player.m_dy);
+		if (m_grid[pos_y_d + 1][pos_x] != null)
+			m_player.collision(m_grid[pos_y_d + 1][pos_x], m_player.m_dx, m_player.m_dy);
+		if (m_grid[pos_y_d + 1][pos_x_r] != null)
+			m_player.collision(m_grid[pos_y_d + 1][pos_x_r], m_player.m_dx, m_player.m_dy);
 		
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;

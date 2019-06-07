@@ -2,6 +2,8 @@ package ricm3.game;
 
 import java.awt.image.BufferedImage;
 
+import ricm3.interpreter.Direction;
+
 public class MovingEntity extends GameEntity {
 
 	int m_dx, m_dy;
@@ -27,5 +29,14 @@ public class MovingEntity extends GameEntity {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean move(Direction dir) {
+		return true;
+	}
+	
+	@Override
+	public void step() {
 	}
 }
