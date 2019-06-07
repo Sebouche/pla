@@ -13,9 +13,11 @@ public class Pick extends IAction {
 	public Pick(String str) {
 		this.dir = Direction.strToDir(str);
 	}
-	
+
 	@Override
 	public boolean exec(GameEntity e) {
+		if (act != null)
+			return e.pick(dir) && act.exec(e);
 		return e.pick(dir);
 	}
 }

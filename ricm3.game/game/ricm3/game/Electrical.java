@@ -1,8 +1,10 @@
 package ricm3.game;
 
-public class Electrical extends Construction{
+import java.awt.image.BufferedImage;
 
-	public Electrical(Model model,int x,int y,int hp) {
-		super(model,x,y,hp);
+public class Electrical extends Construction {
+
+	public Electrical(Model model, int x, int y, int hp, BufferedImage[] sprites) {
+		super(model, x, y, hp, sprites);
 	}
 }
