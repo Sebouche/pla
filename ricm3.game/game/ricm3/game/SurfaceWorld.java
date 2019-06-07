@@ -3,7 +3,6 @@ package ricm3.game;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class SurfaceWorld extends World {
 		super(m);
 		chunklists = new LinkedList<ChunkList>();
 		add(new Chunk(this, 0, 0, 2));
-		m_entities.add(new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house")));
+		m_entities.add(new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house"), this));
 		Random r = new Random();
 		int y;
 		int x;
@@ -94,8 +93,8 @@ public class SurfaceWorld extends World {
 	private class Spawner extends GameEntity {
 		Chunk m_c;
 
-		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites) {
-			super(c.world.m_model, x, y, 100, sprites,null);
+		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites, World originWorld) {
+			super(c.world.m_model, x, y, 100, sprites,null, originWorld);
 			m_c = c;
 			this.m_automate=new IAutomaton(m_model.m_automatons.get(0));
 			c.world.m_entities.add(this);
@@ -115,16 +114,16 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(m_model.m_automatons.get(0)));
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(m_model.m_automatons.get(0)),m_model.m_surfaceworld);
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(m_model.m_automatons.get(0)));
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(m_model.m_automatons.get(0)),m_model.m_surfaceworld);
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(m_model.m_automatons.get(0)));
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(m_model.m_automatons.get(0)),m_model.m_surfaceworld);
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(m_model.m_automatons.get(0)));
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(m_model.m_automatons.get(0)), m_model.m_surfaceworld);
 					break;
 				default:
 					e = null;
@@ -157,7 +156,7 @@ public class SurfaceWorld extends World {
 				type = (((r.nextInt()) % 10) + 1) / 10;
 				if (type == 1) {
 					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
-							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"));
+							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), m_model.m_surfaceworld);
 				}
 			}
 
