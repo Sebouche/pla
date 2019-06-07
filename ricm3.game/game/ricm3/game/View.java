@@ -65,9 +65,10 @@ public class View extends GameView {
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
 				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
-					g.drawImage(m_model.m_sprites.get("grassbg")[0], (int) (i * Options.Entity_size * Options.Scale)-cam_x,
-							(int) (j * Options.Entity_size * Options.Scale)-cam_y, (int) Options.Scale * Options.Entity_size,
-							(int) Options.Scale * Options.Entity_size, null);
+					g.drawImage(m_model.m_sprites.get("grassbg")[0],
+							(int) (i * Options.Entity_size * Options.Scale) - cam_x,
+							(int) (j * Options.Entity_size * Options.Scale) - cam_y,
+							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 
 				}
 			}
@@ -90,26 +91,22 @@ public class View extends GameView {
 			}
 		}
 
+		Graphics g_child;
+		g_child = g.create(0, 0, getWidth(), getHeight());
+		m_model.m_currentworld.paint(g_child);
+		g_child.dispose();
+		g_child = g.create(m_model.m_width / 2, m_model.m_height / 2, (int) (Options.Entity_size * Options.Scale),
+				(int) (Options.Entity_size * Options.Scale));
+		m_model.m_camera.m_watched.paint(g_child);
+		g_child.dispose();
 
-		if (Options.begin) {
-			Graphics g_child;
-			g_child = g.create(0, 0, getWidth(), getHeight());
-			m_model.m_currentworld.paint(g_child);
-			g_child.dispose();
-			g_child = g.create(m_model.m_width / 2,m_model.m_height / 2, (int) (Options.Entity_size * Options.Scale),
-					(int) (Options.Entity_size * Options.Scale));
-			m_model.m_camera.m_watched.paint(g_child);
-			g_child.dispose();
-			
-			//barre de vie
-			
-			g_child = g.create(m_model.m_width / 2-50,20,100,
-					20);
-			g_child.setColor(new Color(255, 20, 10));
-			g_child.fillRect(0, 0, 100, 20);
-			g_child.setColor(new Color(10, 255, 20));
-			g_child.fillRect(0, 0, m_model.m_player.m_hp*100/500, 20);
-			g_child.dispose();
-		}
+		// barre de vie
+
+		g_child = g.create(m_model.m_width / 2 - 50, 20, 100, 20);
+		g_child.setColor(new Color(255, 20, 10));
+		g_child.fillRect(0, 0, 100, 20);
+		g_child.setColor(new Color(10, 255, 20));
+		g_child.fillRect(0, 0, m_model.m_player.m_hp * 100 / 500, 20);
+		g_child.dispose();
 	}
 }

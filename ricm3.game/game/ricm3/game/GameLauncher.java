@@ -4,13 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -35,6 +33,7 @@ public class GameLauncher implements ActionListener {
 	public void Launcher() {
 
 		Launcher = new JFrame();
+		Launcher.setTitle("Super Automatak Defense (Launcher)");
 		Launcher.setLayout(new BorderLayout());
 		Launcher.setBackground(Color.RED);
 
@@ -70,7 +69,7 @@ public class GameLauncher implements ActionListener {
 		StartingMenu.add(Quit);
 
 		Launcher.add(StartingMenu, BorderLayout.CENTER);
-		Launcher.setBounds(200, 200, 800, 600);
+		Launcher.setBounds(200, 100, 800, 600);
 		Launcher.setVisible(true);
 		
 		return;
@@ -78,6 +77,7 @@ public class GameLauncher implements ActionListener {
 
 	public void OptionsMenu() {
 		OptionsFrame = new JFrame();
+		OptionsFrame.setTitle("Super Automatak Defense (Options)");
 		OptionsFrame.setLayout(new BorderLayout());
 
 		JPanel OptionsNorth = new JPanel();
@@ -87,80 +87,70 @@ public class GameLauncher implements ActionListener {
 		OptionsTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		JPanel OptionsPanel = new JPanel();
-		OptionsPanel.setLayout(new FlowLayout());
-
-		JPanel EntitiesPanel = new JPanel();
-		EntitiesPanel.setLayout(new BoxLayout(EntitiesPanel, BoxLayout.Y_AXIS));
-
-		JPanel AutomataPanel = new JPanel();
-		AutomataPanel.setLayout(new BoxLayout(AutomataPanel, BoxLayout.Y_AXIS));
+		OptionsPanel.setLayout(new BoxLayout(OptionsPanel, BoxLayout.Y_AXIS));
+		OptionsPanel.setOpaque(false);
 		
 		OptionsValidate = new JButton("Valider");
 		OptionsValidate.setFont(f2);
 		OptionsValidate.addActionListener(this);
 
 		String[] Automata = { "Player1", "Bat", "Block", "Dog", "House", "Mouse", "Rabbit", "Turtle" };
-
+		LinkedList<JComboBox<String>> AutomataList = new LinkedList<JComboBox<String>>();
+		
 		AutomataComboBox_Player1 = new JComboBox<String>(Automata);
 		AutomataComboBox_Player1.setSelectedIndex(0);
 		AutomataComboBox_Player1.addActionListener(this);
-		
+		AutomataList.add(AutomataComboBox_Player1);
+
 		AutomataComboBox_Bat = new JComboBox<String>(Automata);
 		AutomataComboBox_Bat.setSelectedIndex(1);
 		AutomataComboBox_Bat.addActionListener(this);
+		AutomataList.add(AutomataComboBox_Bat);
 		
 		AutomataComboBox_Block = new JComboBox<String>(Automata);
 		AutomataComboBox_Block.setSelectedIndex(2);
 		AutomataComboBox_Block.addActionListener(this);
+		AutomataList.add(AutomataComboBox_Block);
 		
 		AutomataComboBox_Dog = new JComboBox<String>(Automata);
 		AutomataComboBox_Dog.setSelectedIndex(3);
 		AutomataComboBox_Dog.addActionListener(this);
+		AutomataList.add(AutomataComboBox_Dog);
 		
 		AutomataComboBox_House = new JComboBox<String>(Automata);
 		AutomataComboBox_House.setSelectedIndex(4);
 		AutomataComboBox_House.addActionListener(this);
+		AutomataList.add(AutomataComboBox_House);
 		
 		AutomataComboBox_Mouse = new JComboBox<String>(Automata);
 		AutomataComboBox_Mouse.setSelectedIndex(5);
 		AutomataComboBox_Mouse.addActionListener(this);
+		AutomataList.add(AutomataComboBox_Mouse);
 		
 		AutomataComboBox_Rabbit = new JComboBox<String>(Automata);
 		AutomataComboBox_Rabbit.setSelectedIndex(6);
 		AutomataComboBox_Rabbit.addActionListener(this);
+		AutomataList.add(AutomataComboBox_Rabbit);
 		
 		AutomataComboBox_Turtle = new JComboBox<String>(Automata);
 		AutomataComboBox_Turtle.setSelectedIndex(7);
 		AutomataComboBox_Turtle.addActionListener(this);
+		AutomataList.add(AutomataComboBox_Turtle);
 		
-		JLabel EntitiesPanelTitle = new JLabel("Entités");
-		EntitiesPanelTitle.setFont(f2);
-		EntitiesPanelTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-		EntitiesPanel.add(EntitiesPanelTitle);
-		EntitiesPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+		JLabel Title = new JLabel("Entité / Automate");
+		Title.setFont(f2);
+		Title.setAlignmentX(Component.CENTER_ALIGNMENT);
+		OptionsPanel.add(Title);
+		
 		for (int i = 0; i < Automata.length; i++) {
 			JLabel AutomataLabel = new JLabel(Automata[i]);
 			AutomataLabel.setFont(f3);
-			AutomataLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-			EntitiesPanel.add(AutomataLabel);
-			EntitiesPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+			JComboBox<String> AutomataComboBox = AutomataList.get(i);
+			JPanel AutomataPanel = new JPanel();
+			AutomataPanel.add(AutomataLabel);
+			AutomataPanel.add(AutomataComboBox);
+			OptionsPanel.add(AutomataPanel);
 		}
-		
-		JLabel AutomataPanelTitle = new JLabel("Automates");
-		AutomataPanelTitle.setFont(f2);
-		AutomataPanel.add(AutomataPanelTitle);
-	
-		AutomataPanel.add(AutomataComboBox_Player1);
-		AutomataPanel.add(AutomataComboBox_Bat);
-		AutomataPanel.add(AutomataComboBox_Block);
-		AutomataPanel.add(AutomataComboBox_Dog);
-		AutomataPanel.add(AutomataComboBox_House);
-		AutomataPanel.add(AutomataComboBox_Mouse);
-		AutomataPanel.add(AutomataComboBox_Rabbit);
-		AutomataPanel.add(AutomataComboBox_Turtle);
-		
-		OptionsPanel.add(EntitiesPanel);
-		OptionsPanel.add(AutomataPanel);
 		
 		OptionsNorth.add(OptionsTitle);
 		
@@ -168,8 +158,8 @@ public class GameLauncher implements ActionListener {
 		OptionsFrame.add(OptionsPanel, BorderLayout.CENTER);
 		OptionsFrame.add(OptionsValidate, BorderLayout.SOUTH);
 		
-		OptionsFrame.setBounds(400, 400, 400, 400);
-
+		OptionsFrame.setBounds(300, 200, 800, 600);
+		
 		return;
 	}
 
