@@ -10,6 +10,11 @@ public class IAction extends IExpression {
 		super();
 		act = null;
 	}
+	
+	public IAction(IAction action) {
+		super(action);
+		act=action.act;
+	}
 
 	@Override
 	public boolean exec(GameEntity e) {
