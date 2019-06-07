@@ -5,10 +5,19 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,8 +27,9 @@ import javax.swing.JPanel;
 
 import edu.ricm3.game.GameUI;
 
-public class GameLauncher implements ActionListener {
+public class GameLauncher implements ActionListener, ComponentListener {
 
+	ImagePanel StartingMenu;
 	JFrame Launcher, OptionsFrame;
 	JButton NewGame, Options, Quit, OptionsValidate;
 	JComboBox<String> AutomataComboBox_Player1, AutomataComboBox_Bat, AutomataComboBox_Block, AutomataComboBox_Dog, AutomataComboBox_House, AutomataComboBox_Mouse, AutomataComboBox_Rabbit, AutomataComboBox_Turtle;
@@ -29,16 +39,55 @@ public class GameLauncher implements ActionListener {
 		Launcher();
 		OptionsMenu();
 	}
+	
+	public class ImagePanel extends JPanel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		BufferedImage m_bg;
+		int m_x, m_y, m_w, m_h;
+
+		public ImagePanel(int x, int y, int w, int h, String url) {
+			m_x = x;
+			m_y = y;
+			m_w = w;
+			m_h = h;
+			try {
+				m_bg = ImageIO.read(new File(url));
+			} catch (IOException e) {
+				System.out.println("Problème de lecture d'image (launcher bg)");
+			}
+		}
+
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(m_bg, m_x, m_y, m_w, m_h, null);
+		}
+		
+		public void update(int x, int y, int w, int h) {
+			m_x = x;
+			m_y = y;
+			m_w = w;
+			m_h = h;
+			repaint();
+		}
+	}
 
 	public void Launcher() {
 
 		Launcher = new JFrame();
 		Launcher.setTitle("Super Automatak Defense (Launcher)");
 		Launcher.setLayout(new BorderLayout());
-		Launcher.setBackground(Color.RED);
+		Launcher.setBounds(200, 100, 800, 600);
+		Launcher.addComponentListener(this);
 
-		JPanel StartingMenu = new JPanel();
-		StartingMenu.setLayout(new BoxLayout(StartingMenu, BoxLayout.Y_AXIS));
+		StartingMenu = new ImagePanel(0, 0, Launcher.getWidth(), Launcher.getHeight(), "sprites/mdr.jpg");
+		StartingMenu.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		StartingMenu.setOpaque(false);
 
 		f1 = new Font(Font.SERIF, Font.BOLD, 64);
@@ -47,29 +96,32 @@ public class GameLauncher implements ActionListener {
 
 		JLabel Title = new JLabel("Automatak");
 		Title.setFont(f1);
-		Title.setAlignmentX(Component.CENTER_ALIGNMENT);
-		StartingMenu.add(Title);
+		c.gridx = 0;
+		c.gridy = 0;
+		StartingMenu.add(Title, c);
 
 		NewGame = new JButton("Nouvelle partie");
 		NewGame.setFont(f2);
 		NewGame.addActionListener(this);
-		NewGame.setAlignmentX(Component.CENTER_ALIGNMENT);
-		StartingMenu.add(NewGame);
+		c.gridx = 0;
+		c.gridy = 1;
+		StartingMenu.add(NewGame, c);
 
 		Options = new JButton("Options");
 		Options.setFont(f2);
 		Options.addActionListener(this);
-		Options.setAlignmentX(Component.CENTER_ALIGNMENT);
-		StartingMenu.add(Options);
+		c.gridx = 0;
+		c.gridy = 2;
+		StartingMenu.add(Options, c);
 
 		Quit = new JButton("Quitter");
 		Quit.setFont(f2);
 		Quit.addActionListener(this);
-		Quit.setAlignmentX(Component.CENTER_ALIGNMENT);
-		StartingMenu.add(Quit);
+		c.gridx = 0;
+		c.gridy = 3;
+		StartingMenu.add(Quit, c);
 
 		Launcher.add(StartingMenu, BorderLayout.CENTER);
-		Launcher.setBounds(200, 100, 800, 600);
 		Launcher.setVisible(true);
 		
 		return;
@@ -213,5 +265,21 @@ public class GameLauncher implements ActionListener {
 		} else if (s == OptionsValidate) {
 			OptionsFrame.setVisible(false);
 		}
+	}
+	
+	public void componentResized(ComponentEvent e) {
+		 StartingMenu.update(0, 0, Launcher.getWidth(), Launcher.getHeight());
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
 	}
 }
