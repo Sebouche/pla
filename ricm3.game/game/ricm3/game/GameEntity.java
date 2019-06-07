@@ -18,7 +18,7 @@ public class GameEntity {
 	int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
-	Type m_type;
+	Type m_type;  
 	LinkedList<Keys> m_keys;
 
 	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites,IAutomaton automate) {
