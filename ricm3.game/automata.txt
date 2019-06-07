@@ -75,6 +75,24 @@ Dog(Init){
 	* ()
 }
 
+Block(Init){
+	* (Init): 
+    | !GotPower() ? Pop() :()
+	| True ? Wizz() :(Init)
+	* ()
+	
+barbed(Init){
+    * (Init): 
+    | !GotPower() ? wizz() :()
+	| True ? pop() :(Init)
+	* ()
+
+wall(Init){
+	* (Init): 
+    | !GotPower() ? Pop() :()
+	| True ? Wizz() :(Init)
+	* ()
+	
 PlayerS(Surface){
 	* (Surface):
 	| Key(z) & Cell(N,G,1) ? Pick(N) :()
