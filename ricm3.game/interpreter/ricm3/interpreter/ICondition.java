@@ -5,8 +5,19 @@ import ricm3.game.Options;
 
 public class ICondition extends IExpression {
 
+	public IExpression expr1;
+	public IExpression expr2;
+	
 	public ICondition() {
 		super();
+		expr1 = null;
+		expr2 = null;
+	}
+	
+	public ICondition(ICondition condition) {
+		super(condition);
+		expr1=condition.expr1;
+		expr2=condition.expr2;
 	}
 
 	boolean isInside(GameEntity e, int x, int y) {

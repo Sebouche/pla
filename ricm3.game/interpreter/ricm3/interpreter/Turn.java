@@ -18,9 +18,11 @@ public class Turn extends IAction {
 			this.dir = Direction.FRONT;
 		}
 	}
-	
+
 	@Override
 	public boolean exec(GameEntity e) {
+		if (act != null)
+			return e.turn(dir) && act.exec(e);
 		return e.turn(dir);
 	}
 }
