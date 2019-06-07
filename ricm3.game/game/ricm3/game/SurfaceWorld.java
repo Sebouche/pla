@@ -9,6 +9,7 @@ import java.util.Random;
 import java.io.File;
 
 import ricm3.game.Options;
+import ricm3.interpreter.IAutomaton;
 
 public class SurfaceWorld extends World {
 
@@ -95,8 +96,9 @@ public class SurfaceWorld extends World {
 		Chunk m_c;
 
 		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites) {
-			super(c.world.m_model, x, y, 100, sprites);
+			super(c.world.m_model, x, y, 100, sprites,null);
 			m_c = c;
+			this.m_automate=new IAutomaton(m_model.m_automatons.get(0));
 			c.world.m_entities.add(this);
 		}
 
@@ -114,16 +116,16 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"));
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(m_model.m_automatons.get(0)));
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"));
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(m_model.m_automatons.get(0)));
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"));
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(m_model.m_automatons.get(0)));
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"));
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(m_model.m_automatons.get(0)));
 					break;
 				default:
 					e = null;
@@ -169,6 +171,11 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void step() {
+		Iterator<GameEntity> iter = m_entities.iterator();
+		while (iter.hasNext()) {
+			GameEntity e = iter.next();
+			e.step();
+		}
 	}
 
 	@Override
