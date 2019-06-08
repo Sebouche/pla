@@ -17,7 +17,9 @@
  */
 package ricm3.game;
 
+import java.awt.Font;
 import java.awt.MenuItem;
+import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -125,28 +127,32 @@ public class Controller extends GameController implements ActionListener {
 			System.out.println("MouseMoved: (" + e.getX() + "," + e.getY());
 	}
 
-	public void notifyVisible() {
-		// Menu popup
-		/*
-		 * m_model.options_menu = new PopupMenu();
-		 * 
-		 * Font f3 = new Font(Font.SERIF, Font.BOLD, 32); Font f4 = new
-		 * Font(Font.MONOSPACED, Font.BOLD, 16);
-		 * 
-		 * MenuItem m1_label1 = new MenuItem("Oui (label)"); m1_label1.setFont(f4);
-		 * m_model.options_menu.add(m1_label1);
-		 * 
-		 * m1_button1 = new MenuItem("Non (button)"); m1_button1.setFont(f4);
-		 * m1_button1.addActionListener(this); m_model.options_menu.add(m1_button1);
-		 * 
-		 * m_model.options_menu.setLabel("Choix automate (?)");
-		 * m_model.options_menu.setFont(f3); m_model.options_menu.setEnabled(true);
-		 * 
-		 * m_view.add(m_model.options_menu);
-		 * 
-		 * m_model.options_menu.show(m_view, 0, 0);
-		 */
+	public void menu1() {
+		m_model.menu1 = new PopupMenu();
 
+		Font f3 = new Font(Font.SERIF, Font.BOLD, 32);
+		Font f4 = new Font(Font.MONOSPACED, Font.BOLD, 16);
+
+		MenuItem m1_label1 = new MenuItem("Oui (label)");
+		m1_label1.setFont(f4);
+		m_model.menu1.add(m1_label1);
+
+		m_m1_button1 = new MenuItem("Non (button)");
+		m_m1_button1.setFont(f4);
+		m_m1_button1.addActionListener(this);
+		m_model.menu1.add(m_m1_button1);
+
+		m_model.menu1.setLabel("Choix automate (?)");
+		m_model.menu1.setFont(f3);
+		m_model.menu1.setEnabled(true);
+
+		m_view.add(m_model.menu1);
+
+		m_model.menu1.show(m_view, 0, 0);
+
+	}
+
+	public void notifyVisible() {
 	}
 
 	@Override
