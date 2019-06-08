@@ -38,10 +38,8 @@ public class Closest extends ICondition {
 				}
 			}
 		}
-		if (close == null) return false;
-		
-		
-		
+		if (close == null)
+			return false;
 
 		return dir == dirClosest(e,close);
 	}

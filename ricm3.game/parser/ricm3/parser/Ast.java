@@ -322,10 +322,12 @@ public class Ast {
 				tmp = ((FunCall) left_operand).make();
 				if(tmp instanceof IAction) {
 					act = new IAction();
+					act.op = new IOperator(operator.make());
 					act.act = tmp;
 				}
 				else {
 					cond = new ICondition();
+					cond.op = new IOperator(operator.make());
 					cond.expr1 = tmp;
 				}
 				
@@ -333,53 +335,51 @@ public class Ast {
 				tmp = ((BinaryOp) left_operand).make();
 				if(tmp instanceof IAction) {
 					act = new IAction();
+					act.op = new IOperator(operator.make());
 					act.act = tmp;
 				}
 				else {
 					cond = new ICondition();
+					cond.op = new IOperator(operator.make());
 					cond.expr1 = tmp;
 				}
 			} else {
 				tmp = ((UnaryOp) left_operand).make();
 				if(tmp instanceof IAction) {
 					act = new IAction();
+					act.op = new IOperator(operator.make());
 					act.act = tmp;
 				}
 				else {
 					cond = new ICondition();
+					cond.op = new IOperator(operator.make());
 					cond.expr1 = tmp;
 				}
 			}
 			if (right_operand instanceof FunCall) {
 				tmp = ((FunCall) right_operand).make();
 				if(tmp instanceof IAction) {
-					act = new IAction();
 					act.act = tmp;
 				}
 				else {
-					cond = new ICondition();
-					cond.expr1 = tmp;
+					cond.expr2 = tmp;
 				}
 				
 			} else if (right_operand instanceof BinaryOp) {
 				tmp = ((BinaryOp) right_operand).make();
 				if(tmp instanceof IAction) {
-					act = new IAction();
 					act.act = tmp;
 				}
 				else {
-					cond = new ICondition();
-					cond.expr1 = tmp;
+					cond.expr2 = tmp;
 				}
 			} else {
 				tmp = ((UnaryOp) right_operand).make();
 				if(tmp instanceof IAction) {
-					act = new IAction();
 					act.act = tmp;
 				}
 				else {
-					cond = new ICondition();
-					cond.expr1 = tmp;
+					cond.expr2 = tmp;
 				}
 			}
 			if (cond == null) return (IExpression) act;
