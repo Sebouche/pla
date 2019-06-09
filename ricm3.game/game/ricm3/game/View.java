@@ -18,7 +18,9 @@
 package ricm3.game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import edu.ricm3.game.GameView;
 
@@ -65,9 +67,10 @@ public class View extends GameView {
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
 				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
-					g.drawImage(m_model.m_sprites.get("grassbg")[0], (int) (i * Options.Entity_size * Options.Scale)-cam_x,
-							(int) (j * Options.Entity_size * Options.Scale)-cam_y, (int) Options.Scale * Options.Entity_size,
-							(int) Options.Scale * Options.Entity_size, null);
+					g.drawImage(m_model.m_sprites.get("grassbg")[0],
+							(int) (i * Options.Entity_size * Options.Scale) - cam_x,
+							(int) (j * Options.Entity_size * Options.Scale) - cam_y,
+							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 
 				}
 			}
@@ -90,25 +93,31 @@ public class View extends GameView {
 			}
 		}
 
-
 		if (Options.begin) {
 			Graphics g_child;
 			g_child = g.create(0, 0, getWidth(), getHeight());
 			m_model.m_currentworld.paint(g_child);
 			g_child.dispose();
-			g_child = g.create(m_model.m_width / 2,m_model.m_height / 2, (int) (Options.Entity_size * Options.Scale),
+			g_child = g.create(m_model.m_width / 2, m_model.m_height / 2, (int) (Options.Entity_size * Options.Scale),
 					(int) (Options.Entity_size * Options.Scale));
 			m_model.m_camera.m_watched.paint(g_child);
 			g_child.dispose();
-			
-			//barre de vie
-			
-			g_child = g.create(m_model.m_width / 2-50,20,100,
-					20);
-			g_child.setColor(new Color(255, 20, 10));
-			g_child.fillRect(0, 0, 100, 20);
-			g_child.setColor(new Color(10, 255, 20));
-			g_child.fillRect(0, 0, m_model.m_player.m_hp*100/500, 20);
+
+			// barre de vie
+
+			g_child = g.create(m_model.m_width / 2 - 50, 20, 100, 20);
+			BufferedImage heartsprite = m_model.m_sprites.get("heart")[0];
+			System.out.println(m_model.m_player.m_hp);
+			int hp;
+			for (hp = 0; hp < m_model.m_player.m_hp; hp += 100) {
+				g.drawImage(heartsprite, ((int) (0.4 * hp)) - 12, -12, 64, 64, null);
+			}
+			hp -= 100;
+			g.setFont(new Font("HP", 1, 15));
+			g.setColor(Color.white);
+			if (m_model.m_player.m_hp - hp < 100) {
+				g.drawString("  " + (m_model.m_player.m_hp - hp), ((int) (0.4 * hp)), 24);
+			}
 			g_child.dispose();
 		}
 	}
