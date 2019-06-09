@@ -16,15 +16,13 @@ public class MovingEntity extends GameEntity {
 
 	boolean collision(GameEntity ge, int x, int y) {
 		boolean coll;
-		coll = false;
+		coll = true;
 		double entity_size = Options.Scale * Options.Entity_size;
-		if (!(this.m_y + y > ge.m_y + entity_size || this.m_y + entity_size + y < ge.m_y)) { // collision
-			this.m_dy = 0;
-			coll = true;
+		if ((this.m_y + y > ge.m_y + entity_size || this.m_y + entity_size + y < ge.m_y)) { // collision
+			coll = false;
 		}
-		if (!(this.m_x + x > ge.m_x + entity_size || this.m_x + entity_size + x < ge.m_x)) {
-			this.m_dx = 0;
-			coll = true;
+		if ((this.m_x + x > ge.m_x + entity_size || this.m_x + entity_size + x < ge.m_x)) {
+			coll = false;
 		}
 		if (coll == true) {
 			return true;
@@ -52,16 +50,25 @@ public class MovingEntity extends GameEntity {
 		default:
 			break;
 		}
-		/*Iterator<GameEntity> iter = m_originWorld.m_entities.iterator();
+		boolean coll = false;
+		Iterator<GameEntity> iter = m_originWorld.m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {
 			E = iter.next();
-			if (collision(E, m_dx, m_dy))
-				return false;
-		}*/
+			if (collision(E, m_dx, 0)) {
+				m_dx = 0;
+				coll = true;
+			}
+			if (collision(E, 0, m_dy)) {
+				m_dy = 0;
+				coll = true;
+			}
+		}
 		m_x += m_dx;
 		m_y += m_dy;
-		return true;
+		m_dx = 0;
+		m_dy = 0;
+		return !coll;
 	}
 
 
