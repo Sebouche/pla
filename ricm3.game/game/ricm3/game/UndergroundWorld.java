@@ -138,8 +138,8 @@ public class UndergroundWorld extends World {
 			for (int j = -distance; j <= distance; j++) {
 				k++;
 				if (m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)] != null) {
-					Graphics g_child = g.create(k * (int) (Options.Entity_size * Options.Scale) - cam_x,
-							m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].m_y - cam_y
+					Graphics g_child = g.create(k * (int) (Options.Entity_size * Options.Scale) - (cam_x % (int) (Options.Entity_size * Options.Scale)),
+							m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].m_y - (cam_y % (int) (Options.Entity_size * Options.Scale))
 									+ m_model.m_height / 2 + 2,
 							(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 					m_grid[Math.floorMod((pos_y + i), 20)][Math.floorMod((pos_x + j), 60)].paint(g_child);
