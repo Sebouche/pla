@@ -15,7 +15,7 @@ public class House extends Ally {
 
 	public House(Model model, int x, int y, int hp, BufferedImage[] sprites, World originWorld) {
 		super(model, x, y, hp, sprites, null, originWorld);
-		IAutomaton automate = new IAutomaton(m_model.m_automatons.get(0));
+		IAutomaton automate = new IAutomaton(Options.m_automata.get(0));
 		m_blocks = new LinkedList<Block>();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
