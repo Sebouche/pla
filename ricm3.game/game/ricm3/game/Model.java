@@ -17,13 +17,13 @@
  */
 package ricm3.game;
 
+import java.awt.PopupMenu;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
@@ -39,10 +39,10 @@ public class Model extends GameModel {
 	Camera m_camera;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	List<IAutomaton> m_automatons;
-	JPanel m_starting_menu;
-	JPanel m_options_menu;
+
+	PopupMenu menu1;
 	Music m_bgm;
-	
+
 	public Model() {
 		Ast arbre;
 		try {
@@ -54,8 +54,8 @@ public class Model extends GameModel {
 		loadSprites();
 		m_surfaceworld = new SurfaceWorld(10, this);
 		m_undergroundworld = new UndergroundWorld(this);
-		m_currentworld = m_surfaceworld;
-		//m_currentworld = m_undergroundworld;
+		//m_currentworld = m_surfaceworld;
+		m_currentworld = m_undergroundworld;
 		m_player = new Player(this, -100, -100, 500, m_sprites.get("scientist"),m_automatons.get(0), m_surfaceworld);
 		m_player.m_automate = new IAutomaton(m_automatons.get(0));
 		m_camera = new Camera(this, m_player);
@@ -66,7 +66,7 @@ public class Model extends GameModel {
 			m_bgm = new Music(file);
 			m_bgm.start();
 		} catch (Exception ex) {
-			
+
 		}
 	}
 
@@ -81,11 +81,9 @@ public class Model extends GameModel {
 	 */
 	@Override
 	public void step(long now) {
-		if (Options.begin) {
-			m_player.step();
-			m_undergroundworld.step();
-			m_surfaceworld.step();
-		}
+		m_player.step();
+		m_undergroundworld.step();
+		m_surfaceworld.step();
 	}
 
 	private void loadSprites() {
