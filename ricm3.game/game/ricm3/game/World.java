@@ -14,7 +14,10 @@ public class World {
 		m_model = model;
 		m_entities = new LinkedList<GameEntity>();
 	}
-
+	
+	public void changeWorld() {
+		
+	}
 	public void step() {
 	}
 

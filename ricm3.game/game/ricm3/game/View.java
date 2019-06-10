@@ -73,9 +73,9 @@ public class View extends GameView {
 				for (int j = -1; (int) (j * Options.Entity_size) <= getHeight(); j++) {
 					g.drawImage(m_model.m_sprites.get("grassbg")[0],
 							(int) (i * Options.Entity_size * Options.Scale)
-									- (cam_x % (int) (Options.Entity_size * Options.Scale)),
+									- (cam_x % (int) (Options.Entity_size * Options.Scale))+22,
 							(int) (j * Options.Entity_size * Options.Scale)
-									- (cam_y % (int) (Options.Entity_size * Options.Scale)),
+									- (cam_y % (int) (Options.Entity_size * Options.Scale))+10,
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 
 				}
@@ -89,15 +89,15 @@ public class View extends GameView {
 								(int) (i * Options.Entity_size * Options.Scale)
 										- (cam_x % (int) (Options.Entity_size * Options.Scale)),
 								getHeight() - (int) (j * Options.Entity_size * Options.Scale)
-										- (cam_y % (int) (Options.Entity_size * Options.Scale)),
+										- (cam_y % (int) (Options.Entity_size * Options.Scale))-5,
 								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
 								null);
 					} else {
 						g.drawImage(m_model.m_sprites.get("dirtbg")[0],
 								(int) (i * Options.Entity_size * Options.Scale)
-										- (cam_x % (int) (Options.Entity_size * Options.Scale)),
+										- (cam_x % (int) (Options.Entity_size * Options.Scale))+24,
 								getHeight() - (int) (j * Options.Entity_size * Options.Scale)
-										- (cam_y % (int) (Options.Entity_size * Options.Scale)),
+										- (cam_y % (int) (Options.Entity_size * Options.Scale))-5,
 								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
 								null);
 					}

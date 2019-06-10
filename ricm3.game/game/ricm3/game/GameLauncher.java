@@ -58,7 +58,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			try {
 				m_bg = ImageIO.read(new File(url));
 			} catch (IOException e) {
-				System.out.println("Problème de lecture d'image (launcher bg)");
+				System.out.println("Probleme de lecture d'image (launcher bg)");
 			}
 		}
 
@@ -191,7 +191,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_AutomataComboBox_Turtle.addActionListener(this);
 		AutomataList.add(m_AutomataComboBox_Turtle);
 		
-		JLabel EntitiesTitle = new JLabel("Entité /");
+		JLabel EntitiesTitle = new JLabel("Entite /");
 		EntitiesTitle.setFont(m_f2);
 		c.gridx = 0;
 		c.gridy = 0;

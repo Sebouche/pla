@@ -168,6 +168,14 @@ public class SurfaceWorld extends World {
 	}
 
 	@Override
+	public void changeWorld() {
+		m_model.m_currentworld=m_model.m_undergroundworld;
+		m_model.m_player.m_x=64;
+		m_model.m_player.m_y=640;
+		m_model.m_player.m_originWorld=m_model.m_undergroundworld;
+	}
+	
+	@Override
 	public void step() {
 		Iterator<GameEntity> iter = m_entities.iterator();
 		while (iter.hasNext()) {

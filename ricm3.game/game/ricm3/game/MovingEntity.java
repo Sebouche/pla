@@ -64,6 +64,14 @@ public class MovingEntity extends GameEntity {
 				coll = true;
 			}
 		}
+		if(m_originWorld instanceof UndergroundWorld) {
+			UndergroundWorld u=(UndergroundWorld) m_originWorld;
+			if(u.adjacent_collision(this)) {
+				m_dx = 0;
+				m_dy = 0;
+				coll = true;
+			}
+		}
 		m_x += m_dx;
 		m_y += m_dy;
 		m_dx = 0;
