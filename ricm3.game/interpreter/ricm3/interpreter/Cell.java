@@ -23,9 +23,6 @@ public class Cell extends ICondition {
 
 	@Override
 	public boolean eval(GameEntity e) {
-		if(1==1) {
-		return true;
-		}
 		Direction dir = Direction.entityDir(e, direction);
 		int cellx = e.x();
 		int celly = e.y();
