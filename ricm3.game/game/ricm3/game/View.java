@@ -59,11 +59,15 @@ public class View extends GameView {
 	@Override
 	protected void _paint(Graphics g) {
 		computeFPS();
+		
+		
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
 		m_model.m_width = getWidth() - (int) (Options.Entity_size * Options.Scale);
 		m_model.m_height = getHeight() - (int) (Options.Entity_size * Options.Scale);
 
+		
+		//background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			for (int i = -1; (int) (i * Options.Entity_size) <= getWidth(); i++) {
 				for (int j = -1; (int) (j * Options.Entity_size) <= getHeight(); j++) {
@@ -80,7 +84,7 @@ public class View extends GameView {
 			int profondeur = (int) (m_model.m_player.m_y / (Options.Entity_size * Options.Scale));
 			for (int i = -1; (int) (i * Options.Entity_size) <= getWidth(); i++) {
 				for (int j = -1; (int) (j * Options.Entity_size) <= getHeight(); j++) {
-					if (j - profondeur > 6) {
+					if (j - profondeur > -5) {
 						g.drawImage(m_model.m_sprites.get("block")[7],
 								(int) (i * Options.Entity_size * Options.Scale)
 										- (cam_x % (int) (Options.Entity_size * Options.Scale)),
@@ -101,6 +105,7 @@ public class View extends GameView {
 			}
 		}
 
+		//foreground
 		Graphics g_child;
 		g_child = g.create(0, 0, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);

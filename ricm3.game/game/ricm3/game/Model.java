@@ -54,9 +54,11 @@ public class Model extends GameModel {
 		loadSprites();
 		m_surfaceworld = new SurfaceWorld(10, this);
 		m_undergroundworld = new UndergroundWorld(this);
-		//m_currentworld = m_surfaceworld;
+		// m_currentworld = m_surfaceworld;
 		m_currentworld = m_undergroundworld;
-		m_player = new Player(this, -100, -100, 500, m_sprites.get("scientist"),m_automatons.get(0), m_surfaceworld);
+		// m_player = new Player(this, -100, -100, 500,
+		// m_sprites.get("scientist"),m_automatons.get(0), m_surfaceworld);
+		m_player = new Player(this, 64, 640, 500, m_sprites.get("scientist"), m_automatons.get(0), m_undergroundworld);
 		m_player.m_automate = new IAutomaton(m_automatons.get(0));
 		m_camera = new Camera(this, m_player);
 		File file;
