@@ -1,6 +1,6 @@
 PlayerS(Surface){
 	* (Surface):
-	| Key(w) ? Wizz(O) :(Surface)
+	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
 	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
 	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)

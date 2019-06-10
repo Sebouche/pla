@@ -97,7 +97,7 @@ public class SurfaceWorld extends World {
 			super(c.world.m_model, x, y, 100, sprites,null, originWorld);
 			m_c = c;
 			this.m_automate=new IAutomaton(m_model.m_automatons.get(0));
-			c.world.m_entities.add(this);
+			m_c.world.m_entities.add(this);
 		}
 
 		@Override
@@ -156,7 +156,7 @@ public class SurfaceWorld extends World {
 				type = (((r.nextInt()) % 10) + 1) / 10;
 				if (type == 1) {
 					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
-							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), m_model.m_surfaceworld);
+							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), world);
 				}
 			}
 

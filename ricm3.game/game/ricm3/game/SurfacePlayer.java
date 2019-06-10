@@ -19,27 +19,25 @@ public class SurfacePlayer extends Player {
 	public boolean wizz(Direction dir) {
 		int posTourX = this.m_x;
 		int posTourY = this.m_y;
-		switch (dir) {
+		switch (Direction.entityDir(this, dir)) {
 		case NORTH:
-			posTourY -= Options.Entity_size * Options.Scale;
+			posTourY -= Options.Entity_size * Options.Scale + 1;
 			break;
 		case SOUTH:
-			posTourY += Options.Entity_size * Options.Scale;
+			posTourY += Options.Entity_size * Options.Scale + 1;
 			break;
 		case EAST:
-			posTourX += Options.Entity_size * Options.Scale;
+			posTourX += Options.Entity_size * Options.Scale + 1;
 			break;
 		case WEST:
-			posTourX -= Options.Entity_size * Options.Scale;
+			posTourX -= Options.Entity_size * Options.Scale + 1;
 			break;
-	/*	case FRONT:
-		case LEFT:
-		case RIGHT:
-		case BACK:
 		default:
-			return false;*/
+			return false;
 		}
-		new Turret(m_model, posTourX, posTourY, Options.HP[1], m_sprites, m_automate, m_originWorld);
+/// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE LA TOURELLE  (GOTSTUFF maybe)
+		m_originWorld.m_entities
+				.add(new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("tesla"), m_automate, m_originWorld));
 		return true;
 	}
 }
