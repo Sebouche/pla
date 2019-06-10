@@ -61,7 +61,7 @@ public class Model extends GameModel {
 		m_player = new Player(this, 64, 640, 500, m_sprites.get("scientist"), m_automatons.get(0), m_undergroundworld);
 		m_player.m_automate = new IAutomaton(m_automatons.get(0));
 		m_camera = new Camera(this, m_player);
-		File file;
+		/*File file;
 		file = new File("sprites/menumusic.wav");
 
 		try {
@@ -69,7 +69,7 @@ public class Model extends GameModel {
 			m_bgm.start();
 		} catch (Exception ex) {
 
-		}
+		}*/
 	}
 
 	@Override

@@ -19,8 +19,15 @@ public class House extends Ally {
 		m_blocks = new LinkedList<Block>();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
+				Block b;
+				if(i==2 && j==1) {
+					b= new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
+							(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate,originWorld);
+				}
+				else {
+				b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 						(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate,originWorld);
+				}
 				b.m_idsprite = i * 3 + j;
 				originWorld.m_entities.add(b);
 			}
@@ -31,6 +38,7 @@ public class House extends Ally {
 	public void step() {
 		m_blocks.get(0).step();
 	}
+
 	@Override
 	public void paint(Graphics g) {
 		Iterator<Block> iter = m_blocks.iterator();

@@ -47,9 +47,16 @@ public class UndergroundWorld extends World {
 		// Generation maison
 		for (int i = 9; i <= 10; i++) {
 			for (int j = 0; j <= 2; j++) {
-				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-						(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
-						new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+				Block b;
+				if (i == 10 && j == 2) {
+					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
+							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
+							new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+				} else {
+					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
+							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
+							new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+				}
 				b.set_idsprite((i - 6) * 3 + j);
 				m_grid[i][j] = b;
 				if (i == 10 && j == 1) {
@@ -73,7 +80,7 @@ public class UndergroundWorld extends World {
 				m_grid[11][j] = b;
 			}
 		}
-		 m_grid[11][1] = null;
+		m_grid[11][1] = null;
 
 		// Generation minerais
 		for (int i = 12; i < 60; i++) {
@@ -114,7 +121,7 @@ public class UndergroundWorld extends World {
 					if (randint >= 950 && randint < 999) {
 						m_grid[i][j] = null;
 					}
-					if (randint >= 999 && i>= 30) {
+					if (randint >= 999 && i >= 30) {
 						m_grid[i][j] = new Uranium(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("block"),
 								new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
@@ -126,6 +133,7 @@ public class UndergroundWorld extends World {
 
 	@Override
 	public void changeWorld() {
+		// A appeller lorsque le joueur passe par la porte
 		m_model.m_currentworld = m_model.m_surfaceworld;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 192;
@@ -135,10 +143,12 @@ public class UndergroundWorld extends World {
 
 	@Override
 	public void step() {
+		// application de la gravité au joueur
 		if (m_player.m_originWorld instanceof UndergroundWorld) {
 			gravity(m_model.m_player);
 		}
-		
+
+		// step des blocs
 		int entity_size = (int) (Options.Scale * Options.Entity_size);
 		int distance = 10;
 		int pos_x = (int) (m_model.m_player.m_x / entity_size);
@@ -151,6 +161,7 @@ public class UndergroundWorld extends World {
 			}
 		}
 
+		// step des entités
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {
@@ -160,46 +171,47 @@ public class UndergroundWorld extends World {
 
 	}
 
-	boolean adjacent_collision(MovingEntity E) {
+	// Renvoi true si il y a collision avec un des blocs adjacent a l'entité
+	boolean adjacent_collision(MovingEntity E, int dx, int dy) {
 		int entity_size = (int) (Options.Scale * Options.Entity_size);
 		int pos_x = (int) (E.m_x / entity_size);
 		int pos_y = (int) (E.m_y / entity_size);
 		int pos_x_r = (int) ((E.m_x + entity_size) / entity_size);
 		int pos_y_d = (int) ((E.m_y + entity_size) / entity_size);
 		if (m_grid[pos_y - 1][pos_x] != null && m_grid[pos_y - 1][pos_x].m_collision)
-			if (E.collision(m_grid[pos_y - 1][pos_x], E.m_dx, E.m_dy)) {
+			if (E.collision(m_grid[pos_y - 1][pos_x], dx, dy)) {
 				return true;
 			}
 		if (m_grid[pos_y - 1][pos_x_r] != null && m_grid[pos_y - 1][pos_x_r].m_collision)
-			if (E.collision(m_grid[pos_y - 1][pos_x_r], E.m_dx, E.m_dy)) {
+			if (E.collision(m_grid[pos_y - 1][pos_x_r], dx, dy)) {
 				return true;
 			}
 		if (m_grid[pos_y][Math.floorMod((pos_x - 1), 60)] != null
 				&& m_grid[pos_y][Math.floorMod((pos_x - 1), 60)].m_collision)
-			if (E.collision(m_grid[pos_y][Math.floorMod((pos_x - 1), 60)], E.m_dx, E.m_dy)) {
+			if (E.collision(m_grid[pos_y][Math.floorMod((pos_x - 1), 60)], dx, dy)) {
 				return true;
 			}
 		if (m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)] != null
 				&& m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)].m_collision)
-			if (E.collision(m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)], E.m_dx, E.m_dy)) {
+			if (E.collision(m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)], dx, dy)) {
 				return true;
 			}
 		if (m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)] != null
 				&& m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)].m_collision)
-			if (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)], E.m_dx, E.m_dy)) {
+			if (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)], dx, dy)) {
 				return true;
 			}
 		if (m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)] != null
 				&& m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)].m_collision)
-			if (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)], E.m_dx, E.m_dy)) {
+			if (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)], dx, dy)) {
 				return true;
 			}
 		if (m_grid[pos_y_d + 1][pos_x] != null && m_grid[pos_y_d + 1][pos_x].m_collision)
-			if (E.collision(m_grid[pos_y_d + 1][pos_x], E.m_dx, E.m_dy)) {
+			if (E.collision(m_grid[pos_y_d + 1][pos_x], dx, dy)) {
 				return true;
 			}
 		if (m_grid[pos_y_d + 1][pos_x_r] != null && m_grid[pos_y_d + 1][pos_x_r].m_collision)
-			if (E.collision(m_grid[pos_y_d + 1][pos_x_r], E.m_dx, E.m_dy)) {
+			if (E.collision(m_grid[pos_y_d + 1][pos_x_r], dx, dy)) {
 				return true;
 			}
 		return false;
@@ -218,6 +230,8 @@ public class UndergroundWorld extends World {
 		int cam_y = m_model.m_camera.m_watched.m_y;
 		int pos_x = (int) (m_model.m_player.m_x / (Options.Entity_size * Options.Scale));
 		int pos_y = (int) (m_model.m_player.m_y / (Options.Entity_size * Options.Scale));
+
+		// Affichage des blocs
 		for (int i = -distance; i <= distance; i++) {
 			for (int j = -distance; j <= distance; j++) {
 				if (m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)] != null) {
@@ -232,6 +246,8 @@ public class UndergroundWorld extends World {
 				}
 			}
 		}
+
+		// Affichage des entités
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {
