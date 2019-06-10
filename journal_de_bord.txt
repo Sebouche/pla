@@ -54,3 +54,17 @@ Houda : -Conception du prototype pour la fabrication des objets
 	 -Houda : Travail sur les automates des blocs
 	 -Sebastian : Travail sur l'affichage et sur la classe de la maison
 	 -Nicolas : Travail sur l'interpreteur d'automates
+	 
+-07/06 : -Sacha : Travail sur la barre de vie du joueur
+	 -Samuel : Travail sur la gestion de la gravité
+	 -Adrien : Travail sur la gestion du son
+	 -Houda : Travail sur les automates des murs et barbelés
+	 -Sebastian : Travail sur l'affichage du fond des deux mondes
+	 -Nicolas : Travail sur la classe joueur
+	 
+-08/06 et 09/06 : -Sacha : Travail sur les automates des ennemis
+	 -Samuel : Travail sur les options du menu (choisir les automates associés a chaque entité)
+	 -Adrien : Travail sur la gestion du son
+	 -Houda : Travail sur les automates des murs et barbelés
+	 -Sebastian : Correction de bugs d'affichage et automates d'ennemis
+	 -Nicolas : Travail sur la classe joueur
