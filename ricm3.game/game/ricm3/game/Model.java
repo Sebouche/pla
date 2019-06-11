@@ -46,7 +46,7 @@ public class Model extends GameModel {
 	public Model() {
 		
 		loadSprites();
-		m_surfaceworld = new SurfaceWorld(10, this);
+		m_surfaceworld = new SurfaceWorld(2, this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
 		IAutomaton player_automate = new IAutomaton(Options.selectedAutomata.get(0));

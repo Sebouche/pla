@@ -13,32 +13,34 @@ public class World {
 	LinkedList<GameEntity> m_entities;
 	LinkedList<Ally> m_allies;
 	File m_bgmfile;
-	
+
 	public World(Model model) {
 		m_entities = new LinkedList<GameEntity>();
 		m_allies = new LinkedList<Ally>();
 		m_model = model;
 	}
-	
+
 	public void changeWorld() {
 		try {
 			Options.m_bgm.stop();
 			Options.m_bgm = new Music(m_model.m_currentworld.m_bgmfile);
 			Options.m_bgm.start();
-		} catch (Exception ex) {}
-		
+		} catch (Exception ex) {
+		}
+
 	}
+
 	public void step() {
 	}
 
 	public void paint(Graphics g) {
 	}
-	
+
 	public boolean Hit(GameEntity ge, Direction d) {
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity e;
-		int x,y;
-		switch(d) {
+		int x, y;
+		switch (d) {
 		case EAST:
 			x = 10;
 			y = 0;
@@ -60,11 +62,13 @@ public class World {
 			return false;
 		}
 		boolean b = false;
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			e = iter.next();
-			if(((MovingEntity)(e)).collision(ge, x, y)) {
-				ge.damage_hp(e.m_dmg);
-				b = true;
+			if (e instanceof MovingEntity) {
+				if (((MovingEntity) (e)).collision(ge, x, y)) {
+					ge.damage_hp(e.m_dmg);
+					b = true;
+				}
 			}
 		}
 		return b;
