@@ -16,22 +16,22 @@ public class MovingEntity extends GameEntity {
 	}
 
 	boolean collision(GameEntity ge, int x, int y) {
-		boolean coll;
-		coll = true;
-		double entity_size = Options.Scale * Options.Entity_size;
 		if (ge.m_collision) {
+			boolean coll;
+			coll = true;
+			double entity_size = Options.Scale * Options.Entity_size;
 			if ((this.m_y + y >= ge.m_y + entity_size || this.m_y + entity_size + y < ge.m_y)) { // collision
 				coll = false;
 			}
 			if ((this.m_x + x >= ge.m_x + entity_size || this.m_x + entity_size + x < ge.m_x)) {
 				coll = false;
 			}
-		}
-		if (coll == true) {
-			if(ge instanceof Gate) {
-				m_originWorld.changeWorld();
+			if (coll == true) {
+				if (ge instanceof Gate) {
+					m_originWorld.changeWorld();
+				}
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}

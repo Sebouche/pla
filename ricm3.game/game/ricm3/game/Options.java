@@ -46,4 +46,5 @@ public class Options {
 	public static IAutomaton Mouse_Automaton = null;
 	public static IAutomaton Rabbit_Automaton = null;
 	public static IAutomaton Turtle_Automaton = null;
+	public static IAutomaton Spawner_Automaton = null;
 }

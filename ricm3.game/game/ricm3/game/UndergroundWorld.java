@@ -16,7 +16,7 @@ public class UndergroundWorld extends World {
 
 	public UndergroundWorld(Model model) {
 		super(model);
-		m_grid = new GameEntity[20][60];
+		m_grid = new GameEntity[60][60];
 		m_player = new Player(m_model, 10, 10, 9999, m_model.m_sprites.get("scientist"), null, this);
 		generate_level();
 		m_bgmfile = new File("sprites/bgm_underground.wav");
@@ -40,7 +40,7 @@ public class UndergroundWorld extends World {
 			int rand_y = m_rand.nextInt(60);
 			Block b = new Block(m_model, (int) (rand_x * Options.Entity_size * Options.Scale),
 					(int) (rand_y * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
-					new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+					new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
 			b.set_idsprite(8);
 			m_grid[rand_x + 4][rand_y] = b;
 		}
@@ -51,11 +51,11 @@ public class UndergroundWorld extends World {
 				if (i == 10 && j == 2) {
 					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
 							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
-							new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+							new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
 				} else {
 					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
-							new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+							new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
 				}
 				b.set_idsprite((i - 6) * 3 + j);
 				m_grid[i][j] = b;
@@ -69,13 +69,13 @@ public class UndergroundWorld extends World {
 			if (j <= 2) {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
-						new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+						new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
 				b.set_idsprite(6);
 				m_grid[11][j] = b;
 			} else {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
-						new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+						new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
 				b.set_idsprite(1);
 				m_grid[11][j] = b;
 			}
@@ -90,20 +90,20 @@ public class UndergroundWorld extends World {
 					if (randint >= 0 && randint < 850) {
 						Block b = new Dirt(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"),
-								new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+								new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
 						m_grid[i][j] = b;
 					}
 					if (randint >= 850 && randint < 950) {
 						Block b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 600, m_model.m_sprites.get("block"),
-								new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+								new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
 						m_grid[i][j] = b;
 						for (int k = -1; k <= 1; k++) {
 							int randint2 = m_rand.nextInt(10);
 							if (randint2 <= 3 && i + k >= 0 && i + k < 20) {
 								b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
 										(int) ((i + k) * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("block"), new IAutomaton(m_model.m_automatons.get(0)),
+										m_model.m_sprites.get("block"), new IAutomaton(Options.Block_Automaton),
 										m_model.m_undergroundworld);
 								m_grid[i][j] = b;
 							}
@@ -111,7 +111,7 @@ public class UndergroundWorld extends World {
 							if (randint2 <= 3 && j + k >= 0 && j + k < 60) {
 								b = new Copper(m_model, (int) ((j + k) * Options.Entity_size * Options.Scale),
 										(int) (i * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("block"), new IAutomaton(m_model.m_automatons.get(0)),
+										m_model.m_sprites.get("block"), new IAutomaton(Options.Block_Automaton),
 										this);
 								b.set_idsprite(5);
 								m_grid[i][j] = b;
@@ -124,7 +124,7 @@ public class UndergroundWorld extends World {
 					if (randint >= 999 && i >= 30) {
 						m_grid[i][j] = new Uranium(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("block"),
-								new IAutomaton(m_model.m_automatons.get(0)), m_model.m_undergroundworld);
+								new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
 					}
 				}
 			}
@@ -246,7 +246,6 @@ public class UndergroundWorld extends World {
 					g_child.dispose();
 				}
 			}
-			k = 0;
 		}
 
 		// Affichage des entit�s

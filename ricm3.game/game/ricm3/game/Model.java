@@ -52,8 +52,8 @@ public class Model extends GameModel {
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
 		//m_currentworld = m_undergroundworld;
-		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(m_automatons.get(0)), m_surfaceworld);
-		m_undergroundplayer =new UndergroundPlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(m_automatons.get(0)), m_surfaceworld);
+		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(Options.Player1_Automaton), m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 128, 500, m_sprites.get("scientist"),new IAutomaton(Options.Player1_Automaton), m_surfaceworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		/*File file;

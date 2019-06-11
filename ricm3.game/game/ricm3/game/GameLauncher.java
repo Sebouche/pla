@@ -46,8 +46,8 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		m_AutomatonIndex = new int[8];
-		int[] tab = { 0, 3, 7, 6, 9, 5, 0, 0 };
+		m_AutomatonIndex = new int[9];
+		int[] tab = { 0, 3, 7, 6, 9, 5, 0, 0 , 0 };
 		m_AutomatonIndex = tab;
 		
 		Options.Player1_Automaton = Options.m_automata.get(tab[0]);
@@ -58,6 +58,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		Options.Mouse_Automaton = Options.m_automata.get(tab[5]);
 		Options.Rabbit_Automaton = Options.m_automata.get(tab[6]);
 		Options.Turtle_Automaton = Options.m_automata.get(tab[7]);
+		Options.Spawner_Automaton = Options.m_automata.get(tab[8]);
 		Launcher();
 		OptionsMenu();
 	}

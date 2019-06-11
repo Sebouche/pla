@@ -96,7 +96,7 @@ public class SurfaceWorld extends World {
 		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites, World originWorld) {
 			super(c.world.m_model, x, y, 100, sprites, null, originWorld);
 			m_c = c;
-			this.m_automate=new IAutomaton(m_model.m_automatons.get(0));
+			this.m_automate=new IAutomaton(Options.Spawner_Automaton);
 			m_c.world.m_entities.add(this);
 		}
 
