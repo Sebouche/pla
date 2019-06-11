@@ -39,7 +39,7 @@ public class UndergroundWorld extends World {
 			int rand_y = m_rand.nextInt(60);
 			Block b = new Block(m_model, (int) (rand_x * Options.Entity_size * Options.Scale),
 					(int) (rand_y * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
-					new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
+					new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_undergroundworld);
 			b.set_idsprite(8);
 			m_grid[rand_x + 4][rand_y] = b;
 		}
@@ -50,11 +50,11 @@ public class UndergroundWorld extends World {
 				if (i == 10 && j == 2) {
 					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
 							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
-							new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
+							new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_undergroundworld);
 				} else {
 					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
-							new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
+							new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_undergroundworld);
 				}
 				b.set_idsprite((i - 6) * 3 + j);
 				m_grid[i][j] = b;
@@ -68,13 +68,13 @@ public class UndergroundWorld extends World {
 			if (j <= 2) {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
-						new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
+						new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_undergroundworld);
 				b.set_idsprite(6);
 				m_grid[11][j] = b;
 			} else {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
-						new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
+						new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_undergroundworld);
 				b.set_idsprite(1);
 				m_grid[11][j] = b;
 			}
@@ -89,20 +89,20 @@ public class UndergroundWorld extends World {
 					if (randint >= 0 && randint < 850) {
 						Block b = new Dirt(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"),
-								new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
+								new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_undergroundworld);
 						m_grid[i][j] = b;
 					}
 					if (randint >= 850 && randint < 950) {
 						Block b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 600, m_model.m_sprites.get("block"),
-								new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
+								new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_undergroundworld);
 						m_grid[i][j] = b;
 						for (int k = -1; k <= 1; k++) {
 							int randint2 = m_rand.nextInt(10);
 							if (randint2 <= 3 && i + k >= 0 && i + k < 20) {
 								b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
 										(int) ((i + k) * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("block"), new IAutomaton(Options.Block_Automaton),
+										m_model.m_sprites.get("block"), new IAutomaton(Options.selectedAutomata.get(0)),
 										m_model.m_undergroundworld);
 								m_grid[i][j] = b;
 							}
@@ -110,8 +110,7 @@ public class UndergroundWorld extends World {
 							if (randint2 <= 3 && j + k >= 0 && j + k < 60) {
 								b = new Copper(m_model, (int) ((j + k) * Options.Entity_size * Options.Scale),
 										(int) (i * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("block"), new IAutomaton(Options.Block_Automaton),
-										this);
+										m_model.m_sprites.get("block"), new IAutomaton(Options.selectedAutomata.get(0)), this);
 								b.set_idsprite(5);
 								m_grid[i][j] = b;
 							}
@@ -123,7 +122,7 @@ public class UndergroundWorld extends World {
 					if (randint >= 999 && i >= 30) {
 						m_grid[i][j] = new Uranium(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("block"),
-								new IAutomaton(Options.Block_Automaton), m_model.m_undergroundworld);
+								new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_undergroundworld);
 					}
 				}
 			}
@@ -137,10 +136,11 @@ public class UndergroundWorld extends World {
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_currentworld = m_model.m_surfaceworld;
-		m_model.m_player=m_model.m_surfaceplayer;
+		m_model.m_player = m_model.m_surfaceplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 192;
 		m_model.m_player.m_dy = 0;
+		m_model.m_camera.m_watched = m_model.m_player;
 		super.changeWorld();
 	}
 
@@ -171,12 +171,12 @@ public class UndergroundWorld extends World {
 			E = iter.next();
 			E.step();
 		}
-		
+
 	}
 
 	// Renvoi true si il y a collision avec un des blocs adjacent a l'entit�
 	boolean adjacent_collision(MovingEntity E, int dx, int dy) {
-		int entity_size = (int) (Options.Scale * Options.Entity_size);
+		/*int entity_size = (int) (Options.Scale * Options.Entity_size);
 		int pos_x = (int) (E.m_x / entity_size);
 		int pos_y = (int) (E.m_y / entity_size);
 		int pos_x_r = (int) ((E.m_x + entity_size) / entity_size);
@@ -216,14 +216,18 @@ public class UndergroundWorld extends World {
 		if (m_grid[pos_y_d + 1][pos_x_r] != null && m_grid[pos_y_d + 1][pos_x_r].m_collision)
 			if (E.collision(m_grid[pos_y_d + 1][pos_x_r], dx, dy)) {
 				return true;
-			}
+			}*/
 		return false;
 	}
 
 	void gravity(MovingEntity ge) {
-		if (ge.m_dy < 20) {
-			ge.m_dy++;
+		/*if (ge.m_grav < 20) {
+			ge.m_grav++;
+		} 
+		if (ge.collision(, 0, ge.m_dy)) {
+			ge.m_grav = 0;
 		}
+		ge.m_x += ge.m_grav;*/
 	}
 
 	@Override

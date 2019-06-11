@@ -29,6 +29,7 @@ import ricm3.interpreter.IAutomaton;
 
 
 public class Model extends GameModel {
+	long m_lastStep;
 	Player m_player;
 	SurfacePlayer m_surfaceplayer;
 	UndergroundPlayer m_undergroundplayer;
@@ -48,12 +49,11 @@ public class Model extends GameModel {
 		m_surfaceworld = new SurfaceWorld(10, this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
-		//m_currentworld = m_undergroundworld;
-		IAutomaton player_automaton=new IAutomaton(Options.Player1_Automaton);
-		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),player_automaton, m_surfaceworld);
-		m_undergroundplayer =new UndergroundPlayer(this, 64, 128, 500, m_sprites.get("scientist"),player_automaton, m_undergroundworld);
+		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(Options.selectedAutomata.get(0)), m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),new IAutomaton(Options.selectedAutomata.get(0)), m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
+		m_lastStep = 0;
 		try {
 			Options.m_bgm.stop();
 			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
@@ -73,9 +73,13 @@ public class Model extends GameModel {
 	 */
 	@Override
 	public void step(long now) {
-		m_player.step();
-		m_undergroundworld.step();
-		m_surfaceworld.step();
+		long elapsed = now - m_lastStep;
+		if (elapsed >= 2L) {
+			m_lastStep = now;
+			m_player.step();
+			m_undergroundworld.step();
+			m_surfaceworld.step();
+		}
 	}
 
 	private void loadSprites() {

@@ -77,7 +77,6 @@ public class View extends GameView {
 							(int) (j * Options.Entity_size * Options.Scale)
 									- (cam_y % (int) (Options.Entity_size * Options.Scale))+10,
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
-
 				}
 			}
 		} else {
