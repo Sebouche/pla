@@ -139,7 +139,6 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		try {
 			arbre = AutomataParser.from_file(m_AutomataPath);
 			Options.m_automata = (LinkedList<IAutomaton>) arbre.make();
-			System.out.println("oui");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -235,6 +234,9 @@ public class GameLauncher implements ActionListener, ComponentListener {
 
 		Object s = e.getSource();
 		if (s == m_NewGame) {
+			if (m_OptionsFrame == null) {
+				Options();
+			}
 			Model model = new Model();
 			View view = new View(model);
 			Controller controller = new Controller(model, view);
