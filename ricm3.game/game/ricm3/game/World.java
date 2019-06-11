@@ -13,7 +13,7 @@ public class World {
 	LinkedList<GameEntity> m_entities;
 	LinkedList<Ally> m_allies;
 	File m_bgmfile;
-
+	
 	public World(Model model) {
 		m_entities = new LinkedList<GameEntity>();
 		m_allies = new LinkedList<Ally>();
@@ -27,7 +27,6 @@ public class World {
 			Options.m_bgm.start();
 		} catch (Exception ex) {
 		}
-
 	}
 
 	public void step() {
