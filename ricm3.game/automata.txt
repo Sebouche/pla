@@ -23,6 +23,7 @@ Player(Surface){
 	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu2)
+	| True ? Move(S) :(Underground)
 	* (Ladder):
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)

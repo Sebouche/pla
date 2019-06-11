@@ -3,6 +3,7 @@ package ricm3.game;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
 
 public class Turtle extends Enemy {
