@@ -17,6 +17,10 @@
  */
 package ricm3.game;
 
+import java.util.LinkedList;
+
+import ricm3.interpreter.IAutomaton;
+
 public class Options {
 	public static final boolean USE_DOUBLE_BUFFERING = true;
 	public static final boolean ECHO_MOUSE = false;
@@ -31,4 +35,10 @@ public class Options {
 	public static int[] HP = { 25, 100, 2, 10 };
 
 	public static boolean day = true; // indique si on est la journée ou pas
+	
+	public static LinkedList<IAutomaton> m_automata;
+	
+	public static LinkedList<IAutomaton> selectedAutomata;
+	
+	public static Music m_bgm;
 }

@@ -22,14 +22,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.List;
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
-import ricm3.parser.*;
+
 
 public class Model extends GameModel {
+	long m_lastStep;
 	Player m_player;
 	SurfacePlayer m_surfaceplayer;
 	UndergroundPlayer m_undergroundplayer;
@@ -40,38 +40,28 @@ public class Model extends GameModel {
 	World m_currentworld;
 	Camera m_camera;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
-	List<IAutomaton> m_automatons;
 
 	PopupMenu menu1;
-	Music m_bgm;
 
-	@SuppressWarnings("unchecked")
 	public Model() {
-		Ast arbre;
-		try {
-			arbre = AutomataParser.from_file("automata.txt");
-			m_automatons = (List<IAutomaton>) arbre.make();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 		loadSprites();
-		m_surfaceworld = new SurfaceWorld(10, this);
+		m_surfaceworld = new SurfaceWorld(2, this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
-		//m_currentworld = m_undergroundworld;
-		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(m_automatons.get(0)), m_surfaceworld);
-		m_undergroundplayer =new UndergroundPlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(m_automatons.get(0)), m_surfaceworld);
+		IAutomaton player_automate = new IAutomaton(Options.selectedAutomata.get(0));
+		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("scientist"),player_automate, m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),player_automate, m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
-		/*File file;
-		file = new File("sprites/menumusic.wav");
-
+		m_lastStep = 0;
 		try {
-			m_bgm = new Music(file);
-			m_bgm.start();
-		} catch (Exception ex) {
-
-		}*/
+			Options.m_bgm.stop();
+			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
+			Options.m_bgm.start();
+		} catch (Exception ex) {}
+		m_surfaceworld.m_allies.add(m_surfaceplayer);
+		m_undergroundworld.m_allies.add(m_undergroundplayer);
 	}
 
 	@Override
@@ -85,9 +75,13 @@ public class Model extends GameModel {
 	 */
 	@Override
 	public void step(long now) {
-		m_player.step();
-		m_undergroundworld.step();
-		m_surfaceworld.step();
+		long elapsed = now - m_lastStep;
+		if (elapsed >= 2L) {
+			m_lastStep = now;
+			m_player.step();
+			m_undergroundworld.step();
+			m_surfaceworld.step();
+		}
 	}
 
 	private void loadSprites() {

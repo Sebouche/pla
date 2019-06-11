@@ -75,9 +75,6 @@ public class Controller extends GameController implements ActionListener {
 		if (!m_model.m_player.m_keys.contains(k)) {
 			m_model.m_player.m_keys.add(k);
 		}
-		if(e.getKeyChar()=='e') {
-			m_model.m_currentworld.changeWorld();
-		}
 	}
 
 	@Override
@@ -160,16 +157,7 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object s = e.getSource();
-		if (s == m_m1_button1) {
-			try {
-				m_model.m_bgm.stop();
-				m_model.m_bgm = new Music(m_model.m_currentworld.m_bgmfile);
-				m_model.m_bgm.start();
-			} catch (Exception ex) {
 
-			}
-		}
 	}
 
 }

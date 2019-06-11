@@ -51,8 +51,10 @@ public class UndergroundPlayer extends Player {
 		int pos_y = (int) (m_model.m_player.m_y / entity_size);
 		UndergroundWorld w = (UndergroundWorld) m_originWorld;
 /// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE L echelle  (GOTSTUFF maybe)
-		w.m_grid[pos_y][pos_x]=new Ladder(m_model, pos_x*entity_size, pos_y*entity_size, Options.HP[1],
-				m_model.m_sprites.get("block"), m_automate, w);
+		if (w.m_grid[pos_y][Math.floorMod((pos_x), 60)]==null) {
+			w.m_grid[pos_y][Math.floorMod((pos_x), 60)] = new Ladder(m_model, Math.floorMod((pos_x), 60) * entity_size, pos_y * entity_size, Options.HP[1],
+					m_model.m_sprites.get("block"), m_automate, w);
+		}
 		return true;
 	}
 }
