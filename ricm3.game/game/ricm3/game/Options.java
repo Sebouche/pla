@@ -39,4 +39,6 @@ public class Options {
 	public static LinkedList<IAutomaton> m_automata;
 	
 	public static LinkedList<IAutomaton> selectedAutomata;
+	
+	public static Music m_bgm;
 }

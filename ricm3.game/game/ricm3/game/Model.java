@@ -55,6 +55,7 @@ public class Model extends GameModel {
 		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),new IAutomaton(Options.selectedAutomata.get(0)), m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
+		m_lastStep = 0;
 		try {
 			Options.m_bgm.stop();
 			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
@@ -75,7 +76,8 @@ public class Model extends GameModel {
 	@Override
 	public void step(long now) {
 		long elapsed = now - m_lastStep;
-		if (elapsed >= 30L) {
+		if (elapsed >= 2L) {
+			m_lastStep = now;
 			m_player.step();
 			m_undergroundworld.step();
 			m_surfaceworld.step();

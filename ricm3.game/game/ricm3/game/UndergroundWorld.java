@@ -136,7 +136,7 @@ public class UndergroundWorld extends World {
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 192;
 		m_model.m_player.m_dy = 0;
-		m_model.m_player.m_originWorld = m_model.m_surfaceworld;
+		m_model.m_camera.m_watched = m_model.m_player;
 		super.changeWorld();
 	}
 
