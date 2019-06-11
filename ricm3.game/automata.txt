@@ -3,7 +3,7 @@ Player(Surface){
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
+	| Key(q) & Cell(W,V,1) ? Move(W) :(Surface)
 	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
 	| Key(m) ? Throw(F) :(SelectTurret)
@@ -13,14 +13,14 @@ Player(Surface){
 	* (Underground):
 	| Key(o) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Jumping)
-	| Key(q) & Cell(O,J,1) ? Move(O) :(Ladder)
+	| Key(q) & Cell(W,J,1) ? Move(W) :(Ladder)
 	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu1)
 	* (Jumping):
 	| Cell(S,O,1) ? Protect() :(Underground)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu2)
 	| True ? Move(S) :(Underground)
@@ -30,7 +30,7 @@ Player(Surface){
 	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Underground)
 	| Key(s) & Cell(S,V,1) ? Move(S) :(Underground)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu3)
 	* (Menu1):
@@ -68,12 +68,12 @@ Mole(E1){
 Mouse(E3){
 	* (E1):
 	| !GotPower() ? :()
-	| Cell(F,O,1) ? Hit() :(E2)
+	| Cell(F,W,1) ? Hit() :(E2)
 	| Cell(F,A,1) ? Hit() :(E3)
 	| True ? Egg() :(E4)
 	* (E2):
 	| !GotPower() ? :()
-	| Cell(F,O,1) ? Hit() :(E2)
+	| Cell(F,W,1) ? Hit() :(E2)
 	| Cell(F,V) ? Move(F) / Egg() :(E4)
 	* (E3):
 	| !GotPower() ? :()
@@ -89,7 +89,7 @@ Mouse(E3){
 Dog(E2){
 	* (E1):
 	| !GotPower() ? :()
-	| Cell(F,O,1) ? Hit() :(E3)
+	| Cell(F,W,1) ? Hit() :(E3)
 	| Cell(F,A,1) ? Hit() :(E2)
 	| Cell(F,V,1) ? Move(F) :(E2)
 	* (E2):
@@ -106,7 +106,7 @@ Dog(E2){
 Rabbit(Init){
 	* (E1):
 	| !GotPower() ? :()
-	| Cell(F,O,1) ? Move(F) :(E3)
+	| Cell(F,W,1) ? Move(F) :(E3)
 	| Cell(F,V,1) ? Move(F) :(E2)
 	| Cell(F,A,1) ? Hit() :(E2)
 	* (E2):

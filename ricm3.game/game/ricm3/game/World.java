@@ -13,7 +13,6 @@ public class World {
 	LinkedList<GameEntity> m_entities;
 	LinkedList<Ally> m_allies;
 	File m_bgmfile;
-	LinkedList<Ally> m_allies;
 	
 	public World(Model model) {
 		m_entities = new LinkedList<GameEntity>();
