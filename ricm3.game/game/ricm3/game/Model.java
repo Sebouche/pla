@@ -61,6 +61,9 @@ public class Model extends GameModel {
 			Options.m_bgm.start();
 		} catch (Exception ex) {}
 
+		}*/
+		m_surfaceworld.m_allies.add(m_surfaceplayer);
+		m_undergroundworld.m_allies.add(m_undergroundplayer);
 	}
 
 	@Override
