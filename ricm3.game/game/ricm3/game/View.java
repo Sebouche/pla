@@ -118,7 +118,6 @@ public class View extends GameView {
 
 			g_child = g.create(m_model.m_width / 2 - 50, 20, 100, 20);
 			BufferedImage heartsprite = m_model.m_sprites.get("heart")[0];
-			System.out.println(m_model.m_player.m_hp);
 			int hp;
 			for (hp = 0; hp < m_model.m_player.m_hp; hp += 100) {
 				g.drawImage(heartsprite, ((int) (0.4 * hp)) - 12, -12, 64, 64, null);

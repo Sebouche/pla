@@ -1,6 +1,7 @@
 package ricm3.game;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
@@ -8,8 +9,8 @@ import ricm3.interpreter.IAutomaton;
 public class Dog extends Enemy {
 	int m_spritevariation = 6;
 
-	public Dog(Model model, int x, int y, BufferedImage[] sprites,IAutomaton automate,World originWorld) {
-		super(model, x, y, Options.HP[0], sprites,automate,originWorld);
+	public Dog(Model model, int x, int y, BufferedImage[] sprites,IAutomaton automate,World originWorld, List<GameEntity> t) {
+		super(model, x, y, Options.HP[0], sprites,automate,originWorld, t);
 	}
 	public boolean move(Direction dir) {
 		super.move(dir);

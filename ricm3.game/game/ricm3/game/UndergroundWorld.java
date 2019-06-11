@@ -3,6 +3,7 @@ package ricm3.game;
 import java.awt.Graphics;
 import java.io.File;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
 import game.blocks.*;
@@ -131,6 +132,9 @@ public class UndergroundWorld extends World {
 	@Override
 	public void changeWorld() {
 		// A appeller lorsque le joueur passe par la porte
+		m_model.m_player.m_keys=new LinkedList<Keys>();
+		m_model.m_player.m_x = 64;
+		m_model.m_player.m_y = 640;
 		m_model.m_currentworld = m_model.m_surfaceworld;
 		m_model.m_player = m_model.m_surfaceplayer;
 		m_model.m_player.m_x = 64;

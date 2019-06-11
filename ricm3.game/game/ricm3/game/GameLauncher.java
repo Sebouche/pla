@@ -239,6 +239,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		return;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

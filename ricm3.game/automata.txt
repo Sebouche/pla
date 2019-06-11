@@ -1,19 +1,17 @@
-PlayerS(Surface){
+Player(Surface){
 	* (Surface):
+	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
-	| Key(z) ? Move(N) :(Surface)
-	| Key(q) ? Move(O) :(Surface)
-	| Key(s) ? Move(S) :(Surface)
-	| Key(d) ? Move(E) :(Surface)
-	| Key(m) ? Throw(F) :(Menu)
-	* (Menu):
+	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
+	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
+	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
+	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
+	| Key(m) ? Throw(F) :(SelectTurret)
+	* (SelectTurret):
 	| Key(m) ? Throw(F) :(Surface)
 	| Key(ENTER) ? Throw(F) :(Surface)
-	* ()
-}
-
-PlayerU(Underground){
 	* (Underground):
+	| Key(o) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Jumping)
 	| Key(q) & Cell(O,J,1) ? Move(O) :(Ladder)
 	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
@@ -25,8 +23,9 @@ PlayerU(Underground){
 	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu2)
+	| True ? Move(S) :(Underground)
 	* (Ladder):
-	| Key(z) & Cell(N,G,1) ? Pick(N) :()
+	| Key(z) & Cell(N,G,1) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)
 	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Underground)
@@ -44,24 +43,6 @@ PlayerU(Underground){
 	| Key(m) ? Throw(F) :(Ladder)
 	| Key(ENTER) ? Throw(F) :(Ladder)
 	* ()
-}
-
-Turner0(Turn_0){
-  * (Turn_0): True ? Turn(R) :(Turn_1)
-  * (Turn_1): True ? Turn(R) :(Turn_2)
-  * (Turn_2): True ? Turn(R) :(Turn_3)
-  * (Turn_3): True ? Turn(R) :(Turn_4)
-  * (Turn_4): True ? Kamikaze :()
-  * ()
-}
-
-Turner1(Turn_0){
-  * (Turn_0): True ? Turn(R) :(Turn_1)
-  * (Turn_1): True ? Turn(R) :(Turn_2)
-  * (Turn_2): True ? Turn(R) :(Turn_3)
-  * (Turn_3): True ? Turn(R) :(Turn_4)
-  * (Turn_4): True ? Kamikaze :()
-  * ()
 }
 
 Bat(E1){
@@ -143,19 +124,4 @@ Wall(Init){
 	| True ? Wizz() :(Init)
 	* ()
 }
-	
-PlayerS(Surface){
-	* (Surface):
-	| Key(z) & Cell(N,G,1) ? Pick(N) :()
-	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
-	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
-	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
-	| Key(m) & Cell(F,T,1) ? Throw(F) :(Menu)
-	* (Menu):
-	| Key(m) ? Throw(F) :(Surface)
-	| Key(ENTER) ? Throw(F) :(Surface)
-	* ()
-}
-
 
