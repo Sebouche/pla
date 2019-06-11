@@ -47,4 +47,5 @@ public class Options {
 	public static IAutomaton Rabbit_Automaton = null;
 	public static IAutomaton Turtle_Automaton = null;
 	public static IAutomaton Spawner_Automaton = null;
+	public static Music m_bgm;
 }
