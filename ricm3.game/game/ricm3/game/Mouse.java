@@ -9,7 +9,7 @@ import ricm3.interpreter.IAutomaton;
 public class Mouse extends Enemy {
 	int m_spritevariation = 0;
 
-	public Mouse(Model model, int x, int y, BufferedImage[] sprites,IAutomaton automate,World originWorld, List<GameEntity> t) {
+	public Mouse(Model model, int x, int y, BufferedImage[] sprites,IAutomaton automate,World originWorld, List<Ally> t) {
 		super(model, x, y, Options.HP[2], sprites,automate, originWorld, t);
 	}
 

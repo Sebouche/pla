@@ -11,10 +11,10 @@ import ricm3.interpreter.Type;
 
 public class Enemy extends MovingEntity {
 
-	List<GameEntity> targets;
+	List<Ally> targets;
 
 	public Enemy(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld,
-			List<GameEntity> t) {
+			List<Ally> t) {
 		super(model, x, y, hp, sprites, automate, originWorld);
 		this.m_type = Type.ADVERSAIRE;
 		targets = t;
@@ -63,7 +63,7 @@ public class Enemy extends MovingEntity {
 	}
 
 	LinkedList<Point> aggro() {
-		Iterator<GameEntity> iter = targets.iterator();
+		Iterator<Ally> iter = targets.iterator();
 		double de, dt = -1;
 		GameEntity e, t = null;
 		while (iter.hasNext()) {

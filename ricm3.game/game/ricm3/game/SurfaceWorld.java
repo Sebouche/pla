@@ -100,6 +100,7 @@ public class SurfaceWorld extends World {
 
 	public class Spawner extends GameEntity {
 		Chunk m_c;
+		int m_elapsed=0;
 
 		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites, World originWorld) {
 			super(c.world.m_model, x, y, 100, sprites, null, originWorld);
@@ -110,6 +111,11 @@ public class SurfaceWorld extends World {
 
 		@Override
 		public boolean egg() {
+			if (m_elapsed % 30 == 0) {
+				m_elapsed=0;
+				m_idsprite=(m_idsprite+1)%m_sprites.length;
+			}
+			m_elapsed++;
 			Random r = new Random();
 			if ((r.nextInt() % 10000) == 0) {
 				System.out.println("salu");
@@ -123,16 +129,16 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.selectedAutomata.get(4)),m_model.m_surfaceworld, m_entities);
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.selectedAutomata.get(4)),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld, m_entities);
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.selectedAutomata.get(3)),m_model.m_surfaceworld, m_entities);
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.selectedAutomata.get(3)),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_surfaceworld, m_entities);
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_surfaceworld, m_allies);
 					break;
 				default:
 					e = null;

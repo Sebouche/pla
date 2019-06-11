@@ -9,7 +9,7 @@ import ricm3.interpreter.IAutomaton;
 public class Dog extends Enemy {
 	int m_spritevariation = 6;
 
-	public Dog(Model model, int x, int y, BufferedImage[] sprites,IAutomaton automate,World originWorld, List<GameEntity> t) {
+	public Dog(Model model, int x, int y, BufferedImage[] sprites,IAutomaton automate,World originWorld, List<Ally> t) {
 		super(model, x, y, Options.HP[0], sprites,automate,originWorld, t);
 	}
 	public boolean move(Direction dir) {
