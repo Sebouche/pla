@@ -13,6 +13,12 @@ public class Player extends Ally {
 	}
 
 	@Override
+	public boolean jump(Direction dir) {
+		m_originWorld.changeWorld();
+		return true;
+	}
+
+	@Override
 	public void step() {
 		m_automate.step(this);
 	}

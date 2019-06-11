@@ -69,15 +69,14 @@ public class View extends GameView {
 		
 		//background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
-			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
-				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
+			for (int i = -1; (int) (i * Options.Entity_size) < getWidth(); i++) {
+				for (int j = -1; (int) (j * Options.Entity_size) < getWidth(); j++) {
 					g.drawImage(m_model.m_sprites.get("grassbg")[0],
 							(int) (i * Options.Entity_size * Options.Scale)
 									- (cam_x % (int) (Options.Entity_size * Options.Scale))+22,
 							(int) (j * Options.Entity_size * Options.Scale)
 									- (cam_y % (int) (Options.Entity_size * Options.Scale))+10,
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
-
 				}
 			}
 		} else {
@@ -119,7 +118,6 @@ public class View extends GameView {
 
 			g_child = g.create(m_model.m_width / 2 - 50, 20, 100, 20);
 			BufferedImage heartsprite = m_model.m_sprites.get("heart")[0];
-			System.out.println(m_model.m_player.m_hp);
 			int hp;
 			for (hp = 0; hp < m_model.m_player.m_hp; hp += 100) {
 				g.drawImage(heartsprite, ((int) (0.4 * hp)) - 12, -12, 64, 64, null);
