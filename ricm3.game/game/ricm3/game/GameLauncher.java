@@ -28,7 +28,6 @@ import javax.swing.JPanel;
 
 import edu.ricm3.game.GameUI;
 import ricm3.interpreter.IAutomaton;
-import ricm3.interpreter.IBehaviour;
 import ricm3.parser.Ast;
 import ricm3.parser.AutomataParser;
 
@@ -153,6 +152,11 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			e.printStackTrace();
 		}
 
+		if ((Options.Automata == null) || (Options.Automata.size() == 0))  {
+			System.out.println("Pas d'automates exploitables");
+			System.exit(0);
+		}
+		
 		m_OptionsFrame = new JFrame();
 		m_OptionsFrame.setTitle("Super Automatak Defense (Options)");
 		m_OptionsFrame.setLayout(new BorderLayout());
@@ -187,45 +191,39 @@ public class GameLauncher implements ActionListener, ComponentListener {
 
 		Options.selectedAutomata = new LinkedList<IAutomaton>();
 
-		LinkedList<String> AutomataNames_list = new LinkedList<String>();
 		// Création des labels
-		int i = 0;
-		Iterator<IAutomaton> iter = Options.Automata.iterator();
-		while (iter.hasNext()) {
-			IAutomaton automaton = iter.next();
-			Options.selectedAutomata.add(automaton);
-			JLabel AutomataLabel = new JLabel(automaton.name());
-			AutomataNames_list.add(automaton.name());
-			AutomataLabel.setFont(m_f3);
+		int i;
+		for (i = 0; i < Options.EntitiesNames.length; i++) {
+			JLabel EntitiesLabel = new JLabel(Options.EntitiesNames[i]);
+			EntitiesLabel.setFont(m_f3);
 			c.gridx = 0;
 			c.gridy = i + 1;
-			OptionsPanel.add(AutomataLabel, c);
-			i++;
+			OptionsPanel.add(EntitiesLabel, c);
 		}
 
-		String[] AutomataNames = new String[AutomataNames_list.size()];
-		Iterator<String> itr = AutomataNames_list.iterator();
+		//Création liste de noms des automates
+		LinkedList<String> AutomataNames_list = new LinkedList<String>();
+		Iterator<IAutomaton> itr = Options.Automata.iterator();
 		i = 0;
 		while (itr.hasNext()) {
-			String AutomatonName = itr.next();
-			AutomataNames[i] = AutomatonName;
+			IAutomaton Automaton = itr.next();
+			AutomataNames_list.add(Automaton.name());
 			i++;
 		}
+		String[] AutomataNames = AutomataNames_list.toArray(new String[0]);
 
 		// Création des combo box
-		i = 0;
 		m_AutomataComboBox = new LinkedList<JComboBox<String>>();
-		iter = Options.Automata.iterator();
-		while (iter.hasNext()) {
-			IAutomaton automaton = iter.next();
+		itr = Options.Automata.iterator();
+		for (i = 0; i < Options.EntitiesNames.length; i++) {
+			Options.selectedAutomata.add(Options.Automata.get(0));
 			JComboBox<String> ComboBox = new JComboBox<String>(AutomataNames);
-			ComboBox.setSelectedIndex(i);
+			ComboBox.setSelectedIndex(0);
 			ComboBox.addActionListener(this);
 			m_AutomataComboBox.add(ComboBox);
 			c.gridx = 1;
 			c.gridy = i + 1;
 			OptionsPanel.add(ComboBox, c);
-			i++;
 		}
 
 		OptionsNorth.add(OptionsTitle);

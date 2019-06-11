@@ -17,6 +17,7 @@
  */
 package ricm3.game;
 
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import ricm3.interpreter.IAutomaton;
@@ -38,6 +39,8 @@ public class Options {
 	
 	public static LinkedList<IAutomaton> Automata;
 	
+	public static Hashtable<String, IAutomaton> Entities;
+	public static String[] EntitiesNames = { "Player1", "Player2", "Barbed", "Bat", "Block", "Dog", "Mole", "Mouse", "Rabbit", "Spawner", "Turtle" };
 	public static LinkedList<IAutomaton> selectedAutomata;
 	
 	public static Music bgm;
