@@ -51,7 +51,7 @@ public class Model extends GameModel {
 		m_surfaceworld = new SurfaceWorld(2, this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
-		IAutomaton player_automate = new IAutomaton(Options.selectedAutomata.get(0));
+		IAutomaton player_automate = new IAutomaton(Options.Entities.get("Player1"));
 		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("scientist"),player_automate, m_surfaceworld);
 		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),player_automate, m_undergroundworld);
 		m_player = m_surfaceplayer;

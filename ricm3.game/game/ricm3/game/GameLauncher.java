@@ -14,6 +14,7 @@ import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -44,6 +45,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 	public GameLauncher() {
 		m_AutomataPath = "automata.txt";
 		m_lastAutomataPath = "automata.txt";
+		Options.Entities = new Hashtable<String, IAutomaton>();
 		Launcher();
 	}
 
@@ -189,8 +191,6 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		c.gridy = 0;
 		OptionsPanel.add(AutomataTitle, c);
 
-		Options.selectedAutomata = new LinkedList<IAutomaton>();
-
 		// Création des labels
 		int i;
 		for (i = 0; i < Options.EntitiesNames.length; i++) {
@@ -216,7 +216,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_AutomataComboBox = new LinkedList<JComboBox<String>>();
 		itr = Options.Automata.iterator();
 		for (i = 0; i < Options.EntitiesNames.length; i++) {
-			Options.selectedAutomata.add(Options.Automata.get(0));
+			Options.Entities.put(Options.EntitiesNames[i], Options.Automata.get(0));
 			JComboBox<String> ComboBox = new JComboBox<String>(AutomataNames);
 			ComboBox.setSelectedIndex(0);
 			ComboBox.addActionListener(this);
@@ -281,7 +281,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 				JComboBox<String> ComboBox = iter.next();
 				if (s == ComboBox) {
 					JComboBox<String> cb = (JComboBox<String>) s;
-					Options.selectedAutomata.set(i, Options.Automata.get(cb.getSelectedIndex()));
+					Options.Entities.replace(Options.EntitiesNames[i], Options.Automata.get(cb.getSelectedIndex()));
 				}
 				i++;
 			}

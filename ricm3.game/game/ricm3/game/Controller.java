@@ -179,13 +179,13 @@ public class Controller extends GameController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == m_m1_button_murs) {
-			Wall w=new Wall(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("wall"), Options.selectedAutomata.get(3), m_model.m_surfaceworld);
+			Wall w=new Wall(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("wall"), Options.Entities.get("Wall"), m_model.m_surfaceworld);
 			w.m_collision=false;
 			m_model.m_surfaceworld.m_entities.add(w);
 		} else if ((s == m_m1_button_barbele)) {
 			
 		} else if ((s == m_m1_button_tesla)) {
-			Turret t=new Turret(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("tesla"), Options.selectedAutomata.get(3), m_model.m_surfaceworld);
+			Turret t=new Turret(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("tesla"), Options.Entities.get("Tesla"), m_model.m_surfaceworld);
 			t.m_collision=false;
 			m_model.m_surfaceworld.m_entities.add(t);
 		} else if ((s == m_m1_button_poteau)) {
