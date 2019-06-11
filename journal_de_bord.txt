@@ -68,3 +68,10 @@ Houda : -Conception du prototype pour la fabrication des objets
 	 -Houda : Travail sur les automates des murs et barbelés
 	 -Sebastian : Correction de bugs d'affichage et automates d'ennemis
 	 -Nicolas : Travail sur la classe joueur
+
+-11/06 : -Samuel : Correction de bugs de collisions
+	  -Sacha : Classes des ennemis
+	  -Adrien : Changement des sprites lors de deplacements
+	  -Houda : Integration de la fabrication
+	  -Nicolas : Pop du joueur
+	  -Sebastian : Correction de bugs de collisions
