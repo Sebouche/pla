@@ -17,22 +17,13 @@
  */
 package ricm3.game;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.MenuItem;
+import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import edu.ricm3.game.GameController;
 import ricm3.interpreter.Keys;
@@ -53,11 +44,7 @@ public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 
-	JPanel m_m1_automata_panel;
-	JLabel m_m1_title;
-	JButton m_m1_button1, m_m1_button2, m_m1_button3;
-	JComboBox<String> m_m1_combo1;
-	MenuItem m_m2_button1;
+	MenuItem m_m1_button1;
 
 	public Controller(Model model, View view) {
 		m_model = model;
@@ -87,6 +74,9 @@ public class Controller extends GameController implements ActionListener {
 		Keys k = Keys.keyEventToKeys(e);
 		if (!m_model.m_player.m_keys.contains(k)) {
 			m_model.m_player.m_keys.add(k);
+		}
+		if(e.getKeyChar()=='e') {
+			m_model.m_currentworld.changeWorld();
 		}
 	}
 
@@ -140,111 +130,38 @@ public class Controller extends GameController implements ActionListener {
 			System.out.println("MouseMoved: (" + e.getX() + "," + e.getY());
 	}
 
-	public void notifyVisible() {
-		// Menu de démarrage
-		JPanel North = new JPanel();
-		North.setLayout(new FlowLayout(FlowLayout.CENTER));
-		North.setBackground(m_view.m_background);
-
-		m_model.m_starting_menu = new JPanel();
-		m_model.m_starting_menu.setLayout(new BoxLayout(m_model.m_starting_menu, BoxLayout.Y_AXIS));
-		m_model.m_starting_menu.setOpaque(false);
-
-		Font f1 = new Font(Font.SERIF, Font.BOLD, 64);
-		Font f2 = new Font(Font.MONOSPACED, Font.BOLD, 32);
-		Font f3 = new Font(Font.MONOSPACED, Font.BOLD, 16);
-
-		Component PaddingUp = Box.createRigidArea(new Dimension(0, m_view.getHeight() / 2 - 150));
-
-		m_model.m_starting_menu.add(PaddingUp);
-
-		m_m1_title = new JLabel("Automatak");
-		m_m1_title.setFont(f1);
-		m_m1_title.setAlignmentX(Component.CENTER_ALIGNMENT);
-		m_model.m_starting_menu.add(m_m1_title);
-
-		m_model.m_starting_menu.add(Box.createRigidArea(new Dimension(0, 50)));
-
-		m_m1_button1 = new JButton("Nouvelle partie");
-		m_m1_button1.setFont(f2);
-		m_m1_button1.addActionListener(this);
-		m_m1_button1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		m_model.m_starting_menu.add(m_m1_button1);
-
-		m_model.m_starting_menu.add(Box.createRigidArea(new Dimension(0, 10)));
-
-		JPanel m1_options_panel = new JPanel();
-		m1_options_panel.setLayout(new FlowLayout());
-		m1_options_panel.setOpaque(false);
-		m_m1_button2 = new JButton("Options");
-		m_m1_button2.setFont(f2);
-		m_m1_button2.addActionListener(this);
-		m_m1_button2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		m1_options_panel.add(m_m1_button2);
-		
-		m_m1_automata_panel = new JPanel();
-		m_m1_automata_panel.setLayout(new BoxLayout(m_m1_automata_panel, BoxLayout.Y_AXIS));
-		m_m1_automata_panel.setOpaque(false);
-		
-		JLabel choose_your_automaton = new JLabel("Choix de l'automate du joueur");
-		choose_your_automaton.setFont(f3);
-		m_m1_automata_panel.add(choose_your_automaton);
-		
-		String[] automata = { "Bat", "Dog", "Otto", "Rabbit", "Mouse" };
-		m_m1_combo1 = new JComboBox<String>(automata);
-		m_m1_combo1.setSelectedIndex(4);
-		m_m1_combo1.addActionListener(this);
-		m_m1_automata_panel.add(m_m1_combo1);
-
-		m1_options_panel.add(m_m1_automata_panel);
-		m_m1_automata_panel.setVisible(false);
-		m_model.m_starting_menu.add(m1_options_panel);
-
-		m_model.m_starting_menu.add(Box.createRigidArea(new Dimension(0, 10)));
-
-		m_m1_button3 = new JButton("Quitter");
-		m_m1_button3.setFont(f2);
-		m_m1_button3.addActionListener(this);
-		m_m1_button3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		m_model.m_starting_menu.add(m_m1_button3);
-
-		
-		North.add(m_model.m_starting_menu);
-		m_game.addNorth(North);
-		
-		
-		
-		// Menu popup
-		/*m_model.options_menu = new PopupMenu();
+	public void menu1() {
+		m_model.menu1 = new PopupMenu();
 
 		Font f3 = new Font(Font.SERIF, Font.BOLD, 32);
 		Font f4 = new Font(Font.MONOSPACED, Font.BOLD, 16);
 
-		MenuItem m2_label1 = new MenuItem("Oui (label)");
-		m2_label1.setFont(f4);
-		m_model.options_menu.add(m2_label1);
+		MenuItem m1_label1 = new MenuItem("Oui (label)");
+		m1_label1.setFont(f4);
+		m_model.menu1.add(m1_label1);
 
-		m2_button1 = new MenuItem("Non (button)");
-		m2_button1.setFont(f4);
-		m2_button1.addActionListener(this);
-		m_model.options_menu.add(m2_button1);
+		m_m1_button1 = new MenuItem("Non (button)");
+		m_m1_button1.setFont(f4);
+		m_m1_button1.addActionListener(this);
+		m_model.menu1.add(m_m1_button1);
 
-		m_model.options_menu.setLabel("Choix automate (?)");
-		m_model.options_menu.setFont(f3);
-		m_model.options_menu.setEnabled(true);
+		m_model.menu1.setLabel("Choix automate (?)");
+		m_model.menu1.setFont(f3);
+		m_model.menu1.setEnabled(true);
 
-		m_view.add(m_model.options_menu);
-		
-		m_model.options_menu.show(m_view, 0, 0);*/
+		m_view.add(m_model.menu1);
 
+		m_model.menu1.show(m_view, 0, 0);
+
+	}
+
+	public void notifyVisible() {
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == m_m1_button1) {
-			Options.begin = true;
-			m_model.m_starting_menu.setVisible(false);
 			try {
 				m_model.m_bgm.stop();
 				m_model.m_bgm = new Music(m_model.m_currentworld.m_bgmfile);
@@ -252,16 +169,6 @@ public class Controller extends GameController implements ActionListener {
 			} catch (Exception ex) {
 
 			}
-		} else if (s == m_m1_button2) {
-			m_m1_automata_panel.setVisible(!m_m1_automata_panel.isVisible());
-		} else if (s == m_m1_combo1) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
-		} else if (s == m_m1_button3) {
-			System.exit(0);
-		} else if (s == m_m2_button1) {
-			System.out.println("NYI");
 		}
 	}
 
