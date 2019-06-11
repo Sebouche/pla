@@ -115,16 +115,16 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld);
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld, m_entities);
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld);
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld, m_entities);
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld);
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld, m_entities);
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_surfaceworld);
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_surfaceworld, m_entities);
 					break;
 				default:
 					e = null;

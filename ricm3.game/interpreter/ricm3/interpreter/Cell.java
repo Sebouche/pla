@@ -44,7 +44,6 @@ public class Cell extends ICondition {
 		default:
 			break;
 		}
-		boolean col = true;
 		Iterator<GameEntity> iter = e.entities().iterator();
 		while (iter.hasNext()) {
 			GameEntity f = iter.next();
@@ -56,8 +55,6 @@ public class Cell extends ICondition {
 				else {
 					if(kind == f.type())
 						return true;
-					if (kind != f.type())
-						col = false;
 				}	
 			}
 		}

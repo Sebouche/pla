@@ -86,7 +86,7 @@ public class MovingEntity extends GameEntity {
 		m_y += m_dy + m_grav;
 		m_dx=0;
 		m_dy=0;
-		return !coll;
+		return true;
 	}
 
 }
