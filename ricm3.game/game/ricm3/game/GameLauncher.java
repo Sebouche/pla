@@ -38,7 +38,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 	Font m_f1, m_f2, m_f3;
 	int[] m_AutomatonIndex;
 
-	@SuppressWarnings("unchecked")
+
 	public GameLauncher() {
 		Ast arbre;
 		try {
@@ -141,6 +141,15 @@ public class GameLauncher implements ActionListener, ComponentListener {
 
 		m_Launcher.add(m_StartingMenu, BorderLayout.CENTER);
 		m_Launcher.setVisible(true);
+		File file;
+		file = new File("sprites/menumusic.wav");
+
+		try {
+			Options.m_bgm = new Music(file);
+			Options.m_bgm.start();
+		} catch (Exception ex) {
+
+		}
 		
 		return;
 	}

@@ -16,6 +16,11 @@ public class World {
 	}
 	
 	public void changeWorld() {
+		try {
+			Options.m_bgm.stop();
+			Options.m_bgm = new Music(m_model.m_currentworld.m_bgmfile);
+			Options.m_bgm.start();
+		} catch (Exception ex) {}
 		
 	}
 	public void step() {

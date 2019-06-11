@@ -177,6 +177,7 @@ public class SurfaceWorld extends World {
 		m_model.m_player=m_model.m_undergroundplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
+		super.changeWorld();
 	}
 
 	@Override

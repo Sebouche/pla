@@ -27,6 +27,7 @@ import javax.imageio.ImageIO;
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
 
+
 public class Model extends GameModel {
 	Player m_player;
 	SurfacePlayer m_surfaceplayer;
@@ -40,7 +41,6 @@ public class Model extends GameModel {
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 
 	PopupMenu menu1;
-	Music m_bgm;
 
 	public Model() {
 		
@@ -54,15 +54,12 @@ public class Model extends GameModel {
 		m_undergroundplayer =new UndergroundPlayer(this, 64, 128, 500, m_sprites.get("scientist"),player_automaton, m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
-		/*File file;
-		file = new File("sprites/menumusic.wav");
-
 		try {
-			m_bgm = new Music(file);
-			m_bgm.start();
-		} catch (Exception ex) {
+			Options.m_bgm.stop();
+			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
+			Options.m_bgm.start();
+		} catch (Exception ex) {}
 
-		}*/
 	}
 
 	@Override
