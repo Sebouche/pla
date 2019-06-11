@@ -12,14 +12,13 @@ public class GameEntity {
 	public BufferedImage[] m_sprites;
 	public Model m_model;
 	IAutomaton m_automate;
-	IState m_state;
 	// m_sound;
 	World m_originWorld;
 	int m_hp;
 	public int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
-	Type m_type;
+	public Type m_type;
 	LinkedList<Keys> m_keys;
 	boolean m_collision = true;
 
@@ -98,7 +97,6 @@ public class GameEntity {
 	}
 
 	public boolean turn(Direction dir) {
-		System.out.printf("test\n");
 		return true;
 	}
 
