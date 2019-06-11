@@ -37,7 +37,9 @@ public class SurfaceWorld extends World {
 		super(m);
 		m_tmp_ent = new LinkedList<GameEntity>();
 		chunklists = new LinkedList<ChunkList>();
-		add(new Chunk(this, 0, 0, 2));
+		Chunk c=new Chunk(this, 0, 0, 2);
+		add(c);
+		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("spawner"), this);
 		new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house"), this);
 		Random r = new Random();
 		int y;
@@ -96,7 +98,7 @@ public class SurfaceWorld extends World {
 		}
 	}
 
-	private class Spawner extends GameEntity {
+	public class Spawner extends GameEntity {
 		Chunk m_c;
 
 		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites, World originWorld) {
@@ -109,7 +111,8 @@ public class SurfaceWorld extends World {
 		@Override
 		public boolean egg() {
 			Random r = new Random();
-			if ((r.nextInt() % 100) == 0) {
+			if ((r.nextInt() % 10000) == 0) {
+				System.out.println("salu");
 				int type;
 				int i = 0;
 				type = r.nextInt() % 100;
