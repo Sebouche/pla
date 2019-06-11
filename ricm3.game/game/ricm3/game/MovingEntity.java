@@ -42,15 +42,19 @@ public class MovingEntity extends GameEntity {
 		m_dy = 0;
 		switch (Direction.entityDir(this, dir)) {
 		case NORTH:
+			this.m_dir = Direction.NORTH;
 			m_dy = -1;
 			break;
 		case SOUTH:
+			this.m_dir = Direction.SOUTH;
 			m_dy = 1;
 			break;
 		case WEST:
+			this.m_dir = Direction.WEST;
 			m_dx = -1;
 			break;
 		case EAST:
+			this.m_dir = Direction.EAST;
 			m_dx = 1;
 			break;
 		default:
@@ -82,7 +86,7 @@ public class MovingEntity extends GameEntity {
 		m_y += m_dy;
 		m_dx = 0;
 		m_dy = 0;
-		return !coll;
+		return true;
 	}
 
 }

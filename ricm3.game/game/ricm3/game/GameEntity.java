@@ -35,6 +35,7 @@ public class GameEntity {
 		m_keys = new LinkedList<Keys>();
 		m_automate = automate;
 		m_dir = Direction.NORTH;
+
 	}
 
 	///////////////////////////
@@ -146,7 +147,8 @@ public class GameEntity {
 	}
 
 	public void step() {
-		m_automate.step(this);
+		if (m_automate != null)
+			m_automate.step(this);
 	}
 
 	//////////////////////

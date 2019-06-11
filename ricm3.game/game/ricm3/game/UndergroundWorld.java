@@ -112,7 +112,7 @@ public class UndergroundWorld extends World {
 								b = new Copper(m_model, (int) ((j + k) * Options.Entity_size * Options.Scale),
 										(int) (i * Options.Entity_size * Options.Scale), 600,
 										m_model.m_sprites.get("block"), new IAutomaton(m_model.m_automatons.get(0)),
-										m_model.m_undergroundworld);
+										this);
 								b.set_idsprite(5);
 								m_grid[i][j] = b;
 							}
@@ -143,7 +143,7 @@ public class UndergroundWorld extends World {
 
 	@Override
 	public void step() {
-		// application de la gravité au joueur
+		// application de la gravitï¿½ au joueur
 		if (m_player.m_originWorld instanceof UndergroundWorld) {
 			gravity(m_model.m_player);
 		}
@@ -161,7 +161,7 @@ public class UndergroundWorld extends World {
 			}
 		}
 
-		// step des entités
+		// step des entitï¿½s
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {
@@ -171,7 +171,7 @@ public class UndergroundWorld extends World {
 
 	}
 
-	// Renvoi true si il y a collision avec un des blocs adjacent a l'entité
+	// Renvoi true si il y a collision avec un des blocs adjacent a l'entitï¿½
 	boolean adjacent_collision(MovingEntity E, int dx, int dy) {
 		int entity_size = (int) (Options.Scale * Options.Entity_size);
 		int pos_x = (int) (E.m_x / entity_size);
@@ -247,7 +247,7 @@ public class UndergroundWorld extends World {
 			}
 		}
 
-		// Affichage des entités
+		// Affichage des entitï¿½s
 		Iterator<GameEntity> iter = m_entities.iterator();
 		GameEntity E;
 		while (iter.hasNext()) {
