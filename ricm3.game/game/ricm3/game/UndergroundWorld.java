@@ -3,6 +3,7 @@ package ricm3.game;
 import java.awt.Graphics;
 import java.io.File;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
 import game.blocks.*;
@@ -10,14 +11,12 @@ import ricm3.interpreter.*;
 
 public class UndergroundWorld extends World {
 
-	Player m_player;
 	GameEntity[][] m_grid;
 	Random m_rand = new Random();
 
 	public UndergroundWorld(Model model) {
 		super(model);
 		m_grid = new GameEntity[60][60];
-		m_player = new Player(m_model, 10, 10, 9999, m_model.m_sprites.get("scientist"), null, this);
 		generate_level();
 		m_bgmfile = new File("sprites/bgm_underground.wav");
 		// m_entities
@@ -134,18 +133,18 @@ public class UndergroundWorld extends World {
 	@Override
 	public void changeWorld() {
 		// A appeller lorsque le joueur passe par la porte
+		m_model.m_player.m_keys=new LinkedList<Keys>();
 		m_model.m_currentworld = m_model.m_surfaceworld;
 		m_model.m_player=m_model.m_surfaceplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 192;
 		m_model.m_player.m_dy = 0;
-		m_model.m_player.m_originWorld = m_model.m_surfaceworld;
 	}
 
 	@Override
 	public void step() {
 		// application de la gravit� au joueur
-		if (m_player.m_originWorld instanceof UndergroundWorld) {
+		if (m_model.m_player.m_originWorld instanceof UndergroundWorld) {
 			gravity(m_model.m_player);
 		}
 

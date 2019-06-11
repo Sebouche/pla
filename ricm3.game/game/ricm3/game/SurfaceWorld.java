@@ -10,6 +10,7 @@ import java.util.Random;
 
 import ricm3.game.Options;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Keys;
 
 public class SurfaceWorld extends World {
 	private class ChunkList {
@@ -169,11 +170,13 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void changeWorld() {
+		m_model.m_player.m_keys=new LinkedList<Keys>();
+		m_model.m_player.m_x = 64;
+		m_model.m_player.m_y = 128;
 		m_model.m_currentworld = m_model.m_undergroundworld;
 		m_model.m_player=m_model.m_undergroundplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
-		m_model.m_player.m_originWorld = m_model.m_undergroundworld;
 	}
 
 	@Override

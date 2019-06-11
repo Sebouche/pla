@@ -69,8 +69,8 @@ public class View extends GameView {
 		
 		//background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
-			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
-				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
+			for (int i = -1; (int) (i * Options.Entity_size) < getWidth(); i++) {
+				for (int j = -1; (int) (j * Options.Entity_size) < getWidth(); j++) {
 					g.drawImage(m_model.m_sprites.get("grassbg")[0],
 							(int) (i * Options.Entity_size * Options.Scale)
 									- (cam_x % (int) (Options.Entity_size * Options.Scale))+22,

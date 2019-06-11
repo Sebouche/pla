@@ -21,5 +21,6 @@ public class Player extends Ally {
 	@Override
 	public void step() {
 		m_automate.step(this);
+		System.out.println(m_automate.current.name);
 	}
 }
