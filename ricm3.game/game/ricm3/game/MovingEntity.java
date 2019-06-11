@@ -9,10 +9,12 @@ import ricm3.interpreter.IAutomaton;
 public class MovingEntity extends GameEntity {
 
 	int m_dx, m_dy;
+	int m_grav;
 
 	public MovingEntity(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate,
 			World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
+		m_grav = 0;
 	}
 
 	boolean collision(GameEntity ge, int x, int y) {
@@ -20,10 +22,10 @@ public class MovingEntity extends GameEntity {
 			boolean coll;
 			coll = true;
 			double entity_size = Options.Scale * Options.Entity_size;
-			if ((this.m_y + y >= ge.m_y + entity_size || this.m_y + entity_size + y < ge.m_y)) { // collision
+			if ((this.m_y + y >= ge.m_y + entity_size || this.m_y + entity_size + y <= ge.m_y)) { // collision
 				coll = false;
 			}
-			if ((this.m_x + x >= ge.m_x + entity_size || this.m_x + entity_size + x < ge.m_x)) {
+			if ((this.m_x + x >= ge.m_x + entity_size || this.m_x + entity_size + x <= ge.m_x)) {
 				coll = false;
 			}
 			if (coll == true) {
@@ -38,8 +40,6 @@ public class MovingEntity extends GameEntity {
 
 	@Override
 	public boolean move(Direction dir) {
-		m_dx = 0;
-		m_dy = 0;
 		switch (Direction.entityDir(this, dir)) {
 		case NORTH:
 			this.m_dir = Direction.NORTH;
@@ -83,10 +83,10 @@ public class MovingEntity extends GameEntity {
 			}
 		}
 		m_x += m_dx;
-		m_y += m_dy;
-		m_dx = 0;
-		m_dy = 0;
-		return true;
+		m_y += m_dy + m_grav;
+		m_dx=0;
+		m_dy=0;
+		return !coll;
 	}
 
 }

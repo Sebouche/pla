@@ -49,4 +49,8 @@ public class IAutomaton {
 		return false; // true si une transition effectuée, false si aucune transition possible (=?=
 						// mort de l'automate ?)
 	}
+	
+	public String name() {
+		return this.name;
+	}
 }
