@@ -31,6 +31,8 @@ import ricm3.parser.*;
 
 public class Model extends GameModel {
 	Player m_player;
+	SurfacePlayer m_surfaceplayer;
+	UndergroundPlayer m_undergroundplayer;
 	int m_width;
 	int m_height;
 	SurfaceWorld m_surfaceworld;
@@ -57,8 +59,9 @@ public class Model extends GameModel {
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
 		//m_currentworld = m_undergroundworld;
-		m_player = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),m_automatons.get(0), m_surfaceworld);
-		m_player.m_automate = new IAutomaton(m_automatons.get(0));
+		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(m_automatons.get(0)), m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(m_automatons.get(0)), m_surfaceworld);
+		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		/*File file;
 		file = new File("sprites/menumusic.wav");

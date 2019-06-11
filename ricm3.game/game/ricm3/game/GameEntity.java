@@ -51,7 +51,10 @@ public class GameEntity {
 	public int hps() {
 		return this.m_hp;
 	}
-
+	
+	public void damage_hp(int dmg) {
+		m_hp-=dmg;
+	}
 	public int dmgs() {
 		return this.m_dmg;
 	}
