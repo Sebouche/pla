@@ -234,7 +234,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_OptionsFrame.add(OptionsPanel, BorderLayout.CENTER);
 		m_OptionsFrame.add(m_OptionsValidate, BorderLayout.SOUTH);
 
-		m_OptionsFrame.setBounds(300, 200, 800, 450);
+		m_OptionsFrame.setBounds(300, 200, 800, 500);
 
 		return;
 	}

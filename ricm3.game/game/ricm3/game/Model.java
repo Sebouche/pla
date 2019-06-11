@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
+import javax.swing.JMenu;
+import javax.swing.JPopupMenu;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
@@ -41,7 +43,7 @@ public class Model extends GameModel {
 	Camera m_camera;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 
-	PopupMenu menu1;
+	JPopupMenu menu_fabrication;
 
 
 	@SuppressWarnings("unchecked")
@@ -194,6 +196,14 @@ public class Model extends GameModel {
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
 			splitSprite("tesla", spritename, 2, 2);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("sprites/wall.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("wall", spritename, 2, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
