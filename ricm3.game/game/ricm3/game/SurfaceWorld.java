@@ -3,7 +3,6 @@ package ricm3.game;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class SurfaceWorld extends World {
 		super(m);
 		chunklists = new LinkedList<ChunkList>();
 		add(new Chunk(this, 0, 0, 2));
-		m_entities.add(new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house")));
+		new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house"), this);
 		Random r = new Random();
 		int y;
 		int x;
@@ -94,11 +93,11 @@ public class SurfaceWorld extends World {
 	private class Spawner extends GameEntity {
 		Chunk m_c;
 
-		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites) {
-			super(c.world.m_model, x, y, 100, sprites,null);
+		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites, World originWorld) {
+			super(c.world.m_model, x, y, 100, sprites, null, originWorld);
 			m_c = c;
-			this.m_automate=new IAutomaton(m_model.m_automatons.get(0));
-			c.world.m_entities.add(this);
+			this.m_automate=new IAutomaton(Options.Spawner_Automaton);
+			m_c.world.m_entities.add(this);
 		}
 
 		@Override
@@ -115,16 +114,16 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(m_model.m_automatons.get(0)));
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.Dog_Automaton),m_model.m_surfaceworld);
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(m_model.m_automatons.get(0)));
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.Turtle_Automaton),m_model.m_surfaceworld);
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(m_model.m_automatons.get(0)));
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.Mouse_Automaton),m_model.m_surfaceworld);
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(m_model.m_automatons.get(0)));
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.Rabbit_Automaton), m_model.m_surfaceworld);
 					break;
 				default:
 					e = null;
@@ -157,7 +156,7 @@ public class SurfaceWorld extends World {
 				type = (((r.nextInt()) % 10) + 1) / 10;
 				if (type == 1) {
 					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
-							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"));
+							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), world);
 				}
 			}
 
@@ -166,6 +165,15 @@ public class SurfaceWorld extends World {
 
 	public SurfaceWorld(Model model) {
 		super(model);
+	}
+
+	@Override
+	public void changeWorld() {
+		m_model.m_currentworld = m_model.m_undergroundworld;
+		m_model.m_player=m_model.m_undergroundplayer;
+		m_model.m_player.m_x = 64;
+		m_model.m_player.m_y = 640;
+		m_model.m_player.m_originWorld = m_model.m_undergroundworld;
 	}
 
 	@Override
@@ -185,14 +193,8 @@ public class SurfaceWorld extends World {
 		while (iter.hasNext()) {
 			GameEntity e = iter.next();
 			Graphics g_child;
-			if (e instanceof House) {
-				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
-						(int) (Options.Entity_size * Options.Scale) * 9,
-						(int) (Options.Entity_size * Options.Scale) * 9);
-			} else {
-				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
-						(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
-			}
+			g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
+					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			e.paint(g_child);
 			g_child.dispose();
 		}

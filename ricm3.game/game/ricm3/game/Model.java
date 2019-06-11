@@ -17,13 +17,13 @@
  */
 package ricm3.game;
 
+import java.awt.PopupMenu;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
@@ -31,6 +31,8 @@ import ricm3.parser.*;
 
 public class Model extends GameModel {
 	Player m_player;
+	SurfacePlayer m_surfaceplayer;
+	UndergroundPlayer m_undergroundplayer;
 	int m_width;
 	int m_height;
 	SurfaceWorld m_surfaceworld;
@@ -38,36 +40,31 @@ public class Model extends GameModel {
 	World m_currentworld;
 	Camera m_camera;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
-	List<IAutomaton> m_automatons;
-	JPanel m_starting_menu;
-	JPanel m_options_menu;
+
+	PopupMenu menu1;
 	Music m_bgm;
-	
+
+	@SuppressWarnings("unchecked")
 	public Model() {
-		Ast arbre;
-		try {
-			arbre = AutomataParser.from_file("automata.txt");
-			m_automatons = (List<IAutomaton>) arbre.make();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 		loadSprites();
 		m_surfaceworld = new SurfaceWorld(10, this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
-		// m_currentworld = m_undergroundworld;
-		m_player = new Player(this, 64, 64, 9999, m_sprites.get("scientist"),m_automatons.get(0));
-		m_player.m_automate = new IAutomaton(m_automatons.get(0));
+		//m_currentworld = m_undergroundworld;
+		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(Options.Player1_Automaton), m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 128, 500, m_sprites.get("scientist"),new IAutomaton(Options.Player1_Automaton), m_surfaceworld);
+		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
-		File file;
+		/*File file;
 		file = new File("sprites/menumusic.wav");
 
 		try {
 			m_bgm = new Music(file);
 			m_bgm.start();
 		} catch (Exception ex) {
-			
-		}
+
+		}*/
 	}
 
 	@Override
@@ -81,11 +78,9 @@ public class Model extends GameModel {
 	 */
 	@Override
 	public void step(long now) {
-		if (Options.begin) {
-			m_player.step();
-			m_undergroundworld.step();
-			m_surfaceworld.step();
-		}
+		m_player.step();
+		m_undergroundworld.step();
+		m_surfaceworld.step();
 	}
 
 	private void loadSprites() {
@@ -182,6 +177,22 @@ public class Model extends GameModel {
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
 			splitSprite("turtle", spritename, 5, 4);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("sprites/heart.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("heart", spritename, 2, 2);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("sprites/tesla.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("tesla", spritename, 2, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
