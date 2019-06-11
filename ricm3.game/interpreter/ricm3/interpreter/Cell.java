@@ -26,7 +26,7 @@ public class Cell extends ICondition {
 		if(kind == Type.ANYTHING)
 			return true;
 		Direction dir = Direction.entityDir(e, direction);
-		int cellx = e.x()-1;
+		int cellx = e.x();
 		int celly = e.y();
 		switch (dir) {
 		case NORTH:
@@ -44,14 +44,21 @@ public class Cell extends ICondition {
 		default:
 			break;
 		}
+		boolean col = true;
 		Iterator<GameEntity> iter = e.entities().iterator();
 		while (iter.hasNext()) {
 			GameEntity f = iter.next();
 			if (isInside(f, cellx, celly)) {
-				if (kind != f.type())
-					return false;
-				if(kind == f.type())
-					return true;
+				if(kind == Type.VOID) {
+					if (kind != f.type())
+						return false;
+				}
+				else {
+					if(kind == f.type())
+						return true;
+					if (kind != f.type())
+						col = false;
+				}	
 			}
 		}
 		if (kind == Type.VOID)

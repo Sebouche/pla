@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
-import ricm3.interpreter.IState;
 
 public class Player extends Ally {
 
@@ -21,6 +20,5 @@ public class Player extends Ally {
 	@Override
 	public void step() {
 		m_automate.step(this);
-		System.out.println(m_automate.current.name);
 	}
 }

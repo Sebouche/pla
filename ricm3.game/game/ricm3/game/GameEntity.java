@@ -154,7 +154,7 @@ public class GameEntity {
 
 	//////////////////////
 
-	double distance(GameEntity e) {
+	public double distance(GameEntity e) {
 		double dx1, dx2, dy1, dy2;
 		dx1 = m_x - (e.m_x + Options.Entity_size*Options.Scale);
 		dx2 = e.m_x - (m_x + Options.Entity_size*Options.Scale);
