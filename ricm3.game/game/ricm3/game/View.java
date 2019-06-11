@@ -59,33 +59,45 @@ public class View extends GameView {
 	@Override
 	protected void _paint(Graphics g) {
 		computeFPS();
+		
+		
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
 		m_model.m_width = getWidth() - (int) (Options.Entity_size * Options.Scale);
 		m_model.m_height = getHeight() - (int) (Options.Entity_size * Options.Scale);
 
+		
+		//background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
 				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
 					g.drawImage(m_model.m_sprites.get("grassbg")[0],
-							(int) (i * Options.Entity_size * Options.Scale) - cam_x,
-							(int) (j * Options.Entity_size * Options.Scale) - cam_y,
+							(int) (i * Options.Entity_size * Options.Scale)
+									- (cam_x % (int) (Options.Entity_size * Options.Scale))+22,
+							(int) (j * Options.Entity_size * Options.Scale)
+									- (cam_y % (int) (Options.Entity_size * Options.Scale))+10,
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 
 				}
 			}
 		} else {
 			int profondeur = (int) (m_model.m_player.m_y / (Options.Entity_size * Options.Scale));
-			for (int i = 0; (int) (i * Options.Entity_size) < getWidth(); i++) {
-				for (int j = 0; (int) (j * Options.Entity_size) < getWidth(); j++) {
-					if (j - profondeur <= 0) {
-						g.drawImage(m_model.m_sprites.get("block")[7], (int) (i * Options.Entity_size * Options.Scale),
-								(int) (j * Options.Entity_size * Options.Scale),
+			for (int i = -1; (int) (i * Options.Entity_size) <= getWidth(); i++) {
+				for (int j = -1; (int) (j * Options.Entity_size) <= getHeight(); j++) {
+					if (j - profondeur > -5) {
+						g.drawImage(m_model.m_sprites.get("block")[7],
+								(int) (i * Options.Entity_size * Options.Scale)
+										- (cam_x % (int) (Options.Entity_size * Options.Scale)),
+								getHeight() - (int) (j * Options.Entity_size * Options.Scale)
+										- (cam_y % (int) (Options.Entity_size * Options.Scale))-5,
 								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
 								null);
 					} else {
-						g.drawImage(m_model.m_sprites.get("dirtbg")[0], (int) (i * Options.Entity_size * Options.Scale),
-								(int) (j * Options.Entity_size * Options.Scale),
+						g.drawImage(m_model.m_sprites.get("dirtbg")[0],
+								(int) (i * Options.Entity_size * Options.Scale)
+										- (cam_x % (int) (Options.Entity_size * Options.Scale))+24,
+								getHeight() - (int) (j * Options.Entity_size * Options.Scale)
+										- (cam_y % (int) (Options.Entity_size * Options.Scale))-5,
 								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
 								null);
 					}
@@ -93,15 +105,15 @@ public class View extends GameView {
 			}
 		}
 
-		if (Options.begin) {
-			Graphics g_child;
-			g_child = g.create(0, 0, getWidth(), getHeight());
-			m_model.m_currentworld.paint(g_child);
-			g_child.dispose();
-			g_child = g.create(m_model.m_width / 2, m_model.m_height / 2, (int) (Options.Entity_size * Options.Scale),
-					(int) (Options.Entity_size * Options.Scale));
-			m_model.m_camera.m_watched.paint(g_child);
-			g_child.dispose();
+		//foreground
+		Graphics g_child;
+		g_child = g.create(0, 0, getWidth(), getHeight());
+		m_model.m_currentworld.paint(g_child);
+		g_child.dispose();
+		g_child = g.create(m_model.m_width / 2, m_model.m_height / 2, (int) (Options.Entity_size * Options.Scale),
+				(int) (Options.Entity_size * Options.Scale));
+		m_model.m_camera.m_watched.paint(g_child);
+		g_child.dispose();
 
 			// barre de vie
 
@@ -119,6 +131,5 @@ public class View extends GameView {
 				g.drawString("  " + (m_model.m_player.m_hp - hp), ((int) (0.4 * hp)), 24);
 			}
 			g_child.dispose();
-		}
 	}
 }
