@@ -23,8 +23,10 @@ public class Cell extends ICondition {
 
 	@Override
 	public boolean eval(GameEntity e) {
+		if(kind == Type.ANYTHING)
+			return true;
 		Direction dir = Direction.entityDir(e, direction);
-		int cellx = e.x();
+		int cellx = e.x()-1;
 		int celly = e.y();
 		switch (dir) {
 		case NORTH:
@@ -52,7 +54,7 @@ public class Cell extends ICondition {
 					return true;
 			}
 		}
-		if (kind == Type.VOID || kind == Type.ANYTHING)
+		if (kind == Type.VOID)
 			return true;
 		return false;
 	}

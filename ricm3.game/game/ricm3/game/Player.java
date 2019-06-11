@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.IState;
 
 public class Player extends Ally {
 
@@ -16,7 +17,7 @@ public class Player extends Ally {
 		m_originWorld.changeWorld();
 		return true;
 	}
-	
+
 	@Override
 	public void step() {
 		m_automate.step(this);

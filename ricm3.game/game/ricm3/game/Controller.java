@@ -75,9 +75,6 @@ public class Controller extends GameController implements ActionListener {
 		if (!m_model.m_player.m_keys.contains(k)) {
 			m_model.m_player.m_keys.add(k);
 		}
-		if(e.getKeyChar()=='e') {
-			m_model.m_currentworld.changeWorld();
-		}
 	}
 
 	@Override

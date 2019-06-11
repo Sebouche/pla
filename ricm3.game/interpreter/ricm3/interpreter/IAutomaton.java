@@ -9,8 +9,8 @@ import ricm3.game.GameEntity;
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IAutomaton {
-	String name;
-	IState current;
+	public String name;
+	public IState current;
 	List<IBehaviour> behaviours;
 
 	public IAutomaton(String name, IState initial, List<IBehaviour> behaviours) {
@@ -38,10 +38,10 @@ public class IAutomaton {
 		Iterator<IBehaviour> iter=behaviours.iterator();
 		while(iter.hasNext()) {
 			IBehaviour b=iter.next();
-			if(b.source.name.equals(current.name)) {
+			if(b.source.name.equals(this.current.name)) {
 					IState target=b.step(e);
 					if(target!=null) {
-						current=target;
+						this.current=target;
 						return true;
 					}
 				}

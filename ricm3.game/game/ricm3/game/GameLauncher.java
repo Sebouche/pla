@@ -47,7 +47,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			e.printStackTrace();
 		}
 		m_AutomatonIndex = new int[9];
-		int[] tab = { 0, 3, 7, 6, 9, 5, 0, 0 , 0 };
+		int[] tab = { 0, 1, 5, 4, 7, 3, 0, 0 , 0 };
 		m_AutomatonIndex = tab;
 		
 		Options.Player1_Automaton = Options.m_automata.get(tab[0]);

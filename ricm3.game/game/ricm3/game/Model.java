@@ -22,12 +22,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.List;
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
-import ricm3.parser.*;
 
 public class Model extends GameModel {
 	Player m_player;
@@ -44,7 +42,6 @@ public class Model extends GameModel {
 	PopupMenu menu1;
 	Music m_bgm;
 
-	@SuppressWarnings("unchecked")
 	public Model() {
 		
 		loadSprites();
@@ -52,8 +49,9 @@ public class Model extends GameModel {
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
 		//m_currentworld = m_undergroundworld;
-		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(Options.Player1_Automaton), m_surfaceworld);
-		m_undergroundplayer =new UndergroundPlayer(this, 64, 128, 500, m_sprites.get("scientist"),new IAutomaton(Options.Player1_Automaton), m_surfaceworld);
+		IAutomaton player_automaton=new IAutomaton(Options.Player1_Automaton);
+		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),player_automaton, m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 128, 500, m_sprites.get("scientist"),player_automaton, m_surfaceworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		/*File file;

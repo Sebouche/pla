@@ -12,7 +12,6 @@ public class GameEntity {
 	public BufferedImage[] m_sprites;
 	public Model m_model;
 	IAutomaton m_automate;
-	IState m_state;
 	// m_sound;
 	World m_originWorld;
 	int m_hp;
