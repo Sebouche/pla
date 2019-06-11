@@ -1,11 +1,11 @@
 PlayerS(Surface){
 	* (Surface):
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
-	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
-	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
-	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
-	| Key(m) & Cell(F,T,1) ? Throw(F) :(Menu)
+	| Key(z) ? Move(N) :(Surface)
+	| Key(q) ? Move(O) :(Surface)
+	| Key(s) ? Move(S) :(Surface)
+	| Key(d) ? Move(E) :(Surface)
+	| Key(m) ? Throw(F) :(Menu)
 	* (Menu):
 	| Key(m) ? Throw(F) :(Surface)
 	| Key(ENTER) ? Throw(F) :(Surface)
