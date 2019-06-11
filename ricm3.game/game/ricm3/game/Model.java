@@ -22,12 +22,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.List;
 import javax.imageio.ImageIO;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
-import ricm3.parser.*;
+
 
 public class Model extends GameModel {
 	long m_lastStep;
@@ -43,7 +42,7 @@ public class Model extends GameModel {
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 
 	PopupMenu menu1;
-	Music m_bgm;
+
 
 	@SuppressWarnings("unchecked")
 	public Model() {
@@ -56,16 +55,12 @@ public class Model extends GameModel {
 		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),new IAutomaton(Options.selectedAutomata.get(0)), m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
-		m_lastStep = 0;
-		/*File file;
-		file = new File("sprites/menumusic.wav");
-
 		try {
-			m_bgm = new Music(file);
-			m_bgm.start();
-		} catch (Exception ex) {
+			Options.m_bgm.stop();
+			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
+			Options.m_bgm.start();
+		} catch (Exception ex) {}
 
-		}*/
 	}
 
 	@Override

@@ -41,6 +41,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 	LinkedList<JComboBox<String>> m_AutomataComboBox;
 	Font m_f1, m_f2, m_f3;
 
+
 	public GameLauncher() {
 		m_AutomataPath = "automata.txt";
 		m_lastAutomataPath = "automata.txt";
@@ -130,7 +131,16 @@ public class GameLauncher implements ActionListener, ComponentListener {
 
 		m_Launcher.add(m_StartingMenu, BorderLayout.CENTER);
 		m_Launcher.setVisible(true);
+		File file;
+		file = new File("sprites/menumusic.wav");
 
+		try {
+			Options.m_bgm = new Music(file);
+			Options.m_bgm.start();
+		} catch (Exception ex) {
+
+		}
+		
 		return;
 	}
 
