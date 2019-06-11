@@ -46,24 +46,6 @@ PlayerU(Underground){
 	* ()
 }
 
-Turner0(Turn_0){
-  * (Turn_0): True ? Turn(R) :(Turn_1)
-  * (Turn_1): True ? Turn(R) :(Turn_2)
-  * (Turn_2): True ? Turn(R) :(Turn_3)
-  * (Turn_3): True ? Turn(R) :(Turn_4)
-  * (Turn_4): True ? Kamikaze :()
-  * ()
-}
-
-Turner1(Turn_0){
-  * (Turn_0): True ? Turn(R) :(Turn_1)
-  * (Turn_1): True ? Turn(R) :(Turn_2)
-  * (Turn_2): True ? Turn(R) :(Turn_3)
-  * (Turn_3): True ? Turn(R) :(Turn_4)
-  * (Turn_4): True ? Kamikaze :()
-  * ()
-}
-
 Bat(E1){
 	* (E1):
 	| !GotPower() ? Kamikaze :()
@@ -143,19 +125,3 @@ Wall(Init){
 	| True ? Wizz() :(Init)
 	* ()
 }
-	
-PlayerS(Surface){
-	* (Surface):
-	| Key(z) & Cell(N,G,1) ? Pick(N) :()
-	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
-	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
-	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
-	| Key(m) & Cell(F,T,1) ? Throw(F) :(Menu)
-	* (Menu):
-	| Key(m) ? Throw(F) :(Surface)
-	| Key(ENTER) ? Throw(F) :(Surface)
-	* ()
-}
-
-

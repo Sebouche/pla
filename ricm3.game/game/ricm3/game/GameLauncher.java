@@ -38,6 +38,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 	Font m_f1, m_f2, m_f3;
 	int[] m_AutomatonIndex;
 
+	@SuppressWarnings("unchecked")
 	public GameLauncher() {
 		Ast arbre;
 		try {
@@ -244,6 +245,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		return;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
