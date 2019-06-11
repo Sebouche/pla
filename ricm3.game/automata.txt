@@ -12,6 +12,39 @@ PlayerS(Surface){
 	* ()
 }
 
+PlayerU(Underground){
+	* (Underground):
+	| Key(z) & Cell(N,V,1) ? Move(N) :(Jumping)
+	| Key(q) & Cell(O,J,1) ? Move(O) :(Ladder)
+	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
+	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
+	| Key(m) ? Throw(F) :(Menu1)
+	* (Jumping):
+	| Cell(S,O,1) ? Protect() :(Underground)
+	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
+	| Key(m) ? Throw(F) :(Menu2)
+	* (Ladder):
+	| Key(z) & Cell(N,G,1) ? Pick(N) :()
+	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)
+	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
+	| Key(z) & Cell(N,V,1) ? Move(N) :(Underground)
+	| Key(s) & Cell(S,V,1) ? Move(S) :(Underground)
+	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
+	| Key(m) ? Throw(F) :(Menu3)
+	* (Menu1):
+	| Key(m) ? Throw(F) :(Underground)
+	| Key(ENTER) ? Throw(F) :(Underground)
+	* (Menu2):
+	| Key(m) ? Throw(F) :(Jumping)
+	| Key(ENTER) ? Throw(F) :(Jumping)
+	* (Menu3):
+	| Key(m) ? Throw(F) :(Ladder)
+	| Key(ENTER) ? Throw(F) :(Ladder)
+	* ()
+}
 
 Turner0(Turn_0){
   * (Turn_0): True ? Turn(R) :(Turn_1)
@@ -125,36 +158,4 @@ PlayerS(Surface){
 	* ()
 }
 
-PlayerU(Underground){
-	* (Underground):
-	| Key(z) & Cell(N,V,1) ? Move(N) :(Jumping)
-	| Key(q) & Cell(O,J,1) ? Move(O) :(Ladder)
-	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
-	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
-	| Key(m) ? Throw(F) :(Menu1)
-	* (Jumping):
-	| Cell(S,O,1) ? Protect() :(Underground)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
-	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
-	| Key(m) ? Throw(F) :(Menu2)
-	* (Ladder):
-	| Key(z) & Cell(N,G,1) ? Pick(N) :()
-	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)
-	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
-	| Key(z) & Cell(N,V,1) ? Move(N) :(Underground)
-	| Key(s) & Cell(S,V,1) ? Move(S) :(Underground)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
-	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
-	| Key(m) ? Throw(F) :(Menu3)
-	* (Menu1):
-	| Key(m) ? Throw(F) :(Underground)
-	| Key(ENTER) ? Throw(F) :(Underground)
-	* (Menu2):
-	| Key(m) ? Throw(F) :(Jumping)
-	| Key(ENTER) ? Throw(F) :(Jumping)
-	* (Menu3):
-	| Key(m) ? Throw(F) :(Ladder)
-	| Key(ENTER) ? Throw(F) :(Ladder)
-	* ()
-}
+

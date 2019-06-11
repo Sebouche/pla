@@ -1,7 +1,7 @@
 package ricm3.game;
 
 import java.awt.image.BufferedImage;
-
+import game.blocks.*;
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
 
@@ -45,7 +45,7 @@ public class UndergroundPlayer extends Player {
 		return true;
 	}
 
-	public boolean wizz() {
+	public boolean wizz(Direction dir) {
 		int entity_size = (int) (Options.Scale * Options.Entity_size);
 		int pos_x = (int) (m_model.m_player.m_x / entity_size);
 		int pos_y = (int) (m_model.m_player.m_y / entity_size);
