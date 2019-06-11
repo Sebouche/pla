@@ -125,3 +125,8 @@ Wall(Init){
 	* ()
 }
 
+Spawner(Init){
+	* (Init): 
+	| True ? Egg() :(Init)
+	* ()
+}
