@@ -25,21 +25,22 @@ public class Player extends Ally {
 
 	@Override
 	public boolean move(Direction dir) {
+		Direction absoldir= Direction.entityDir(this, dir);
 		super.move(dir);
-		if (dir != m_lastdir) {
-			if (dir == Direction.EAST) {
+		if (absoldir != m_lastdir) {
+			if (absoldir == Direction.EAST) {
 				m_basesprite = 18;
 			}
-			if (dir == Direction.WEST) {
+			if (absoldir == Direction.WEST) {
 				m_basesprite = 26;
 			}
-			if (dir == Direction.NORTH) {
+			if (absoldir == Direction.NORTH) {
 				m_basesprite = 8;
 			}
-			if (dir == Direction.SOUTH) {
+			if (absoldir == Direction.SOUTH) {
 				m_basesprite = 0;
 			}
-			m_lastdir = dir;
+			m_lastdir = absoldir;
 			m_elapsed = 0;
 		} else {
 			if (m_elapsed % 30 == 0) {
