@@ -31,6 +31,8 @@ import ricm3.parser.*;
 
 public class Model extends GameModel {
 	Player m_player;
+	SurfacePlayer m_surfaceplayer;
+	UndergroundPlayer m_undergroundplayer;
 	int m_width;
 	int m_height;
 	SurfaceWorld m_surfaceworld;
@@ -42,6 +44,7 @@ public class Model extends GameModel {
 	PopupMenu menu1;
 	Music m_bgm;
 
+	@SuppressWarnings("unchecked")
 	public Model() {
 		
 		loadSprites();
@@ -49,10 +52,11 @@ public class Model extends GameModel {
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
 		//m_currentworld = m_undergroundworld;
-		m_player = new Player(this, -100, -100, 500, m_sprites.get("scientist"),Options.Player1_Automaton, m_surfaceworld);
-		m_player.m_automate = new IAutomaton(Options.Player1_Automaton);
+		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(m_automatons.get(0)), m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(m_automatons.get(0)), m_surfaceworld);
+		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
-		File file;
+		/*File file;
 		file = new File("sprites/menumusic.wav");
 
 		try {
@@ -60,7 +64,7 @@ public class Model extends GameModel {
 			m_bgm.start();
 		} catch (Exception ex) {
 
-		}
+		}*/
 	}
 
 	@Override
@@ -181,6 +185,14 @@ public class Model extends GameModel {
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
 			splitSprite("heart", spritename, 2, 2);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("sprites/tesla.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("tesla", spritename, 2, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

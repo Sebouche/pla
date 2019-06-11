@@ -11,10 +11,13 @@ public class World {
 	File m_bgmfile;
 	
 	public World(Model model) {
-		m_model = model;
 		m_entities = new LinkedList<GameEntity>();
+		m_model = model;
 	}
-
+	
+	public void changeWorld() {
+		
+	}
 	public void step() {
 	}
 

@@ -94,10 +94,10 @@ public class SurfaceWorld extends World {
 		Chunk m_c;
 
 		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites, World originWorld) {
-			super(c.world.m_model, x, y, 100, sprites,null, originWorld);
+			super(c.world.m_model, x, y, 100, sprites, null, originWorld);
 			m_c = c;
-			this.m_automate=new IAutomaton(Options.m_automata.get(0));
-			c.world.m_entities.add(this);
+			this.m_automate=new IAutomaton(m_model.m_automatons.get(0));
+			m_c.world.m_entities.add(this);
 		}
 
 		@Override
@@ -156,7 +156,7 @@ public class SurfaceWorld extends World {
 				type = (((r.nextInt()) % 10) + 1) / 10;
 				if (type == 1) {
 					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
-							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), m_model.m_surfaceworld);
+							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), world);
 				}
 			}
 
@@ -165,6 +165,15 @@ public class SurfaceWorld extends World {
 
 	public SurfaceWorld(Model model) {
 		super(model);
+	}
+
+	@Override
+	public void changeWorld() {
+		m_model.m_currentworld = m_model.m_undergroundworld;
+		m_model.m_player=m_model.m_undergroundplayer;
+		m_model.m_player.m_x = 64;
+		m_model.m_player.m_y = 640;
+		m_model.m_player.m_originWorld = m_model.m_undergroundworld;
 	}
 
 	@Override
@@ -184,14 +193,8 @@ public class SurfaceWorld extends World {
 		while (iter.hasNext()) {
 			GameEntity e = iter.next();
 			Graphics g_child;
-			if (e instanceof House) {
-				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
-						(int) (Options.Entity_size * Options.Scale) * 9,
-						(int) (Options.Entity_size * Options.Scale) * 9);
-			} else {
-				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
-						(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
-			}
+			g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
+					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			e.paint(g_child);
 			g_child.dispose();
 		}
