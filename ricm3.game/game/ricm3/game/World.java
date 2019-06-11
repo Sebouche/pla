@@ -37,8 +37,8 @@ public class World {
 	}
 
 	public boolean Hit(GameEntity ge, Direction d) {
-		Iterator<GameEntity> iter = m_entities.iterator();
-		GameEntity e;
+		Iterator<Ally> iter = m_allies.iterator();
+		Ally e;
 		int x, y;
 		switch (d) {
 		case EAST:
@@ -66,7 +66,7 @@ public class World {
 			e = iter.next();
 			if (e instanceof MovingEntity) {
 				if (((MovingEntity) (e)).collision(ge, x, y)) {
-					ge.damage_hp(e.m_dmg);
+					e.damage_hp(ge.m_dmg);
 					b = true;
 				}
 			}

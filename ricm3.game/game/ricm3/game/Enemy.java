@@ -20,7 +20,7 @@ public class Enemy extends MovingEntity {
 		targets = t;
 	}
 
-	public void Pop() {
+	public boolean pop(Direction dir) {
 		Point p = aggro().getFirst();
 		double dx = p.x - this.m_x;
 		double dy = p.y - this.m_y;
@@ -53,13 +53,15 @@ public class Enemy extends MovingEntity {
 				}
 			}
 		}
+		return true;
 	}
 	
-	public void Wizz() {
+	public boolean wizz(Direction dir) {
 		this.m_idsprite++;
 		if(this.m_idsprite>=this.m_sprites.length) {
 			this.m_idsprite = 0;
 		}
+		return true;
 	}
 
 	LinkedList<Point> aggro() {
