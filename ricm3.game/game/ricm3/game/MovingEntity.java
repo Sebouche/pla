@@ -27,9 +27,6 @@ public class MovingEntity extends GameEntity {
 				coll = false;
 			}
 			if (coll == true) {
-				if (ge instanceof Gate) {
-					m_originWorld.changeWorld();
-				}
 				return true;
 			}
 		}

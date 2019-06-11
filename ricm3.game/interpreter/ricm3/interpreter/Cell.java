@@ -46,10 +46,14 @@ public class Cell extends ICondition {
 		while (iter.hasNext()) {
 			GameEntity f = iter.next();
 			if (isInside(f, cellx, celly)) {
-				if (kind != f.type())			
+				if (kind != f.type())
 					return false;
+				if(kind == f.type())
+					return true;
 			}
 		}
-		return true;
+		if (kind == Type.VOID || kind == Type.ANYTHING)
+			return true;
+		return false;
 	}
 }

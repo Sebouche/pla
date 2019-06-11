@@ -19,7 +19,7 @@ public class GameEntity {
 	public int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
-	Type m_type;
+	public Type m_type;
 	LinkedList<Keys> m_keys;
 	boolean m_collision = true;
 
@@ -98,7 +98,6 @@ public class GameEntity {
 	}
 
 	public boolean turn(Direction dir) {
-		System.out.printf("test\n");
 		return true;
 	}
 

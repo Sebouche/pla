@@ -1,12 +1,13 @@
 PlayerS(Surface){
 	* (Surface):
+	| Key(z) & Cell(N,G,10) ? Jump(F) :()
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
-	| Key(z) ? Move(N) :(Surface)
-	| Key(q) ? Move(O) :(Surface)
-	| Key(s) ? Move(S) :(Surface)
-	| Key(d) ? Move(E) :(Surface)
-	| Key(m) ? Throw(F) :(Menu)
-	* (Menu):
+	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
+	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
+	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
+	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
+	| Key(m) ? Throw(F) :(SelectTurret)
+	* (SelectTurret):
 	| Key(m) ? Throw(F) :(Surface)
 	| Key(ENTER) ? Throw(F) :(Surface)
 	* ()
