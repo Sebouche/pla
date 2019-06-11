@@ -13,19 +13,20 @@ public class Dog extends Enemy {
 		super(model, x, y, Options.HP[0], sprites,automate,originWorld, t);
 	}
 	public boolean move(Direction dir) {
+		Direction absoldir= Direction.entityDir(this, dir);
 		super.move(dir);
-		if (dir != m_lastdir) {
-			if (dir == Direction.EAST) {
+		if (absoldir != m_lastdir) {
+			if (absoldir == Direction.EAST) {
 				m_basesprite = 0;
 			}
-			if (dir == Direction.WEST) {
+			if (absoldir == Direction.WEST) {
 				m_basesprite = 6;
 			}
-			if (dir == Direction.NORTH) {
-				m_basesprite = 12;
-			}
-			if (dir == Direction.SOUTH) {
+			if (absoldir == Direction.NORTH) {
 				m_basesprite = 18;
+			}
+			if (absoldir == Direction.SOUTH) {
+				m_basesprite = 12;
 			}
 			m_lastdir = dir;
 			m_elapsed = 0;
