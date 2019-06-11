@@ -17,6 +17,10 @@
  */
 package ricm3.game;
 
+import java.util.List;
+
+import ricm3.interpreter.IAutomaton;
+
 public class Options {
 	public static final boolean USE_DOUBLE_BUFFERING = true;
 	public static final boolean ECHO_MOUSE = false;
@@ -31,4 +35,16 @@ public class Options {
 	public static int[] HP = { 25, 100, 2, 10 };
 
 	public static boolean day = true; // indique si on est la journée ou pas
+	
+	public static List<IAutomaton> m_automata;
+	
+	public static IAutomaton Player1_Automaton = null;
+	public static IAutomaton Bat_Automaton = null;
+	public static IAutomaton Block_Automaton = null;
+	public static IAutomaton Dog_Automaton = null;
+	public static IAutomaton Wall_Automaton = null;
+	public static IAutomaton Mouse_Automaton = null;
+	public static IAutomaton Rabbit_Automaton = null;
+	public static IAutomaton Turtle_Automaton = null;
+	public static IAutomaton Spawner_Automaton = null;
 }

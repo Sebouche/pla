@@ -1,7 +1,6 @@
 package ricm3.game;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -26,16 +25,40 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.ricm3.game.GameUI;
+import ricm3.interpreter.IAutomaton;
+import ricm3.parser.Ast;
+import ricm3.parser.AutomataParser;
 
 public class GameLauncher implements ActionListener, ComponentListener {
 
 	ImagePanel m_StartingMenu;
 	JFrame m_Launcher, m_OptionsFrame;
 	JButton m_NewGame, m_Options, m_Quit, m_OptionsValidate;
-	JComboBox<String> m_AutomataComboBox_Player1, m_AutomataComboBox_Bat, m_AutomataComboBox_Block, m_AutomataComboBox_Dog, m_AutomataComboBox_House, m_AutomataComboBox_Mouse, m_AutomataComboBox_Rabbit, m_AutomataComboBox_Turtle;
+	JComboBox<String> m_AutomataComboBox_Player1, m_AutomataComboBox_Bat, m_AutomataComboBox_Block, m_AutomataComboBox_Dog, m_AutomataComboBox_Wall, m_AutomataComboBox_Mouse, m_AutomataComboBox_Rabbit, m_AutomataComboBox_Turtle;
 	Font m_f1, m_f2, m_f3;
+	int[] m_AutomatonIndex;
 
 	public GameLauncher() {
+		Ast arbre;
+		try {
+			arbre = AutomataParser.from_file("automata.txt");
+			Options.m_automata = (LinkedList<IAutomaton>) arbre.make();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		m_AutomatonIndex = new int[9];
+		int[] tab = { 0, 3, 7, 6, 9, 5, 0, 0 , 0 };
+		m_AutomatonIndex = tab;
+		
+		Options.Player1_Automaton = Options.m_automata.get(tab[0]);
+		Options.Bat_Automaton = Options.m_automata.get(tab[1]);
+		Options.Block_Automaton = Options.m_automata.get(tab[2]);
+		Options.Dog_Automaton = Options.m_automata.get(tab[3]);
+		Options.Wall_Automaton = Options.m_automata.get(tab[4]);
+		Options.Mouse_Automaton = Options.m_automata.get(tab[5]);
+		Options.Rabbit_Automaton = Options.m_automata.get(tab[6]);
+		Options.Turtle_Automaton = Options.m_automata.get(tab[7]);
+		Options.Spawner_Automaton = Options.m_automata.get(tab[8]);
 		Launcher();
 		OptionsMenu();
 	}
@@ -58,7 +81,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			try {
 				m_bg = ImageIO.read(new File(url));
 			} catch (IOException e) {
-				System.out.println("Problème de lecture d'image (launcher bg)");
+				System.out.println("Probleme de lecture d'image (launcher bg)");
 			}
 		}
 
@@ -82,44 +105,38 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_Launcher = new JFrame();
 		m_Launcher.setTitle("Super Automatak Defense (Launcher)");
 		m_Launcher.setLayout(new BorderLayout());
-		m_Launcher.setBounds(200, 100, 800, 600);
+		m_Launcher.setBounds(200, 100, 1000, 800);
 		m_Launcher.addComponentListener(this);
-
-		m_StartingMenu = new ImagePanel(0, 0, m_Launcher.getWidth(), m_Launcher.getHeight(), "sprites/mdr.jpg");
-		m_StartingMenu.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		
+		m_StartingMenu = new ImagePanel(0, 0, m_Launcher.getWidth(), m_Launcher.getHeight(), "sprites/launcherbg.jpg");
+		m_StartingMenu.setLayout(new BoxLayout(m_StartingMenu, BoxLayout.Y_AXIS));
 		m_StartingMenu.setOpaque(false);
 
 		m_f1 = new Font(Font.SERIF, Font.BOLD, 64);
 		m_f2 = new Font(Font.MONOSPACED, Font.BOLD, 32);
 		m_f3 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 
-		JLabel Title = new JLabel("Automatak");
-		Title.setFont(m_f1);
-		c.gridx = 0;
-		c.gridy = 0;
-		m_StartingMenu.add(Title, c);
-
+		JPanel Padding = new JPanel();
+		Padding.setOpaque(false);
+		m_StartingMenu.add(Padding);
+		
 		m_NewGame = new JButton("Nouvelle partie");
 		m_NewGame.setFont(m_f2);
 		m_NewGame.addActionListener(this);
-		c.gridx = 0;
-		c.gridy = 1;
-		m_StartingMenu.add(m_NewGame, c);
+		m_NewGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+		m_StartingMenu.add(m_NewGame);
 
 		m_Options = new JButton("Options");
 		m_Options.setFont(m_f2);
 		m_Options.addActionListener(this);
-		c.gridx = 0;
-		c.gridy = 2;
-		m_StartingMenu.add(m_Options, c);
+		m_Options.setAlignmentX(Component.CENTER_ALIGNMENT);
+		m_StartingMenu.add(m_Options);
 
 		m_Quit = new JButton("Quitter");
 		m_Quit.setFont(m_f2);
 		m_Quit.addActionListener(this);
-		c.gridx = 0;
-		c.gridy = 3;
-		m_StartingMenu.add(m_Quit, c);
+		m_Quit.setAlignmentX(Component.CENTER_ALIGNMENT);
+		m_StartingMenu.add(m_Quit);
 
 		m_Launcher.add(m_StartingMenu, BorderLayout.CENTER);
 		m_Launcher.setVisible(true);
@@ -148,50 +165,51 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_OptionsValidate.setFont(m_f2);
 		m_OptionsValidate.addActionListener(this);
 
-		String[] Automata = { "Player1", "Bat", "Block", "Dog", "House", "Mouse", "Rabbit", "Turtle" };
+		String[] Automata_name = { "Player1", "Bat", "Block", "Dog", "Wall", "Mouse", "Rabbit", "Turtle" };
+		
 		LinkedList<JComboBox<String>> AutomataList = new LinkedList<JComboBox<String>>();
 		
-		m_AutomataComboBox_Player1 = new JComboBox<String>(Automata);
+		m_AutomataComboBox_Player1 = new JComboBox<String>(Automata_name);
 		m_AutomataComboBox_Player1.setSelectedIndex(0);
 		m_AutomataComboBox_Player1.addActionListener(this);
 		AutomataList.add(m_AutomataComboBox_Player1);
 
-		m_AutomataComboBox_Bat = new JComboBox<String>(Automata);
+		m_AutomataComboBox_Bat = new JComboBox<String>(Automata_name);
 		m_AutomataComboBox_Bat.setSelectedIndex(1);
 		m_AutomataComboBox_Bat.addActionListener(this);
 		AutomataList.add(m_AutomataComboBox_Bat);
 		
-		m_AutomataComboBox_Block = new JComboBox<String>(Automata);
+		m_AutomataComboBox_Block = new JComboBox<String>(Automata_name);
 		m_AutomataComboBox_Block.setSelectedIndex(2);
 		m_AutomataComboBox_Block.addActionListener(this);
 		AutomataList.add(m_AutomataComboBox_Block);
 		
-		m_AutomataComboBox_Dog = new JComboBox<String>(Automata);
+		m_AutomataComboBox_Dog = new JComboBox<String>(Automata_name);
 		m_AutomataComboBox_Dog.setSelectedIndex(3);
 		m_AutomataComboBox_Dog.addActionListener(this);
 		AutomataList.add(m_AutomataComboBox_Dog);
 		
-		m_AutomataComboBox_House = new JComboBox<String>(Automata);
-		m_AutomataComboBox_House.setSelectedIndex(4);
-		m_AutomataComboBox_House.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_House);
+		m_AutomataComboBox_Wall = new JComboBox<String>(Automata_name);
+		m_AutomataComboBox_Wall.setSelectedIndex(4);
+		m_AutomataComboBox_Wall.addActionListener(this);
+		AutomataList.add(m_AutomataComboBox_Wall);
 		
-		m_AutomataComboBox_Mouse = new JComboBox<String>(Automata);
+		m_AutomataComboBox_Mouse = new JComboBox<String>(Automata_name);
 		m_AutomataComboBox_Mouse.setSelectedIndex(5);
 		m_AutomataComboBox_Mouse.addActionListener(this);
 		AutomataList.add(m_AutomataComboBox_Mouse);
 		
-		m_AutomataComboBox_Rabbit = new JComboBox<String>(Automata);
+		m_AutomataComboBox_Rabbit = new JComboBox<String>(Automata_name);
 		m_AutomataComboBox_Rabbit.setSelectedIndex(6);
 		m_AutomataComboBox_Rabbit.addActionListener(this);
 		AutomataList.add(m_AutomataComboBox_Rabbit);
 		
-		m_AutomataComboBox_Turtle = new JComboBox<String>(Automata);
+		m_AutomataComboBox_Turtle = new JComboBox<String>(Automata_name);
 		m_AutomataComboBox_Turtle.setSelectedIndex(7);
 		m_AutomataComboBox_Turtle.addActionListener(this);
 		AutomataList.add(m_AutomataComboBox_Turtle);
 		
-		JLabel EntitiesTitle = new JLabel("Entité /");
+		JLabel EntitiesTitle = new JLabel("Entite /");
 		EntitiesTitle.setFont(m_f2);
 		c.gridx = 0;
 		c.gridy = 0;
@@ -203,8 +221,8 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		c.gridy = 0;
 		OptionsPanel.add(AutomataTitle, c);	
 		
-		for (int i = 0; i < Automata.length; i++) {
-			JLabel AutomataLabel = new JLabel(Automata[i]);
+		for (int i = 0; i < Automata_name.length; i++) {
+			JLabel AutomataLabel = new JLabel(Automata_name[i]);
 			AutomataLabel.setFont(m_f3);
 			JComboBox<String> AutomataComboBox = AutomataList.get(i);
 			c.gridx = 0;
@@ -241,36 +259,28 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			m_OptionsFrame.setVisible(true);
 		} else if (s == m_AutomataComboBox_Player1) {
 			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
+			Options.Player1_Automaton = Options.m_automata.get(cb.getSelectedIndex());
 		} else if (s == m_AutomataComboBox_Bat) {
 			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
+			Options.Bat_Automaton = Options.m_automata.get(cb.getSelectedIndex());
 		} else if (s == m_AutomataComboBox_Block) {
 			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
+			Options.Block_Automaton = Options.m_automata.get(cb.getSelectedIndex());
 		} else if (s == m_AutomataComboBox_Dog) {
 			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
-		} else if (s == m_AutomataComboBox_House) {
+			Options.Dog_Automaton = Options.m_automata.get(cb.getSelectedIndex());
+		} else if (s == m_AutomataComboBox_Wall) {
 			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
+			Options.Wall_Automaton = Options.m_automata.get(cb.getSelectedIndex());
 		} else if (s == m_AutomataComboBox_Mouse) {
 			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
+			Options.Mouse_Automaton = Options.m_automata.get(cb.getSelectedIndex());
 		} else if (s == m_AutomataComboBox_Rabbit) {
 			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
+			Options.Rabbit_Automaton = Options.m_automata.get(cb.getSelectedIndex());
 		} else if (s == m_AutomataComboBox_Turtle) {
 			JComboBox<String> cb = (JComboBox<String>) s;
-			String automaton = (String) cb.getSelectedItem();
-			System.out.println(automaton);
+			Options.Turtle_Automaton = Options.m_automata.get(cb.getSelectedIndex());
 		} else if (s == m_Quit) {
 			System.exit(0);
 		} else if (s == m_OptionsValidate) {
