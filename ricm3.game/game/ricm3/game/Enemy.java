@@ -58,11 +58,12 @@ public class Enemy extends MovingEntity {
 		return true;
 	}
 	
-	public void Wizz() {
+	public boolean wizz(Direction d) {
 		this.m_idsprite++;
 		if(this.m_idsprite>=this.m_sprites.length) {
 			this.m_idsprite = 0;
 		}
+		return true;
 	}
 
 	LinkedList<Point> aggro() {
