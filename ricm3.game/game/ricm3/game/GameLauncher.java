@@ -135,8 +135,8 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		file = new File("sprites/menumusic.wav");
 
 		try {
-			Options.m_bgm = new Music(file);
-			Options.m_bgm.start();
+			Options.bgm = new Music(file);
+			Options.bgm.start();
 		} catch (Exception ex) {
 
 		}
@@ -148,7 +148,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		Ast arbre;
 		try {
 			arbre = AutomataParser.from_file(m_AutomataPath);
-			Options.m_automata = (LinkedList<IAutomaton>) arbre.make();
+			Options.Automata = (LinkedList<IAutomaton>) arbre.make();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -190,7 +190,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		LinkedList<String> AutomataNames_list = new LinkedList<String>();
 		// Création des labels
 		int i = 0;
-		Iterator<IAutomaton> iter = Options.m_automata.iterator();
+		Iterator<IAutomaton> iter = Options.Automata.iterator();
 		while (iter.hasNext()) {
 			IAutomaton automaton = iter.next();
 			Options.selectedAutomata.add(automaton);
@@ -215,7 +215,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		// Création des combo box
 		i = 0;
 		m_AutomataComboBox = new LinkedList<JComboBox<String>>();
-		iter = Options.m_automata.iterator();
+		iter = Options.Automata.iterator();
 		while (iter.hasNext()) {
 			IAutomaton automaton = iter.next();
 			JComboBox<String> ComboBox = new JComboBox<String>(AutomataNames);
@@ -283,7 +283,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 				JComboBox<String> ComboBox = iter.next();
 				if (s == ComboBox) {
 					JComboBox<String> cb = (JComboBox<String>) s;
-					Options.selectedAutomata.set(i, Options.m_automata.get(cb.getSelectedIndex()));
+					Options.selectedAutomata.set(i, Options.Automata.get(cb.getSelectedIndex()));
 				}
 				i++;
 			}

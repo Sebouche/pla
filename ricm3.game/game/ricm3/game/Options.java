@@ -36,9 +36,9 @@ public class Options {
 
 	public static boolean day = true; // indique si on est la journée ou pas
 	
-	public static LinkedList<IAutomaton> m_automata;
+	public static LinkedList<IAutomaton> Automata;
 	
 	public static LinkedList<IAutomaton> selectedAutomata;
 	
-	public static Music m_bgm;
+	public static Music bgm;
 }

@@ -58,9 +58,9 @@ public class Model extends GameModel {
 		m_camera = new Camera(this, m_player);
 		m_lastStep = 0;
 		try {
-			Options.m_bgm.stop();
-			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
-			Options.m_bgm.start();
+			Options.bgm.stop();
+			Options.bgm = new Music(m_currentworld.m_bgmfile);
+			Options.bgm.start();
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
 		m_undergroundworld.m_allies.add(m_undergroundplayer);
