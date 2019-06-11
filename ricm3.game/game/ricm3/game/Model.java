@@ -45,16 +45,15 @@ public class Model extends GameModel {
 
 	JPopupMenu menu_fabrication;
 
-
-	@SuppressWarnings("unchecked")
 	public Model() {
 		
 		loadSprites();
-		m_surfaceworld = new SurfaceWorld(10, this);
+		m_surfaceworld = new SurfaceWorld(2, this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
-		m_surfaceplayer = new SurfacePlayer(this, 64, 192, 500, m_sprites.get("scientist"),new IAutomaton(Options.selectedAutomata.get(0)), m_surfaceworld);
-		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),new IAutomaton(Options.selectedAutomata.get(0)), m_undergroundworld);
+		IAutomaton player_automate = new IAutomaton(Options.selectedAutomata.get(0));
+		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("scientist"),player_automate, m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),player_automate, m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		m_lastStep = 0;
@@ -63,7 +62,8 @@ public class Model extends GameModel {
 			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
 			Options.m_bgm.start();
 		} catch (Exception ex) {}
-
+		m_surfaceworld.m_allies.add(m_surfaceplayer);
+		m_undergroundworld.m_allies.add(m_undergroundplayer);
 	}
 
 	@Override

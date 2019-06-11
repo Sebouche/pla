@@ -6,12 +6,17 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 
 import ricm3.game.Options;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Keys;
 
 public class SurfaceWorld extends World {
+	
+	List<GameEntity> m_tmp_ent;
+	
 	private class ChunkList {
 		List<Chunk> chunks;
 		int m_y;
@@ -30,8 +35,11 @@ public class SurfaceWorld extends World {
 
 	public SurfaceWorld(int radius, Model m) {
 		super(m);
+		m_tmp_ent = new LinkedList<GameEntity>();
 		chunklists = new LinkedList<ChunkList>();
-		add(new Chunk(this, 0, 0, 2));
+		Chunk c=new Chunk(this, 0, 0, 2);
+		add(c);
+		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("spawner"), this);
 		new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house"), this);
 		Random r = new Random();
 		int y;
@@ -90,20 +98,27 @@ public class SurfaceWorld extends World {
 		}
 	}
 
-	private class Spawner extends GameEntity {
+	public class Spawner extends GameEntity {
 		Chunk m_c;
+		int m_elapsed=0;
 
 		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites, World originWorld) {
 			super(c.world.m_model, x, y, 100, sprites, null, originWorld);
 			m_c = c;
-			this.m_automate=new IAutomaton(Options.selectedAutomata.get(0));
+			this.m_automate=new IAutomaton(Options.selectedAutomata.get(9));
 			m_c.world.m_entities.add(this);
 		}
 
 		@Override
 		public boolean egg() {
+			if (m_elapsed % 30 == 0) {
+				m_elapsed=0;
+				m_idsprite=(m_idsprite+1)%m_sprites.length;
+			}
+			m_elapsed++;
 			Random r = new Random();
 			if ((r.nextInt() % 100) == 0) {
+				System.out.println("salu");
 				int type;
 				int i = 0;
 				type = r.nextInt() % 100;
@@ -114,23 +129,23 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld);
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.selectedAutomata.get(4)),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld);
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld);
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.selectedAutomata.get(3)),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_surfaceworld);
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_surfaceworld, m_allies);
 					break;
 				default:
 					e = null;
 					break;
 				}
 				if (e != null) {
-					m_entities.add(e);
+					m_tmp_ent.add(e);
 					return true;
 				}
 			}
@@ -153,7 +168,7 @@ public class SurfaceWorld extends World {
 			sprite = world.m_model.m_sprites.get("grassbg")[0];
 			if (type < 0) {
 				Random r = new Random();
-				type = (((r.nextInt()) % 10) + 1) / 10;
+				type = (((r.nextInt()) % 2) + 1) / 2;
 				if (type == 1) {
 					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
 							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), world);
@@ -169,6 +184,9 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void changeWorld() {
+		m_model.m_player.m_keys=new LinkedList<Keys>();
+		m_model.m_player.m_x = 64;
+		m_model.m_player.m_y = 128;
 		m_model.m_currentworld = m_model.m_undergroundworld;
 		m_model.m_player=m_model.m_undergroundplayer;
 		m_model.m_player.m_x = 64;
@@ -184,6 +202,13 @@ public class SurfaceWorld extends World {
 			GameEntity e = iter.next();
 			e.step();
 		}
+		iter = m_tmp_ent.iterator();
+		while(iter.hasNext()) {
+			GameEntity e = iter.next();
+			m_entities.add(e);
+		}
+		m_tmp_ent = new LinkedList<GameEntity>();
+		
 	}
 
 	@Override
