@@ -28,7 +28,7 @@ public class Dog extends Enemy {
 			if (absoldir == Direction.SOUTH) {
 				m_basesprite = 12;
 			}
-			m_lastdir = dir;
+			m_lastdir = absoldir;
 			m_elapsed = 0;
 		} else {
 			if (m_elapsed % 30 == 0) {
