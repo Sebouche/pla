@@ -154,8 +154,34 @@ public class GameEntity {
 
 	//////////////////////
 
-	public double distance(GameEntity e) {
-		return Math.sqrt((m_x - e.m_x) * (m_x - e.m_x) + (m_y - e.m_y) * (m_y - e.m_y));
+	double distance(GameEntity e) {
+		double dx1, dx2, dy1, dy2;
+		dx1 = m_x - (e.m_x + Options.Entity_size*Options.Scale);
+		dx2 = e.m_x - (m_x + Options.Entity_size*Options.Scale);
+		dy1 = m_y - (e.m_y + Options.Entity_size*Options.Scale);
+		dy2 = e.m_y - (m_y + Options.Entity_size*Options.Scale);
+		if ((dx1 <= 0) && (dx2 <= 0) && (dy1 <= 0) && (dy2 <= 0)) {
+			return 0;
+		}
+		if ((dx1 <= 0) && (dx2 <= 0)) {
+			return Math.max(dy1, dy2);
+		} else if ((dy1 <= 0) && (dy2 <= 0)) {
+			return Math.max(dx1, dx2);
+		}
+		if (dx1 > 0) {
+			if (dy1 > 0) {
+				return Math.sqrt(dx1*dx1+dy1*dy1);
+			} else if (dy2 > 0) {
+				return Math.sqrt(dx1*dx1+dy2*dy2);
+			}
+		} else if (dx2 > 0) {
+			if (dy1 > 0) {
+				return Math.sqrt(dx2*dx2+dy1*dy1);
+			} else if (dy2 > 0) {
+				return Math.sqrt(dx2*dx2+dy2*dy2);
+			}
+		}
+		return -1;
 	}
 
 }

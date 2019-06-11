@@ -154,7 +154,7 @@ public class SurfaceWorld extends World {
 			sprite = world.m_model.m_sprites.get("grassbg")[0];
 			if (type < 0) {
 				Random r = new Random();
-				type = (((r.nextInt()) % 10) + 1) / 10;
+				type = (((r.nextInt()) % 2) + 1) / 2;
 				if (type == 1) {
 					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
 							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), world);
