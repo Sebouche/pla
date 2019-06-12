@@ -216,9 +216,11 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_AutomataComboBox = new LinkedList<JComboBox<String>>();
 		itr = Options.Automata.iterator();
 		for (i = 0; i < Options.EntitiesNames.length; i++) {
-			Options.Entities.put(Options.EntitiesNames[i], Options.Automata.get(0));
+			int index = find(Options.EntitiesNames[i]);
+			IAutomaton Automaton = Options.Automata.get(index);
+			Options.Entities.put(Options.EntitiesNames[i], Automaton);
 			JComboBox<String> ComboBox = new JComboBox<String>(AutomataNames);
-			ComboBox.setSelectedIndex(0);
+			ComboBox.setSelectedIndex(index);
 			ComboBox.addActionListener(this);
 			m_AutomataComboBox.add(ComboBox);
 			c.gridx = 1;
@@ -232,9 +234,22 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_OptionsFrame.add(OptionsPanel, BorderLayout.CENTER);
 		m_OptionsFrame.add(m_OptionsValidate, BorderLayout.SOUTH);
 
-		m_OptionsFrame.setBounds(300, 200, 800, 500);
+		m_OptionsFrame.setBounds(300, 200, 800, 200 + 25 * (i+1));
 
 		return;
+	}
+	
+	int find(String name) {
+		int i = 0;
+		Iterator<IAutomaton> iter = Options.Automata.iterator();
+		while (iter.hasNext()) {
+			IAutomaton Automaton = iter.next();
+			if (Automaton.name().equals(name)) {
+				return i;
+			}
+			i++;
+		}
+		return 0;
 	}
 
 	@SuppressWarnings("unchecked")
