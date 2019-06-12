@@ -113,15 +113,6 @@ public class Controller extends GameController implements ActionListener {
 				m_model.m_player.m_keys.add(k);
 			}
 		}
-		if (e.getKeyChar() == 'm') {
-			m_model.m_player.m_keys = new LinkedList<Keys>();
-			m_model.fabricationMenu.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale),
-					m_view.getHeight() / 2);
-		}
-		if (e.getKeyChar() == 'i') {
-			m_model.m_player.blocs().increments(Ladder.class, 1);
-			inventory();
-		}
 	}
 
 	@Override

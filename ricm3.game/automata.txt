@@ -12,7 +12,6 @@ Player(Surface){
 	* (BuyMenu):
 	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Surface)
-	| Key(ENTER) ? Throw(F) :(Surface)
 	* (Underground):
 	| !GotPower() ? Pick(N) :()
 	| Key(d) & Cell(E,G,1) ? Jump(F) :(Surface)
