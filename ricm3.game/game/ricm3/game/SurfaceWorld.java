@@ -118,7 +118,7 @@ public class SurfaceWorld extends World {
 			}
 			m_elapsed++;
 			Random r = new Random();
-			if ((r.nextInt() % 10000) == 0) {
+			if ((r.nextInt() % 1000) == 0) {
 				int type;
 				int i = 0;
 				type = r.nextInt() % 100;
