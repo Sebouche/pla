@@ -68,8 +68,8 @@ public class View extends GameView {
 
 		// background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
-			for (int i = -1; (int) (i * Options.Entity_size * Options.Scale) < getWidth(); i++) {
-				for (int j = -1; (int) (j * Options.Entity_size * Options.Scale) < getHeight(); j++) {
+			for (int i = -1; (int) (i * Options.Entity_size * Options.Scale) < getWidth()+(int) (Options.Entity_size * Options.Scale); i++) {
+				for (int j = -2; (int) (j * Options.Entity_size * Options.Scale) < getHeight()+(int) (Options.Entity_size * Options.Scale); j++) {
 					g.drawImage(m_model.m_sprites.get("grassbg")[0],
 							(int) (i * Options.Entity_size * Options.Scale)
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + 22,
@@ -108,16 +108,16 @@ public class View extends GameView {
 
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			BufferedImage rotate = m_model.m_sprites.get("scientist")[0];
-			/*
-			 * double distance =
-			 * m_model.m_camera.m_watched.distance(m_model.m_arrow.m_watched); double cosa =
-			 * Math.abs(m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x) /
-			 * distance; double sina = Math.abs(m_model.m_camera.m_watched.m_y -
-			 * m_model.m_arrow.m_watched.m_y) / distance;
-			 */double angle = Math.atan2(m_model.m_camera.m_watched.m_y - m_model.m_arrow.m_watched.m_y,
-					m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x) * 180 / Math.PI;
+
+			double distance = m_model.m_camera.m_watched.distance(m_model.m_arrow.m_watched);
+			// double cosa = Math.abs(m_model.m_camera.m_watched.m_x -
+			// m_model.m_arrow.m_watched.m_x) / distance;
+			// double sina = Math.abs(m_model.m_camera.m_watched.m_y -
+			// m_model.m_arrow.m_watched.m_y) / distance;
+			double angle = Math.atan2((m_model.m_camera.m_watched.m_y - m_model.m_arrow.m_watched.m_y),
+					(m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x));
 			AffineTransform tx = new AffineTransform();
-			tx.rotate(angle, rotate.getWidth()/2, rotate.getHeight()/2);
+			tx.rotate(angle-Math.PI/2, rotate.getWidth() / 2, rotate.getHeight() / 2);
 			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 			rotate = op.filter(rotate, null);
 			g_child = g.create(getWidth() - (int) (Options.Scale * Options.Entity_size * 1.5),
