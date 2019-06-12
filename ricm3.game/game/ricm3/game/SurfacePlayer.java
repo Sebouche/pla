@@ -7,7 +7,7 @@ import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
 
 public class SurfacePlayer extends Player {
-	
+
 	boolean m_insideTurret;
 	Turret m_controled;
 
@@ -17,25 +17,26 @@ public class SurfacePlayer extends Player {
 	}
 
 	@Override
-	public boolean pop(Direction dir) {	
-		if(!m_insideTurret) {
+	public boolean pop(Direction dir) {
+		if (!m_insideTurret) {
+			Ally a = null;
 			IAutomaton moving = Options.Entities.get("Moving");
-			Iterator <Ally> iter = m_model.m_currentworld.m_allies.iterator();
-			while(iter.hasNext()) {
-				Ally a = iter.next();
-				if(a instanceof Turret) {
-					if(distance(a)<=2) {
-						a.m_automate = moving;
+			Iterator<Ally> iter = m_model.m_currentworld.m_allies.iterator();
+			while (iter.hasNext()) {
+				Ally tmp = iter.next();
+				if (tmp instanceof Turret) {
+					if (distance(tmp) <= 2) {
+						a = tmp;
 						m_insideTurret = true;
-						m_controled = (Turret)a;
+						a.m_automate = moving;
+						m_controled = (Turret) a;
 						m_model.m_camera.m_watched = a;
 						return true;
 					}
 				}
 			}
 			return false;
-		}
-		else {
+		} else {
 			m_controled.m_hp = Options.HP[1];
 			m_model.m_camera.m_watched = this;
 			m_controled.m_automate = Options.Entities.get("tesla");
@@ -65,10 +66,10 @@ public class SurfacePlayer extends Player {
 		}
 /// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE LA TOURELLE  (GOTSTUFF maybe)
 
-		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("tesla"), Options.Entities.get("tesla"),
-				m_originWorld, m_model.m_surfaceworld.m_enemies);
+		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("tesla"),
+				Options.Entities.get("tesla"), m_originWorld, m_model.m_surfaceworld.m_enemies);
 		t.m_collision = false;
-		((SurfaceWorld)m_originWorld).m_tmp_ent.add(t);
+		((SurfaceWorld) m_originWorld).m_tmp_ent.add(t);
 		m_originWorld.m_allies.add(t);
 		return true;
 	}

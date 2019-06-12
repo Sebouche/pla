@@ -51,9 +51,4 @@ public class Turret extends Ally {
 		return false;
 	}
 	
-	public boolean move(Direction dir) {
-		super.move(dir);
-		System.out.println("cc");
-		return true;
-	}
 }

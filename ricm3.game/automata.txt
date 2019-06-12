@@ -1,7 +1,7 @@
 Player(Surface){
 	* (Surface):
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
-	| Key(w) & !Cell(F,O,64) & !Cell(F,T,64) ? Wizz(F) :(Surface)
+	| Key(w) & !Cell(F,O,64) / Cell(F,T,64) ? Wizz(F) :(Surface)
 	| Key(p) & Cell(F,T,1) ? Pop(F) :(InsideTurret)
 	| Key(z) & !Cell(N,O,1) ? Move(N) :(Surface)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Surface)
