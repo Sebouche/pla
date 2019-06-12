@@ -25,6 +25,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+
 import edu.ricm3.game.GameController;
 import ricm3.interpreter.Keys;
 
@@ -44,7 +50,7 @@ public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 
-	MenuItem m_m1_button1;
+	JMenuItem m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau;
 
 	public Controller(Model model, View view) {
 		m_model = model;
@@ -127,28 +133,42 @@ public class Controller extends GameController implements ActionListener {
 			System.out.println("MouseMoved: (" + e.getX() + "," + e.getY());
 	}
 
-	public void menu1() {
-		m_model.menu1 = new PopupMenu();
+	public void menu_fabrication() {
+		Font f1 = new Font(Font.SERIF, Font.BOLD, 64);
+		Font f2 = new Font(Font.MONOSPACED, Font.BOLD, 32);
+		Font f3 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 
-		Font f3 = new Font(Font.SERIF, Font.BOLD, 32);
-		Font f4 = new Font(Font.MONOSPACED, Font.BOLD, 16);
+		m_model.menu_fabrication = new JPopupMenu("Fabrication");
+		
+		JLabel m_m1_title = new JLabel("Fabrication");
+		m_m1_title.setFont(f2);
+		m_model.menu_fabrication.add(m_m1_title);
+		
+		m_m1_button_murs = new JMenuItem("Murs");
+		m_m1_button_murs.setFont(f3);
+		m_m1_button_murs.setIcon(new ImageIcon("sprites/icon_wall.png"));
+		m_m1_button_murs.addActionListener(this);
+		m_model.menu_fabrication.add(m_m1_button_murs);
 
-		MenuItem m1_label1 = new MenuItem("Oui (label)");
-		m1_label1.setFont(f4);
-		m_model.menu1.add(m1_label1);
+		m_m1_button_barbele = new JMenuItem("Barbelés");
+		m_m1_button_barbele.setFont(f3);
+		m_m1_button_barbele.setIcon(new ImageIcon("sprites/icon_barbele.png"));
+		m_m1_button_barbele.addActionListener(this);
+		m_model.menu_fabrication.add(m_m1_button_barbele);
+		
+		m_m1_button_tesla = new JMenuItem("Tourelle Tesla");
+		m_m1_button_tesla.setFont(f3);
+		m_m1_button_tesla.setIcon(new ImageIcon("sprites/icon_tesla.png"));
+		m_m1_button_tesla.addActionListener(this);
+		m_model.menu_fabrication.add(m_m1_button_tesla);
+		
+		m_m1_button_poteau = new JMenuItem("Poteau électrique");
+		m_m1_button_poteau.setFont(f3);
+		m_m1_button_poteau.setIcon(new ImageIcon("sprites/icon_poteau.png"));
+		m_m1_button_poteau.addActionListener(this);
+		m_model.menu_fabrication.add(m_m1_button_poteau);
 
-		m_m1_button1 = new MenuItem("Non (button)");
-		m_m1_button1.setFont(f4);
-		m_m1_button1.addActionListener(this);
-		m_model.menu1.add(m_m1_button1);
-
-		m_model.menu1.setLabel("Choix automate (?)");
-		m_model.menu1.setFont(f3);
-		m_model.menu1.setEnabled(true);
-
-		m_view.add(m_model.menu1);
-
-		m_model.menu1.show(m_view, 0, 0);
+		m_model.menu_fabrication.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
 
 	}
 
@@ -157,7 +177,20 @@ public class Controller extends GameController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		Object s = e.getSource();
+		if (s == m_m1_button_murs) {
+			Wall w=new Wall(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("wall"), Options.Entities.get("Wall"), m_model.m_surfaceworld);
+			w.m_collision=false;
+			m_model.m_surfaceworld.m_entities.add(w);
+		} else if ((s == m_m1_button_barbele)) {
+			
+		} else if ((s == m_m1_button_tesla)) {
+			Turret t=new Turret(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("tesla"), Options.Entities.get("Tesla"), m_model.m_surfaceworld);
+			t.m_collision=false;
+			m_model.m_surfaceworld.m_entities.add(t);
+		} else if ((s == m_m1_button_poteau)) {
+			
+		}
 	}
 
 }

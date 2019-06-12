@@ -11,7 +11,7 @@ public class GameEntity {
 	int m_x, m_y;
 	public BufferedImage[] m_sprites;
 	public Model m_model;
-	IAutomaton m_automate;
+	public IAutomaton m_automate;
 	// m_sound;
 	World m_originWorld;
 	int m_hp;
@@ -51,6 +51,9 @@ public class GameEntity {
 		return this.m_hp;
 	}
 	
+	public World world() {
+		return this.m_originWorld;
+	}
 	public void damage_hp(int dmg) {
 		m_hp-=dmg;
 	}
