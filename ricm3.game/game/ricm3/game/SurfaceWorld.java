@@ -12,6 +12,7 @@ import java.util.Random;
 import ricm3.game.Options;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.Keys;
+import ricm3.interpreter.Type;
 
 public class SurfaceWorld extends World {
 	
@@ -40,7 +41,7 @@ public class SurfaceWorld extends World {
 		Chunk c=new Chunk(this, 0, 0, 2);
 		add(c);
 		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("spawner"), this);
-		new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house"), this);
+		new House(m_model, 0, 0, 10000, m_model.m_sprites.get("house"), this);
 		Random r = new Random();
 		int y;
 		int x;
@@ -117,7 +118,7 @@ public class SurfaceWorld extends World {
 			}
 			m_elapsed++;
 			Random r = new Random();
-			if ((r.nextInt() % 100) == 0) {
+			if ((r.nextInt() % 1000) == 0) {
 				int type;
 				int i = 0;
 				type = r.nextInt() % 100;
@@ -191,11 +192,16 @@ public class SurfaceWorld extends World {
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_camera.m_watched = m_model.m_player;
+		m_model.m_surfaceworld.m_allies.remove(m_model.m_surfaceplayer);
+		m_model.m_undergroundworld.m_allies.add(m_model.m_undergroundplayer);
 		super.changeWorld();
 	}
 
 	@Override
 	public void step() {
+		if(this.m_model.m_player.m_hp<=0) {
+			m_model.endgame();
+		}
 		Iterator<GameEntity> iter = m_entities.iterator();
 		while (iter.hasNext()) {
 			GameEntity e = iter.next();

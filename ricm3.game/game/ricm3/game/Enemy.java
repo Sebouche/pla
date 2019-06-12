@@ -12,6 +12,7 @@ import ricm3.interpreter.Type;
 public class Enemy extends MovingEntity {
 
 	List<Ally> targets;
+	long lastHit = 0;
 
 	public Enemy(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld,
 			List<Ally> t) {
@@ -49,16 +50,20 @@ public class Enemy extends MovingEntity {
 				if (dx > dy) {
 					this.m_dir = Direction.EAST;
 				} else {
-					this.m_dir = Direction.SOUTH;
+					if ((dx == 0) && (dy == 0)) {
+						this.m_dir = Direction.NONE;
+					} else {
+						this.m_dir = Direction.SOUTH;
+					}
 				}
 			}
 		}
 		return true;
 	}
-	
+
 	public boolean wizz(Direction dir) {
 		this.m_idsprite++;
-		if(this.m_idsprite>=this.m_sprites.length) {
+		if (this.m_idsprite >= this.m_sprites.length) {
 			this.m_idsprite = 0;
 		}
 		return true;
@@ -77,66 +82,74 @@ public class Enemy extends MovingEntity {
 			}
 		}
 		LinkedList<Point> l = new LinkedList<Point>();
-		l.add(new Point(t.m_x, t.m_y));
+		if (t != null) {
+			l.add(new Point(t.m_x, t.m_y));
+		} else {
+			l.add(new Point(m_x, m_y));
+		}
 		return l;
 	}
-	
+
 	public boolean hit() {
 		return this.m_model.m_currentworld.Hit(this, this.m_dir);
 	}
 
 	@Override
 	public boolean hit(Direction dir, int power) {
-		switch (dir) {
-		case NORTH:
-		case SOUTH:
-		case EAST:
-		case WEST:
-			return this.m_model.m_currentworld.Hit(this, dir);
-		case FRONT:
-			return this.m_model.m_currentworld.Hit(this, this.m_dir);
-		case BACK:
-			switch (this.m_dir) {
+		if (System.currentTimeMillis() > lastHit + 200) {
+			lastHit = System.currentTimeMillis();
+			switch (dir) {
 			case NORTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
 			case SOUTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
 			case EAST:
-				return this.m_model.m_currentworld.Hit(this, Direction.WEST);
 			case WEST:
-				return this.m_model.m_currentworld.Hit(this, Direction.EAST);
+				return this.m_model.m_currentworld.Hit(this, dir);
+			case FRONT:
+				return this.m_model.m_currentworld.Hit(this, this.m_dir);
+			case BACK:
+				switch (this.m_dir) {
+				case NORTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
+				case SOUTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
+				case EAST:
+					return this.m_model.m_currentworld.Hit(this, Direction.WEST);
+				case WEST:
+					return this.m_model.m_currentworld.Hit(this, Direction.EAST);
+				default:
+					return false;
+				}
+			case LEFT:
+				switch (this.m_dir) {
+				case NORTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.WEST);
+				case SOUTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.EAST);
+				case EAST:
+					return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
+				case WEST:
+					return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
+				default:
+					return false;
+				}
+			case RIGHT:
+				switch (this.m_dir) {
+				case NORTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.EAST);
+				case SOUTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.WEST);
+				case EAST:
+					return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
+				case WEST:
+					return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
+				default:
+					return false;
+				}
 			default:
 				return false;
 			}
-		case LEFT:
-			switch (this.m_dir) {
-			case NORTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.WEST);
-			case SOUTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.EAST);
-			case EAST:
-				return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
-			case WEST:
-				return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
-			default:
-				return false;
-			}
-		case RIGHT:
-			switch (this.m_dir) {
-			case NORTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.EAST);
-			case SOUTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.WEST);
-			case EAST:
-				return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
-			case WEST:
-				return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
-			default:
-				return false;
-			}
-		default:
-			return false;
 		}
+		return false;
 	}
 
 }

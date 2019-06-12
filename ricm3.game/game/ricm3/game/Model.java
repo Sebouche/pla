@@ -63,7 +63,7 @@ public class Model extends GameModel {
 			Options.bgm.start();
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
-		m_undergroundworld.m_allies.add(m_undergroundplayer);
+		m_surfaceworld.m_entities.add(m_surfaceplayer);
 	}
 
 	@Override
@@ -80,9 +80,9 @@ public class Model extends GameModel {
 		long elapsed = now - m_lastStep;
 		if (elapsed >= 2L) {
 			m_lastStep = now;
-			m_player.step();
-			m_undergroundworld.step();
+			//m_player.step();
 			m_surfaceworld.step();
+			m_undergroundworld.step();
 		}
 	}
 
@@ -96,6 +96,14 @@ public class Model extends GameModel {
 		 * (IOException ex) { ex.printStackTrace(); System.exit(-1); }
 		 * 
 		 */
+		imageFile = new File("sprites/arrow.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("arrow", spritename, 1, 1);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 		imageFile = new File("sprites/bat.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
@@ -155,7 +163,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/rabbit.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("rabbit", spritename, 4, 5);
+			splitSprite("rabbit", spritename, 5, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -240,6 +248,11 @@ public class Model extends GameModel {
 			}
 		}
 		m_sprites.put(name, sprites);
+	}
+
+	public void endgame() {
+		// TODO Auto-generated method stub
+		System.out.println("fin");
 	}
 
 }

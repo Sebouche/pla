@@ -7,12 +7,15 @@ import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
 
 public class Rabbit extends Enemy {
-	int m_spritevariation=5;
+	int m_spritevariation = 5;
 
-	public Rabbit(Model model, int x, int y, BufferedImage[] sprites, IAutomaton automate,World originWorld, List<Ally> t) {
+	public Rabbit(Model model, int x, int y, BufferedImage[] sprites, IAutomaton automate, World originWorld,
+			List<Ally> t) {
 		super(model, x, y, Options.HP[3], sprites, automate, originWorld, t);
+		model.m_surfaceworld.m_enemies.add(this);
+		m_dmg = Options.damage[3];
 	}
-	
+
 	public boolean move(Direction dir) {
 		Direction absoldir= Direction.entityDir(this, dir);
 		super.move(dir);
@@ -33,8 +36,8 @@ public class Rabbit extends Enemy {
 			m_elapsed = 0;
 		} else {
 			if (m_elapsed % 30 == 0) {
-				m_spritechanger=(m_spritechanger+1)%m_spritevariation;
-				m_idsprite=m_basesprite+m_spritechanger;
+				m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
+				m_idsprite = m_basesprite + m_spritechanger;
 			}
 			m_elapsed++;
 		}

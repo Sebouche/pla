@@ -1,54 +1,67 @@
 package ricm3.game;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 import game.blocks.*;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Type;
 
 public class House extends Ally {
 
-	LinkedList<Block> m_blocks;
+	Block[] m_blocks = new Block[9];
 	int m_size = 3;
+	int HPmax = 10000;
+	int previousHP;
 
 	public House(Model model, int x, int y, int hp, BufferedImage[] sprites, World originWorld) {
 		super(model, x, y, hp, sprites, null, originWorld);
 		IAutomaton automate = new IAutomaton(Options.Entities.get("Wall"));
-		m_blocks = new LinkedList<Block>();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				Block b;
 				if (i == 2 && j == 1) {
-					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
-							(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate, originWorld);
+					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale)+x,
+							(int) (i * Options.Entity_size * Options.Scale)+y, 0, sprites, automate, originWorld);
 					m_model.m_arrow = new Camera(m_model, b);
 				} else {
-					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-							(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate, originWorld);
+					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale)+x,
+							(int) (i * Options.Entity_size * Options.Scale)+y, 0, sprites, automate, originWorld);
 				}
 				b.m_idsprite = i * 3 + j;
+				m_blocks[3*i+j] = b;
 				originWorld.m_entities.add(b);
+				
 			}
 		}
+		originWorld.m_allies.add(this);
+		originWorld.m_entities.add(this);
+		m_type = Type.OBSTACLE;
 	}
 
 	@Override
 	public void step() {
-		m_blocks.get(0).step();
+		m_blocks[7].step();
+		if(m_hp<=0) {
+			m_model.endgame();
+		}
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		Iterator<Block> iter = m_blocks.iterator();
-		while (iter.hasNext()) {
-			Block b = iter.next();
-			Graphics g_child = g.create(b.x(), b.y(), (int) (Options.Entity_size * Options.Scale),
-					(int) (Options.Entity_size * Options.Scale));
-			b.paint(g_child);
-			g_child.dispose();
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				Graphics g_child = g.create(m_blocks[3 * i + j].x(), m_blocks[3 * i + j].y(),
+						(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
+				m_blocks[3 * i + j].paint(g_child);
+				g_child.dispose();
+			}
 		}
+		g.setColor(new Color(250,2,2));
+		g.setFont(new Font("HOUSEHP",1,8));
+		g.drawString("HP=" + m_hp, 10, 10);
 	}
 
 }

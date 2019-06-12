@@ -23,7 +23,7 @@ public class Cell extends ICondition {
 
 	@Override
 	public boolean eval(GameEntity e) {
-		if(kind == Type.ANYTHING)
+		if (kind == Type.ANYTHING)
 			return true;
 		Direction dir = Direction.entityDir(e, direction);
 		int cellx = e.x();
@@ -48,14 +48,14 @@ public class Cell extends ICondition {
 		while (iter.hasNext()) {
 			GameEntity f = iter.next();
 			if (isInside(f, cellx, celly)) {
-				if(kind == Type.VOID) {
+				if (kind == Type.VOID) {
 					if (kind != f.type())
 						return false;
-				}
-				else {
-					if(kind == f.type())
+				} else {
+					if (kind == f.type()) {
 						return true;
-				}	
+					}
+				}
 			}
 		}
 		if (kind == Type.VOID)

@@ -2,10 +2,10 @@ Player(Surface){
 	* (Surface):
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
-	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
-	| Key(q) & Cell(W,V,1) ? Move(W) :(Surface)
-	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
-	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
+	| Key(z) & !Cell(N,O,1) ? Move(N) :(Surface)
+	| Key(q) & !Cell(W,O,1) ? Move(W) :(Surface)
+	| Key(s) & !Cell(S,O,1) ? Move(S) :(Surface)
+	| Key(d) & !Cell(E,O,1) ? Move(E) :(Surface)
 	| Key(m) ? Throw(F) :(SelectTurret)
 	* (SelectTurret):
 	| Key(m) ? Throw(F) :(Surface)
@@ -70,12 +70,12 @@ Mole(E1){
 Mouse(E3){
 	* (E1):
 	| !GotPower() ? :()
-	| Cell(F,W,1) ? Hit() :(E2)
+	| Cell(F,O,1) ? Hit() :(E2)
 	| Cell(F,A,1) ? Hit() :(E3)
 	| True ? Egg() :(E4)
 	* (E2):
 	| !GotPower() ? :()
-	| Cell(F,W,1) ? Hit() :(E2)
+	| Cell(F,O,1) ? Hit() :(E2)
 	| Cell(F,V) ? Move(F) / Egg() :(E4)
 	* (E3):
 	| !GotPower() ? :()
@@ -88,44 +88,53 @@ Mouse(E3){
 	* ()
 }
 
-Dog(Init){
-	* (Init): True ? Pop(F) :(E2)
+Dog(E2){
 	* (E1):
 	| !GotPower() ? :()
-	| Cell(F,O,1) ? Hit() :(E3)
-	| Cell(F,T,1) ? Hit() :(E2)
-	| Cell(F,V,1) ? Move(F) :(E2)
+	| Cell(F,O,1) / Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
+	| True ? Move(F) :(E2)
 	* (E2):
 	| !GotPower() ? :()
-	| Cell(F,T,1) ? Hit() :(E2)
 	| True ? Pop() :(E1)
-	* (E3):
-	| !GotPower() ? :()
-	| Cell(F,T,1) ? Hit :(E3)
-	| True ? Move(F) :(E2)
 	* ()
 }
 
-Rabbit(Init){
+Rabbit(E1){
 	* (E1):
 	| !GotPower() ? :()
-	| Cell(F,W,1) ? Move(F) :(E3)
-	| Cell(F,V,1) ? Move(F) :(E2)
-	| Cell(F,T,1) ? Hit() :(E2)
+	| Cell(F,O,1) / Cell(F,V,1) ? Move(F) :(E2)
+	| Cell(F,T,1) ? Hit() :(E1)
 	* (E2):
 	| !GotPower() ? :()
-	| Cell(F,T,1) ? Hit() :(E2)
 	| True ? Pop() :(E1)
-	* (E3):
-	| !GotPower() ? :()
-	| Cell(F,T,1) ? Hit :(E3)
+	* ()
+}
+
+Turtle(E1){
+	* (E1):
+	| !GotPower() ? Kamikaze :()
+	| Cell(F,O,1) ? Hit() :(E1)
+	| Cell(F,T,1) ? Hit() :(E1)
 	| True ? Move(F) :(E2)
+	* (E2):
+	| !GotPower() ? Kamikaze :()
+	| True ? Pop() :(E1)
+	* ()
+}
+
+Turret(E1){
+	* (E1):
+	| !GotPower() ? :()
+	| True ? Pop() :(E2)
+	* (E2):
+	| !GotPower() ? :()
+	| True ? Hit(F) :(E1)
 	* ()
 }
 
 Block(Init){
 	* (Init): 
-    | !GotPower() ? Pop() :()
+	| !GotPower() ? Pop() :()
 	| True ? Wizz() :(Init)
 	* ()
 }

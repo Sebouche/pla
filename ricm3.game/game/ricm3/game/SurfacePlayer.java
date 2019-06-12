@@ -37,8 +37,8 @@ public class SurfacePlayer extends Player {
 		}
 /// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE LA TOURELLE  (GOTSTUFF maybe)
 
-		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("tesla"), m_automate,
-				m_originWorld);
+		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("tesla"), Options.Entities.get("tesla"),
+				m_originWorld, m_model.m_surfaceworld.m_enemies);
 		t.m_collision = false;
 		m_originWorld.m_entities.add(t);
 		m_originWorld.m_allies.add(t);

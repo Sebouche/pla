@@ -213,6 +213,8 @@ public class Controller extends GameController implements ActionListener {
 		m_m1_button_poteau.setFont(m_f2);
 		m_m1_button_poteau.setIcon(new ImageIcon("sprites/icon_poteau.png"));
 		m_m1_button_poteau.addActionListener(this);
+		m_model.menu_fabrication.add(m_m1_button_poteau);
+
 		m_model.fabricationMenu.add(m_m1_button_poteau);
 		
 		m_model.fabricationMenu.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
@@ -237,9 +239,7 @@ public class Controller extends GameController implements ActionListener {
 	}
 
 	public void notifyVisible() {
-		m_f1 = new Font(Font.MONOSPACED, Font.BOLD, 32);
-		m_f2 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
-		inventory();
+		menu_fabrication();
 	}
 
 	@Override
@@ -253,6 +253,7 @@ public class Controller extends GameController implements ActionListener {
 			m_model.m_surfaceworld.m_entities.add(b);
 		} else if ((s == m_m1_button_tesla)) {
 			Turret t=new Turret(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("tesla"), Options.Entities.get("Tesla"), m_model.m_surfaceworld);
+			t.m_collision=false;
 			m_model.m_surfaceworld.m_entities.add(t);
 		} else if ((s == m_m1_button_poteau)) {
 			ElectricalPost t=new ElectricalPost(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("electricalPost"), Options.Entities.get("Wall"), m_model.m_surfaceworld);

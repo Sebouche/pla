@@ -43,4 +43,5 @@ public class Options {
 	public static String[] EntitiesNames = { "Player1", "Player2", "Barbed", "Bat", "Block", "Dog", "Mole", "Mouse", "Rabbit", "Spawner", "Tesla", "Turtle", "Wall", "Water" };
 	
 	public static Music bgm;
+	public static int[] damage = {10,3,1,2};
 }

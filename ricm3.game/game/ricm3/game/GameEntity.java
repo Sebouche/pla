@@ -74,7 +74,7 @@ public class GameEntity {
 	}
 
 	public LinkedList<GameEntity> entities() {
-		return this.m_model.m_currentworld.m_entities;
+		return this.m_originWorld.m_entities;
 	}
 
 	///////////////////////////
@@ -100,6 +100,7 @@ public class GameEntity {
 	}
 
 	public boolean turn(Direction dir) {
+		System.out.println("taper");
 		return true;
 	}
 
@@ -153,6 +154,7 @@ public class GameEntity {
 	public void step() {
 		if (m_automate != null)
 			m_automate.step(this);
+	//	System.out.println(m_automate.current.name);
 	}
 
 	//////////////////////
