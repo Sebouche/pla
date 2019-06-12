@@ -60,28 +60,6 @@ public class MovingEntity extends GameEntity {
 		default:
 			break;
 		}
-	/*	boolean coll = false;
-		Iterator<GameEntity> iter = m_originWorld.m_entities.iterator();
-		GameEntity E;
-		while (iter.hasNext()) {
-			E = iter.next();
-			if (collision(E, m_dx, 0)) {
-				m_dx = 0;
-				coll = true;
-			}
-			if (collision(E, 0, m_dy)) {
-				m_dy = 0;
-				coll = true;
-			}
-		}
-		if (m_originWorld instanceof UndergroundWorld) {
-			UndergroundWorld u = (UndergroundWorld) m_originWorld;
-			if (u.adjacent_collision(this, m_dx, m_dy)) {
-				m_dx = 0;
-				m_dy = 0;
-				coll = true;
-			}
-		}*/
 		m_x += m_dx;
 		m_y += m_dy + m_grav;
 		m_dx=0;

@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -103,8 +104,11 @@ public class Controller extends GameController implements ActionListener {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyPressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		Keys k = Keys.keyEventToKeys(e);
-		if (!m_model.m_player.m_keys.contains(k)) {
-			m_model.m_player.m_keys.add(k);
+		if (!m_model.m_camera.m_watched.m_keys.contains(k)) {
+			m_model.m_camera.m_watched.m_keys.add(k);
+			if(m_model.m_surfaceplayer.m_insideTurret) {
+				m_model.m_player.m_keys.add(k);
+			}
 		}
 		if (e.getKeyChar() == 'm') {
 			m_model.m_player.m_keys = new LinkedList<Keys>();
@@ -122,7 +126,10 @@ public class Controller extends GameController implements ActionListener {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyReleased: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		Keys k = Keys.keyEventToKeys(e);
-		m_model.m_player.m_keys.remove(k);
+		m_model.m_camera.m_watched.m_keys.remove(k);
+		if(m_model.m_surfaceplayer.m_insideTurret) {
+			m_model.m_player.m_keys.remove(k);
+		}
 	}
 
 	@Override

@@ -56,4 +56,5 @@ public class Turret extends Ally {
 		}
 		return false;
 	}
+	
 }
