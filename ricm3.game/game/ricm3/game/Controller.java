@@ -39,6 +39,7 @@ import javax.swing.JPopupMenu;
 
 import edu.ricm3.game.GameController;
 import game.blocks.Dirt;
+import game.blocks.Ladder;
 import ricm3.interpreter.Keys;
 
 /**
@@ -178,6 +179,7 @@ public class Controller extends GameController implements ActionListener {
 			m_m1_button_poteau.setIcon(new ImageIcon("sprites/icon_poteau.png"));
 			m_m1_button_poteau.addActionListener(this);
 			m_model.fabricationMenu.add(m_m1_button_poteau);
+			
 		}
 
 	}
@@ -224,7 +226,7 @@ public class Controller extends GameController implements ActionListener {
 		
 		JLabel Label;
 		
-		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Ladder.class)*/);
+		Label = new JLabel("x0" + m_model.m_player.blocs().get(Ladder.class));
 		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[10]));
 		Label.setFont(m_f1);
 		NorthPanel.add(Label);
