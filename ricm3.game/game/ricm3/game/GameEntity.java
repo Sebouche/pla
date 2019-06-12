@@ -9,65 +9,74 @@ import ricm3.interpreter.*;
 public class GameEntity {
 
 	int m_x, m_y;
-	BufferedImage[] m_sprites;
+	public BufferedImage[] m_sprites;
 	public Model m_model;
 	IAutomaton m_automate;
 	IState m_state;
 	// m_sound;
+	World m_originWorld;
 	int m_hp;
-	int m_idsprite;
+	public int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
 	Type m_type;
 	LinkedList<Keys> m_keys;
+	boolean m_collision = true;
 
-	public GameEntity(Model model, int x, int y, int hp,BufferedImage[] sprites,IAutomaton automate) {
+	public GameEntity(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate,
+			World originWorld) {
 		m_model = model;
 		m_x = x;
 		m_y = y;
+		m_originWorld = originWorld;
 		m_hp = hp;
-		m_idsprite=0;
-		m_sprites=sprites;
+		m_idsprite = 0;
+		m_sprites = sprites;
 		m_keys = new LinkedList<Keys>();
-		m_automate=automate;
+		m_automate = automate;
+		m_dir = Direction.NORTH;
+
 	}
-	
+
 	///////////////////////////
-	
+
 	public int x() {
 		return this.m_x;
 	}
-	
+
 	public int y() {
 		return this.m_y;
 	}
-	
+
 	public int hps() {
 		return this.m_hp;
 	}
-
+	
+	public void damage_hp(int dmg) {
+		m_hp-=dmg;
+	}
 	public int dmgs() {
 		return this.m_dmg;
 	}
-	
+
 	public Direction dir() {
 		return this.m_dir;
 	}
-	
+
 	public Type type() {
 		return this.m_type;
 	}
-	
+
 	public LinkedList<Keys> keys() {
 		return this.m_keys;
 	}
-	
-	public LinkedList<GameEntity> entities(){
+
+	public LinkedList<GameEntity> entities() {
 		return this.m_model.m_currentworld.m_entities;
 	}
 
 	///////////////////////////
-	
+
 	public boolean Wait() {
 		return true;
 	}
@@ -131,12 +140,18 @@ public class GameEntity {
 
 	////////////////////////////
 
+	public void set_collision(boolean coll) {
+		m_collision = coll;
+	}
+
 	public void paint(Graphics g) {
 		g.drawImage(m_sprites[m_idsprite], 0, 0, (int) Options.Scale * Options.Entity_size,
-				(int) Options.Scale * Options.Entity_size, null);	}
+				(int) Options.Scale * Options.Entity_size, null);
+	}
 
 	public void step() {
-		m_automate.step(this);
+		if (m_automate != null)
+			m_automate.step(this);
 	}
 
 	//////////////////////
