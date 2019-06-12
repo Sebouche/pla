@@ -51,4 +51,10 @@ public class Player extends Ally {
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean pick(Direction dir) {
+		m_model.endgame();
+		return true;
+	}
 }

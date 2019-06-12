@@ -42,6 +42,7 @@ public class Model extends GameModel {
 	Camera m_camera;
 	Camera m_arrow;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
+	View m_view;
 
 	JPopupMenu menu_fabrication;
 
@@ -233,5 +234,9 @@ public class Model extends GameModel {
 		}
 		m_sprites.put(name, sprites);
 	}
-
+	
+	public void endgame()  {
+		JPopupMenu endmenu = new JPopupMenu();
+		endmenu.show(m_view, m_view.getWidth()/2, m_view.getHeight()/2);
+	}
 }

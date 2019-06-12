@@ -1,5 +1,6 @@
 Player(Surface){
 	* (Surface):
+	| !GotPower() ? Pick(N) :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
@@ -8,9 +9,11 @@ Player(Surface){
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
 	| Key(m) ? Throw(F) :(SelectTurret)
 	* (SelectTurret):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Surface)
 	| Key(ENTER) ? Throw(F) :(Surface)
 	* (Underground):
+	| !GotPower() ? Pick(N) :()
 	| Key(o) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Jumping)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Underground)
@@ -21,12 +24,14 @@ Player(Surface){
 	| Key(m) ? Throw(F) :(Menu1)
 	| Cell(S,V,1) ? Move(S) :(Underground)
 	* (Jumping):
+	| !GotPower() ? Pick(N) :()
 	| Cell(S,O,1) ? Protect() :(Underground)
 	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu2)
 	| True ? Move(S) :(Underground)
 	* (Ladder):
+	| !GotPower() ? Pick(N) :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)
 	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
@@ -36,12 +41,15 @@ Player(Surface){
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu3)
 	* (Menu1):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Underground)
 	| Key(ENTER) ? Throw(F) :(Underground)
 	* (Menu2):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Jumping)
 	| Key(ENTER) ? Throw(F) :(Jumping)
 	* (Menu3):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Ladder)
 	| Key(ENTER) ? Throw(F) :(Ladder)
 	* ()
