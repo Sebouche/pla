@@ -25,7 +25,7 @@ public class Fabrication {
 		return ressource;
 	}
 	
-	public void increment(Class cle) {
+	public void increments(Class cle) {
 		ressource.put(cle, get(cle) + 1);
 	}
 

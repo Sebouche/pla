@@ -30,6 +30,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -38,8 +39,13 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import edu.ricm3.game.GameController;
+import game.blocks.Coal;
+import game.blocks.Copper;
 import game.blocks.Dirt;
+import game.blocks.Iron;
 import game.blocks.Ladder;
+import game.blocks.Stone;
+import game.blocks.Uranium;
 import ricm3.interpreter.Keys;
 
 /**
@@ -92,6 +98,10 @@ public class Controller extends GameController implements ActionListener {
 		}
 		if (e.getKeyChar() == 'm') {
 			fabricationMenu();
+		}
+		if (e.getKeyChar() == 'i') {
+			m_model.m_player.blocs().increments(Ladder.class);
+			inventory();
 		}
 	}
 
@@ -220,48 +230,48 @@ public class Controller extends GameController implements ActionListener {
 	}
 	
 	public void inventory() {
-		JPanel NorthPanel = new JPanel();
-		NorthPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		NorthPanel.setBackground(Color.WHITE);
+		JPanel Panel = new JPanel();
+		Panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		Panel.setBackground(Color.WHITE);
 		
 		JLabel Label;
 		
-		Label = new JLabel("x0" + m_model.m_player.blocs().get(Ladder.class));
+		Label = new JLabel("x" + m_model.m_player.blocs().get(Ladder.class));
 		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[10]));
 		Label.setFont(m_f1);
-		NorthPanel.add(Label);
+		Panel.add(Label);
 		
-		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Dirt.class)*/);
+		Label = new JLabel("x" + m_model.m_player.blocs().get(Dirt.class));
 		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[0]));
 		Label.setFont(m_f1);
-		NorthPanel.add(Label);
+		Panel.add(Label);
 		
-		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Stone.class)*/);
+		Label = new JLabel("x" + m_model.m_player.blocs().get(Stone.class));
 		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[2]));
 		Label.setFont(m_f1);
-		NorthPanel.add(Label);
+		Panel.add(Label);
 		
-		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Coal.class)*/);
+		Label = new JLabel("x" + m_model.m_player.blocs().get(Coal.class));
 		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[11]));
 		Label.setFont(m_f1);
-		NorthPanel.add(Label);
+		Panel.add(Label);
 		
-		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Iron.class)*/);
+		Label = new JLabel("x" + m_model.m_player.blocs().get(Iron.class));
 		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[5]));
 		Label.setFont(m_f1);
-		NorthPanel.add(Label);
+		Panel.add(Label);
 		
-		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Copper.class)*/);
+		Label = new JLabel("x" + m_model.m_player.blocs().get(Copper.class));
 		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[3]));
 		Label.setFont(m_f1);
-		NorthPanel.add(Label);
+		Panel.add(Label);
 		
-		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Uranium.class)*/);
+		Label = new JLabel("x" + m_model.m_player.blocs().get(Uranium.class));
 		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[4]));
 		Label.setFont(m_f1);
-		NorthPanel.add(Label);
+		Panel.add(Label);
 		
-		m_game.addNorth(NorthPanel);
+		m_game.addSouth(Panel);
 	}
 
 	public void notifyVisible() {

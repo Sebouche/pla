@@ -31,7 +31,7 @@ import ricm3.interpreter.IAutomaton;
 
 public class Model extends GameModel {
 	long m_lastStep;
-	Player m_player;
+	public Player m_player;
 	SurfacePlayer m_surfaceplayer;
 	UndergroundPlayer m_undergroundplayer;
 	int m_width;
