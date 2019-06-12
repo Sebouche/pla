@@ -74,7 +74,7 @@ public class GameEntity {
 	}
 
 	public LinkedList<GameEntity> entities() {
-		return this.m_model.m_currentworld.m_entities;
+		return this.m_originWorld.m_entities;
 	}
 
 	///////////////////////////
