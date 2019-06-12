@@ -17,21 +17,13 @@
  */
 package ricm3.game;
 
-import game.blocks.Block;
-
 //import ricm3.structure.Controller;
 //import ricm3.structure.Model;
 //import ricm3.structure.View;
 
 public class GameMain {
-
+	
 	public static void main(String[] args) {
-		Class c;
-		Block b = new Block(null, 0, 0, 0, null, null, null);
-		c = b.getClass();
-		if (c == Block.class) {
-			System.out.println("true");
-		}
 		new GameLauncher();
 	}
 }
