@@ -43,6 +43,7 @@ public class Model extends GameModel {
 	Camera m_arrow;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	View m_view;
+	Timer m_timer;
 
 	JPopupMenu fabricationMenu;
 
@@ -53,8 +54,8 @@ public class Model extends GameModel {
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
 		IAutomaton player_automate = new IAutomaton(Options.Entities.get("Player1"));
-		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("scientist"),player_automate, m_surfaceworld);
-		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),player_automate, m_undergroundworld);
+		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("Scientist"),player_automate, m_surfaceworld);
+		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("Scientist"),player_automate, m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		m_lastStep = 0;
@@ -65,6 +66,7 @@ public class Model extends GameModel {
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
 		m_undergroundworld.m_allies.add(m_undergroundplayer);
+		m_timer = new Timer(2, 30);
 	}
 
 	@Override
@@ -78,6 +80,7 @@ public class Model extends GameModel {
 	 */
 	@Override
 	public void step(long now) {
+		m_timer.step(now);
 		long elapsed = now - m_lastStep;
 		if (elapsed >= 2L) {
 			m_lastStep = now;
@@ -100,7 +103,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/bat.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("bat", spritename, 3, 2);
+			splitSprite("Bat", spritename, 3, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -108,7 +111,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/block.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("block", spritename, 4, 3);
+			splitSprite("Block", spritename, 4, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -116,7 +119,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/dirtbg.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("dirtbg", spritename, 1, 1);
+			splitSprite("Dirtbg", spritename, 1, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -124,7 +127,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/dog.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("dog", spritename, 5, 5);
+			splitSprite("Dog", spritename, 5, 5);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -132,7 +135,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/grassbg.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("grassbg", spritename, 1, 1);
+			splitSprite("Grassbg", spritename, 1, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -140,7 +143,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/house.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("house", spritename, 5, 3);
+			splitSprite("House", spritename, 5, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -148,7 +151,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/mouse.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("mouse", spritename, 4, 4);
+			splitSprite("Mouse", spritename, 4, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -156,7 +159,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/rabbit.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("rabbit", spritename, 4, 5);
+			splitSprite("Rabbit", spritename, 4, 5);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -164,7 +167,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/scientist.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("scientist", spritename, 7, 6);
+			splitSprite("Scientist", spritename, 7, 6);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -172,7 +175,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/spawner.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("spawner", spritename, 2, 2);
+			splitSprite("Spawner", spritename, 2, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -180,7 +183,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/turtle.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("turtle", spritename, 5, 4);
+			splitSprite("Turtle", spritename, 5, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -188,7 +191,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/heart.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("heart", spritename, 2, 2);
+			splitSprite("Heart", spritename, 2, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -196,7 +199,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/tesla.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("tesla", spritename, 2, 2);
+			splitSprite("Tesla", spritename, 2, 2);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -204,7 +207,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/wall.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("wall", spritename, 2, 1);
+			splitSprite("Wall", spritename, 2, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -212,7 +215,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/barbele.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("barbed", spritename, 4, 4);
+			splitSprite("Barbed", spritename, 4, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -220,7 +223,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/poteau.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("electricalPost", spritename, 2, 1);
+			splitSprite("ElectricalPost", spritename, 2, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

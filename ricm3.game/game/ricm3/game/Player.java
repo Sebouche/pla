@@ -8,6 +8,7 @@ import ricm3.interpreter.IAutomaton;
 
 public class Player extends Ally {
 	int m_spritevariation=8;
+	Fabrication blocs;
 
 	Fabrication blocs;
 	
@@ -55,9 +56,8 @@ public class Player extends Ally {
 		}
 		return true;
 	}
-
-   public Fabrication bloc(){
-		return this.blocs;
-	}
 	
+	public Fabrication blocs() {
+		return blocs;
+	}
 }

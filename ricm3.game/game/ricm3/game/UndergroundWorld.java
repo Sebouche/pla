@@ -38,7 +38,7 @@ public class UndergroundWorld extends World {
 			int rand_x = m_rand.nextInt(60);
 			int rand_y = m_rand.nextInt(4);
 			Block b = new Block(m_model, (int) (rand_x * Options.Entity_size * Options.Scale),
-					(int) ((rand_y + 5) * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
+					(int) ((rand_y + 5) * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("Block"),
 					new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 			b.set_idsprite(8);
 			m_entities.add(b);
@@ -49,11 +49,11 @@ public class UndergroundWorld extends World {
 				Block b;
 				if (i == 10 && j == 2) {
 					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
-							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
+							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("House"),
 							new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 				} else {
 					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("house"),
+							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("House"),
 							new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 				}
 				b.set_idsprite((i - 6) * 3 + j);
@@ -67,13 +67,13 @@ public class UndergroundWorld extends World {
 		for (int j = 0; j < 60; j++) {
 			if (j <= 2) {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
+						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("Block"),
 						new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 				b.set_idsprite(6);
 				m_grid[11][j] = b;
 			} else {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
+						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("Block"),
 						new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 				b.set_idsprite(1);
 				m_grid[11][j] = b;
@@ -87,13 +87,13 @@ public class UndergroundWorld extends World {
 					randint = m_rand.nextInt(1001);
 					if (randint >= 0 && randint < 850) {
 						Block b = new Dirt(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("block"),
+								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("Block"),
 								new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 						m_grid[i][j] = b;
 					}
 					if (randint >= 850 && randint < 950) {
 						Block b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 600, m_model.m_sprites.get("block"),
+								(int) (i * Options.Entity_size * Options.Scale), 600, m_model.m_sprites.get("Block"),
 								new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 						m_grid[i][j] = b;
 						for (int k = -1; k <= 1; k++) {
@@ -101,7 +101,7 @@ public class UndergroundWorld extends World {
 							if (randint2 <= 3 && i + k >= 0 && i + k < 20) {
 								b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
 										(int) ((i + k) * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("block"), new IAutomaton(Options.Entities.get("Block")),
+										m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
 										m_model.m_undergroundworld);
 								m_grid[i][j] = b;
 							}
@@ -109,7 +109,7 @@ public class UndergroundWorld extends World {
 							if (randint2 <= 3 && j + k >= 0 && j + k < 60) {
 								b = new Copper(m_model, (int) ((j + k) * Options.Entity_size * Options.Scale),
 										(int) (i * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("block"), new IAutomaton(Options.Entities.get("Block")), this);
+										m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")), this);
 								b.set_idsprite(5);
 								m_grid[i][j] = b;
 							}
@@ -120,13 +120,13 @@ public class UndergroundWorld extends World {
 					}
 					if (randint >= 999 && i >= 30) {
 						m_grid[i][j] = new Uranium(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("block"),
+								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("Block"),
 								new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 					}
 					if (randint >= 1000) {
 						m_grid[i][j] = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
 								(int) (i * (Options.Entity_size * Options.Scale)), m_rand.nextInt(12),
-								m_model.m_sprites.get("block"), Options.Entities.get("Water"), this);
+								m_model.m_sprites.get("Block"), Options.Entities.get("Water"), this);
 						;
 
 					}
@@ -231,14 +231,14 @@ public class UndergroundWorld extends World {
 		for (int i = -distance; i <= distance; i++) {
 			for (int j = -distance; j <= distance; j++) {
 				if (Math.floorMod((pos_y + i), 60) <= 10) {
-					g.drawImage(m_model.m_sprites.get("block")[7],
+					g.drawImage(m_model.m_sprites.get("Block")[7],
 							(j * (int) (Options.Entity_size * Options.Scale))
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
 							(i * (int) (Options.Entity_size * Options.Scale))
 									- (cam_y % (int) (Options.Entity_size * Options.Scale)) + m_model.m_height / 2,
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 				} else {
-					g.drawImage(m_model.m_sprites.get("dirtbg")[0],
+					g.drawImage(m_model.m_sprites.get("Dirtbg")[0],
 							(j * (int) (Options.Entity_size * Options.Scale))
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
 							(i * (int) (Options.Entity_size * Options.Scale))

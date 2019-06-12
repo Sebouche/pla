@@ -16,7 +16,7 @@ public class Fabrication {
 		ressource.put(Iron.class, 0);
 		ressource.put(Uranium.class, 0);
 		ressource.put(Ladder.class, 0);
-		ressource.put(Stone.class, 0);
+		ressource.put(Stone.class, 10);
 		ressource.put(Dirt.class, 0);
 
 	}
@@ -24,13 +24,21 @@ public class Fabrication {
 	public Hashtable<Class, Integer> ressource() {
 		return ressource;
 	}
-
-	public void put(GameEntity cle, int quantity) {
-		ressource.put(cle.getClass(), quantity);
+	
+	public void increments(Class cle, int n) {
+		ressource.put(cle, get(cle) + n);
+	}
+	
+	public void decrements(Class cle, int n) {
+		ressource.put(cle, get(cle) - n);
 	}
 
-	public int get(GameEntity cle) {
-		return ressource.get(cle.getClass());
+	public void put(Class cle, int quantity) {
+		ressource.put(cle, quantity);
+	}
+
+	public int get(Class cle) {
+		return ressource.get(cle);
 	}
 
 	public Set<Class> Quantity() {
