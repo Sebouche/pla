@@ -13,7 +13,7 @@ public class Dog extends Enemy {
 			List<Ally> t) {
 		super(model, x, y, Options.HP[0], sprites, automate, originWorld, t);
 		model.m_surfaceworld.m_enemies.add(this);
-		m_dmg = 5;
+		m_dmg = Options.damage[0];
 	}
 
 	public boolean move(Direction dir) {

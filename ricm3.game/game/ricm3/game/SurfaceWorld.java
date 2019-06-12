@@ -38,7 +38,7 @@ public class SurfaceWorld extends World {
 		Chunk c=new Chunk(this, 0, 0, 2);
 		add(c);
 		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("Spawner"), this);
-		new House(m_model, 0, 0, 2000, m_model.m_sprites.get("House"), this);
+		new House(m_model, 0, 0, 10000, m_model.m_sprites.get("House"), this);
 		Random r = new Random();
 		int y;
 		int x;
@@ -199,6 +199,9 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void step() {
+		if(this.m_model.m_player.m_hp<=0) {
+			m_model.endgame();
+		}
 		Iterator<GameEntity> iter = m_entities.iterator();
 		while (iter.hasNext()) {
 			GameEntity e = iter.next();
