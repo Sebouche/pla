@@ -8,6 +8,9 @@ Player(Surface){
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Surface)
 	| Key(s) & !Cell(S,O,1) ? Move(S) :(Surface)
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Surface)
+	| Key(m) ? Throw(F) :(BuyMenu)
+	* (BuyMenu):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Surface)
 	* (Underground):
 	| !GotPower() ? Pick(N) :()
