@@ -21,7 +21,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import edu.ricm3.game.GameView;
 
 public class View extends GameView {
@@ -65,7 +66,6 @@ public class View extends GameView {
 		m_model.m_width = getWidth() - (int) (Options.Entity_size * Options.Scale);
 		m_model.m_height = getHeight() - (int) (Options.Entity_size * Options.Scale);
 
-
 		// background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			for (int i = -1; (int) (i * Options.Entity_size * Options.Scale) < getWidth(); i++) {
@@ -78,7 +78,7 @@ public class View extends GameView {
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 				}
 			}
-		} 
+		}
 
 		// foreground
 		Graphics g_child;
@@ -105,5 +105,26 @@ public class View extends GameView {
 			g.drawString("  " + (m_model.m_player.m_hp - hp), ((int) (0.4 * hp)), 24);
 		}
 		g_child.dispose();
+
+		if (m_model.m_currentworld instanceof SurfaceWorld) {
+			BufferedImage rotate = m_model.m_sprites.get("scientist")[0];
+			/*
+			 * double distance =
+			 * m_model.m_camera.m_watched.distance(m_model.m_arrow.m_watched); double cosa =
+			 * Math.abs(m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x) /
+			 * distance; double sina = Math.abs(m_model.m_camera.m_watched.m_y -
+			 * m_model.m_arrow.m_watched.m_y) / distance;
+			 */double angle = Math.atan2(m_model.m_camera.m_watched.m_y - m_model.m_arrow.m_watched.m_y,
+					m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x) * 180 / Math.PI;
+			AffineTransform tx = new AffineTransform();
+			tx.rotate(angle, rotate.getWidth()/2, rotate.getHeight()/2);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			rotate = op.filter(rotate, null);
+			g_child = g.create(getWidth() - (int) (Options.Scale * Options.Entity_size * 1.5),
+					getHeight() - (int) (Options.Scale * Options.Entity_size * 1.5), getWidth(), getHeight());
+			g_child.drawImage(rotate, 0, 0, (int) (Options.Scale * Options.Entity_size * 1.5),
+					(int) (Options.Scale * Options.Entity_size * 1.5), null);
+			g_child.dispose();
+		}
 	}
 }

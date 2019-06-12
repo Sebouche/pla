@@ -27,7 +27,6 @@ import javax.imageio.ImageIO;
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
 
-
 public class Model extends GameModel {
 	long m_lastStep;
 	Player m_player;
@@ -39,19 +38,22 @@ public class Model extends GameModel {
 	UndergroundWorld m_undergroundworld;
 	World m_currentworld;
 	Camera m_camera;
+	Camera m_arrow;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 
 	PopupMenu menu1;
 
 	public Model() {
-		
+
 		loadSprites();
 		m_surfaceworld = new SurfaceWorld(2, this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
 		IAutomaton player_automate = new IAutomaton(Options.selectedAutomata.get(0));
-		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("scientist"),player_automate, m_surfaceworld);
-		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),player_automate, m_undergroundworld);
+		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("scientist"), player_automate,
+				m_surfaceworld);
+		m_undergroundplayer = new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"), player_automate,
+				m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		m_lastStep = 0;
@@ -59,7 +61,8 @@ public class Model extends GameModel {
 			Options.m_bgm.stop();
 			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
 			Options.m_bgm.start();
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+		}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
 		m_undergroundworld.m_allies.add(m_undergroundplayer);
 	}
