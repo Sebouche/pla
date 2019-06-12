@@ -54,6 +54,7 @@ public class Cell extends ICondition {
 				}
 				else {
 					if(kind == f.type())
+					//	System.out.println("c vré");
 						return true;
 				}	
 			}

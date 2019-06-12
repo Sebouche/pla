@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import game.blocks.*;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Type;
 
 public class House extends Ally {
 
@@ -14,13 +15,14 @@ public class House extends Ally {
 
 	public House(Model model, int x, int y, int hp, BufferedImage[] sprites, World originWorld) {
 		super(model, x, y, hp, sprites, null, originWorld);
-		IAutomaton automate = new IAutomaton(Options.selectedAutomata.get(0));
+		IAutomaton automate = new IAutomaton(Options.Entities.get("Wall"));
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				Block b;
 				if (i == 2 && j == 1) {
 					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
 							(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate, originWorld);
+					m_model.m_arrow = new Camera(m_model, b);
 				} else {
 					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 							(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate, originWorld);
@@ -28,8 +30,11 @@ public class House extends Ally {
 				b.m_idsprite = i * 3 + j;
 				m_blocks[3*i+j] = b;
 				originWorld.m_entities.add(b);
+				
 			}
 		}
+		originWorld.m_allies.add(this);
+		m_type = Type.OBSTACLE;
 	}
 
 	@Override

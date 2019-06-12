@@ -59,8 +59,8 @@ public class Enemy extends MovingEntity {
 		}
 		return true;
 	}
-
-	public boolean wizz(Direction d) {
+	
+	public boolean wizz(Direction dir) {
 		this.m_idsprite++;
 		if (this.m_idsprite >= this.m_sprites.length) {
 			this.m_idsprite = 0;
