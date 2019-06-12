@@ -57,6 +57,7 @@ public class UndergroundPlayer extends Player {
 		UndergroundWorld w = (UndergroundWorld) m_originWorld;
 		if (w.m_grid[pos_y][Math.floorMod((pos_x), 60)] == null && blocs().Exist(Dirt.class, 1)) {
 			blocs().increments(Ladder.class, 1);
+			blocs().decrements(Dirt.class, 1);
 			Ladder L=new Ladder(m_model, Math.floorMod((pos_x), 60) * entity_size,
 					pos_y * entity_size, 100, m_model.m_sprites.get("Block"),
 					new IAutomaton(Options.Entities.get("Block")), w);
