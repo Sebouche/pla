@@ -41,7 +41,7 @@ public class SurfaceWorld extends World {
 		Chunk c=new Chunk(this, 0, 0, 2);
 		add(c);
 		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("spawner"), this);
-		new House(m_model, 0, 0, 2000, m_model.m_sprites.get("house"), this);
+		new House(m_model, 0, 0, 10000, m_model.m_sprites.get("house"), this);
 		Random r = new Random();
 		int y;
 		int x;

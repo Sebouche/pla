@@ -44,11 +44,6 @@ public class House extends Ally {
 	@Override
 	public void step() {
 		m_blocks[7].step();
-		previousHP = m_hp;
-		m_hp = HPmax;
-		for(int i = 0; i<9; i++) {
-			m_hp -= m_blocks[i].hps();
-		}
 		if(m_hp<=0) {
 			m_model.endgame();
 		}
