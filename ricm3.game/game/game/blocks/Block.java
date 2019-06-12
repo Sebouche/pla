@@ -30,7 +30,7 @@ public class Block extends GameEntity {
 	public void Pop() {
 
 		Fabrication bloc_player = m_model.m_player.blocs();
-		bloc_player.increments(this.getClass());
+		bloc_player.increments(this.getClass(), 1);
 
 	}
 

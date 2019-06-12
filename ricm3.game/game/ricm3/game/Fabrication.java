@@ -16,7 +16,7 @@ public class Fabrication {
 		ressource.put(Iron.class, 0);
 		ressource.put(Uranium.class, 0);
 		ressource.put(Ladder.class, 0);
-		ressource.put(Stone.class, 0);
+		ressource.put(Stone.class, 10);
 		ressource.put(Dirt.class, 0);
 
 	}
@@ -25,8 +25,12 @@ public class Fabrication {
 		return ressource;
 	}
 	
-	public void increments(Class cle) {
-		ressource.put(cle, get(cle) + 1);
+	public void increments(Class cle, int n) {
+		ressource.put(cle, get(cle) + n);
+	}
+	
+	public void decrements(Class cle, int n) {
+		ressource.put(cle, get(cle) - n);
 	}
 
 	public void put(Class cle, int quantity) {

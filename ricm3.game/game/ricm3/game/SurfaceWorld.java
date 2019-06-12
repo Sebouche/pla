@@ -39,8 +39,8 @@ public class SurfaceWorld extends World {
 		chunklists = new LinkedList<ChunkList>();
 		Chunk c=new Chunk(this, 0, 0, 2);
 		add(c);
-		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("spawner"), this);
-		new House(m_model, 64, 64, 2000, m_model.m_sprites.get("house"), this);
+		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("Spawner"), this);
+		new House(m_model, 64, 64, 2000, m_model.m_sprites.get("House"), this);
 		Random r = new Random();
 		int y;
 		int x;
@@ -128,16 +128,16 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.Entities.get("Dog")),m_model.m_surfaceworld, m_allies);
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("Dog"),new IAutomaton(Options.Entities.get("Dog")),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.Entities.get("Turtle")),m_model.m_surfaceworld, m_allies);
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("Turtle"),new IAutomaton(Options.Entities.get("Turtle")),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.Entities.get("Mouse")),m_model.m_surfaceworld, m_allies);
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("Mouse"),new IAutomaton(Options.Entities.get("Mouse")),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.Entities.get("Rabbit")), m_model.m_surfaceworld, m_allies);
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("Rabbit"),new IAutomaton(Options.Entities.get("Rabbit")), m_model.m_surfaceworld, m_allies);
 					break;
 				default:
 					e = null;
@@ -164,13 +164,13 @@ public class SurfaceWorld extends World {
 			m_x = x;
 			m_y = y;
 			world = w;
-			sprite = world.m_model.m_sprites.get("grassbg")[0];
+			sprite = world.m_model.m_sprites.get("Grassbg")[0];
 			if (type < 0) {
 				Random r = new Random();
 				type = (((r.nextInt()) % 2) + 1) / 2;
 				if (type == 1) {
 					spawn = new Spawner((r.nextInt() % (m_size - 64)) + 32 + m_x * 2048,
-							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("spawner"), world);
+							(r.nextInt() % (m_size - 64)) + 32 + m_y * 2048, this, m_model.m_sprites.get("Spawner"), world);
 				}
 			}
 
