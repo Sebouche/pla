@@ -56,6 +56,10 @@ public class World {
 			x = 0;
 			y = -10;
 			break;
+		case NONE:
+			x = 0;
+			y = 0;
+			break;
 		default:
 			System.out.println("Mauvaise utilisation de Hit (world)");
 			return false;
@@ -65,7 +69,7 @@ public class World {
 			e = iter.next();
 			if (e instanceof MovingEntity) {
 				if (((MovingEntity) (e)).collision(ge, x, y)) {
-					ge.damage_hp(e.m_dmg);
+					e.damage_hp(ge.m_dmg);
 					b = true;
 				}
 			}
