@@ -49,16 +49,20 @@ public class Enemy extends MovingEntity {
 				if (dx > dy) {
 					this.m_dir = Direction.EAST;
 				} else {
-					this.m_dir = Direction.SOUTH;
+					if ((dx == 0) && (dy == 0)) {
+						this.m_dir = Direction.NONE;
+					} else {
+						this.m_dir = Direction.SOUTH;
+					}
 				}
 			}
 		}
 		return true;
 	}
-	
-	public boolean wizz(Direction dir) {
+
+	public boolean wizz(Direction d) {
 		this.m_idsprite++;
-		if(this.m_idsprite>=this.m_sprites.length) {
+		if (this.m_idsprite >= this.m_sprites.length) {
 			this.m_idsprite = 0;
 		}
 		return true;
@@ -77,10 +81,14 @@ public class Enemy extends MovingEntity {
 			}
 		}
 		LinkedList<Point> l = new LinkedList<Point>();
-		l.add(new Point(t.m_x, t.m_y));
+		if (t != null) {
+			l.add(new Point(t.m_x, t.m_y));
+		} else {
+			l.add(new Point(m_x, m_y));
+		}
 		return l;
 	}
-	
+
 	public boolean hit() {
 		return this.m_model.m_currentworld.Hit(this, this.m_dir);
 	}

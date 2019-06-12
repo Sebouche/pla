@@ -131,9 +131,19 @@ Rabbit(Init){
 	* ()
 }
 
+Turret(Init){
+	* (E1):
+	| !GotPower() ? :()
+	| True ? Pop() :(E2)
+	* (E2):
+	| !GotPower() ? :()
+	| True ? Hit(F) :(E1)
+	* ()
+}
+
 Block(Init){
 	* (Init): 
-    | !GotPower() ? Pop() :()
+	| !GotPower() ? Pop() :()
 	| True ? Wizz() :(Init)
 	* ()
 }
