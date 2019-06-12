@@ -299,6 +299,7 @@ public class Controller extends GameController implements ActionListener {
 		m_f2 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 		fabricationMenu();
 		inventory();
+		m_game.addNorth(m_model.m_timer);
 	}
 
 	public boolean free(GameEntity e) {

@@ -43,6 +43,7 @@ public class Model extends GameModel {
 	Camera m_arrow;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	View m_view;
+	Timer m_timer;
 
 	JPopupMenu fabricationMenu;
 
@@ -65,6 +66,7 @@ public class Model extends GameModel {
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
 		m_undergroundworld.m_allies.add(m_undergroundplayer);
+		m_timer = new Timer(2, 30);
 	}
 
 	@Override
@@ -78,6 +80,7 @@ public class Model extends GameModel {
 	 */
 	@Override
 	public void step(long now) {
+		m_timer.step(now);
 		long elapsed = now - m_lastStep;
 		if (elapsed >= 2L) {
 			m_lastStep = now;
