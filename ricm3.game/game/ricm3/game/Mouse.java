@@ -9,10 +9,12 @@ import ricm3.interpreter.IAutomaton;
 
 public class Mouse extends Enemy {
 	int m_spritevariation = 0;
+	static Random r = new Random();
 
 	public Mouse(Model model, int x, int y, BufferedImage[] sprites, IAutomaton automate, World originWorld,
 			List<Ally> t) {
 		super(model, x, y, Options.HP[2], sprites, automate, originWorld, t);
+		model.m_surfaceworld.m_enemies.add(this);
 	}
 
 	public boolean move(Direction dir) {
@@ -45,10 +47,9 @@ public class Mouse extends Enemy {
 	@Override
 	public boolean egg() {
 		System.out.println("egg souris");
-		Random r = new Random();
-		if ((new Random().nextInt()) % 100000 == 0) {
+		if ((r.nextInt()) % 100000 == 0) {
 			m_model.m_surfaceworld.m_entities
-					.add(new Mouse(m_model, m_x, m_y, m_sprites, m_automate, m_originWorld, targets));
+					.add(new Mouse(m_model, m_x+(r.nextInt()%21)-10, m_y+(r.nextInt()%21)-10, m_sprites, m_automate, m_originWorld, targets));
 			return true;
 		}
 		return false;

@@ -12,11 +12,13 @@ public class World {
 	Model m_model;
 	LinkedList<GameEntity> m_entities;
 	LinkedList<Ally> m_allies;
+	LinkedList<Enemy> m_enemies;
 	File m_bgmfile;
 	
 	public World(Model model) {
 		m_entities = new LinkedList<GameEntity>();
 		m_allies = new LinkedList<Ally>();
+		m_enemies = new LinkedList<Enemy>();
 		m_model = model;
 	}
 
