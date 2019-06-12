@@ -2,6 +2,7 @@ package ricm3.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import ricm3.interpreter.*;
@@ -21,6 +22,7 @@ public class GameEntity {
 	public Type m_type;
 	LinkedList<Keys> m_keys;
 	boolean m_collision = true;
+	Hashtable<String, Integer> m_recipe;
 
 	public GameEntity(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate,
 			World originWorld) {
@@ -34,7 +36,6 @@ public class GameEntity {
 		m_keys = new LinkedList<Keys>();
 		m_automate = automate;
 		m_dir = Direction.NORTH;
-
 	}
 
 	///////////////////////////
