@@ -153,6 +153,7 @@ public class GameEntity {
 	public void step() {
 		if (m_automate != null)
 			m_automate.step(this);
+		System.out.println(m_automate.current.name);
 	}
 
 	//////////////////////
