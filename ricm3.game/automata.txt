@@ -7,10 +7,7 @@ Player(Surface){
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Surface)
 	| Key(s) & !Cell(S,O,1) ? Move(S) :(Surface)
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Surface)
-	| Key(m) ? Throw(F) :(BuyMenu)
-	* (BuyMenu):
 	| Key(m) ? Throw(F) :(Surface)
-	| Key(ENTER) ? Throw(F) :(Surface)
 	* (Underground):
 	| Key(o) ? Jump(F) :(Surface)
 	| Key(z) & !Cell(N,O,1) ? Move(N) :(Jumping)
