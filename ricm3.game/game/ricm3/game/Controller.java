@@ -76,7 +76,7 @@ public class Controller extends GameController implements ActionListener {
 	View m_view;
 
 	Font m_f1, m_f2;
-	JMenuItem m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau, m_m2_validate;
+	JMenuItem m_quitbutton, m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau, m_m2_validate;
 	JPopupMenu fabricationSubMenu;
 	
 	GameEntity currentEntity;
