@@ -13,7 +13,7 @@ public class GameEntity {
 	public Model m_model;
 	public IAutomaton m_automate;
 	// m_sound;
-	World m_originWorld;
+	public World m_originWorld;
 	int m_hp;
 	public int m_idsprite;
 	int m_dmg;

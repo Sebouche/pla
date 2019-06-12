@@ -68,13 +68,15 @@ public class View extends GameView {
 
 		// background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
-			for (int i = -1; (int) (i * Options.Entity_size * Options.Scale) < getWidth()+(int) (Options.Entity_size * Options.Scale); i++) {
-				for (int j = -2; (int) (j * Options.Entity_size * Options.Scale) < getHeight()+(int) (Options.Entity_size * Options.Scale); j++) {
+			for (int i = -(int) ((getWidth() / 2) / (Options.Entity_size * Options.Scale))
+					- 1; i <= (int) ((getWidth() / 2) / (Options.Entity_size * Options.Scale)) + 1; i++) {
+				for (int j = -(int) ((getHeight() / 2) / (Options.Entity_size * Options.Scale))
+						- 1; j <= (int) ((getHeight() / 2) / (Options.Entity_size * Options.Scale)) + 1; j++) {
 					g.drawImage(m_model.m_sprites.get("grassbg")[0],
-							(int) (i * Options.Entity_size * Options.Scale)
-									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + 22,
-							(int) (j * Options.Entity_size * Options.Scale)
-									- (cam_y % (int) (Options.Entity_size * Options.Scale)) + 10,
+							(i * (int) (Options.Entity_size * Options.Scale))
+									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
+							(j * (int) (Options.Entity_size * Options.Scale))
+									- (cam_y % (int) (Options.Entity_size * Options.Scale)) + m_model.m_height / 2,
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 				}
 			}
@@ -117,7 +119,7 @@ public class View extends GameView {
 			double angle = Math.atan2((m_model.m_camera.m_watched.m_y - m_model.m_arrow.m_watched.m_y),
 					(m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x));
 			AffineTransform tx = new AffineTransform();
-			tx.rotate(angle-Math.PI/2, rotate.getWidth() / 2, rotate.getHeight() / 2);
+			tx.rotate(angle - Math.PI / 2, rotate.getWidth() / 2, rotate.getHeight() / 2);
 			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 			rotate = op.filter(rotate, null);
 			g_child = g.create(getWidth() - (int) (Options.Scale * Options.Entity_size * 1.5),
