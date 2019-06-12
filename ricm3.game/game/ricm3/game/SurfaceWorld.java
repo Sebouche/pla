@@ -195,6 +195,7 @@ public class SurfaceWorld extends World {
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 128;
 		m_model.m_currentworld = m_model.m_undergroundworld;
+		m_model.m_undergroundplayer.blocs=m_model.m_player.blocs;
 		m_model.m_player=m_model.m_undergroundplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;

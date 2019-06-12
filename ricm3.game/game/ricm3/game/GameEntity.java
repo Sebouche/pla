@@ -9,7 +9,8 @@ import ricm3.interpreter.*;
 
 public class GameEntity {
 
-	int m_x, m_y;
+	public int m_x;
+	public int m_y;
 	public BufferedImage[] m_sprites;
 	public Model m_model;
 	public IAutomaton m_automate;
