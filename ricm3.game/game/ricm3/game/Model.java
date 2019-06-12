@@ -44,7 +44,7 @@ public class Model extends GameModel {
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	View m_view;
 
-	JPopupMenu menu_fabrication;
+	JPopupMenu fabricationMenu;
 
 	public Model() {
 
@@ -212,6 +212,22 @@ public class Model extends GameModel {
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
 			splitSprite("wall", spritename, 2, 1);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("sprites/barbele.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("barbed", spritename, 4, 4);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("sprites/poteau.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("electricalPost", spritename, 2, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
