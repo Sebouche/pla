@@ -27,11 +27,11 @@ public class Turtle extends Enemy {
 				m_spritevariation = 5;
 			}
 			if (absoldir == Direction.NORTH) {
-				m_basesprite = 10;
+				m_basesprite = 15;
 				m_spritevariation = 4;
 			}
 			if (absoldir == Direction.SOUTH) {
-				m_basesprite = 15;
+				m_basesprite = 10;
 				m_spritevariation = 4;
 			}
 			m_lastdir = absoldir;

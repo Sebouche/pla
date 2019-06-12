@@ -40,37 +40,11 @@ public class World {
 	public boolean Hit(GameEntity ge, Direction d) {
 		Iterator<Ally> iter = m_allies.iterator();
 		Ally e;
-		int x, y;
-		switch (d) {
-		case EAST:
-			x = 10;
-			y = 0;
-			break;
-		case SOUTH:
-			x = 0;
-			y = 10;
-			break;
-		case WEST:
-			x = -10;
-			y = 0;
-			break;
-		case NORTH:
-			x = 0;
-			y = -10;
-			break;
-		case NONE:
-			x = 0;
-			y = 0;
-			break;
-		default:
-			System.out.println("Mauvaise utilisation de Hit (world)");
-			return false;
-		}
 		boolean b = false;
 		while (iter.hasNext()) {
 			e = iter.next();
 			if (e instanceof MovingEntity) {
-				if (((MovingEntity) (e)).collision(ge, x, y)) {
+				if (((MovingEntity) (e)).distance(ge)<=0) {
 					e.damage_hp(ge.m_dmg);
 					b = true;
 				}
