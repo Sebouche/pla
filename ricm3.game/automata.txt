@@ -123,19 +123,19 @@ Rabbit(E1){
 	* ()
 }
 
-Turtle(Init){
+Turtle(E1){
 	* (E1):
 	| !GotPower() ? Kamikaze :()
 	| Cell(F,O,1) ? Hit() :(E1)
-	| Cell(F,V,1) ? Move(F) :(E2)
 	| Cell(F,T,1) ? Hit() :(E1)
+	| True ? Move(F) :(E2)
 	* (E2):
 	| !GotPower() ? Kamikaze :()
 	| True ? Pop() :(E1)
 	* ()
 }
 
-Turret(Init){
+Turret(E1){
 	* (E1):
 	| !GotPower() ? :()
 	| True ? Pop() :(E2)
