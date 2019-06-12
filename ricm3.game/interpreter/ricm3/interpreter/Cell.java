@@ -78,7 +78,7 @@ public class Cell extends ICondition {
 			}
 			GameEntity f = ((UndergroundWorld) e.m_originWorld).m_grid[Math.floorMod(pos_y, 60)][Math.floorMod(pos_x,
 					60)];
-			if (f != null && isInside(f, cellx, celly)) {
+			if (f != null && f.m_collision && isInside(f, cellx, celly)) {
 				if (kind == Type.VOID) {
 					if (kind != f.type())
 						return false;

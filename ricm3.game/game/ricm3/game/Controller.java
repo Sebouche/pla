@@ -91,7 +91,7 @@ public class Controller extends GameController implements ActionListener {
 	public void step(long now) {
 		m_model.step(now);
 		m_view.step(now);
-
+		inventory();
 	}
 
 	@Override

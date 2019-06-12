@@ -118,7 +118,7 @@ public class SurfaceWorld extends World {
 			int[] time = m_model.m_timer.getTime();
 			if ((time[0] == 0 && time[1] == 0)) {
 				Options.day = !Options.day;
-				m_model.m_timer.setTime(0, 1);
+				m_model.m_timer.setTime(2, 30);
 				if (Options.day) {
 					int type;
 					int i = 0;
@@ -196,8 +196,8 @@ public class SurfaceWorld extends World {
 		m_model.m_player.m_y = 128;
 		m_model.m_currentworld = m_model.m_undergroundworld;
 		m_model.m_player=m_model.m_undergroundplayer;
-		m_model.m_player.m_x = 500;
-		m_model.m_player.m_y = 620;
+		m_model.m_player.m_x = 64;
+		m_model.m_player.m_y = 640;
 		m_model.m_camera.m_watched = m_model.m_player;
 		m_model.m_surfaceworld.m_allies.remove(m_model.m_surfaceplayer);
 		m_model.m_undergroundworld.m_allies.add(m_model.m_undergroundplayer);

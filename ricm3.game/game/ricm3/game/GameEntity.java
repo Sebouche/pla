@@ -21,7 +21,7 @@ public class GameEntity {
 	Direction m_dir;
 	public Type m_type;
 	LinkedList<Keys> m_keys;
-	boolean m_collision = true;
+	public boolean m_collision = true;
 	Hashtable<String, Integer> m_recipe;
 	public boolean m_breakable = true;
 

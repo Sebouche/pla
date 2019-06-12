@@ -72,7 +72,7 @@ public class View extends GameView {
 					- 1; i <= (int) ((getWidth() / 2) / (Options.Entity_size * Options.Scale)) + 1; i++) {
 				for (int j = -(int) ((getHeight() / 2) / (Options.Entity_size * Options.Scale))
 						- 1; j <= (int) ((getHeight() / 2) / (Options.Entity_size * Options.Scale)) + 1; j++) {
-					g.drawImage(m_model.m_sprites.get("grassbg")[0],
+					g.drawImage(m_model.m_sprites.get("Grassbg")[0],
 							(i * (int) (Options.Entity_size * Options.Scale))
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
 							(j * (int) (Options.Entity_size * Options.Scale))
