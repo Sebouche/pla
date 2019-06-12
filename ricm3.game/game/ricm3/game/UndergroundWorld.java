@@ -86,33 +86,41 @@ public class UndergroundWorld extends World {
 				if (m_grid[i][j] == null) {
 					randint = m_rand.nextInt(1001);
 					if (randint >= 0 && randint < 850) {
-						Block b = new Dirt(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("Block"),
-								new IAutomaton(Options.Entities.get("Block")), this);
-						m_grid[i][j] = b;
+						if (m_rand.nextInt(40) >= 20) {
+							Block b = new Stone(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 600,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
+						} else {
+							Block b = new Dirt(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 300,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
+						}
 					}
 					if (randint >= 850 && randint < 950) {
-						Block b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 600, m_model.m_sprites.get("Block"),
-								new IAutomaton(Options.Entities.get("Block")), this);
-						m_grid[i][j] = b;
-						for (int k = -1; k <= 1; k++) {
-							int randint2 = m_rand.nextInt(10);
-							if (randint2 <= 3 && i + k >= 0 && i + k < 20) {
-								b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
-										(int) ((i + k) * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
-										this);
-								m_grid[i][j] = b;
-							}
-							randint2 = m_rand.nextInt(10);
-							if (randint2 <= 3 && j + k >= 0 && j + k < 60) {
-								b = new Copper(m_model, (int) ((j + k) * Options.Entity_size * Options.Scale),
-										(int) (i * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
-										this);
-								m_grid[i][j] = b;
-							}
+						int randint2 = m_rand.nextInt(3);
+						Block b;
+						if (randint2 == 2) {
+							b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 700,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
+						} else if (randint2 == 1) {
+							b = new Iron(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 800,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
+						} else {
+							b = new Coal(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 500,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
 						}
 					}
 					if (randint >= 950 && randint < 999) {
@@ -124,10 +132,11 @@ public class UndergroundWorld extends World {
 								new IAutomaton(Options.Entities.get("Block")), this);
 					}
 					if (randint >= 1000) {
-						m_grid[i][j] = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
+						Water w = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
 								(int) (i * (Options.Entity_size * Options.Scale)), m_rand.nextInt(12),
 								m_model.m_sprites.get("Block"), Options.Entities.get("Water"), this);
-						;
+						w.m_collision = false;
+						m_grid[i][j] = w;
 
 					}
 				}
@@ -142,6 +151,7 @@ public class UndergroundWorld extends World {
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_currentworld = m_model.m_surfaceworld;
+		m_model.m_surfaceplayer.blocs=m_model.m_player.blocs;
 		m_model.m_player = m_model.m_surfaceplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 193;
