@@ -9,20 +9,23 @@ import ricm3.interpreter.*;
 
 public class GameEntity {
 
-	int m_x, m_y;
+	public int m_x;
+	public int m_y;
 	public BufferedImage[] m_sprites;
 	public Model m_model;
 	public IAutomaton m_automate;
 	// m_sound;
-	World m_originWorld;
+	public World m_originWorld;
 	int m_hp;
 	public int m_idsprite;
 	int m_dmg;
 	Direction m_dir;
 	public Type m_type;
 	LinkedList<Keys> m_keys;
-	boolean m_collision = true;
+	public boolean m_collision = true;
 	Hashtable<String, Integer> m_recipe;
+	public boolean m_breakable = true;
+
 
 	public GameEntity(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate,
 			World originWorld) {
@@ -125,6 +128,11 @@ public class GameEntity {
 	}
 
 	public boolean get() {
+		if(m_breakable) {
+			m_originWorld.m_tmprm.add(this);
+			m_originWorld.m_allies.remove(this);
+			m_originWorld.m_enemies.remove(this);
+		}
 		return true;
 	}
 
@@ -133,6 +141,7 @@ public class GameEntity {
 	}
 
 	public boolean kamikaze() {
+
 		return true;
 	}
 
@@ -154,7 +163,7 @@ public class GameEntity {
 	public void step() {
 		if (m_automate != null)
 			m_automate.step(this);
-		System.out.println(m_model.m_player.m_automate.current.name);
+
 	}
 
 	//////////////////////

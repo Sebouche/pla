@@ -24,11 +24,11 @@ public class House extends Ally {
 				Block b;
 				if (i == 2 && j == 1) {
 					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale)+x,
-							(int) (i * Options.Entity_size * Options.Scale)+y, 0, sprites, automate, originWorld);
+							(int) (i * Options.Entity_size * Options.Scale)+y, -1, sprites, automate, originWorld);
 					m_model.m_arrow = new Camera(m_model, b);
 				} else {
 					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale)+x,
-							(int) (i * Options.Entity_size * Options.Scale)+y, 0, sprites, automate, originWorld);
+							(int) (i * Options.Entity_size * Options.Scale)+y, -1, sprites, automate, originWorld);
 				}
 				b.m_idsprite = i * 3 + j;
 				m_blocks[3*i+j] = b;

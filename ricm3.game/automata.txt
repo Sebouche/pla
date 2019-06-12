@@ -1,5 +1,6 @@
 Player(Surface){
 	* (Surface):
+	| !GotPower() ? Pick(N) :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
 	| Key(w) & !Cell(F,O,64) / Cell(F,T,64) ? Wizz(F) :(Surface)
 	| Key(p) & Cell(F,T,1) ? Pop(F) :(InsideTurret)
@@ -9,12 +10,20 @@ Player(Surface){
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Surface)
 	| Key(m) ? Throw(F) :(BuyMenu)
 	* (BuyMenu):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Surface)
-	| Key(ENTER) ? Throw(F) :(Surface)
 	* (Underground):
-	| Key(o) ? Jump(F) :(Surface)
+	| !GotPower() ? Pick(N) :()
+	| Key(d) & Cell(E,G,1) ? Jump(F) :(Surface)
+	| Key(FR) & Cell(E,O,1) ? Pop(E) :(Underground)
+	| Key(FD) & Cell(S,O,1) ? Pop(S) :(Underground)
+	| Key(FU) & Cell(N,O,1) ? Pop(N) :(Underground)
+	| Key(FL) & Cell(W,O,1) ? Pop(W) :(Underground)
+	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
+	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
+	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
 	| Key(z) & !Cell(N,O,1) ? Move(N) :(Jumping)
-	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Underground)
+	| Key(w) ? Wizz(F) :(Underground)
 	| Key(q) & Cell(W,J,1) ? Move(W) :(Ladder)
 	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
@@ -22,12 +31,14 @@ Player(Surface){
 	| Key(m) ? Throw(F) :(Menu1)
 	| !Cell(S,O,1) ? Move(S) :(Underground)
 	* (Jumping):
+	| !GotPower() ? Pick(N) :()
 	| Cell(S,O,1) ? Protect() :(Underground)
 	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu2)
 	| True ? Move(S) :(Underground)
 	* (Ladder):
+	| !GotPower() ? Pick(N) :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)
 	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
@@ -37,12 +48,15 @@ Player(Surface){
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu3)
 	* (Menu1):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Underground)
 	| Key(ENTER) ? Throw(F) :(Underground)
 	* (Menu2):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Jumping)
 	| Key(ENTER) ? Throw(F) :(Jumping)
 	* (Menu3):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Ladder)
 	| Key(ENTER) ? Throw(F) :(Ladder)
 	* (InsideTurret):
@@ -52,40 +66,32 @@ Player(Surface){
 
 Bat(E1){
 	* (E1):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| True ? Pop() :(E2)
 	* (E2):
-	| !GotPower() ? :() 
+	| !GotPower() ? Get() :() 
 	| Cell(F,V) ? Move(F) :(E1)
 	| Cell(F,@) ? Hit() :(E1)
 	| True ? Pop() :(E2)
-	* ()
-}
-
-Mole(E1){
-	* (E1): True ? Pop() :(E2)
-	* (E2):
-	| Cell(S,V,1) ? Move(S) :(E1)
-	| Cell(F,V) ? Wizz() :(E1)
-	| True ? Move(F) :(E2)
+	* ():
 }
 
 Mouse(E3){
 	* (E1):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| Cell(F,O,1) ? Hit() :(E2)
 	| Cell(F,T,1) / Cell(F,@,1) ? Hit() :(E3)
 	| True ? Egg() :(E4)
 	* (E2):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| Cell(F,O,1) ? Hit() :(E2)
 	| True ? Move(F) / Egg() :(E4)
 	* (E3):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| Cell(F,@,1) ? Hit() :(E3)
 	| True ? Pop() :(E1)
 	* (E4):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| Cell(F,@,1) ? Hit() :(E1)
 	| !Cell(F,@,1) ? Pop() :(E1)
 	* ()
@@ -93,43 +99,43 @@ Mouse(E3){
 
 Dog(E2){
 	* (E1):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| Cell(F,O,1) / Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
 	| True ? Move(F) :(E2)
 	* (E2):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| True ? Pop() :(E1)
 	* ()
 }
 
 Rabbit(E2){
 	* (E1):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
 	| True ? Move(F) :(E2)
 	* (E2):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| True ? Pop() :(E1)
 	* ()
 }
 
 Turtle(E1){
 	* (E1):
-	| !GotPower() ? Kamikaze :()
+	| !GotPower() ? Get() :()
 	| Cell(F,O,1) / Cell(F,T,1) / Cell(F,@,1) ? Hit() :(E1)
 	| True ? Move(F) :(E2)
 	* (E2):
-	| !GotPower() ? Kamikaze :()
+	| !GotPower() ? Get() :()
 	| True ? Pop() :(E1)
 	* ()
 }
 
-Turret(E1){
+Tesla(E1){
 	* (E1):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| True ? Pop() :(E2)
 	* (E2):
-	| !GotPower() ? :()
+	| !GotPower() ? Get() :()
 	| True ? Hit(F) :(E1)
 	* ()
 }
