@@ -21,7 +21,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import edu.ricm3.game.GameView;
 
 public class View extends GameView {
@@ -59,52 +60,27 @@ public class View extends GameView {
 	@Override
 	protected void _paint(Graphics g) {
 		computeFPS();
-		
-		
+
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
 		m_model.m_width = getWidth() - (int) (Options.Entity_size * Options.Scale);
 		m_model.m_height = getHeight() - (int) (Options.Entity_size * Options.Scale);
 
-		
-		//background
+		// background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
-			for (int i = -1; (int) (i * Options.Entity_size) < getWidth(); i++) {
-				for (int j = -1; (int) (j * Options.Entity_size) < getWidth(); j++) {
+			for (int i = -1; (int) (i * Options.Entity_size * Options.Scale) < getWidth()+(int) (Options.Entity_size * Options.Scale); i++) {
+				for (int j = -2; (int) (j * Options.Entity_size * Options.Scale) < getHeight()+(int) (Options.Entity_size * Options.Scale); j++) {
 					g.drawImage(m_model.m_sprites.get("grassbg")[0],
 							(int) (i * Options.Entity_size * Options.Scale)
-									- (cam_x % (int) (Options.Entity_size * Options.Scale))+22,
+									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + 22,
 							(int) (j * Options.Entity_size * Options.Scale)
-									- (cam_y % (int) (Options.Entity_size * Options.Scale))+10,
+									- (cam_y % (int) (Options.Entity_size * Options.Scale)) + 10,
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
-				}
-			}
-		} else {
-			int profondeur = (int) (m_model.m_player.m_y / (Options.Entity_size * Options.Scale));
-			for (int i = -1; (int) (i * Options.Entity_size) <= getWidth(); i++) {
-				for (int j = -1; (int) (j * Options.Entity_size) <= getHeight(); j++) {
-					if (j - profondeur > -5) {
-						g.drawImage(m_model.m_sprites.get("block")[7],
-								(int) (i * Options.Entity_size * Options.Scale)
-										- (cam_x % (int) (Options.Entity_size * Options.Scale)),
-								getHeight() - (int) (j * Options.Entity_size * Options.Scale)
-										- (cam_y % (int) (Options.Entity_size * Options.Scale))-5,
-								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
-								null);
-					} else {
-						g.drawImage(m_model.m_sprites.get("dirtbg")[0],
-								(int) (i * Options.Entity_size * Options.Scale)
-										- (cam_x % (int) (Options.Entity_size * Options.Scale))+24,
-								getHeight() - (int) (j * Options.Entity_size * Options.Scale)
-										- (cam_y % (int) (Options.Entity_size * Options.Scale))-5,
-								(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size,
-								null);
-					}
 				}
 			}
 		}
 
-		//foreground
+		// foreground
 		Graphics g_child;
 		g_child = g.create(0, 0, getWidth(), getHeight());
 		m_model.m_currentworld.paint(g_child);
@@ -114,20 +90,41 @@ public class View extends GameView {
 		m_model.m_camera.m_watched.paint(g_child);
 		g_child.dispose();
 
-			// barre de vie
+		// barre de vie
 
-			g_child = g.create(m_model.m_width / 2 - 50, 20, 100, 20);
-			BufferedImage heartsprite = m_model.m_sprites.get("heart")[0];
-			int hp;
-			for (hp = 0; hp < m_model.m_player.m_hp; hp += 100) {
-				g.drawImage(heartsprite, ((int) (0.4 * hp)) - 12, -12, 64, 64, null);
-			}
-			hp -= 100;
-			g.setFont(new Font("HP", 1, 15));
-			g.setColor(Color.white);
-			if (m_model.m_player.m_hp - hp < 100) {
-				g.drawString("  " + (m_model.m_player.m_hp - hp), ((int) (0.4 * hp)), 24);
-			}
+		g_child = g.create(m_model.m_width / 2 - 50, 20, 100, 20);
+		BufferedImage heartsprite = m_model.m_sprites.get("heart")[0];
+		int hp;
+		for (hp = 0; hp < m_model.m_player.m_hp; hp += 100) {
+			g.drawImage(heartsprite, ((int) (0.4 * hp)) - 12, -12, 64, 64, null);
+		}
+		hp -= 100;
+		g.setFont(new Font("HP", 1, 15));
+		g.setColor(Color.white);
+		if (m_model.m_player.m_hp - hp < 100) {
+			g.drawString("  " + (m_model.m_player.m_hp - hp), ((int) (0.4 * hp)), 24);
+		}
+		g_child.dispose();
+
+		if (m_model.m_currentworld instanceof SurfaceWorld) {
+			BufferedImage rotate = m_model.m_sprites.get("scientist")[0];
+
+			double distance = m_model.m_camera.m_watched.distance(m_model.m_arrow.m_watched);
+			// double cosa = Math.abs(m_model.m_camera.m_watched.m_x -
+			// m_model.m_arrow.m_watched.m_x) / distance;
+			// double sina = Math.abs(m_model.m_camera.m_watched.m_y -
+			// m_model.m_arrow.m_watched.m_y) / distance;
+			double angle = Math.atan2((m_model.m_camera.m_watched.m_y - m_model.m_arrow.m_watched.m_y),
+					(m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x));
+			AffineTransform tx = new AffineTransform();
+			tx.rotate(angle-Math.PI/2, rotate.getWidth() / 2, rotate.getHeight() / 2);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			rotate = op.filter(rotate, null);
+			g_child = g.create(getWidth() - (int) (Options.Scale * Options.Entity_size * 1.5),
+					getHeight() - (int) (Options.Scale * Options.Entity_size * 1.5), getWidth(), getHeight());
+			g_child.drawImage(rotate, 0, 0, (int) (Options.Scale * Options.Entity_size * 1.5),
+					(int) (Options.Scale * Options.Entity_size * 1.5), null);
 			g_child.dispose();
+		}
 	}
 }

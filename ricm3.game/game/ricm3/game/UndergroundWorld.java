@@ -11,7 +11,7 @@ import ricm3.interpreter.*;
 
 public class UndergroundWorld extends World {
 
-	GameEntity[][] m_grid;
+	public GameEntity[][] m_grid;
 	Random m_rand = new Random();
 
 	public UndergroundWorld(Model model) {
@@ -35,13 +35,13 @@ public class UndergroundWorld extends World {
 		}
 		// Generation nuages
 		for (int i = 0; i < 15; i++) {
-			int rand_x = m_rand.nextInt(4);
-			int rand_y = m_rand.nextInt(60);
+			int rand_x = m_rand.nextInt(60);
+			int rand_y = m_rand.nextInt(4);
 			Block b = new Block(m_model, (int) (rand_x * Options.Entity_size * Options.Scale),
-					(int) (rand_y * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
+					(int) ((rand_y + 5) * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("block"),
 					new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 			b.set_idsprite(8);
-			m_grid[rand_x + 4][rand_y] = b;
+			m_entities.add(b);
 		}
 		// Generation maison
 		for (int i = 9; i <= 10; i++) {
@@ -80,7 +80,6 @@ public class UndergroundWorld extends World {
 			}
 		}
 		m_grid[11][1] = null;
-
 		// Generation minerais
 		for (int i = 12; i < 60; i++) {
 			for (int j = 0; j < 60; j++) {
@@ -124,6 +123,13 @@ public class UndergroundWorld extends World {
 								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("block"),
 								new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
 					}
+					if (randint >= 1000) {
+						m_grid[i][j] = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
+								(int) (i * (Options.Entity_size * Options.Scale)), m_rand.nextInt(12),
+								m_model.m_sprites.get("block"), Options.selectedAutomata.get(10), this);
+						;
+
+					}
 				}
 			}
 		}
@@ -132,7 +138,7 @@ public class UndergroundWorld extends World {
 	@Override
 	public void changeWorld() {
 		// A appeller lorsque le joueur passe par la porte
-		m_model.m_player.m_keys=new LinkedList<Keys>();
+		m_model.m_player.m_keys = new LinkedList<Keys>();
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_currentworld = m_model.m_surfaceworld;
@@ -176,58 +182,41 @@ public class UndergroundWorld extends World {
 
 	// Renvoi true si il y a collision avec un des blocs adjacent a l'entit�
 	boolean adjacent_collision(MovingEntity E, int dx, int dy) {
-		/*int entity_size = (int) (Options.Scale * Options.Entity_size);
-		int pos_x = (int) (E.m_x / entity_size);
-		int pos_y = (int) (E.m_y / entity_size);
-		int pos_x_r = (int) ((E.m_x + entity_size) / entity_size);
-		int pos_y_d = (int) ((E.m_y + entity_size) / entity_size);
-		if (m_grid[pos_y - 1][pos_x] != null && m_grid[pos_y - 1][pos_x].m_collision)
-			if (E.collision(m_grid[pos_y - 1][pos_x], dx, dy)) {
-				return true;
-			}
-		if (m_grid[pos_y - 1][pos_x_r] != null && m_grid[pos_y - 1][pos_x_r].m_collision)
-			if (E.collision(m_grid[pos_y - 1][pos_x_r], dx, dy)) {
-				return true;
-			}
-		if (m_grid[pos_y][Math.floorMod((pos_x - 1), 60)] != null
-				&& m_grid[pos_y][Math.floorMod((pos_x - 1), 60)].m_collision)
-			if (E.collision(m_grid[pos_y][Math.floorMod((pos_x - 1), 60)], dx, dy)) {
-				return true;
-			}
-		if (m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)] != null
-				&& m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)].m_collision)
-			if (E.collision(m_grid[pos_y][Math.floorMod((pos_x_r + 1), 60)], dx, dy)) {
-				return true;
-			}
-		if (m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)] != null
-				&& m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)].m_collision)
-			if (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x - 1), 60)], dx, dy)) {
-				return true;
-			}
-		if (m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)] != null
-				&& m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)].m_collision)
-			if (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)], dx, dy)) {
-				return true;
-			}
-		if (m_grid[pos_y_d + 1][pos_x] != null && m_grid[pos_y_d + 1][pos_x].m_collision)
-			if (E.collision(m_grid[pos_y_d + 1][pos_x], dx, dy)) {
-				return true;
-			}
-		if (m_grid[pos_y_d + 1][pos_x_r] != null && m_grid[pos_y_d + 1][pos_x_r].m_collision)
-			if (E.collision(m_grid[pos_y_d + 1][pos_x_r], dx, dy)) {
-				return true;
-			}*/
+		/*
+		 * int entity_size = (int) (Options.Scale * Options.Entity_size); int pos_x =
+		 * (int) (E.m_x / entity_size); int pos_y = (int) (E.m_y / entity_size); int
+		 * pos_x_r = (int) ((E.m_x + entity_size) / entity_size); int pos_y_d = (int)
+		 * ((E.m_y + entity_size) / entity_size); if (m_grid[pos_y - 1][pos_x] != null
+		 * && m_grid[pos_y - 1][pos_x].m_collision) if (E.collision(m_grid[pos_y -
+		 * 1][pos_x], dx, dy)) { return true; } if (m_grid[pos_y - 1][pos_x_r] != null
+		 * && m_grid[pos_y - 1][pos_x_r].m_collision) if (E.collision(m_grid[pos_y -
+		 * 1][pos_x_r], dx, dy)) { return true; } if (m_grid[pos_y][Math.floorMod((pos_x
+		 * - 1), 60)] != null && m_grid[pos_y][Math.floorMod((pos_x - 1),
+		 * 60)].m_collision) if (E.collision(m_grid[pos_y][Math.floorMod((pos_x - 1),
+		 * 60)], dx, dy)) { return true; } if (m_grid[pos_y][Math.floorMod((pos_x_r +
+		 * 1), 60)] != null && m_grid[pos_y][Math.floorMod((pos_x_r + 1),
+		 * 60)].m_collision) if (E.collision(m_grid[pos_y][Math.floorMod((pos_x_r + 1),
+		 * 60)], dx, dy)) { return true; } if (m_grid[pos_y + 1][Math.floorMod((pos_x -
+		 * 1), 60)] != null && m_grid[pos_y + 1][Math.floorMod((pos_x - 1),
+		 * 60)].m_collision) if (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x -
+		 * 1), 60)], dx, dy)) { return true; } if (m_grid[pos_y +
+		 * 1][Math.floorMod((pos_x_r + 1), 60)] != null && m_grid[pos_y +
+		 * 1][Math.floorMod((pos_x_r + 1), 60)].m_collision) if
+		 * (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)], dx, dy)) {
+		 * return true; } if (m_grid[pos_y_d + 1][pos_x] != null && m_grid[pos_y_d +
+		 * 1][pos_x].m_collision) if (E.collision(m_grid[pos_y_d + 1][pos_x], dx, dy)) {
+		 * return true; } if (m_grid[pos_y_d + 1][pos_x_r] != null && m_grid[pos_y_d +
+		 * 1][pos_x_r].m_collision) if (E.collision(m_grid[pos_y_d + 1][pos_x_r], dx,
+		 * dy)) { return true; }
+		 */
 		return false;
 	}
 
 	void gravity(MovingEntity ge) {
-		/*if (ge.m_grav < 20) {
-			ge.m_grav++;
-		} 
-		if (ge.collision(, 0, ge.m_dy)) {
-			ge.m_grav = 0;
-		}
-		ge.m_x += ge.m_grav;*/
+		/*
+		 * if (ge.m_grav < 20) { ge.m_grav++; } if (ge.collision(, 0, ge.m_dy)) {
+		 * ge.m_grav = 0; } ge.m_x += ge.m_grav;
+		 */
 	}
 
 	@Override
@@ -241,6 +230,21 @@ public class UndergroundWorld extends World {
 		// Affichage des blocs
 		for (int i = -distance; i <= distance; i++) {
 			for (int j = -distance; j <= distance; j++) {
+				if (Math.floorMod((pos_y + i), 60) <= 10) {
+					g.drawImage(m_model.m_sprites.get("block")[7],
+							(j * (int) (Options.Entity_size * Options.Scale))
+									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
+							(i * (int) (Options.Entity_size * Options.Scale))
+									- (cam_y % (int) (Options.Entity_size * Options.Scale)) + m_model.m_height / 2,
+							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
+				} else {
+					g.drawImage(m_model.m_sprites.get("dirtbg")[0],
+							(j * (int) (Options.Entity_size * Options.Scale))
+									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
+							(i * (int) (Options.Entity_size * Options.Scale))
+									- (cam_y % (int) (Options.Entity_size * Options.Scale)) + m_model.m_height / 2,
+							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
+				}
 				if (m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)] != null) {
 					Graphics g_child = g.create(
 							(j * (int) (Options.Entity_size * Options.Scale))
@@ -259,7 +263,7 @@ public class UndergroundWorld extends World {
 		GameEntity E;
 		while (iter.hasNext()) {
 			E = iter.next();
-			Graphics g_child = g.create(E.m_x - cam_x + m_model.m_width / 2, E.m_y - cam_y + m_model.m_height / 2,
+			Graphics g_child = g.create((E.m_x - cam_x + m_model.m_width / 2), E.m_y - cam_y + m_model.m_height / 2,
 					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			E.paint(g_child);
 			g_child.dispose();

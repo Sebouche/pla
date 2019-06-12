@@ -29,7 +29,6 @@ import javax.swing.JPopupMenu;
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
 
-
 public class Model extends GameModel {
 	long m_lastStep;
 	Player m_player;
@@ -41,12 +40,13 @@ public class Model extends GameModel {
 	UndergroundWorld m_undergroundworld;
 	World m_currentworld;
 	Camera m_camera;
+	Camera m_arrow;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 
 	JPopupMenu menu_fabrication;
 
 	public Model() {
-		
+
 		loadSprites();
 		m_surfaceworld = new SurfaceWorld(2, this);
 		m_undergroundworld = new UndergroundWorld(this);
