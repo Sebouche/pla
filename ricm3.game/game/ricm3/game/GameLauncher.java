@@ -14,12 +14,15 @@ import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,45 +34,28 @@ import ricm3.parser.AutomataParser;
 
 public class GameLauncher implements ActionListener, ComponentListener {
 
+	String m_AutomataPath, m_lastAutomataPath;
 	ImagePanel m_StartingMenu;
 	JFrame m_Launcher, m_OptionsFrame;
-	JButton m_NewGame, m_Options, m_Quit, m_OptionsValidate;
-	JComboBox<String> m_AutomataComboBox_Player1, m_AutomataComboBox_Bat, m_AutomataComboBox_Block, m_AutomataComboBox_Dog, m_AutomataComboBox_Wall, m_AutomataComboBox_Mouse, m_AutomataComboBox_Rabbit, m_AutomataComboBox_Turtle;
+	JButton m_NewGame, m_Options, m_Quit, m_OptionsValidate, m_fileChooser;
+	LinkedList<JComboBox<String>> m_AutomataComboBox;
 	Font m_f1, m_f2, m_f3;
-	int[] m_AutomatonIndex;
+
 
 	public GameLauncher() {
-		Ast arbre;
-		try {
-			arbre = AutomataParser.from_file("automata.txt");
-			Options.m_automata = (LinkedList<IAutomaton>) arbre.make();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		m_AutomatonIndex = new int[9];
-		int[] tab = { 0, 3, 7, 6, 9, 5, 0, 0 , 0 };
-		m_AutomatonIndex = tab;
-		
-		Options.Player1_Automaton = Options.m_automata.get(tab[0]);
-		Options.Bat_Automaton = Options.m_automata.get(tab[1]);
-		Options.Block_Automaton = Options.m_automata.get(tab[2]);
-		Options.Dog_Automaton = Options.m_automata.get(tab[3]);
-		Options.Wall_Automaton = Options.m_automata.get(tab[4]);
-		Options.Mouse_Automaton = Options.m_automata.get(tab[5]);
-		Options.Rabbit_Automaton = Options.m_automata.get(tab[6]);
-		Options.Turtle_Automaton = Options.m_automata.get(tab[7]);
-		Options.Spawner_Automaton = Options.m_automata.get(tab[8]);
+		m_AutomataPath = "automata.txt";
+		m_lastAutomataPath = "automata.txt";
+		Options.Entities = new Hashtable<String, IAutomaton>();
 		Launcher();
-		OptionsMenu();
 	}
-	
+
 	public class ImagePanel extends JPanel {
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		
+
 		BufferedImage m_bg;
 		int m_x, m_y, m_w, m_h;
 
@@ -90,7 +76,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			super.paintComponent(g);
 			g.drawImage(m_bg, m_x, m_y, m_w, m_h, null);
 		}
-		
+
 		public void update(int x, int y, int w, int h) {
 			m_x = x;
 			m_y = y;
@@ -107,7 +93,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_Launcher.setLayout(new BorderLayout());
 		m_Launcher.setBounds(200, 100, 1000, 800);
 		m_Launcher.addComponentListener(this);
-		
+
 		m_StartingMenu = new ImagePanel(0, 0, m_Launcher.getWidth(), m_Launcher.getHeight(), "sprites/launcherbg.jpg");
 		m_StartingMenu.setLayout(new BoxLayout(m_StartingMenu, BoxLayout.Y_AXIS));
 		m_StartingMenu.setOpaque(false);
@@ -119,12 +105,18 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		JPanel Padding = new JPanel();
 		Padding.setOpaque(false);
 		m_StartingMenu.add(Padding);
-		
+
 		m_NewGame = new JButton("Nouvelle partie");
 		m_NewGame.setFont(m_f2);
 		m_NewGame.addActionListener(this);
 		m_NewGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 		m_StartingMenu.add(m_NewGame);
+
+		m_fileChooser = new JButton("Fichier d'automates");
+		m_fileChooser.setFont(m_f2);
+		m_fileChooser.addActionListener(this);
+		m_fileChooser.setAlignmentX(Component.CENTER_ALIGNMENT);
+		m_StartingMenu.add(m_fileChooser);
 
 		m_Options = new JButton("Options");
 		m_Options.setFont(m_f2);
@@ -140,17 +132,39 @@ public class GameLauncher implements ActionListener, ComponentListener {
 
 		m_Launcher.add(m_StartingMenu, BorderLayout.CENTER);
 		m_Launcher.setVisible(true);
+		File file;
+		file = new File("sprites/menumusic.wav");
+
+		try {
+			Options.bgm = new Music(file);
+			Options.bgm.start();
+		} catch (Exception ex) {
+
+		}
 		
 		return;
 	}
 
-	public void OptionsMenu() {
+	public void Options() {
+		Ast arbre;
+		try {
+			arbre = AutomataParser.from_file(m_AutomataPath);
+			Options.Automata = (LinkedList<IAutomaton>) arbre.make();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if ((Options.Automata == null) || (Options.Automata.size() == 0))  {
+			System.out.println("Pas d'automates exploitables");
+			System.exit(0);
+		}
+		
 		m_OptionsFrame = new JFrame();
 		m_OptionsFrame.setTitle("Super Automatak Defense (Options)");
 		m_OptionsFrame.setLayout(new BorderLayout());
 
 		JPanel OptionsNorth = new JPanel();
-		
+
 		JLabel OptionsTitle = new JLabel("Choix des automates");
 		OptionsTitle.setFont(m_f1);
 		OptionsTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -160,94 +174,93 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		OptionsPanel.setOpaque(false);
-		
+
 		m_OptionsValidate = new JButton("Valider");
 		m_OptionsValidate.setFont(m_f2);
 		m_OptionsValidate.addActionListener(this);
 
-		String[] Automata_name = { "Player1", "Bat", "Block", "Dog", "Wall", "Mouse", "Rabbit", "Turtle" };
-		
-		LinkedList<JComboBox<String>> AutomataList = new LinkedList<JComboBox<String>>();
-		
-		m_AutomataComboBox_Player1 = new JComboBox<String>(Automata_name);
-		m_AutomataComboBox_Player1.setSelectedIndex(0);
-		m_AutomataComboBox_Player1.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_Player1);
-
-		m_AutomataComboBox_Bat = new JComboBox<String>(Automata_name);
-		m_AutomataComboBox_Bat.setSelectedIndex(1);
-		m_AutomataComboBox_Bat.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_Bat);
-		
-		m_AutomataComboBox_Block = new JComboBox<String>(Automata_name);
-		m_AutomataComboBox_Block.setSelectedIndex(2);
-		m_AutomataComboBox_Block.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_Block);
-		
-		m_AutomataComboBox_Dog = new JComboBox<String>(Automata_name);
-		m_AutomataComboBox_Dog.setSelectedIndex(3);
-		m_AutomataComboBox_Dog.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_Dog);
-		
-		m_AutomataComboBox_Wall = new JComboBox<String>(Automata_name);
-		m_AutomataComboBox_Wall.setSelectedIndex(4);
-		m_AutomataComboBox_Wall.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_Wall);
-		
-		m_AutomataComboBox_Mouse = new JComboBox<String>(Automata_name);
-		m_AutomataComboBox_Mouse.setSelectedIndex(5);
-		m_AutomataComboBox_Mouse.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_Mouse);
-		
-		m_AutomataComboBox_Rabbit = new JComboBox<String>(Automata_name);
-		m_AutomataComboBox_Rabbit.setSelectedIndex(6);
-		m_AutomataComboBox_Rabbit.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_Rabbit);
-		
-		m_AutomataComboBox_Turtle = new JComboBox<String>(Automata_name);
-		m_AutomataComboBox_Turtle.setSelectedIndex(7);
-		m_AutomataComboBox_Turtle.addActionListener(this);
-		AutomataList.add(m_AutomataComboBox_Turtle);
-		
 		JLabel EntitiesTitle = new JLabel("Entite /");
 		EntitiesTitle.setFont(m_f2);
 		c.gridx = 0;
 		c.gridy = 0;
 		OptionsPanel.add(EntitiesTitle, c);
-		
+
 		JLabel AutomataTitle = new JLabel(" Automate");
 		AutomataTitle.setFont(m_f2);
 		c.gridx = 1;
 		c.gridy = 0;
-		OptionsPanel.add(AutomataTitle, c);	
-		
-		for (int i = 0; i < Automata_name.length; i++) {
-			JLabel AutomataLabel = new JLabel(Automata_name[i]);
-			AutomataLabel.setFont(m_f3);
-			JComboBox<String> AutomataComboBox = AutomataList.get(i);
+		OptionsPanel.add(AutomataTitle, c);
+
+		// Création des labels
+		int i;
+		for (i = 0; i < Options.EntitiesNames.length; i++) {
+			JLabel EntitiesLabel = new JLabel(Options.EntitiesNames[i]);
+			EntitiesLabel.setFont(m_f3);
 			c.gridx = 0;
 			c.gridy = i + 1;
-			OptionsPanel.add(AutomataLabel, c);
+			OptionsPanel.add(EntitiesLabel, c);
+		}
+
+		//Création liste de noms des automates
+		LinkedList<String> AutomataNames_list = new LinkedList<String>();
+		Iterator<IAutomaton> itr = Options.Automata.iterator();
+		i = 0;
+		while (itr.hasNext()) {
+			IAutomaton Automaton = itr.next();
+			AutomataNames_list.add(Automaton.name());
+			i++;
+		}
+		String[] AutomataNames = AutomataNames_list.toArray(new String[0]);
+
+		// Création des combo box
+		m_AutomataComboBox = new LinkedList<JComboBox<String>>();
+		itr = Options.Automata.iterator();
+		for (i = 0; i < Options.EntitiesNames.length; i++) {
+			int index = find(Options.EntitiesNames[i]);
+			IAutomaton Automaton = Options.Automata.get(index);
+			Options.Entities.put(Options.EntitiesNames[i], Automaton);
+			JComboBox<String> ComboBox = new JComboBox<String>(AutomataNames);
+			ComboBox.setSelectedIndex(index);
+			ComboBox.addActionListener(this);
+			m_AutomataComboBox.add(ComboBox);
 			c.gridx = 1;
 			c.gridy = i + 1;
-			OptionsPanel.add(AutomataComboBox, c);
+			OptionsPanel.add(ComboBox, c);
 		}
-		
+
 		OptionsNorth.add(OptionsTitle);
-		
+
 		m_OptionsFrame.add(OptionsNorth, BorderLayout.NORTH);
 		m_OptionsFrame.add(OptionsPanel, BorderLayout.CENTER);
 		m_OptionsFrame.add(m_OptionsValidate, BorderLayout.SOUTH);
-		
-		m_OptionsFrame.setBounds(300, 200, 800, 450);
-		
+
+		m_OptionsFrame.setBounds(300, 200, 800, 200 + 25 * (i+1));
+
 		return;
 	}
+	
+	int find(String name) {
+		int i = 0;
+		Iterator<IAutomaton> iter = Options.Automata.iterator();
+		while (iter.hasNext()) {
+			IAutomaton Automaton = iter.next();
+			if (Automaton.name().equals(name)) {
+				return i;
+			}
+			i++;
+		}
+		return 0;
+	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		Object s = e.getSource();
 		if (s == m_NewGame) {
+			if (m_OptionsFrame == null) {
+				Options();
+			}
 			Model model = new Model();
 			View view = new View(model);
 			Controller controller = new Controller(model, view);
@@ -256,40 +269,42 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			new GameUI(model, view, controller, d);
 			m_Launcher.setVisible(false);
 		} else if (s == m_Options) {
-			m_OptionsFrame.setVisible(true);
-		} else if (s == m_AutomataComboBox_Player1) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			Options.Player1_Automaton = Options.m_automata.get(cb.getSelectedIndex());
-		} else if (s == m_AutomataComboBox_Bat) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			Options.Bat_Automaton = Options.m_automata.get(cb.getSelectedIndex());
-		} else if (s == m_AutomataComboBox_Block) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			Options.Block_Automaton = Options.m_automata.get(cb.getSelectedIndex());
-		} else if (s == m_AutomataComboBox_Dog) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			Options.Dog_Automaton = Options.m_automata.get(cb.getSelectedIndex());
-		} else if (s == m_AutomataComboBox_Wall) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			Options.Wall_Automaton = Options.m_automata.get(cb.getSelectedIndex());
-		} else if (s == m_AutomataComboBox_Mouse) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			Options.Mouse_Automaton = Options.m_automata.get(cb.getSelectedIndex());
-		} else if (s == m_AutomataComboBox_Rabbit) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			Options.Rabbit_Automaton = Options.m_automata.get(cb.getSelectedIndex());
-		} else if (s == m_AutomataComboBox_Turtle) {
-			JComboBox<String> cb = (JComboBox<String>) s;
-			Options.Turtle_Automaton = Options.m_automata.get(cb.getSelectedIndex());
+			if (m_AutomataPath != null) {
+				if (m_OptionsFrame == null || !m_AutomataPath.equals(m_lastAutomataPath)) {
+					m_lastAutomataPath = m_AutomataPath;
+					Options();
+				}
+				m_OptionsFrame.setVisible(true);
+			} else {
+				System.out.println("Pas de fichier d'automates sélectionné");
+			}
 		} else if (s == m_Quit) {
 			System.exit(0);
 		} else if (s == m_OptionsValidate) {
 			m_OptionsFrame.setVisible(false);
+		} else if (s == m_fileChooser) {
+			JFileChooser choice = new JFileChooser();
+			int back = choice.showOpenDialog(m_OptionsFrame);
+			if (back == JFileChooser.APPROVE_OPTION) {
+				m_AutomataPath = choice.getSelectedFile().getAbsolutePath();
+			}
+		}
+		if (m_OptionsFrame != null) {
+			int i = 0;
+			Iterator<JComboBox<String>> iter = m_AutomataComboBox.iterator();
+			while (iter.hasNext()) {
+				JComboBox<String> ComboBox = iter.next();
+				if (s == ComboBox) {
+					JComboBox<String> cb = (JComboBox<String>) s;
+					Options.Entities.replace(Options.EntitiesNames[i], Options.Automata.get(cb.getSelectedIndex()));
+				}
+				i++;
+			}
 		}
 	}
-	
+
 	public void componentResized(ComponentEvent e) {
-		 m_StartingMenu.update(0, 0, m_Launcher.getWidth(), m_Launcher.getHeight());
+		m_StartingMenu.update(0, 0, m_Launcher.getWidth(), m_Launcher.getHeight());
 	}
 
 	@Override

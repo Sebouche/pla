@@ -9,7 +9,7 @@ import ricm3.game.GameEntity;
 /* Michael PÉRIN, Verimag / Univ. Grenoble Alpes, may 2019 */
 
 public class IBehaviour {
-	IState source;
+	public IState source;
 	List<ITransition> transitions;
 
 	public IBehaviour(IState source, List<ITransition> transitions) {
