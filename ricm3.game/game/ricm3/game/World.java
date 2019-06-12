@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import ricm3.interpreter.Direction;
 
@@ -12,11 +13,17 @@ public class World {
 	Model m_model;
 	LinkedList<GameEntity> m_entities;
 	LinkedList<Ally> m_allies;
+	LinkedList<Enemy> m_enemies;
 	File m_bgmfile;
+	LinkedList<GameEntity> m_tmpadd;
+	LinkedList<GameEntity> m_tmprm;
 	
 	public World(Model model) {
 		m_entities = new LinkedList<GameEntity>();
 		m_allies = new LinkedList<Ally>();
+		m_enemies = new LinkedList<Enemy>();
+		m_tmpadd = new LinkedList<GameEntity>();
+		m_tmprm = new LinkedList<GameEntity>();
 		m_model = model;
 	}
 
@@ -55,6 +62,10 @@ public class World {
 		case NORTH:
 			x = 0;
 			y = -10;
+			break;
+		case NONE:
+			x = 0;
+			y = 0;
 			break;
 		default:
 			System.out.println("Mauvaise utilisation de Hit (world)");

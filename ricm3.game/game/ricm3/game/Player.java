@@ -4,12 +4,16 @@ import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Type;
 
 public class Player extends Ally {
 	int m_spritevariation=8;
+	Fabrication blocs;
 
 	public Player(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
+		blocs = new Fabrication();
+		m_type = Type.PLAYER;
 	}
 
 	@Override
@@ -49,6 +53,16 @@ public class Player extends Ally {
 			}
 			m_elapsed++;
 		}
+		return true;
+	}
+	
+	public Fabrication blocs() {
+		return blocs;
+	}
+	
+	@Override
+	public boolean Throw(Direction dir) {
+	//	m_model.menu_fabrication.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
 		return true;
 	}
 }
