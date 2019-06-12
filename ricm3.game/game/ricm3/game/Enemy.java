@@ -87,6 +87,7 @@ public class Enemy extends MovingEntity {
 
 	@Override
 	public boolean hit(Direction dir, int power) {
+		System.out.println("taper");
 		switch (dir) {
 		case NORTH:
 		case SOUTH:

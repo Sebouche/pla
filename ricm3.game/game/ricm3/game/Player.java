@@ -4,12 +4,14 @@ import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Type;
 
 public class Player extends Ally {
 	int m_spritevariation=8;
 
 	public Player(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
+		m_type = Type.TEAM;
 	}
 
 	@Override

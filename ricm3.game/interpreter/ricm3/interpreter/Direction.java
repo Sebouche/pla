@@ -4,7 +4,7 @@ import ricm3.game.GameEntity;
 
 public enum Direction {
 
-	NORTH, SOUTH, EAST, WEST, FRONT, BACK, LEFT, RIGHT;
+	NORTH, SOUTH, EAST, WEST, FRONT, BACK, LEFT, RIGHT, NONE;
 
 	public static Direction strToDir(String str) {
 		switch (str) {
@@ -26,7 +26,7 @@ public enum Direction {
 		case ("R"):
 			return Direction.RIGHT;
 		default:
-			return Direction.FRONT;
+			return Direction.NONE;
 		}
 
 	}

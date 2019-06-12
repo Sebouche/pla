@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import game.blocks.*;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Type;
 
 public class House extends Ally {
 
@@ -30,8 +31,11 @@ public class House extends Ally {
 				}
 				b.m_idsprite = i * 3 + j;
 				originWorld.m_entities.add(b);
+				
 			}
 		}
+		originWorld.m_allies.add(this);
+		m_type = Type.OBSTACLE;
 	}
 
 	@Override

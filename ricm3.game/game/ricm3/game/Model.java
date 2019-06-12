@@ -63,7 +63,6 @@ public class Model extends GameModel {
 			Options.bgm.start();
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
-		m_undergroundworld.m_allies.add(m_undergroundplayer);
 	}
 
 	@Override
@@ -163,7 +162,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/rabbit.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("rabbit", spritename, 4, 5);
+			splitSprite("rabbit", spritename, 5, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
