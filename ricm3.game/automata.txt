@@ -81,12 +81,12 @@ Mouse(E3){
 	* (E1):
 	| !GotPower() ? Get() :()
 	| Cell(F,O,1) ? Hit() :(E2)
-	| Cell(F,A,1) ? Hit() :(E3)
+	| Cell(F,T,1) / Cell(F,@,1) ? Hit() :(E3)
 	| True ? Egg() :(E4)
 	* (E2):
 	| !GotPower() ? Get() :()
 	| Cell(F,O,1) ? Hit() :(E2)
-	| Cell(F,V) ? Move(F) / Egg() :(E4)
+	| True ? Move(F) / Egg() :(E4)
 	* (E3):
 	| !GotPower() ? Get() :()
 	| Cell(F,@,1) ? Hit() :(E3)
