@@ -12,6 +12,7 @@ import ricm3.interpreter.Type;
 public class Enemy extends MovingEntity {
 
 	List<Ally> targets;
+	long lastHit = 0;
 
 	public Enemy(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld,
 			List<Ally> t) {
@@ -95,56 +96,60 @@ public class Enemy extends MovingEntity {
 
 	@Override
 	public boolean hit(Direction dir, int power) {
-		switch (dir) {
-		case NORTH:
-		case SOUTH:
-		case EAST:
-		case WEST:
-			return this.m_model.m_currentworld.Hit(this, dir);
-		case FRONT:
-			return this.m_model.m_currentworld.Hit(this, this.m_dir);
-		case BACK:
-			switch (this.m_dir) {
+		if (System.currentTimeMillis() > lastHit + 200) {
+			lastHit = System.currentTimeMillis();
+			switch (dir) {
 			case NORTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
 			case SOUTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
 			case EAST:
-				return this.m_model.m_currentworld.Hit(this, Direction.WEST);
 			case WEST:
-				return this.m_model.m_currentworld.Hit(this, Direction.EAST);
+				return this.m_model.m_currentworld.Hit(this, dir);
+			case FRONT:
+				return this.m_model.m_currentworld.Hit(this, this.m_dir);
+			case BACK:
+				switch (this.m_dir) {
+				case NORTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
+				case SOUTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
+				case EAST:
+					return this.m_model.m_currentworld.Hit(this, Direction.WEST);
+				case WEST:
+					return this.m_model.m_currentworld.Hit(this, Direction.EAST);
+				default:
+					return false;
+				}
+			case LEFT:
+				switch (this.m_dir) {
+				case NORTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.WEST);
+				case SOUTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.EAST);
+				case EAST:
+					return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
+				case WEST:
+					return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
+				default:
+					return false;
+				}
+			case RIGHT:
+				switch (this.m_dir) {
+				case NORTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.EAST);
+				case SOUTH:
+					return this.m_model.m_currentworld.Hit(this, Direction.WEST);
+				case EAST:
+					return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
+				case WEST:
+					return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
+				default:
+					return false;
+				}
 			default:
 				return false;
 			}
-		case LEFT:
-			switch (this.m_dir) {
-			case NORTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.WEST);
-			case SOUTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.EAST);
-			case EAST:
-				return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
-			case WEST:
-				return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
-			default:
-				return false;
-			}
-		case RIGHT:
-			switch (this.m_dir) {
-			case NORTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.EAST);
-			case SOUTH:
-				return this.m_model.m_currentworld.Hit(this, Direction.WEST);
-			case EAST:
-				return this.m_model.m_currentworld.Hit(this, Direction.SOUTH);
-			case WEST:
-				return this.m_model.m_currentworld.Hit(this, Direction.NORTH);
-			default:
-				return false;
-			}
-		default:
-			return false;
 		}
+		return false;
 	}
 
 }

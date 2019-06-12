@@ -199,6 +199,9 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void step() {
+		if(this.m_model.m_player.m_hp<=0) {
+			m_model.endgame();
+		}
 		Iterator<GameEntity> iter = m_entities.iterator();
 		while (iter.hasNext()) {
 			GameEntity e = iter.next();

@@ -12,6 +12,7 @@ public class Turtle extends Enemy {
 			List<Ally> t) {
 		super(model, x, y, Options.HP[1], sprites, automate, originWorld, t);
 		model.m_surfaceworld.m_enemies.add(this);
+		m_dmg = Options.damage[1];
 	}
 
 	public boolean move(Direction dir) {
