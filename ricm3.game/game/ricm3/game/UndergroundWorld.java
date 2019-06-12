@@ -175,6 +175,14 @@ public class UndergroundWorld extends World {
 			E = iter.next();
 			E.step();
 		}
+		
+		iter = m_tmprm.iterator();
+		while (iter.hasNext()) {
+			GameEntity e = iter.next();
+			m_entities.remove(e);
+		}
+		m_tmprm = new LinkedList<GameEntity>();
+		
 		if(!(m_model.m_currentworld instanceof UndergroundWorld)) {
 			if(m_entities.contains(m_model.m_player)) {
 				m_entities.remove(m_model.m_player);
