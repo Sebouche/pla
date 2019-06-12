@@ -11,7 +11,6 @@ public class Player extends Ally {
 	int m_spritevariation=8;
 	Fabrication blocs;
 
-	Fabrication blocs;
 	
 	public Player(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
@@ -65,7 +64,7 @@ public class Player extends Ally {
 		return true;
 	}
 
-   public Fabrication bloc(){
+   public Fabrication blocs(){
 		return this.blocs;
 	}
 	
