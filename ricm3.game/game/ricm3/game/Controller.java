@@ -215,7 +215,6 @@ public class Controller extends GameController implements ActionListener {
 		m_m1_button_poteau.addActionListener(this);
 		m_model.fabricationMenu.add(m_m1_button_poteau);
 		
-		m_model.fabricationMenu.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
 	}
 	
 	public void inventory() {
@@ -239,6 +238,7 @@ public class Controller extends GameController implements ActionListener {
 	public void notifyVisible() {
 		m_f1 = new Font(Font.MONOSPACED, Font.BOLD, 32);
 		m_f2 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
+		fabricationMenu();
 		inventory();
 	}
 

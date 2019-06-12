@@ -42,6 +42,7 @@ public class Model extends GameModel {
 	Camera m_camera;
 	Camera m_arrow;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
+	View m_view;
 
 	JPopupMenu fabricationMenu;
 
