@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import game.blocks.Stone;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Type;
 
 public class Wall extends Ally {
 	
@@ -12,5 +13,6 @@ public class Wall extends Ally {
 		super(model, x, y, hp, sprites, automate, originWorld);
 		m_recipe = new Hashtable<String, Integer>();
 		m_recipe.put("Stone", 2);
+		m_type = Type.OBSTACLE;
 	}
 }

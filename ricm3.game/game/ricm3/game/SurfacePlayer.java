@@ -41,7 +41,7 @@ public class SurfacePlayer extends Player {
 		} else {
 			m_controled.m_hp = Options.HP[1];
 			m_model.m_camera.m_watched = this;
-			m_controled.m_automate = Options.Entities.get("tesla");
+			m_controled.m_automate = Options.Entities.get("Tesla");
 			m_keys = new LinkedList<Keys>();
 			m_insideTurret = false;
 			return true;
@@ -69,8 +69,8 @@ public class SurfacePlayer extends Player {
 		}
 /// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE LA TOURELLE  (GOTSTUFF maybe)
 
-		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("tesla"),
-				Options.Entities.get("tesla"), m_originWorld, m_model.m_surfaceworld.m_enemies);
+		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("Tesla"),
+				Options.Entities.get("Tesla"), m_originWorld, m_model.m_surfaceworld.m_enemies);
 		t.m_collision = false;
 		((SurfaceWorld) m_originWorld).m_tmpadd.add(t);
 		m_originWorld.m_allies.add(t);

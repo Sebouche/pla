@@ -357,7 +357,7 @@ public class Controller extends GameController implements ActionListener {
 			break;
 		case "Tesla":
 			Turret t = new Turret(m_model, m_model.m_player.m_x + dx + 1, m_model.m_player.m_y + dy + 1, Options.HP[1],
-					m_model.m_sprites.get("Tesla"), new IAutomaton(Options.Entities.get("Tesla")), m_model.m_surfaceworld);
+					m_model.m_sprites.get("Tesla"), new IAutomaton(Options.Entities.get("Tesla")), m_model.m_surfaceworld, m_model.m_surfaceworld.m_enemies);
 			fabricationSubMenu(t);
 			break;
 		case "ElectricalPost":

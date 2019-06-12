@@ -37,8 +37,8 @@ public class SurfaceWorld extends World {
 		chunklists = new LinkedList<ChunkList>();
 		Chunk c=new Chunk(this, 0, 0, 2);
 		add(c);
-		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("spawner"), this);
-		new House(m_model, 0, 0, 2000, m_model.m_sprites.get("house"), this);
+		c.spawn = new Spawner(-100,-100,c,m_model.m_sprites.get("Spawner"), this);
+		new House(m_model, 0, 0, 2000, m_model.m_sprites.get("House"), this);
 		Random r = new Random();
 		int y;
 		int x;
