@@ -17,6 +17,7 @@
  */
 package ricm3.game;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.MenuItem;
@@ -179,8 +180,6 @@ public class Controller extends GameController implements ActionListener {
 			m_model.fabricationMenu.add(m_m1_button_poteau);
 		}
 
-		m_model.fabricationMenu.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
-
 	}
 	
 	public void fabricationSubMenu() {
@@ -215,22 +214,50 @@ public class Controller extends GameController implements ActionListener {
 		m_m1_button_poteau.addActionListener(this);
 		m_model.fabricationMenu.add(m_m1_button_poteau);
 		
+		m_model.fabricationMenu.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
 	}
 	
 	public void inventory() {
 		JPanel NorthPanel = new JPanel();
-		NorthPanel.setLayout(new FlowLayout());
+		NorthPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		NorthPanel.setBackground(Color.WHITE);
 		
-		BufferedImage dirt = m_model.m_sprites.get("block")[0];
-		AffineTransform tx = new AffineTransform();
-		tx.rotate(Math.PI/2, dirt.getWidth() / 2, dirt.getHeight() / 2);
-		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-		dirt = op.filter(dirt, null);
-		ImagePanel dirtPanel = new ImagePanel(0, 0, 100, 100, dirt);
-		JLabel dirtNumber = new JLabel("x0" /*+ m_model.m_player.bloc().get(Dirt.class)*/);
-		dirtNumber.setFont(m_f2);
-		dirtPanel.add(dirtNumber);
-		dirtPanel.add(NorthPanel);
+		JLabel Label;
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Ladder.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[10]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Dirt.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[0]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Stone.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[2]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Coal.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[11]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Iron.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[5]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Copper.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[3]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Uranium.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[4]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
 		
 		m_game.addNorth(NorthPanel);
 	}
