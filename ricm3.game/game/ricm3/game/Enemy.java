@@ -20,9 +20,8 @@ public class Enemy extends MovingEntity {
 		targets = t;
 	}
 
-	@Override
-	public boolean pop(Direction d) {
-		Point p = aggro().get(0);
+	public boolean pop(Direction dir) {
+		Point p = aggro().getFirst();
 		double dx = p.x - this.m_x;
 		double dy = p.y - this.m_y;
 		if (dx < 0) {
@@ -58,11 +57,10 @@ public class Enemy extends MovingEntity {
 				}
 			}
 		}
-		System.out.println(m_dir);
 		return true;
 	}
-
-	public boolean wizz(Direction d) {
+	
+	public boolean wizz(Direction dir) {
 		this.m_idsprite++;
 		if (this.m_idsprite >= this.m_sprites.length) {
 			this.m_idsprite = 0;

@@ -13,6 +13,7 @@ public class Dog extends Enemy {
 			List<Ally> t) {
 		super(model, x, y, Options.HP[0], sprites, automate, originWorld, t);
 		model.m_surfaceworld.m_enemies.add(this);
+		m_dmg = 5;
 	}
 
 	public boolean move(Direction dir) {
@@ -34,7 +35,7 @@ public class Dog extends Enemy {
 			m_lastdir = absoldir;
 			m_elapsed = 0;
 		} else {
-			if (m_elapsed % 30 == 0) {
+			if (m_elapsed % 10 == 0) {
 				m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
 				m_idsprite = m_basesprite + m_spritechanger;
 			}

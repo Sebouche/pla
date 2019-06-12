@@ -23,10 +23,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
+import javax.swing.JMenu;
+import javax.swing.JPopupMenu;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
-
 
 public class Model extends GameModel {
 	long m_lastStep;
@@ -39,29 +40,29 @@ public class Model extends GameModel {
 	UndergroundWorld m_undergroundworld;
 	World m_currentworld;
 	Camera m_camera;
+	Camera m_arrow;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 
-	PopupMenu menu1;
+	JPopupMenu menu_fabrication;
 
 	public Model() {
-		
+
 		loadSprites();
 		m_surfaceworld = new SurfaceWorld(2, this);
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
-		IAutomaton player_automate = new IAutomaton(Options.selectedAutomata.get(0));
+		IAutomaton player_automate = new IAutomaton(Options.Entities.get("Player1"));
 		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("scientist"),player_automate, m_surfaceworld);
 		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("scientist"),player_automate, m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		m_lastStep = 0;
 		try {
-			Options.m_bgm.stop();
-			Options.m_bgm = new Music(m_currentworld.m_bgmfile);
-			Options.m_bgm.start();
+			Options.bgm.stop();
+			Options.bgm = new Music(m_currentworld.m_bgmfile);
+			Options.bgm.start();
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
-		m_undergroundworld.m_allies.add(m_undergroundplayer);
 	}
 
 	@Override
@@ -94,6 +95,14 @@ public class Model extends GameModel {
 		 * (IOException ex) { ex.printStackTrace(); System.exit(-1); }
 		 * 
 		 */
+		imageFile = new File("sprites/arrow.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("arrow", spritename, 1, 1);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 		imageFile = new File("sprites/bat.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
@@ -153,7 +162,7 @@ public class Model extends GameModel {
 		imageFile = new File("sprites/rabbit.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
-			splitSprite("rabbit", spritename, 4, 5);
+			splitSprite("rabbit", spritename, 5, 4);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);
@@ -194,6 +203,14 @@ public class Model extends GameModel {
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
 			splitSprite("tesla", spritename, 2, 2);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("sprites/wall.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("wall", spritename, 2, 1);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

@@ -24,9 +24,9 @@ public class World {
 
 	public void changeWorld() {
 		try {
-			Options.m_bgm.stop();
-			Options.m_bgm = new Music(m_model.m_currentworld.m_bgmfile);
-			Options.m_bgm.start();
+			Options.bgm.stop();
+			Options.bgm = new Music(m_model.m_currentworld.m_bgmfile);
+			Options.bgm.start();
 		} catch (Exception ex) {
 		}
 	}
@@ -38,8 +38,8 @@ public class World {
 	}
 
 	public boolean Hit(GameEntity ge, Direction d) {
-		Iterator<GameEntity> iter = m_entities.iterator();
-		GameEntity e;
+		Iterator<Ally> iter = m_allies.iterator();
+		Ally e;
 		int x, y;
 		switch (d) {
 		case EAST:

@@ -26,7 +26,7 @@ public enum Direction {
 		case ("R"):
 			return Direction.RIGHT;
 		default:
-			return Direction.FRONT;
+			return Direction.NONE;
 		}
 
 	}

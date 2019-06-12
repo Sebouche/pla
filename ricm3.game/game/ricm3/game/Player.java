@@ -4,12 +4,14 @@ import java.awt.image.BufferedImage;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Type;
 
 public class Player extends Ally {
 	int m_spritevariation=8;
 
 	public Player(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
+		m_type = Type.PLAYER;
 	}
 
 	@Override
@@ -25,21 +27,22 @@ public class Player extends Ally {
 
 	@Override
 	public boolean move(Direction dir) {
+		Direction absoldir= Direction.entityDir(this, dir);
 		super.move(dir);
-		if (dir != m_lastdir) {
-			if (dir == Direction.EAST) {
+		if (absoldir != m_lastdir) {
+			if (absoldir == Direction.EAST) {
 				m_basesprite = 18;
 			}
-			if (dir == Direction.WEST) {
+			if (absoldir == Direction.WEST) {
 				m_basesprite = 26;
 			}
-			if (dir == Direction.NORTH) {
+			if (absoldir == Direction.NORTH) {
 				m_basesprite = 8;
 			}
-			if (dir == Direction.SOUTH) {
+			if (absoldir == Direction.SOUTH) {
 				m_basesprite = 0;
 			}
-			m_lastdir = dir;
+			m_lastdir = absoldir;
 			m_elapsed = 0;
 		} else {
 			if (m_elapsed % 30 == 0) {
@@ -48,6 +51,12 @@ public class Player extends Ally {
 			}
 			m_elapsed++;
 		}
+		return true;
+	}
+	
+	@Override
+	public boolean Throw(Direction dir) {
+	//	m_model.menu_fabrication.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
 		return true;
 	}
 }

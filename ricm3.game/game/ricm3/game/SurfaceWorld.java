@@ -12,6 +12,7 @@ import java.util.Random;
 import ricm3.game.Options;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.Keys;
+import ricm3.interpreter.Type;
 
 public class SurfaceWorld extends World {
 	
@@ -105,7 +106,7 @@ public class SurfaceWorld extends World {
 		public Spawner(int x, int y, Chunk c, BufferedImage[] sprites, World originWorld) {
 			super(c.world.m_model, x, y, 100, sprites, null, originWorld);
 			m_c = c;
-			this.m_automate=new IAutomaton(Options.selectedAutomata.get(9));
+			this.m_automate=new IAutomaton(Options.Entities.get("Spawner"));
 			m_c.world.m_entities.add(this);
 		}
 
@@ -117,8 +118,7 @@ public class SurfaceWorld extends World {
 			}
 			m_elapsed++;
 			Random r = new Random();
-			if ((r.nextInt() % 100) == 0) {
-				System.out.println("salu");
+			if ((r.nextInt() % 1000) == 0) {
 				int type;
 				int i = 0;
 				type = r.nextInt() % 100;
@@ -129,16 +129,16 @@ public class SurfaceWorld extends World {
 				GameEntity e;
 				switch (Options.spawnerType[i]) {
 				case "Dog":
-					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.selectedAutomata.get(4)),m_model.m_surfaceworld, m_allies);
+					e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("dog"),new IAutomaton(Options.Entities.get("Dog")),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Turtle":
-					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.selectedAutomata.get(0)),m_model.m_surfaceworld, m_allies);
+					e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("turtle"),new IAutomaton(Options.Entities.get("Turtle")),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Mouse":
-					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.selectedAutomata.get(3)),m_model.m_surfaceworld, m_allies);
+					e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("mouse"),new IAutomaton(Options.Entities.get("Mouse")),m_model.m_surfaceworld, m_allies);
 					break;
 				case "Rabbit":
-					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.selectedAutomata.get(0)), m_model.m_surfaceworld, m_allies);
+					e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("rabbit"),new IAutomaton(Options.Entities.get("Rabbit")), m_model.m_surfaceworld, m_allies);
 					break;
 				default:
 					e = null;
@@ -192,6 +192,8 @@ public class SurfaceWorld extends World {
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_camera.m_watched = m_model.m_player;
+		m_model.m_surfaceworld.m_allies.remove(m_model.m_surfaceplayer);
+		m_model.m_undergroundworld.m_allies.add(m_model.m_undergroundplayer);
 		super.changeWorld();
 	}
 
