@@ -234,4 +234,9 @@ public class Model extends GameModel {
 		m_sprites.put(name, sprites);
 	}
 
+	public void endgame() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
