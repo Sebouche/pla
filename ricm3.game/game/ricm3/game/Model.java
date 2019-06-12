@@ -18,12 +18,16 @@
 package ricm3.game;
 
 import java.awt.PopupMenu;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import edu.ricm3.game.GameModel;
@@ -43,8 +47,10 @@ public class Model extends GameModel {
 	Camera m_arrow;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	View m_view;
+	boolean m_gameon=true;
 
 	JPopupMenu fabricationMenu;
+	JPopupMenu endmenu;
 
 	public Model() {
 
@@ -78,7 +84,7 @@ public class Model extends GameModel {
 	@Override
 	public void step(long now) {
 		long elapsed = now - m_lastStep;
-		if (elapsed >= 2L) {
+		if (elapsed >= 2L && m_gameon) {
 			m_lastStep = now;
 			m_player.step();
 			m_undergroundworld.step();
@@ -251,7 +257,6 @@ public class Model extends GameModel {
 	}
 	
 	public void endgame()  {
-		JPopupMenu endmenu = new JPopupMenu();
-		endmenu.show(m_view, m_view.getWidth()/2, m_view.getHeight()/2);
+		endmenu.show(m_view, m_view.getWidth()/2-80, m_view.getHeight()/2-50);
 	}
 }

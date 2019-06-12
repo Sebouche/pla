@@ -18,8 +18,10 @@
 package ricm3.game;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
@@ -29,15 +31,16 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-
+import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-
+import javax.swing.*;
 import edu.ricm3.game.GameController;
+import edu.ricm3.game.GameUI;
 import game.blocks.Dirt;
 import ricm3.interpreter.Keys;
 
@@ -59,7 +62,7 @@ public class Controller extends GameController implements ActionListener {
 
 	Font m_f1, m_f2;
 	JMenuItem m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau;
-
+	JMenuItem m_quitbutton;
 	public Controller(Model model, View view) {
 		m_model = model;
 		m_view = view;
@@ -261,12 +264,34 @@ public class Controller extends GameController implements ActionListener {
 		
 		m_game.addNorth(NorthPanel);
 	}
-
+	
+	public void endgameMenu() {
+		m_f1 = new Font(Font.MONOSPACED, Font.BOLD, 32);
+		m_model.endmenu=new JPopupMenu();
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panel.setBackground(Color.WHITE);
+		
+		JLabel titre = new JLabel("GAME OVER");
+		titre.setFont(m_f1);
+		panel.add(titre);
+		
+		m_quitbutton = new JMenuItem("Quitter");
+		m_quitbutton.setFont(m_f2);
+		m_quitbutton.addActionListener(this);
+		
+		
+		m_model.endmenu.add(panel);
+		m_model.endmenu.add(m_quitbutton);
+	}
+	
 	public void notifyVisible() {
 		m_f1 = new Font(Font.MONOSPACED, Font.BOLD, 32);
 		m_f2 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 		fabricationMenu();
 		inventory();
+		endgameMenu();
 	}
 
 	@Override
@@ -279,11 +304,14 @@ public class Controller extends GameController implements ActionListener {
 			Barbed b=new Barbed(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("barbed"), Options.Entities.get("Barbed"), m_model.m_surfaceworld);
 			m_model.m_surfaceworld.m_entities.add(b);
 		} else if ((s == m_m1_button_tesla)) {
-			Turret t=new Turret(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("tesla"), Options.Entities.get("Tesla"), m_model.m_surfaceworld);
+			Turret t=new Turret(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("tesla"), Options.Entities.get("Tesla"), m_model.m_surfaceworld, m_model.m_surfaceworld.m_enemies);
 			m_model.m_surfaceworld.m_entities.add(t);
 		} else if ((s == m_m1_button_poteau)) {
 			ElectricalPost t=new ElectricalPost(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("electricalPost"), Options.Entities.get("Wall"), m_model.m_surfaceworld);
 			m_model.m_surfaceworld.m_entities.add(t);
+		}
+		else if ((s == m_quitbutton)) {
+			System.exit(0);
 		}
 	}
 

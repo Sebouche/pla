@@ -56,6 +56,7 @@ public class Player extends Ally {
 	
 	@Override
 	public boolean pick(Direction dir) {
+		m_model.m_gameon=false;
 		m_model.endgame();
 		return true;
 	}
