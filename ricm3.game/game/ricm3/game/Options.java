@@ -17,6 +17,7 @@
  */
 package ricm3.game;
 
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import ricm3.interpreter.IAutomaton;
@@ -36,9 +37,11 @@ public class Options {
 
 	public static boolean day = true; // indique si on est la journée ou pas
 	
-	public static LinkedList<IAutomaton> m_automata;
+	public static LinkedList<IAutomaton> Automata;
 	
-	public static LinkedList<IAutomaton> selectedAutomata;
+	public static Hashtable<String, IAutomaton> Entities;
+	public static String[] EntitiesNames = { "Player1", "Player2", "Barbed", "Bat", "Block", "Dog", "Mole", "Mouse", "Rabbit", "Spawner", "Tesla", "Turtle", "Wall", "Water" ,"Moving"};
 	
-	public static Music m_bgm;
+	public static Music bgm;
+	public static int[] damage = {10,3,1,2};
 }

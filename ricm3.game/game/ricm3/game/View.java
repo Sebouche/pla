@@ -95,7 +95,7 @@ public class View extends GameView {
 		// barre de vie
 
 		g_child = g.create(m_model.m_width / 2 - 50, 20, 100, 20);
-		BufferedImage heartsprite = m_model.m_sprites.get("heart")[0];
+		BufferedImage heartsprite = m_model.m_sprites.get("Heart")[0];
 		int hp;
 		for (hp = 0; hp < m_model.m_player.m_hp; hp += 100) {
 			g.drawImage(heartsprite, ((int) (0.4 * hp)) - 12, -12, 64, 64, null);
@@ -109,13 +109,8 @@ public class View extends GameView {
 		g_child.dispose();
 
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
-			BufferedImage rotate = m_model.m_sprites.get("scientist")[0];
+			BufferedImage rotate = m_model.m_sprites.get("arrow")[0];
 
-			double distance = m_model.m_camera.m_watched.distance(m_model.m_arrow.m_watched);
-			// double cosa = Math.abs(m_model.m_camera.m_watched.m_x -
-			// m_model.m_arrow.m_watched.m_x) / distance;
-			// double sina = Math.abs(m_model.m_camera.m_watched.m_y -
-			// m_model.m_arrow.m_watched.m_y) / distance;
 			double angle = Math.atan2((m_model.m_camera.m_watched.m_y - m_model.m_arrow.m_watched.m_y),
 					(m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x));
 			AffineTransform tx = new AffineTransform();

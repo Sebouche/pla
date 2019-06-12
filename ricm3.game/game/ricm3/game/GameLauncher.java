@@ -14,6 +14,7 @@ import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -28,7 +29,6 @@ import javax.swing.JPanel;
 
 import edu.ricm3.game.GameUI;
 import ricm3.interpreter.IAutomaton;
-import ricm3.interpreter.IBehaviour;
 import ricm3.parser.Ast;
 import ricm3.parser.AutomataParser;
 
@@ -45,44 +45,8 @@ public class GameLauncher implements ActionListener, ComponentListener {
 	public GameLauncher() {
 		m_AutomataPath = "automata.txt";
 		m_lastAutomataPath = "automata.txt";
+		Options.Entities = new Hashtable<String, IAutomaton>();
 		Launcher();
-	}
-
-	public class ImagePanel extends JPanel {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		BufferedImage m_bg;
-		int m_x, m_y, m_w, m_h;
-
-		public ImagePanel(int x, int y, int w, int h, String url) {
-			m_x = x;
-			m_y = y;
-			m_w = w;
-			m_h = h;
-			try {
-				m_bg = ImageIO.read(new File(url));
-			} catch (IOException e) {
-				System.out.println("Probleme de lecture d'image (launcher bg)");
-			}
-		}
-
-		@Override
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			g.drawImage(m_bg, m_x, m_y, m_w, m_h, null);
-		}
-
-		public void update(int x, int y, int w, int h) {
-			m_x = x;
-			m_y = y;
-			m_w = w;
-			m_h = h;
-			repaint();
-		}
 	}
 
 	public void Launcher() {
@@ -135,8 +99,8 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		file = new File("sprites/menumusic.wav");
 
 		try {
-			Options.m_bgm = new Music(file);
-			Options.m_bgm.start();
+			Options.bgm = new Music(file);
+			Options.bgm.start();
 		} catch (Exception ex) {
 
 		}
@@ -148,11 +112,16 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		Ast arbre;
 		try {
 			arbre = AutomataParser.from_file(m_AutomataPath);
-			Options.m_automata = (LinkedList<IAutomaton>) arbre.make();
+			Options.Automata = (LinkedList<IAutomaton>) arbre.make();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+		if ((Options.Automata == null) || (Options.Automata.size() == 0))  {
+			System.out.println("Pas d'automates exploitables");
+			System.exit(0);
+		}
+		
 		m_OptionsFrame = new JFrame();
 		m_OptionsFrame.setTitle("Super Automatak Defense (Options)");
 		m_OptionsFrame.setLayout(new BorderLayout());
@@ -185,47 +154,41 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		c.gridy = 0;
 		OptionsPanel.add(AutomataTitle, c);
 
-		Options.selectedAutomata = new LinkedList<IAutomaton>();
-
-		LinkedList<String> AutomataNames_list = new LinkedList<String>();
 		// Création des labels
-		int i = 0;
-		Iterator<IAutomaton> iter = Options.m_automata.iterator();
-		while (iter.hasNext()) {
-			IAutomaton automaton = iter.next();
-			Options.selectedAutomata.add(automaton);
-			JLabel AutomataLabel = new JLabel(automaton.name());
-			AutomataNames_list.add(automaton.name());
-			AutomataLabel.setFont(m_f3);
+		int i;
+		for (i = 0; i < Options.EntitiesNames.length; i++) {
+			JLabel EntitiesLabel = new JLabel(Options.EntitiesNames[i]);
+			EntitiesLabel.setFont(m_f3);
 			c.gridx = 0;
 			c.gridy = i + 1;
-			OptionsPanel.add(AutomataLabel, c);
-			i++;
+			OptionsPanel.add(EntitiesLabel, c);
 		}
 
-		String[] AutomataNames = new String[AutomataNames_list.size()];
-		Iterator<String> itr = AutomataNames_list.iterator();
+		//Création liste de noms des automates
+		LinkedList<String> AutomataNames_list = new LinkedList<String>();
+		Iterator<IAutomaton> itr = Options.Automata.iterator();
 		i = 0;
 		while (itr.hasNext()) {
-			String AutomatonName = itr.next();
-			AutomataNames[i] = AutomatonName;
+			IAutomaton Automaton = itr.next();
+			AutomataNames_list.add(Automaton.name());
 			i++;
 		}
+		String[] AutomataNames = AutomataNames_list.toArray(new String[0]);
 
 		// Création des combo box
-		i = 0;
 		m_AutomataComboBox = new LinkedList<JComboBox<String>>();
-		iter = Options.m_automata.iterator();
-		while (iter.hasNext()) {
-			IAutomaton automaton = iter.next();
+		itr = Options.Automata.iterator();
+		for (i = 0; i < Options.EntitiesNames.length; i++) {
+			int index = find(Options.EntitiesNames[i]);
+			IAutomaton Automaton = Options.Automata.get(index);
+			Options.Entities.put(Options.EntitiesNames[i], Automaton);
 			JComboBox<String> ComboBox = new JComboBox<String>(AutomataNames);
-			ComboBox.setSelectedIndex(i);
+			ComboBox.setSelectedIndex(index);
 			ComboBox.addActionListener(this);
 			m_AutomataComboBox.add(ComboBox);
 			c.gridx = 1;
 			c.gridy = i + 1;
 			OptionsPanel.add(ComboBox, c);
-			i++;
 		}
 
 		OptionsNorth.add(OptionsTitle);
@@ -234,9 +197,22 @@ public class GameLauncher implements ActionListener, ComponentListener {
 		m_OptionsFrame.add(OptionsPanel, BorderLayout.CENTER);
 		m_OptionsFrame.add(m_OptionsValidate, BorderLayout.SOUTH);
 
-		m_OptionsFrame.setBounds(300, 200, 800, 450);
+		m_OptionsFrame.setBounds(300, 200, 800, 200 + 25 * (i+1));
 
 		return;
+	}
+	
+	int find(String name) {
+		int i = 0;
+		Iterator<IAutomaton> iter = Options.Automata.iterator();
+		while (iter.hasNext()) {
+			IAutomaton Automaton = iter.next();
+			if (Automaton.name().equals(name)) {
+				return i;
+			}
+			i++;
+		}
+		return 0;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -250,6 +226,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			}
 			Model model = new Model();
 			View view = new View(model);
+			model.m_view = view;
 			Controller controller = new Controller(model, view);
 
 			Dimension d = new Dimension(1024, 768);
@@ -283,7 +260,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 				JComboBox<String> ComboBox = iter.next();
 				if (s == ComboBox) {
 					JComboBox<String> cb = (JComboBox<String>) s;
-					Options.selectedAutomata.set(i, Options.m_automata.get(cb.getSelectedIndex()));
+					Options.Entities.replace(Options.EntitiesNames[i], Options.Automata.get(cb.getSelectedIndex()));
 				}
 				i++;
 			}
