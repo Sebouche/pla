@@ -9,6 +9,7 @@ import ricm3.interpreter.Type;
 
 public class Player extends Ally {
 	int m_spritevariation=8;
+	Fabrication blocs;
 
 	Fabrication blocs;
 	
