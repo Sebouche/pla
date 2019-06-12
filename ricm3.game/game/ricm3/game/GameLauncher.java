@@ -226,7 +226,7 @@ public class GameLauncher implements ActionListener, ComponentListener {
 			}
 			Model model = new Model();
 			View view = new View(model);
-			model.m_view = view;
+			model.m_view=view;
 			Controller controller = new Controller(model, view);
 
 			Dimension d = new Dimension(1024, 768);

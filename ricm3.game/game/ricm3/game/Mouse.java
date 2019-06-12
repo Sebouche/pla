@@ -15,6 +15,7 @@ public class Mouse extends Enemy {
 			List<Ally> t) {
 		super(model, x, y, Options.HP[2], sprites, automate, originWorld, t);
 		model.m_surfaceworld.m_enemies.add(this);
+		m_dmg = Options.damage[2];
 	}
 
 	public boolean move(Direction dir) {
@@ -28,10 +29,10 @@ public class Mouse extends Enemy {
 				m_basesprite = 5;
 			}
 			if (absoldir == Direction.NORTH) {
-				m_basesprite = 10;
+				m_basesprite = 15;
 			}
 			if (absoldir == Direction.SOUTH) {
-				m_basesprite = 15;
+				m_basesprite = 10;
 			}
 			m_lastdir = absoldir;
 			m_elapsed = 0;

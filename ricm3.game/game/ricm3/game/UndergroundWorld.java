@@ -39,7 +39,7 @@ public class UndergroundWorld extends World {
 			int rand_y = m_rand.nextInt(4);
 			Block b = new Block(m_model, (int) (rand_x * Options.Entity_size * Options.Scale),
 					(int) ((rand_y + 5) * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("Block"),
-					new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
+					new IAutomaton(Options.Entities.get("Block")), this);
 			b.set_idsprite(8);
 			m_entities.add(b);
 		}
@@ -50,11 +50,11 @@ public class UndergroundWorld extends World {
 				if (i == 10 && j == 2) {
 					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
 							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("House"),
-							new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
+							new IAutomaton(Options.Entities.get("Block")), this);
 				} else {
 					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 							(int) (i * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("House"),
-							new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
+							new IAutomaton(Options.Entities.get("Block")), this);
 				}
 				b.set_idsprite((i - 6) * 3 + j);
 				m_grid[i][j] = b;
@@ -68,13 +68,13 @@ public class UndergroundWorld extends World {
 			if (j <= 2) {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("Block"),
-						new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
+						new IAutomaton(Options.Entities.get("Block")), this);
 				b.set_idsprite(6);
 				m_grid[11][j] = b;
 			} else {
 				Block b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
 						(int) (11 * Options.Entity_size * Options.Scale), -1, m_model.m_sprites.get("Block"),
-						new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
+						new IAutomaton(Options.Entities.get("Block")), this);
 				b.set_idsprite(1);
 				m_grid[11][j] = b;
 			}
@@ -86,33 +86,41 @@ public class UndergroundWorld extends World {
 				if (m_grid[i][j] == null) {
 					randint = m_rand.nextInt(1001);
 					if (randint >= 0 && randint < 850) {
-						Block b = new Dirt(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 300, m_model.m_sprites.get("Block"),
-								new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
-						m_grid[i][j] = b;
+						if (m_rand.nextInt(40) >= 20) {
+							Block b = new Stone(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 600,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
+						} else {
+							Block b = new Dirt(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 300,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
+						}
 					}
 					if (randint >= 850 && randint < 950) {
-						Block b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
-								(int) (i * Options.Entity_size * Options.Scale), 600, m_model.m_sprites.get("Block"),
-								new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
-						m_grid[i][j] = b;
-						for (int k = -1; k <= 1; k++) {
-							int randint2 = m_rand.nextInt(10);
-							if (randint2 <= 3 && i + k >= 0 && i + k < 20) {
-								b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
-										(int) ((i + k) * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
-										m_model.m_undergroundworld);
-								m_grid[i][j] = b;
-							}
-							randint2 = m_rand.nextInt(10);
-							if (randint2 <= 3 && j + k >= 0 && j + k < 60) {
-								b = new Copper(m_model, (int) ((j + k) * Options.Entity_size * Options.Scale),
-										(int) (i * Options.Entity_size * Options.Scale), 600,
-										m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")), this);
-								b.set_idsprite(5);
-								m_grid[i][j] = b;
-							}
+						int randint2 = m_rand.nextInt(3);
+						Block b;
+						if (randint2 == 2) {
+							b = new Copper(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 700,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
+						} else if (randint2 == 1) {
+							b = new Iron(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 800,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
+						} else {
+							b = new Coal(m_model, (int) (j * Options.Entity_size * Options.Scale),
+									(int) (i * Options.Entity_size * Options.Scale), 500,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							m_grid[i][j] = b;
 						}
 					}
 					if (randint >= 950 && randint < 999) {
@@ -121,13 +129,14 @@ public class UndergroundWorld extends World {
 					if (randint >= 999 && i >= 30) {
 						m_grid[i][j] = new Uranium(m_model, (int) (j * Options.Entity_size * Options.Scale),
 								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("Block"),
-								new IAutomaton(Options.Entities.get("Block")), m_model.m_undergroundworld);
+								new IAutomaton(Options.Entities.get("Block")), this);
 					}
 					if (randint >= 1000) {
-						m_grid[i][j] = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
+						Water w = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
 								(int) (i * (Options.Entity_size * Options.Scale)), m_rand.nextInt(12),
 								m_model.m_sprites.get("Block"), Options.Entities.get("Water"), this);
-						;
+						w.m_collision = false;
+						m_grid[i][j] = w;
 
 					}
 				}
@@ -142,6 +151,7 @@ public class UndergroundWorld extends World {
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_currentworld = m_model.m_surfaceworld;
+		m_model.m_surfaceplayer.blocs=m_model.m_player.blocs;
 		m_model.m_player = m_model.m_surfaceplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 193;
@@ -162,7 +172,8 @@ public class UndergroundWorld extends World {
 		int pos_y = (int) (m_model.m_player.m_y / entity_size);
 		for (int i = -distance; i <= distance; i++) {
 			for (int j = -distance; j <= distance; j++) {
-				if (m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)] != null) {
+				if ((pos_y + i) >= 0
+						&& m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)] != null) {
 					m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)].step();
 				}
 			}
@@ -175,13 +186,20 @@ public class UndergroundWorld extends World {
 			E = iter.next();
 			E.step();
 		}
-		if(!(m_model.m_currentworld instanceof UndergroundWorld)) {
-			if(m_entities.contains(m_model.m_player)) {
+
+		iter = m_tmprm.iterator();
+		while (iter.hasNext()) {
+			GameEntity e = iter.next();
+			m_entities.remove(e);
+		}
+		m_tmprm = new LinkedList<GameEntity>();
+
+		if (!(m_model.m_currentworld instanceof UndergroundWorld)) {
+			if (m_entities.contains(m_model.m_player)) {
 				m_entities.remove(m_model.m_player);
 			}
-		}
-		else {
-			if(!m_entities.contains(m_model.m_player)) {
+		} else {
+			if (!m_entities.contains(m_model.m_player)) {
 				m_entities.add(m_model.m_player);
 			}
 		}
@@ -199,7 +217,7 @@ public class UndergroundWorld extends World {
 		// Affichage des blocs
 		for (int i = -distance; i <= distance; i++) {
 			for (int j = -distance; j <= distance; j++) {
-				if (Math.floorMod((pos_y + i), 60) <= 10) {
+				if ((pos_y + i) < 0 || Math.floorMod((pos_y + i), 60) <= 10) {
 					g.drawImage(m_model.m_sprites.get("Block")[7],
 							(j * (int) (Options.Entity_size * Options.Scale))
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
@@ -214,7 +232,8 @@ public class UndergroundWorld extends World {
 									- (cam_y % (int) (Options.Entity_size * Options.Scale)) + m_model.m_height / 2,
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 				}
-				if (m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)] != null) {
+				if ((pos_y + i) >= 0
+						&& m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)] != null) {
 					Graphics g_child = g.create(
 							(j * (int) (Options.Entity_size * Options.Scale))
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,

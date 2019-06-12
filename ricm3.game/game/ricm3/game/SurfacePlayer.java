@@ -4,6 +4,10 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import game.blocks.Copper;
+import game.blocks.Dirt;
+import game.blocks.Iron;
+import game.blocks.Ladder;
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.Keys;
@@ -68,12 +72,15 @@ public class SurfacePlayer extends Player {
 			return false;
 		}
 /// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE LA TOURELLE  (GOTSTUFF maybe)
-
-		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("Tesla"),
-				Options.Entities.get("Tesla"), m_originWorld, m_model.m_surfaceworld.m_enemies);
-		t.m_collision = false;
-		((SurfaceWorld) m_originWorld).m_tmpadd.add(t);
-		m_originWorld.m_allies.add(t);
+		if (blocs().Exist(Copper.class, 1) && blocs().Exist(Iron.class, 2)) {
+			blocs().decrements(Copper.class, 1);
+			blocs().decrements(Iron.class, 2);
+			Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("Tesla"),
+					new IAutomaton(Options.Entities.get("Tesla")), m_originWorld, m_model.m_surfaceworld.m_enemies);
+			t.m_collision = false;
+			((SurfaceWorld) m_originWorld).m_tmpadd.add(t);
+			m_originWorld.m_allies.add(t);
+		}
 		return true;
 	}
 }

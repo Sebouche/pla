@@ -18,8 +18,10 @@
 package ricm3.game;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
@@ -29,6 +31,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.*;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -42,8 +45,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-
+import javax.swing.*;
 import edu.ricm3.game.GameController;
+import edu.ricm3.game.GameUI;
 import game.blocks.Coal;
 import game.blocks.Copper;
 import game.blocks.Dirt;
@@ -72,7 +76,7 @@ public class Controller extends GameController implements ActionListener {
 	View m_view;
 
 	Font m_f1, m_f2;
-	JMenuItem m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau, m_m2_validate;
+	JMenuItem m_quitbutton, m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau, m_m2_validate;
 	JPopupMenu fabricationSubMenu;
 	
 	GameEntity currentEntity;
@@ -91,7 +95,7 @@ public class Controller extends GameController implements ActionListener {
 	public void step(long now) {
 		m_model.step(now);
 		m_view.step(now);
-
+		inventory();
 	}
 
 	@Override
@@ -108,15 +112,6 @@ public class Controller extends GameController implements ActionListener {
 			if(m_model.m_surfaceplayer.m_insideTurret) {
 				m_model.m_player.m_keys.add(k);
 			}
-		}
-		if (e.getKeyChar() == 'm') {
-			m_model.m_player.m_keys = new LinkedList<Keys>();
-			m_model.fabricationMenu.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale),
-					m_view.getHeight() / 2);
-		}
-		if (e.getKeyChar() == 'i') {
-			m_model.m_player.blocs().increments(Ladder.class, 1);
-			inventory();
 		}
 	}
 
@@ -299,13 +294,34 @@ public class Controller extends GameController implements ActionListener {
 
 		m_game.addSouth(Panel);
 	}
-
+	
+	public void endgameMenu() {
+		m_f1 = new Font(Font.MONOSPACED, Font.BOLD, 32);
+		m_model.endmenu=new JPopupMenu();
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panel.setBackground(Color.WHITE);
+		
+		JLabel titre = new JLabel("GAME OVER");
+		titre.setFont(m_f1);
+		panel.add(titre);
+		
+		m_quitbutton = new JMenuItem("Quitter");
+		m_quitbutton.setFont(m_f2);
+		m_quitbutton.addActionListener(this);
+		
+		
+		m_model.endmenu.add(panel);
+		m_model.endmenu.add(m_quitbutton);
+	}
+	
 	public void notifyVisible() {
 		m_f1 = new Font(Font.MONOSPACED, Font.BOLD, 32);
 		m_f2 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 		fabricationMenu();
 		inventory();
-		m_game.addNorth(m_model.m_timer);
+		endgameMenu();
 	}
 
 	public boolean free(GameEntity e) {
@@ -402,6 +418,9 @@ public class Controller extends GameController implements ActionListener {
 				m_model.m_surfaceworld.m_allies.add((Ally) currentEntity);
 			}
 			inventory();
+		}
+		else if ((s == m_quitbutton)) {
+			System.exit(0);
 		}
 	}
 
