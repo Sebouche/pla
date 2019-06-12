@@ -12,6 +12,7 @@ public class Turtle extends Enemy {
 			List<Ally> t) {
 		super(model, x, y, Options.HP[1], sprites, automate, originWorld, t);
 		model.m_surfaceworld.m_enemies.add(this);
+		m_dmg = Options.damage[1];
 	}
 
 	public boolean move(Direction dir) {
@@ -28,11 +29,11 @@ public class Turtle extends Enemy {
 			}
 			if (absoldir == Direction.NORTH) {
 				m_basesprite = 15;
-				m_spritevariation=4;
+				m_spritevariation = 4;
 			}
 			if (absoldir == Direction.SOUTH) {
 				m_basesprite = 10;
-				m_spritevariation=4;
+				m_spritevariation = 4;
 			}
 			m_lastdir = absoldir;
 			m_elapsed = 0;

@@ -40,7 +40,8 @@ public class Options {
 	public static LinkedList<IAutomaton> Automata;
 	
 	public static Hashtable<String, IAutomaton> Entities;
-	public static String[] EntitiesNames = { "Player1", "Player2", "Barbed", "Bat", "Block", "Dog", "Mole", "Mouse", "Rabbit", "Spawner", "Tesla", "Turtle", "Wall", "Water" };
+	public static String[] EntitiesNames = { "Player1", "Player2", "Barbed", "Bat", "Block", "Dog", "Mole", "Mouse", "Rabbit", "Spawner", "Tesla", "Turtle", "Wall", "Water" ,"Moving"};
 	
 	public static Music bgm;
+	public static int[] damage = {10,3,1,2};
 }

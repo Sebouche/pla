@@ -1,5 +1,7 @@
 package ricm3.game;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -12,6 +14,7 @@ public class House extends Ally {
 	Block[] m_blocks = new Block[9];
 	int m_size = 3;
 	int HPmax = 10000;
+	int previousHP;
 
 	public House(Model model, int x, int y, int hp, BufferedImage[] sprites, World originWorld) {
 		super(model, x, y, hp, sprites, null, originWorld);
@@ -20,12 +23,12 @@ public class House extends Ally {
 			for (int j = 0; j < 3; j++) {
 				Block b;
 				if (i == 2 && j == 1) {
-					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale),
-							(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate, originWorld);
+					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale)+x,
+							(int) (i * Options.Entity_size * Options.Scale)+y, -1, sprites, automate, originWorld);
 					m_model.m_arrow = new Camera(m_model, b);
 				} else {
-					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale),
-							(int) (i * Options.Entity_size * Options.Scale), 0, sprites, automate, originWorld);
+					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale)+x,
+							(int) (i * Options.Entity_size * Options.Scale)+y, -1, sprites, automate, originWorld);
 				}
 				b.m_idsprite = i * 3 + j;
 				m_blocks[3*i+j] = b;
@@ -34,16 +37,13 @@ public class House extends Ally {
 			}
 		}
 		originWorld.m_allies.add(this);
+		originWorld.m_entities.add(this);
 		m_type = Type.OBSTACLE;
 	}
 
 	@Override
 	public void step() {
 		m_blocks[7].step();
-		m_hp = HPmax;
-		for(int i = 0; i<9; i++) {
-			m_hp -= m_blocks[i].hps();
-		}
 		if(m_hp<=0) {
 			m_model.endgame();
 		}
@@ -59,6 +59,9 @@ public class House extends Ally {
 				g_child.dispose();
 			}
 		}
+		g.setColor(new Color(250,2,2));
+		g.setFont(new Font("HOUSEHP",1,8));
+		g.drawString("HP=" + m_hp, 10, 10);
 	}
 
 }

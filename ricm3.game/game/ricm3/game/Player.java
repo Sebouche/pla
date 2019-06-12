@@ -8,9 +8,11 @@ import ricm3.interpreter.Type;
 
 public class Player extends Ally {
 	int m_spritevariation=8;
+	Fabrication blocs;
 
 	public Player(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
+		blocs = new Fabrication();
 		m_type = Type.PLAYER;
 	}
 
@@ -52,6 +54,10 @@ public class Player extends Ally {
 			m_elapsed++;
 		}
 		return true;
+	}
+	
+	public Fabrication blocs() {
+		return blocs;
 	}
 	
 	@Override

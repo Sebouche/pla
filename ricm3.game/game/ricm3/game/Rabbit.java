@@ -13,6 +13,7 @@ public class Rabbit extends Enemy {
 			List<Ally> t) {
 		super(model, x, y, Options.HP[3], sprites, automate, originWorld, t);
 		model.m_surfaceworld.m_enemies.add(this);
+		m_dmg = Options.damage[3];
 	}
 
 	public boolean move(Direction dir) {
