@@ -96,6 +96,14 @@ public class Model extends GameModel {
 		 * (IOException ex) { ex.printStackTrace(); System.exit(-1); }
 		 * 
 		 */
+		imageFile = new File("sprites/arrow.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("arrow", spritename, 1, 1);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 		imageFile = new File("sprites/bat.png");
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
