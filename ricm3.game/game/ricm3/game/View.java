@@ -70,7 +70,7 @@ public class View extends GameView {
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			for (int i = -1; (int) (i * Options.Entity_size * Options.Scale) < getWidth()+(int) (Options.Entity_size * Options.Scale); i++) {
 				for (int j = -2; (int) (j * Options.Entity_size * Options.Scale) < getHeight()+(int) (Options.Entity_size * Options.Scale); j++) {
-					g.drawImage(m_model.m_sprites.get("grassbg")[0],
+					g.drawImage(m_model.m_sprites.get("Grassbg")[0],
 							(int) (i * Options.Entity_size * Options.Scale)
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + 22,
 							(int) (j * Options.Entity_size * Options.Scale)
@@ -93,7 +93,7 @@ public class View extends GameView {
 		// barre de vie
 
 		g_child = g.create(m_model.m_width / 2 - 50, 20, 100, 20);
-		BufferedImage heartsprite = m_model.m_sprites.get("heart")[0];
+		BufferedImage heartsprite = m_model.m_sprites.get("Heart")[0];
 		int hp;
 		for (hp = 0; hp < m_model.m_player.m_hp; hp += 100) {
 			g.drawImage(heartsprite, ((int) (0.4 * hp)) - 12, -12, 64, 64, null);
