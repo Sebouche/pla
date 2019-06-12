@@ -63,7 +63,7 @@ public class Model extends GameModel {
 			Options.bgm.start();
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
-		m_surfaceworld.m_entities.add(m_surfaceplayer);
+		m_surfaceworld.m_entities.add(m_player);
 	}
 
 	@Override

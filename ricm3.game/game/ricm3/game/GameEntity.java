@@ -100,7 +100,6 @@ public class GameEntity {
 	}
 
 	public boolean turn(Direction dir) {
-		System.out.println("taper");
 		return true;
 	}
 
@@ -154,7 +153,6 @@ public class GameEntity {
 	public void step() {
 		if (m_automate != null)
 			m_automate.step(this);
-	//	System.out.println(m_automate.current.name);
 	}
 
 	//////////////////////

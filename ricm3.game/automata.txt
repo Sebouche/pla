@@ -12,7 +12,7 @@ Player(Surface){
 	| Key(m) ? Throw(F) :(Surface)
 	| Key(ENTER) ? Throw(F) :(Surface)
 	* (Underground):
-	| Key(o) ? Jump(F) :(Surface)
+	| True ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Jumping)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Underground)
 	| Key(q) & Cell(W,J,1) ? Move(W) :(Ladder)
