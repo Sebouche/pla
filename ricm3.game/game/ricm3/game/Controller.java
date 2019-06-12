@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -78,8 +79,11 @@ public class Controller extends GameController implements ActionListener {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyPressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		Keys k = Keys.keyEventToKeys(e);
-		if (!m_model.m_player.m_keys.contains(k)) {
-			m_model.m_player.m_keys.add(k);
+		if (!m_model.m_camera.m_watched.m_keys.contains(k)) {
+			m_model.m_camera.m_watched.m_keys.add(k);
+			if(m_model.m_surfaceplayer.m_insideTurret) {
+				m_model.m_player.m_keys.add(k);
+			}
 		}
 	}
 
@@ -88,7 +92,10 @@ public class Controller extends GameController implements ActionListener {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyReleased: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		Keys k = Keys.keyEventToKeys(e);
-		m_model.m_player.m_keys.remove(k);
+		m_model.m_camera.m_watched.m_keys.remove(k);
+		if(m_model.m_surfaceplayer.m_insideTurret) {
+			m_model.m_player.m_keys.remove(k);
+		}
 	}
 
 	@Override

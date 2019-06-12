@@ -24,7 +24,7 @@ public class SurfacePlayer extends Player {
 			while(iter.hasNext()) {
 				Ally a = iter.next();
 				if(a instanceof Turret) {
-					if(distance(a)<=0) {
+					if(distance(a)<=2) {
 						a.m_automate = moving;
 						m_insideTurret = true;
 						m_controled = (Turret)a;
