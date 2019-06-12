@@ -126,7 +126,7 @@ public class UndergroundWorld extends World {
 					if (randint >= 1000) {
 						m_grid[i][j] = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
 								(int) (i * (Options.Entity_size * Options.Scale)), m_rand.nextInt(12),
-								m_model.m_sprites.get("block"), Options.selectedAutomata.get(10), this);
+								m_model.m_sprites.get("block"), Options.Entities.get("Water"), this);
 						;
 
 					}
