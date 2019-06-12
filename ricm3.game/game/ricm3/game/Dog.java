@@ -9,8 +9,9 @@ import ricm3.interpreter.IAutomaton;
 public class Dog extends Enemy {
 	int m_spritevariation = 6;
 
-	public Dog(Model model, int x, int y, BufferedImage[] sprites,IAutomaton automate,World originWorld, List<GameEntity> t) {
+	public Dog(Model model, int x, int y, BufferedImage[] sprites,IAutomaton automate,World originWorld, List<Ally> t) {
 		super(model, x, y, Options.HP[0], sprites,automate,originWorld, t);
+		m_dmg = 5;
 	}
 	public boolean move(Direction dir) {
 		Direction absoldir= Direction.entityDir(this, dir);
@@ -31,7 +32,7 @@ public class Dog extends Enemy {
 			m_lastdir = absoldir;
 			m_elapsed = 0;
 		} else {
-			if (m_elapsed % 30 == 0) {
+			if (m_elapsed % 10 == 0) {
 				m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
 				m_idsprite = m_basesprite + m_spritechanger;
 			}
