@@ -59,7 +59,7 @@ public class Enemy extends MovingEntity {
 		}
 		return true;
 	}
-	
+
 	public boolean wizz(Direction dir) {
 		this.m_idsprite++;
 		if (this.m_idsprite >= this.m_sprites.length) {
@@ -95,6 +95,7 @@ public class Enemy extends MovingEntity {
 
 	@Override
 	public boolean hit(Direction dir, int power) {
+		System.out.println("Hit 2 " + this.toString());
 		switch (dir) {
 		case NORTH:
 		case SOUTH:

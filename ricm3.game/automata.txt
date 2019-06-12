@@ -91,19 +91,11 @@ Mouse(E3){
 Dog(E2){
 	* (E1):
 	| !GotPower() ? :()
-	| Cell(F,O,1) ? Hit() :(E3)
-	| Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E4)
-	| !Cell(F,O,1) ? Move(F) :(E2)
+	| Cell(F,O,1) / Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
+	| True ? Move(F) :(E2)
 	* (E2):
 	| !GotPower() ? :()
 	| True ? Pop() :(E1)
-	* (E3):
-	| !GotPower() ? :()
-	| Cell(F,O,1) ? Hit() :(E3)
-	| True ? Move(F) :(E2)
-	* (E4):
-	| Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E4)
-	| True ? Move(F) :(E2)
 	* ()
 }
 

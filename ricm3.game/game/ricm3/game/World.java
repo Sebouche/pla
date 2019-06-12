@@ -44,7 +44,7 @@ public class World {
 		while (iter.hasNext()) {
 			e = iter.next();
 			if (e instanceof MovingEntity) {
-				if (((MovingEntity) (e)).distance(ge)<=0) {
+				if (((MovingEntity) (e)).distance(ge)<=1) {
 					e.damage_hp(ge.m_dmg);
 					b = true;
 				}
