@@ -107,13 +107,8 @@ public class View extends GameView {
 		g_child.dispose();
 
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
-			BufferedImage rotate = m_model.m_sprites.get("scientist")[0];
+			BufferedImage rotate = m_model.m_sprites.get("arrow")[0];
 
-			double distance = m_model.m_camera.m_watched.distance(m_model.m_arrow.m_watched);
-			// double cosa = Math.abs(m_model.m_camera.m_watched.m_x -
-			// m_model.m_arrow.m_watched.m_x) / distance;
-			// double sina = Math.abs(m_model.m_camera.m_watched.m_y -
-			// m_model.m_arrow.m_watched.m_y) / distance;
 			double angle = Math.atan2((m_model.m_camera.m_watched.m_y - m_model.m_arrow.m_watched.m_y),
 					(m_model.m_camera.m_watched.m_x - m_model.m_arrow.m_watched.m_x));
 			AffineTransform tx = new AffineTransform();
