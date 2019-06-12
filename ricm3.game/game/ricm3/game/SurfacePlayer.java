@@ -69,7 +69,7 @@ public class SurfacePlayer extends Player {
 		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("tesla"),
 				Options.Entities.get("tesla"), m_originWorld, m_model.m_surfaceworld.m_enemies);
 		t.m_collision = false;
-		((SurfaceWorld) m_originWorld).m_tmp_ent.add(t);
+		((SurfaceWorld) m_originWorld).m_tmpadd.add(t);
 		m_originWorld.m_allies.add(t);
 		return true;
 	}

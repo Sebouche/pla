@@ -15,9 +15,7 @@ import ricm3.interpreter.Keys;
 import ricm3.interpreter.Type;
 
 public class SurfaceWorld extends World {
-	
-	List<GameEntity> m_tmp_ent;
-	
+		
 	private class ChunkList {
 		List<Chunk> chunks;
 		int m_y;
@@ -36,7 +34,6 @@ public class SurfaceWorld extends World {
 
 	public SurfaceWorld(int radius, Model m) {
 		super(m);
-		m_tmp_ent = new LinkedList<GameEntity>();
 		chunklists = new LinkedList<ChunkList>();
 		Chunk c=new Chunk(this, 0, 0, 2);
 		add(c);
@@ -145,7 +142,7 @@ public class SurfaceWorld extends World {
 					break;
 				}
 				if (e != null) {
-					m_tmp_ent.add(e);
+					m_tmpadd.add(e);
 					return true;
 				}
 			}
@@ -204,12 +201,25 @@ public class SurfaceWorld extends World {
 			GameEntity e = iter.next();
 			e.step();
 		}
-		iter = m_tmp_ent.iterator();
+		iter = m_tmpadd.iterator();
 		while(iter.hasNext()) {
 			GameEntity e = iter.next();
 			m_entities.add(e);
 		}
-		m_tmp_ent = new LinkedList<GameEntity>();
+		m_tmpadd = new LinkedList<GameEntity>();
+		
+		
+		
+		if(!(m_model.m_currentworld instanceof SurfaceWorld)) {
+			if(m_entities.contains(m_model.m_player)) {
+				m_entities.remove(m_model.m_player);
+			}
+		}
+		else {
+			if(!m_entities.contains(m_model.m_player)) {
+				m_entities.add(m_model.m_player);
+			}
+		}
 		
 	}
 

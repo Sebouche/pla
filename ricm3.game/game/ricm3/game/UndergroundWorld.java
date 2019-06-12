@@ -154,10 +154,6 @@ public class UndergroundWorld extends World {
 
 	@Override
 	public void step() {
-		// application de la gravit� au joueur
-		if (m_model.m_player.m_originWorld instanceof UndergroundWorld) {
-			gravity(m_model.m_player);
-		}
 
 		// step des blocs
 		int entity_size = (int) (Options.Scale * Options.Entity_size);
@@ -179,46 +175,17 @@ public class UndergroundWorld extends World {
 			E = iter.next();
 			E.step();
 		}
+		if(!(m_model.m_currentworld instanceof UndergroundWorld)) {
+			if(m_entities.contains(m_model.m_player)) {
+				m_entities.remove(m_model.m_player);
+			}
+		}
+		else {
+			if(!m_entities.contains(m_model.m_player)) {
+				m_entities.add(m_model.m_player);
+			}
+		}
 
-	}
-
-	// Renvoi true si il y a collision avec un des blocs adjacent a l'entit�
-	boolean adjacent_collision(MovingEntity E, int dx, int dy) {
-		/*
-		 * int entity_size = (int) (Options.Scale * Options.Entity_size); int pos_x =
-		 * (int) (E.m_x / entity_size); int pos_y = (int) (E.m_y / entity_size); int
-		 * pos_x_r = (int) ((E.m_x + entity_size) / entity_size); int pos_y_d = (int)
-		 * ((E.m_y + entity_size) / entity_size); if (m_grid[pos_y - 1][pos_x] != null
-		 * && m_grid[pos_y - 1][pos_x].m_collision) if (E.collision(m_grid[pos_y -
-		 * 1][pos_x], dx, dy)) { return true; } if (m_grid[pos_y - 1][pos_x_r] != null
-		 * && m_grid[pos_y - 1][pos_x_r].m_collision) if (E.collision(m_grid[pos_y -
-		 * 1][pos_x_r], dx, dy)) { return true; } if (m_grid[pos_y][Math.floorMod((pos_x
-		 * - 1), 60)] != null && m_grid[pos_y][Math.floorMod((pos_x - 1),
-		 * 60)].m_collision) if (E.collision(m_grid[pos_y][Math.floorMod((pos_x - 1),
-		 * 60)], dx, dy)) { return true; } if (m_grid[pos_y][Math.floorMod((pos_x_r +
-		 * 1), 60)] != null && m_grid[pos_y][Math.floorMod((pos_x_r + 1),
-		 * 60)].m_collision) if (E.collision(m_grid[pos_y][Math.floorMod((pos_x_r + 1),
-		 * 60)], dx, dy)) { return true; } if (m_grid[pos_y + 1][Math.floorMod((pos_x -
-		 * 1), 60)] != null && m_grid[pos_y + 1][Math.floorMod((pos_x - 1),
-		 * 60)].m_collision) if (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x -
-		 * 1), 60)], dx, dy)) { return true; } if (m_grid[pos_y +
-		 * 1][Math.floorMod((pos_x_r + 1), 60)] != null && m_grid[pos_y +
-		 * 1][Math.floorMod((pos_x_r + 1), 60)].m_collision) if
-		 * (E.collision(m_grid[pos_y + 1][Math.floorMod((pos_x_r + 1), 60)], dx, dy)) {
-		 * return true; } if (m_grid[pos_y_d + 1][pos_x] != null && m_grid[pos_y_d +
-		 * 1][pos_x].m_collision) if (E.collision(m_grid[pos_y_d + 1][pos_x], dx, dy)) {
-		 * return true; } if (m_grid[pos_y_d + 1][pos_x_r] != null && m_grid[pos_y_d +
-		 * 1][pos_x_r].m_collision) if (E.collision(m_grid[pos_y_d + 1][pos_x_r], dx,
-		 * dy)) { return true; }
-		 */
-		return false;
-	}
-
-	void gravity(MovingEntity ge) {
-		/*
-		 * if (ge.m_grav < 20) { ge.m_grav++; } if (ge.collision(, 0, ge.m_dy)) {
-		 * ge.m_grav = 0; } ge.m_x += ge.m_grav;
-		 */
 	}
 
 	@Override
