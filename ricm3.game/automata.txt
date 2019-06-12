@@ -1,6 +1,5 @@
 Player(Surface){
 	* (Surface):
-	| !GotPower ? :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
 	| Key(z) & !Cell(N,O,1) ? Move(N) :(Surface)
@@ -9,11 +8,9 @@ Player(Surface){
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Surface)
 	| Key(m) ? Throw(F) :(SelectTurret)
 	* (SelectTurret):
-	| !GotPower ? :()
 	| Key(m) ? Throw(F) :(Surface)
 	| Key(ENTER) ? Throw(F) :(Surface)
 	* (Underground):
-	| !GotPower ? :()
 	| Key(o) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Jumping)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Underground)
@@ -24,14 +21,12 @@ Player(Surface){
 	| Key(m) ? Throw(F) :(Menu1)
 	| Cell(S,V,1) ? Move(S) :(Underground)
 	* (Jumping):
-	| !GotPower ? :()
 	| Cell(S,O,1) ? Protect() :(Underground)
 	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu2)
 	| True ? Move(S) :(Underground)
 	* (Ladder):
-	| !GotPower ? :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)
 	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
@@ -41,15 +36,12 @@ Player(Surface){
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu3)
 	* (Menu1):
-	| !GotPower ? :()
 	| Key(m) ? Throw(F) :(Underground)
 	| Key(ENTER) ? Throw(F) :(Underground)
 	* (Menu2):
-	| !GotPower ? :()
 	| Key(m) ? Throw(F) :(Jumping)
 	| Key(ENTER) ? Throw(F) :(Jumping)
 	* (Menu3):
-	| !GotPower ? :()
 	| Key(m) ? Throw(F) :(Ladder)
 	| Key(ENTER) ? Throw(F) :(Ladder)
 	* ()
@@ -126,19 +118,19 @@ Rabbit(E1){
 	* ()
 }
 
-Turtle(Init){
+Turtle(E2){
 	* (E1):
 	| !GotPower() ? Kamikaze :()
 	| Cell(F,O,1) ? Hit() :(E1)
-	| Cell(F,V,1) ? Move(F) :(E2)
 	| Cell(F,T,1) ? Hit() :(E1)
+	| !Cell(F,O,1) ? Move(F) :(E2)
 	* (E2):
 	| !GotPower() ? Kamikaze :()
 	| True ? Pop() :(E1)
 	* ()
 }
 
-Tesla(Init){
+Tesla(E1){
 	* (E1):
 	| !GotPower() ? :()
 	| True ? Pop() :(E2)
