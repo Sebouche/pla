@@ -2,9 +2,11 @@ package ricm3.game;
 
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Keys;
 
 public class SurfacePlayer extends Player {
 
@@ -40,6 +42,7 @@ public class SurfacePlayer extends Player {
 			m_controled.m_hp = Options.HP[1];
 			m_model.m_camera.m_watched = this;
 			m_controled.m_automate = Options.Entities.get("tesla");
+			m_keys = new LinkedList<Keys>();
 			m_insideTurret = false;
 			return true;
 		}
