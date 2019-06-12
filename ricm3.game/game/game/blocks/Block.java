@@ -16,6 +16,7 @@ public class Block extends GameEntity {
 		if(hp==-1) {
 			m_breakable=false;
 		}
+		m_type = Type.OBSTACLE;
 	}
 	
 	public void set_idsprite(int id) {

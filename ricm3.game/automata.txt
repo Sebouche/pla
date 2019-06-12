@@ -1,37 +1,38 @@
-PlayerS(Surface){
+Player(Surface){
 	* (Surface):
+	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
 	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Surface)
-	| Key(z) ? Move(N) :(Surface)
-	| Key(q) ? Move(O) :(Surface)
-	| Key(s) ? Move(S) :(Surface)
-	| Key(d) ? Move(E) :(Surface)
-	| Key(m) ? Throw(F) :(Menu)
-	* (Menu):
+	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
+	| Key(q) & Cell(W,V,1) ? Move(W) :(Surface)
+	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
+	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
+	| Key(m) ? Throw(F) :(SelectTurret)
+	* (SelectTurret):
 	| Key(m) ? Throw(F) :(Surface)
 	| Key(ENTER) ? Throw(F) :(Surface)
-	* ()
-}
-
-PlayerU(Underground){
 	* (Underground):
+	| Key(o) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Jumping)
-	| Key(q) & Cell(O,J,1) ? Move(O) :(Ladder)
+	| Key(w) & Cell(F,V,64) ? Wizz(F) :(Underground)
+	| Key(q) & Cell(W,J,1) ? Move(W) :(Ladder)
 	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu1)
+	| Cell(S,V,1) ? Move(S) :(Underground)
 	* (Jumping):
 	| Cell(S,O,1) ? Protect() :(Underground)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu2)
+	| True ? Move(S) :(Underground)
 	* (Ladder):
-	| Key(z) & Cell(N,G,1) ? Pick(N) :()
+	| Key(z) & Cell(N,G,1) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)
 	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
 	| Key(z) & Cell(N,V,1) ? Move(N) :(Underground)
 	| Key(s) & Cell(S,V,1) ? Move(S) :(Underground)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Underground)
+	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu3)
 	* (Menu1):
@@ -46,30 +47,12 @@ PlayerU(Underground){
 	* ()
 }
 
-Turner0(Turn_0){
-  * (Turn_0): True ? Turn(R) :(Turn_1)
-  * (Turn_1): True ? Turn(R) :(Turn_2)
-  * (Turn_2): True ? Turn(R) :(Turn_3)
-  * (Turn_3): True ? Turn(R) :(Turn_4)
-  * (Turn_4): True ? Kamikaze :()
-  * ()
-}
-
-Turner1(Turn_0){
-  * (Turn_0): True ? Turn(R) :(Turn_1)
-  * (Turn_1): True ? Turn(R) :(Turn_2)
-  * (Turn_2): True ? Turn(R) :(Turn_3)
-  * (Turn_3): True ? Turn(R) :(Turn_4)
-  * (Turn_4): True ? Kamikaze :()
-  * ()
-}
-
 Bat(E1){
 	* (E1):
-	| !GotPower() ? Kamikaze :()
+	| !GotPower() ? :()
 	| True ? Pop() :(E2)
 	* (E2):
-	| !GotPower() ? Kamikaze :() 
+	| !GotPower() ? :() 
 	| Cell(F,V) ? Move(F) :(E1)
 	| Cell(F,@) ? Hit() :(E1)
 	| True ? Pop() :(E2)
@@ -86,39 +69,56 @@ Mole(E1){
 
 Mouse(E3){
 	* (E1):
-	| !GotPower() ? Kamikaze :()
-	| Cell(F,O,1) ? Hit() :(E2)
+	| !GotPower() ? :()
+	| Cell(F,W,1) ? Hit() :(E2)
 	| Cell(F,A,1) ? Hit() :(E3)
 	| True ? Egg() :(E4)
 	* (E2):
-	| !GotPower() ? Kamikaze :()
-	| Cell(F,O,1) ? Hit() :(E2)
+	| !GotPower() ? :()
+	| Cell(F,W,1) ? Hit() :(E2)
 	| Cell(F,V) ? Move(F) / Egg() :(E4)
 	* (E3):
-	| !GotPower() ? Kamikaze :()
+	| !GotPower() ? :()
 	| Cell(F,@,1) ? Hit() :(E3)
 	| True ? Pop() :(E1)
 	* (E4):
-	| !GotPower() ? Kamikaze :()
+	| !GotPower() ? :()
 	| Cell(F,@,1) ? Hit() :(E1)
 	| !Cell(F,@,1) ? Pop() :(E1)
 	* ()
 }
 
 Dog(Init){
-	* (Init): True ? Pop() :(E1)
+	* (Init): True ? Pop(F) :(E2)
 	* (E1):
-	| !GotPower() ? Kamikaze :()
+	| !GotPower() ? :()
 	| Cell(F,O,1) ? Hit() :(E3)
-	| Cell(F,A,1) ? Hit() :(E2)
+	| Cell(F,T,1) ? Hit() :(E2)
 	| Cell(F,V,1) ? Move(F) :(E2)
 	* (E2):
-	| !GotPower() ? Kamikaze :()
-	| Cell(F,A,1) ? Hit() :(E2)
+	| !GotPower() ? :()
+	| Cell(F,T,1) ? Hit() :(E2)
 	| True ? Pop() :(E1)
 	* (E3):
-	| !GotPower() ? Kamikaze :()
-	| Cell(F,A,1) ? Hit :(E3)
+	| !GotPower() ? :()
+	| Cell(F,T,1) ? Hit :(E3)
+	| True ? Move(F) :(E2)
+	* ()
+}
+
+Rabbit(Init){
+	* (E1):
+	| !GotPower() ? :()
+	| Cell(F,W,1) ? Move(F) :(E3)
+	| Cell(F,V,1) ? Move(F) :(E2)
+	| Cell(F,T,1) ? Hit() :(E2)
+	* (E2):
+	| !GotPower() ? :()
+	| Cell(F,T,1) ? Hit() :(E2)
+	| True ? Pop() :(E1)
+	* (E3):
+	| !GotPower() ? :()
+	| Cell(F,T,1) ? Hit :(E3)
 	| True ? Move(F) :(E2)
 	* ()
 }
@@ -143,19 +143,15 @@ Wall(Init){
 	| True ? Wizz() :(Init)
 	* ()
 }
-	
-PlayerS(Surface){
-	* (Surface):
-	| Key(z) & Cell(N,G,1) ? Pick(N) :()
-	| Key(z) & Cell(N,V,1) ? Move(N) :(Surface)
-	| Key(q) & Cell(O,V,1) ? Move(O) :(Surface)
-	| Key(s) & Cell(S,V,1) ? Move(S) :(Surface)
-	| Key(d) & Cell(E,V,1) ? Move(E) :(Surface)
-	| Key(m) & Cell(F,T,1) ? Throw(F) :(Menu)
-	* (Menu):
-	| Key(m) ? Throw(F) :(Surface)
-	| Key(ENTER) ? Throw(F) :(Surface)
+
+Spawner(Init){
+	* (Init): 
+	| True ? Egg() :(Init)
 	* ()
 }
 
-
+Water(Init){
+	* (Init): 
+	| True ? Egg() :(Init)
+	* ()
+}

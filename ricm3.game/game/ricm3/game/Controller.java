@@ -17,6 +17,8 @@
  */
 package ricm3.game;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -24,8 +26,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import edu.ricm3.game.GameController;
+import game.blocks.Dirt;
 import ricm3.interpreter.Keys;
 
 /**
@@ -44,7 +57,8 @@ public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 
-	MenuItem m_m1_button1;
+	Font m_f1, m_f2;
+	JMenuItem m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau;
 
 	public Controller(Model model, View view) {
 		m_model = model;
@@ -75,8 +89,8 @@ public class Controller extends GameController implements ActionListener {
 		if (!m_model.m_player.m_keys.contains(k)) {
 			m_model.m_player.m_keys.add(k);
 		}
-		if(e.getKeyChar()=='e') {
-			m_model.m_currentworld.changeWorld();
+		if (e.getKeyChar() == 'm') {
+			fabricationMenu();
 		}
 	}
 
@@ -130,45 +144,146 @@ public class Controller extends GameController implements ActionListener {
 			System.out.println("MouseMoved: (" + e.getX() + "," + e.getY());
 	}
 
-	public void menu1() {
-		m_model.menu1 = new PopupMenu();
+	public void fabricationMenu() {
+		if (m_model.fabricationMenu == null) {
+			Font f1 = new Font(Font.MONOSPACED, Font.BOLD, 32);
+			Font f2 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
+	
+			m_model.fabricationMenu = new JPopupMenu("Fabrication");
+			
+			JLabel m_m1_title = new JLabel("Fabrication");
+			m_m1_title.setFont(f1);
+			m_model.fabricationMenu.add(m_m1_title);
+			
+			m_m1_button_murs = new JMenuItem("Murs");
+			m_m1_button_murs.setFont(f2);
+			m_m1_button_murs.setIcon(new ImageIcon("sprites/icon_wall.png"));
+			m_m1_button_murs.addActionListener(this);
+			m_model.fabricationMenu.add(m_m1_button_murs);
+	
+			m_m1_button_barbele = new JMenuItem("Barbelés");
+			m_m1_button_barbele.setFont(f2);
+			m_m1_button_barbele.setIcon(new ImageIcon("sprites/icon_barbele.png"));
+			m_m1_button_barbele.addActionListener(this);
+			m_model.fabricationMenu.add(m_m1_button_barbele);
+			
+			m_m1_button_tesla = new JMenuItem("Tourelle Tesla");
+			m_m1_button_tesla.setFont(f2);
+			m_m1_button_tesla.setIcon(new ImageIcon("sprites/icon_tesla.png"));
+			m_m1_button_tesla.addActionListener(this);
+			m_model.fabricationMenu.add(m_m1_button_tesla);
+			
+			m_m1_button_poteau = new JMenuItem("Poteau électrique");
+			m_m1_button_poteau.setFont(f2);
+			m_m1_button_poteau.setIcon(new ImageIcon("sprites/icon_poteau.png"));
+			m_m1_button_poteau.addActionListener(this);
+			m_model.fabricationMenu.add(m_m1_button_poteau);
+		}
 
-		Font f3 = new Font(Font.SERIF, Font.BOLD, 32);
-		Font f4 = new Font(Font.MONOSPACED, Font.BOLD, 16);
+	}
+	
+	public void fabricationSubMenu() {
 
-		MenuItem m1_label1 = new MenuItem("Oui (label)");
-		m1_label1.setFont(f4);
-		m_model.menu1.add(m1_label1);
+		m_model.fabricationMenu = new JPopupMenu("Fabrication");
+		
+		JLabel m_m1_title = new JLabel("Fabrication");
+		m_m1_title.setFont(m_f1);
+		m_model.fabricationMenu.add(m_m1_title);
+		
+		m_m1_button_murs = new JMenuItem("Murs");
+		m_m1_button_murs.setFont(m_f2);
+		m_m1_button_murs.setIcon(new ImageIcon("sprites/icon_wall.png"));
+		m_m1_button_murs.addActionListener(this);
+		m_model.fabricationMenu.add(m_m1_button_murs);
 
-		m_m1_button1 = new MenuItem("Non (button)");
-		m_m1_button1.setFont(f4);
-		m_m1_button1.addActionListener(this);
-		m_model.menu1.add(m_m1_button1);
-
-		m_model.menu1.setLabel("Choix automate (?)");
-		m_model.menu1.setFont(f3);
-		m_model.menu1.setEnabled(true);
-
-		m_view.add(m_model.menu1);
-
-		m_model.menu1.show(m_view, 0, 0);
-
+		m_m1_button_barbele = new JMenuItem("Barbelés");
+		m_m1_button_barbele.setFont(m_f2);
+		m_m1_button_barbele.setIcon(new ImageIcon("sprites/icon_barbele.png"));
+		m_m1_button_barbele.addActionListener(this);
+		m_model.fabricationMenu.add(m_m1_button_barbele);
+		
+		m_m1_button_tesla = new JMenuItem("Tourelle Tesla");
+		m_m1_button_tesla.setFont(m_f2);
+		m_m1_button_tesla.setIcon(new ImageIcon("sprites/icon_tesla.png"));
+		m_m1_button_tesla.addActionListener(this);
+		m_model.fabricationMenu.add(m_m1_button_tesla);
+		
+		m_m1_button_poteau = new JMenuItem("Poteau électrique");
+		m_m1_button_poteau.setFont(m_f2);
+		m_m1_button_poteau.setIcon(new ImageIcon("sprites/icon_poteau.png"));
+		m_m1_button_poteau.addActionListener(this);
+		m_model.fabricationMenu.add(m_m1_button_poteau);
+		
+		m_model.fabricationMenu.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
+	}
+	
+	public void inventory() {
+		JPanel NorthPanel = new JPanel();
+		NorthPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		NorthPanel.setBackground(Color.WHITE);
+		
+		JLabel Label;
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Ladder.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[10]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Dirt.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[0]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Stone.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[2]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Coal.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[11]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Iron.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[5]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Copper.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[3]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		Label = new JLabel("x0" /*+ m_model.m_player.bloc().get(Uranium.class)*/);
+		Label.setIcon(new ImageIcon(m_model.m_sprites.get("block")[4]));
+		Label.setFont(m_f1);
+		NorthPanel.add(Label);
+		
+		m_game.addNorth(NorthPanel);
 	}
 
 	public void notifyVisible() {
+		m_f1 = new Font(Font.MONOSPACED, Font.BOLD, 32);
+		m_f2 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
+		fabricationMenu();
+		inventory();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
-		if (s == m_m1_button1) {
-			try {
-				m_model.m_bgm.stop();
-				m_model.m_bgm = new Music(m_model.m_currentworld.m_bgmfile);
-				m_model.m_bgm.start();
-			} catch (Exception ex) {
-
-			}
+		if (s == m_m1_button_murs) {
+			Wall w=new Wall(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("wall"), Options.Entities.get("Wall"), m_model.m_surfaceworld);
+			m_model.m_surfaceworld.m_entities.add(w);
+		} else if ((s == m_m1_button_barbele)) {
+			Barbed b=new Barbed(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("barbed"), Options.Entities.get("Barbed"), m_model.m_surfaceworld);
+			m_model.m_surfaceworld.m_entities.add(b);
+		} else if ((s == m_m1_button_tesla)) {
+			Turret t=new Turret(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("tesla"), Options.Entities.get("Tesla"), m_model.m_surfaceworld);
+			m_model.m_surfaceworld.m_entities.add(t);
+		} else if ((s == m_m1_button_poteau)) {
+			ElectricalPost t=new ElectricalPost(m_model, m_model.m_player.m_x, m_model.m_player.m_y, Options.HP[1], m_model.m_sprites.get("electricalPost"), Options.Entities.get("Wall"), m_model.m_surfaceworld);
+			m_model.m_surfaceworld.m_entities.add(t);
 		}
 	}
 
