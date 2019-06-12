@@ -7,6 +7,7 @@ import ricm3.interpreter.IAutomaton;
 import java.util.Set;
 
 public class UndergroundPlayer extends Player {
+	int m_miningsprite=0;
 
 	UndergroundPlayer(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate,
 			World originWorld) {
@@ -20,27 +21,39 @@ public class UndergroundPlayer extends Player {
 		int pos_x = (int) (m_model.m_player.m_x / entity_size);
 		int pos_y = (int) (m_model.m_player.m_y / entity_size);
 		UndergroundWorld w = (UndergroundWorld) m_originWorld;
+		if (m_elapsed%20==0) {
+			m_miningsprite=(m_miningsprite+1)%2;
+		}
+		m_elapsed++;
 		switch (Direction.entityDir(this, dir)) {
 		case NORTH:
 			if (w.m_grid[pos_y - 1][pos_x] != null && w.m_grid[pos_y - 1][pos_x].m_breakable) {
 				w.m_grid[pos_y - 1][pos_x].damage_hp(m_dmg);
+				if (m_lastdir== Direction.EAST)
+				m_idsprite=35+m_miningsprite;
+				else m_idsprite=37+m_miningsprite;
 			}
 			break;
 		case SOUTH:
 			if (w.m_grid[pos_y + 1][pos_x] != null && w.m_grid[pos_y + 1][pos_x].m_breakable) {
 				w.m_grid[pos_y + 1][pos_x].damage_hp(m_dmg);
+				if (m_lastdir== Direction.EAST)
+					m_idsprite=35+m_miningsprite;
+					else m_idsprite=37+m_miningsprite;
 			}
 			break;
 		case EAST:
 			if (w.m_grid[pos_y][Math.floorMod((pos_x + 1), 60)] != null
 					&& w.m_grid[pos_y][Math.floorMod((pos_x + 1), 60)].m_breakable) {
 				w.m_grid[pos_y][Math.floorMod((pos_x + 1), 60)].damage_hp(m_dmg);
+				m_idsprite=35+m_miningsprite;
 			}
 			break;
 		case WEST:
 			if (w.m_grid[pos_y][Math.floorMod((pos_x - 1), 60)] != null
 					&& w.m_grid[pos_y][Math.floorMod((pos_x - 1), 60)].m_breakable) {
 				w.m_grid[pos_y][Math.floorMod((pos_x - 1), 60)].damage_hp(m_dmg);
+				m_idsprite=37+m_miningsprite;
 			}
 			break;
 		default:

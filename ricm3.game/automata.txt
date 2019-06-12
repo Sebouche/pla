@@ -1,5 +1,6 @@
 Player(Surface){
 	* (Surface):
+	| !GotPower() ? Pick(N) :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
 	| Key(w) & !Cell(F,O,64) / Cell(F,T,64) ? Wizz(F) :(Surface)
 	| Key(p) & Cell(F,T,1) ? Pop(F) :(InsideTurret)
@@ -9,9 +10,10 @@ Player(Surface){
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Surface)
 	| Key(m) ? Throw(F) :(BuyMenu)
 	* (BuyMenu):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Surface)
-	| Key(ENTER) ? Throw(F) :(Surface)
 	* (Underground):
+	| !GotPower() ? Pick(N) :()
 	| Key(d) & Cell(E,G,1) ? Jump(F) :(Surface)
 	| Key(FR) & Cell(E,O,1) ? Pop(E) :(Underground)
 	| Key(FD) & Cell(S,O,1) ? Pop(S) :(Underground)
@@ -29,12 +31,14 @@ Player(Surface){
 	| Key(m) ? Throw(F) :(Menu1)
 	| !Cell(S,O,1) ? Move(S) :(Underground)
 	* (Jumping):
+	| !GotPower() ? Pick(N) :()
 	| Cell(S,O,1) ? Protect() :(Underground)
 	| Key(q) & Cell(W,V,1) ? Move(W) :(Underground)
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu2)
 	| True ? Move(S) :(Underground)
 	* (Ladder):
+	| !GotPower() ? Pick(N) :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Surface)
 	| Key(z) & Cell(N,J,1) ? Move(N) :(Ladder)
 	| Key(s) & Cell(S,J,1) ? Move(S) :(Ladder)
@@ -44,12 +48,15 @@ Player(Surface){
 	| Key(d) & Cell(E,V,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu3)
 	* (Menu1):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Underground)
 	| Key(ENTER) ? Throw(F) :(Underground)
 	* (Menu2):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Jumping)
 	| Key(ENTER) ? Throw(F) :(Jumping)
 	* (Menu3):
+	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Ladder)
 	| Key(ENTER) ? Throw(F) :(Ladder)
 	* (InsideTurret):
@@ -73,12 +80,12 @@ Mouse(E3){
 	* (E1):
 	| !GotPower() ? Get() :()
 	| Cell(F,O,1) ? Hit() :(E2)
-	| Cell(F,A,1) ? Hit() :(E3)
+	| Cell(F,T,1) / Cell(F,@,1) ? Hit() :(E3)
 	| True ? Egg() :(E4)
 	* (E2):
 	| !GotPower() ? Get() :()
 	| Cell(F,O,1) ? Hit() :(E2)
-	| Cell(F,V) ? Move(F) / Egg() :(E4)
+	| True ? Move(F) / Egg() :(E4)
 	* (E3):
 	| !GotPower() ? Get() :()
 	| Cell(F,@,1) ? Hit() :(E3)

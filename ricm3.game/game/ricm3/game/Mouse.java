@@ -29,10 +29,10 @@ public class Mouse extends Enemy {
 				m_basesprite = 5;
 			}
 			if (absoldir == Direction.NORTH) {
-				m_basesprite = 10;
+				m_basesprite = 15;
 			}
 			if (absoldir == Direction.SOUTH) {
-				m_basesprite = 15;
+				m_basesprite = 10;
 			}
 			m_lastdir = absoldir;
 			m_elapsed = 0;
