@@ -70,13 +70,13 @@ public class UndergroundPlayer extends Player {
 		int pos_x = (int) (m_model.m_player.m_x / entity_size);
 		int pos_y = (int) (m_model.m_player.m_y / entity_size);
 		UndergroundWorld w = (UndergroundWorld) m_originWorld;
-		if (w.m_grid[pos_y][Math.floorMod((pos_x), 60)] == null && blocs().Exist(Ladder.class, 1)) {
+		if (m_model.m_player.m_originWorld instanceof UndergroundWorld && w.m_grid[pos_y][Math.floorMod((pos_x), 60)] == null && blocs().Exist(Ladder.class, 1)) {
 			blocs().decrements(Ladder.class, 1);
 			Ladder L = new Ladder(m_model, Math.floorMod((pos_x), 60) * entity_size, pos_y * entity_size, 100,
 					m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")), w);
 			L.m_collision = false;
 			w.m_grid[pos_y][Math.floorMod((pos_x), 60)] = L;
-		} else if (w.m_grid[pos_y][Math.floorMod((pos_x), 60)] == null && blocs().Exist(Dirt.class, 1)) {
+		} else if (m_model.m_player.m_originWorld instanceof UndergroundWorld && w.m_grid[pos_y][Math.floorMod((pos_x), 60)] == null && blocs().Exist(Dirt.class, 1)) {
 			blocs().increments(Ladder.class, 1);
 			blocs().decrements(Dirt.class, 1);
 			Ladder L = new Ladder(m_model, Math.floorMod((pos_x), 60) * entity_size, pos_y * entity_size, 100,
