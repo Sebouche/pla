@@ -72,6 +72,7 @@ public class Model extends GameModel {
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
 		m_surfaceworld.m_entities.add(m_player);
+		m_undergroundworld.m_allies.add(m_undergroundplayer);
 		m_timer = new Timer(2, 30);
 	}
 

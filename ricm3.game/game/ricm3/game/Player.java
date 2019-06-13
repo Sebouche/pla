@@ -1,6 +1,7 @@
 package ricm3.game;
 
 import java.awt.image.BufferedImage;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import ricm3.interpreter.Direction;
@@ -12,6 +13,7 @@ public class Player extends Ally {
 	int m_spritevariation=8;
 	Fabrication blocs;
 
+	
 	public Player(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
 		blocs = new Fabrication();
