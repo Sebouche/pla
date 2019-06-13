@@ -31,9 +31,9 @@ public class Options {
 	public static int Entity_size = 32;
 	public static double Scale = 2;
 
-	public static int[] spawnerProba = { 60, 15, 5, 10 }; // Chien, Tortue, Souris, Lapin
-	public static String[] spawnerType = { "Rabbit", "Turtle", "Mouse", "Rabbit" };
-	public static int[] HP = { 25, 100, 2, 10 , 500, 250};
+	public static int[] spawnerProba = { 60, 25, 5, 10 }; // Chien, Tortue, Souris, Lapin
+	public static String[] spawnerType = { "Dog", "Turtle", "Mouse", "Rabbit" };
+	public static int[] HP = { 25, 100, 2, 10 , 500};
 
 	public static boolean day = true; // indique si on est la journée ou pas
 	

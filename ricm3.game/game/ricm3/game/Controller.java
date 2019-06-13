@@ -417,7 +417,7 @@ public class Controller extends GameController implements ActionListener {
 			fabricationSubMenu(b);
 			break;
 		case "Tesla":
-			Turret t = new Turret(m_model, m_model.m_player.m_x + dx, m_model.m_player.m_y + dy, Options.HP[5],
+			Turret t = new Turret(m_model, m_model.m_player.m_x + dx, m_model.m_player.m_y + dy, Options.HP[1],
 					m_model.m_sprites.get("Tesla"), new IAutomaton(Options.Entities.get("Tesla")),
 					m_model.m_surfaceworld, m_model.m_surfaceworld.m_enemies);
 			fabricationSubMenu(t);
