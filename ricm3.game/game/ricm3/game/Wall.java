@@ -32,7 +32,6 @@ public class Wall extends Ally {
 			dis = distance(e);
 			if (dis <= 10) {
 				e.damage_hp(m_dmg);
-				System.out.println(e.m_hp);
 			}
 		}
 		return true;

@@ -25,6 +25,7 @@ public class GameEntity {
 	public boolean m_collision = true;
 	Hashtable<String, Integer> m_recipe;
 	public boolean m_breakable = true;
+	long m_lastHit = 0;
 	int m_dx, m_dy;
 	int m_grav;
 
