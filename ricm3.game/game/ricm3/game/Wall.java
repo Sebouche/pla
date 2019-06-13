@@ -18,7 +18,7 @@ public class Wall extends Ally {
 		m_recipe = new Hashtable<String, Integer>();
 		m_recipe.put("Stone", 2);
 		m_type = Type.OBSTACLE;
-		m_dmg = 4;
+		m_dmg = 500;
 	}
 
 
