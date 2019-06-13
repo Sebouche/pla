@@ -96,7 +96,6 @@ public class Model extends GameModel {
 		long elapsed = now - m_lastStep;
 		if (elapsed >= 2L && m_gameon) {
 			m_lastStep = now;
-			//m_player.step();
 			m_surfaceworld.step();
 			m_undergroundworld.step();
 		}

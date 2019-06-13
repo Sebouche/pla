@@ -33,7 +33,7 @@ public class Options {
 
 	public static int[] spawnerProba = { 60, 25, 5, 10 }; // Chien, Tortue, Souris, Lapin
 	public static String[] spawnerType = { "Dog", "Turtle", "Mouse", "Rabbit" };
-	public static int[] HP = { 25, 100, 2, 10 };
+	public static int[] HP = { 25, 100, 2, 10 , 500};
 
 	public static boolean day = true; // indique si on est la journée ou pas
 	

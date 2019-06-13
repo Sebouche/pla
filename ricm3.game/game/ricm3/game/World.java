@@ -17,7 +17,7 @@ public class World {
 	File m_bgmfile;
 	LinkedList<GameEntity> m_tmpadd;
 	LinkedList<GameEntity> m_tmprm;
-	
+
 	public World(Model model) {
 		m_entities = new LinkedList<GameEntity>();
 		m_allies = new LinkedList<Ally>();
@@ -43,15 +43,29 @@ public class World {
 	}
 
 	public boolean Hit(GameEntity ge, Direction d) {
-		Iterator<Ally> iter = m_allies.iterator();
+		Iterator<Ally> iter;
 		Ally e;
 		boolean b = false;
-		while (iter.hasNext()) {
-			e = iter.next();
-			if (e instanceof MovingEntity) {
-				if (((MovingEntity) (e)).distance(ge)<=1) {
-					e.damage_hp(ge.m_dmg);
-					b = true;
+		if (ge.m_originWorld instanceof SurfaceWorld) {
+			iter = m_model.m_surfaceworld.m_allies.iterator();
+			while (iter.hasNext()) {
+				e = iter.next();
+				if (e instanceof MovingEntity) {
+					if (((MovingEntity) (e)).distance(ge) <= 1) {
+						e.damage_hp(ge.m_dmg);
+						b = true;
+					}
+				}
+			}
+		} else {
+			iter = m_model.m_undergroundworld.m_allies.iterator();
+			while (iter.hasNext()) {
+				e = iter.next();
+				if (e instanceof MovingEntity) {
+					if (((MovingEntity) (e)).distance(ge) <= 1) {
+						e.damage_hp(ge.m_dmg);
+						b = true;
+					}
 				}
 			}
 		}

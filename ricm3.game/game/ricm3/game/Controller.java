@@ -395,7 +395,7 @@ public class Controller extends GameController implements ActionListener {
 		}
 		switch (name) {
 		case "Wall":
-			Wall w = new Wall(m_model, m_model.m_player.m_x + dx, m_model.m_player.m_y + dy, Options.HP[1],
+			Wall w = new Wall(m_model, m_model.m_player.m_x + dx, m_model.m_player.m_y + dy, Options.HP[4],
 					m_model.m_sprites.get("Wall"), new IAutomaton(Options.Entities.get("Wall")),
 					m_model.m_surfaceworld);
 			fabricationSubMenu(w);

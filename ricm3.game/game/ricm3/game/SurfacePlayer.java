@@ -70,7 +70,6 @@ public class SurfacePlayer extends Player {
 		default:
 			return false;
 		}
-/// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE LA TOURELLE  (GOTSTUFF maybe)
 		if (m_model.m_player.m_originWorld instanceof SurfaceWorld && blocs().Exist(Copper.class, 1) && blocs().Exist(Iron.class, 2)) {
 			blocs().decrements(Copper.class, 1);
 			blocs().decrements(Iron.class, 2);

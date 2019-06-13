@@ -37,7 +37,7 @@ public class SurfaceWorld extends World {
 		chunklists = new LinkedList<ChunkList>();
 		Chunk c = new Chunk(this, 0, 0, 2);
 		add(c);
-		c.spawn = new Spawner(-100, -100, c, m_model.m_sprites.get("Spawner"), this);
+		c.spawn = new Spawner(-500, -100, c, m_model.m_sprites.get("Spawner"), this);
 		new House(m_model, 0, 0, 10000, m_model.m_sprites.get("House"), this);
 		Random r = new Random();
 		int y;
@@ -118,7 +118,7 @@ public class SurfaceWorld extends World {
 			int[] time = m_model.m_timer.getTime();
 			if ((time[0] == 0 && time[1] == 0)) {
 				Options.day = !Options.day;
-				m_model.m_timer.setTime(2, 30);
+				m_model.m_timer.setTime(0, 30);
 				if (!Options.day) {
 					int type;
 					int i = 0;
@@ -243,7 +243,18 @@ public class SurfaceWorld extends World {
 	public void paint(Graphics g) {
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
-		Iterator<GameEntity> iter = m_entities.iterator();
+		Iterator<GameEntity> ite = m_entities.iterator();
+		while (ite.hasNext()) {
+			GameEntity e = ite.next();
+			if(!(e instanceof Ally) && !(e instanceof Enemy)) {
+				Graphics g_child;
+				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
+						(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
+				e.paint(g_child);
+				g_child.dispose();
+			}
+		}
+		Iterator<Ally> iter = m_allies.iterator();
 		while (iter.hasNext()) {
 			GameEntity e = iter.next();
 			Graphics g_child;
@@ -252,5 +263,14 @@ public class SurfaceWorld extends World {
 			e.paint(g_child);
 			g_child.dispose();
 		}
+		Iterator<Enemy> itera = m_enemies.iterator();
+		while (itera.hasNext()) {
+			GameEntity e = itera.next();
+			Graphics g_child;
+			g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
+					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
+			e.paint(g_child);
+			g_child.dispose();
+		}		
 	}
 }
