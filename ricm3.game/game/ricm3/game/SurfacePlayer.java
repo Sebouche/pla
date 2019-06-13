@@ -75,7 +75,7 @@ public class SurfacePlayer extends Player {
 		if (blocs().Exist(Copper.class, 1) && blocs().Exist(Iron.class, 2)) {
 			blocs().decrements(Copper.class, 1);
 			blocs().decrements(Iron.class, 2);
-			Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("Tesla"),
+			Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[5], m_model.m_sprites.get("Tesla"),
 					new IAutomaton(Options.Entities.get("Tesla")), m_originWorld, m_model.m_surfaceworld.m_enemies);
 			t.m_collision = false;
 			((SurfaceWorld) m_originWorld).m_tmpadd.add(t);
