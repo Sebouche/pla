@@ -17,6 +17,7 @@
  */
 package ricm3.game;
 
+import java.awt.Color;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -31,17 +32,19 @@ public class Options {
 	public static int Entity_size = 32;
 	public static double Scale = 2;
 
-	public static int[] spawnerProba = { 60, 25, 5, 10 }; // Chien, Tortue, Souris, Lapin
+	public static int[] spawnerProba = { 50, 20, 5, 25 }; // Chien, Tortue, Souris, Lapin
 	public static String[] spawnerType = { "Dog", "Turtle", "Mouse", "Rabbit" };
-	public static int[] HP = { 25, 100, 2, 10 };
+	public static int[] HP = { 25, 100, 2, 10 , 500};
 
 	public static boolean day = true; // indique si on est la journée ou pas
 	
 	public static LinkedList<IAutomaton> Automata;
 	
 	public static Hashtable<String, IAutomaton> Entities;
-	public static String[] EntitiesNames = { "Player1", "Player2", "Barbed", "Bat", "Block", "Dog", "Mole", "Mouse", "Rabbit", "Spawner", "Tesla", "Turtle", "Wall", "Water" ,"Moving"};
-	
+	public static String[] EntitiesNames = { "Player1", "Player2", "Barbed", "Bat", "Block", "Dog", "Mole", "Mouse", "Rabbit", "Spawner", "Tesla", "Turtle", "Wall", "Water" ,"Moving", "Explosion"};
+	public static int[] Speed = {2,1,2,3,2};
 	public static Music bgm;
 	public static int[] damage = {10,3,1,2};
+	public static int TurretDamage = 20;
+	public static Color BlitzColor = new Color(0,150,200);
 }

@@ -23,12 +23,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.LinkedList;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import ricm3.interpreter.Keys;
 
 import edu.ricm3.game.GameModel;
 import ricm3.interpreter.IAutomaton;
@@ -45,6 +48,7 @@ public class Model extends GameModel {
 	World m_currentworld;
 	Camera m_camera;
 	Camera m_arrow;
+	public LinkedList<Keys> m_keys;
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	View m_view;
 	Timer m_timer;
@@ -65,6 +69,7 @@ public class Model extends GameModel {
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		m_lastStep = 0;
+		m_keys=new LinkedList<Keys>();
 		try {
 			Options.bgm.stop();
 			Options.bgm = new Music(m_currentworld.m_bgmfile);
@@ -72,7 +77,8 @@ public class Model extends GameModel {
 		} catch (Exception ex) {}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
 		m_surfaceworld.m_entities.add(m_player);
-		m_timer = new Timer(2, 30);
+		m_undergroundworld.m_allies.add(m_undergroundplayer);
+		m_timer = new Timer(0, 10);
 	}
 
 	@Override
@@ -90,7 +96,6 @@ public class Model extends GameModel {
 		long elapsed = now - m_lastStep;
 		if (elapsed >= 2L && m_gameon) {
 			m_lastStep = now;
-			//m_player.step();
 			m_surfaceworld.step();
 			m_undergroundworld.step();
 		}
@@ -238,6 +243,14 @@ public class Model extends GameModel {
 		try {
 			BufferedImage spritename = ImageIO.read(imageFile);
 			splitSprite("ElectricalPost", spritename, 2, 1);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+		imageFile = new File("sprites/explosion.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("Explosion", spritename, 3, 3);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(-1);

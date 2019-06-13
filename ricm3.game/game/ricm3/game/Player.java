@@ -1,6 +1,7 @@
 package ricm3.game;
 
 import java.awt.image.BufferedImage;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import ricm3.interpreter.Direction;
@@ -12,6 +13,7 @@ public class Player extends Ally {
 	int m_spritevariation=8;
 	Fabrication blocs;
 
+	
 	public Player(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
 		blocs = new Fabrication();
@@ -20,7 +22,7 @@ public class Player extends Ally {
 
 	@Override
 	public boolean jump(Direction dir) {
-		m_originWorld.changeWorld();
+		m_model.m_player.m_originWorld.changeWorld();
 		return true;
 	}
 
@@ -64,7 +66,7 @@ public class Player extends Ally {
 	
 	@Override
 	public boolean Throw(Direction dir) {
-		m_model.m_player.m_keys = new LinkedList<Keys>();
+		m_model.m_keys = new LinkedList<Keys>();
 		m_model.fabricationMenu.show(m_model.m_view, (int) (m_model.m_view.getWidth() / 2 + Options.Entity_size * Options.Scale),
 				m_model.m_view.getHeight() / 2);
 		return true;

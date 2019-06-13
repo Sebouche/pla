@@ -25,7 +25,9 @@ public class GameEntity {
 	public boolean m_collision = true;
 	Hashtable<String, Integer> m_recipe;
 	public boolean m_breakable = true;
-
+	long m_lastHit = 0;
+	int m_dx, m_dy;
+	int m_grav;
 
 	public GameEntity(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate,
 			World originWorld) {
@@ -96,9 +98,32 @@ public class GameEntity {
 	}
 
 	public boolean move(Direction dir) {
+		switch (Direction.entityDir(this, dir)) {
+		case NORTH:
+			this.m_dir = Direction.NORTH;
+			m_dy = -1;
+			break;
+		case SOUTH:
+			this.m_dir = Direction.SOUTH;
+			m_dy = 1;
+			break;
+		case WEST:
+			this.m_dir = Direction.WEST;
+			m_dx = -1;
+			break;
+		case EAST:
+			this.m_dir = Direction.EAST;
+			m_dx = 1;
+			break;
+		default:
+			break;
+		}
+		m_x += m_dx;
+		m_y += m_dy + m_grav;
+		m_dx=0;
+		m_dy=0;
 		return true;
 	}
-
 	public boolean jump(Direction dir) {
 		return true;
 	}
@@ -163,7 +188,6 @@ public class GameEntity {
 	public void step() {
 		if (m_automate != null)
 			m_automate.step(this);
-
 	}
 
 	//////////////////////
