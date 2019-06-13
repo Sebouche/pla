@@ -17,6 +17,7 @@
  */
 package ricm3.game;
 
+import java.awt.Color;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -44,4 +45,6 @@ public class Options {
 	
 	public static Music bgm;
 	public static int[] damage = {10,3,1,2};
+	public static int TurretDamage = 20;
+	public static Color BlitzColor = new Color(0,150,200);
 }
