@@ -6,13 +6,11 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
 
 import ricm3.game.Options;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.Keys;
-import ricm3.interpreter.Type;
 
 public class SurfaceWorld extends World {
 
@@ -37,7 +35,7 @@ public class SurfaceWorld extends World {
 		chunklists = new LinkedList<ChunkList>();
 		Chunk c = new Chunk(this, 0, 0, 2);
 		add(c);
-		c.spawn = new Spawner(-100, -100, c, m_model.m_sprites.get("Spawner"), this);
+		c.spawn = new Spawner(-500, -500, c, m_model.m_sprites.get("Spawner"), this);
 		new House(m_model, 0, 0, 10000, m_model.m_sprites.get("House"), this);
 		Random r = new Random();
 		int y;
@@ -211,31 +209,32 @@ public class SurfaceWorld extends World {
 			m_model.endgame();
 		}
 		Iterator<GameEntity> iter = m_entities.iterator();
+		GameEntity e;
 		while (iter.hasNext()) {
-			GameEntity e = iter.next();
+			e = iter.next();
 			e.step();
 		}
 		iter = m_tmpadd.iterator();
 		while (iter.hasNext()) {
-			GameEntity e = iter.next();
+			e = iter.next();
 			m_entities.add(e);
 		}
 		m_tmpadd = new LinkedList<GameEntity>();
 
 		iter = m_tmprm.iterator();
 		while (iter.hasNext()) {
-			GameEntity e = iter.next();
+			e = iter.next();
 			m_entities.remove(e);
 		}
 		m_tmprm = new LinkedList<GameEntity>();
 		
-		if (!(m_model.m_currentworld instanceof SurfaceWorld)) {
-			if (m_entities.contains(m_model.m_player)) {
-				m_entities.remove(m_model.m_player);
-			}
-		} else {
+		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			if (!m_entities.contains(m_model.m_player)) {
 				m_entities.add(m_model.m_player);
+			}
+		} else {
+			if (m_entities.contains(m_model.m_player)) {
+				m_entities.remove(m_model.m_player);
 			}
 		}
 
@@ -246,9 +245,10 @@ public class SurfaceWorld extends World {
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
 		Iterator<GameEntity> iter = m_entities.iterator();
+		GameEntity e;
+		Graphics g_child;
 		while (iter.hasNext()) {
-			GameEntity e = iter.next();
-			Graphics g_child;
+			e = iter.next();
 			g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
 					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			e.paint(g_child);

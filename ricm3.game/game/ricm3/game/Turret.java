@@ -15,7 +15,7 @@ public class Turret extends Ally {
 
 	List<Enemy> targets;
 	Enemy target;
-	double range;
+	double range = 2000;
 
 	public Turret(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld,
 			List<Enemy> t) {

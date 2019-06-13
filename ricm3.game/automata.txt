@@ -144,7 +144,7 @@ Tesla(E1){
 	| True ? Pop() :(E2)
 	* (E2):
 	| !GotPower() ? Get() :()
-	| True ? Hit(F) :(E1)
+	| True ? Hit() :(E1)
 	* ()
 }
 
