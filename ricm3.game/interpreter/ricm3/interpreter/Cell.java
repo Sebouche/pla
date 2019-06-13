@@ -26,7 +26,7 @@ public class Cell extends ICondition {
 		if (kind == Type.ANYTHING)
 			return true;
 		Direction dir = Direction.entityDir(e, direction);
-		if(e.m_originWorld instanceof UndergroundWorld) {
+		if (e.m_originWorld instanceof UndergroundWorld) {
 			e.m_x = Math.floorMod(e.m_x, (int) (60 * Options.Entity_size * Options.Scale));
 			e.m_y = Math.floorMod(e.m_y, (int) (60 * Options.Entity_size * Options.Scale));
 		}
@@ -85,7 +85,7 @@ public class Cell extends ICondition {
 			if (f != null) {
 				f.m_x = Math.floorMod(f.m_x, (int) (60 * Options.Entity_size * Options.Scale));
 				f.m_y = Math.floorMod(f.m_y, (int) (60 * Options.Entity_size * Options.Scale));
-				if (f.m_collision && isInside(f, cellx, celly)) {
+				if ((f.m_collision || kind == Type.TEAM) && isInside(f, cellx, celly)) {
 					if (kind == Type.VOID) {
 						if (kind != f.type())
 							return false;

@@ -77,6 +77,14 @@ public class UndergroundPlayer extends Player {
 			L.m_collision=false;
 			w.m_grid[pos_y][Math.floorMod((pos_x), 60)] = L;
 		}
+		else if(w.m_grid[pos_y][Math.floorMod((pos_x), 60)] == null && blocs().Exist(Ladder.class, 1)) {
+			blocs().decrements(Ladder.class, 1);
+			Ladder L=new Ladder(m_model, Math.floorMod((pos_x), 60) * entity_size,
+					pos_y * entity_size, 100, m_model.m_sprites.get("Block"),
+					new IAutomaton(Options.Entities.get("Block")), w);
+			L.m_collision=false;
+			w.m_grid[pos_y][Math.floorMod((pos_x), 60)] = L;
+		}
 		return true;
 	}
 }

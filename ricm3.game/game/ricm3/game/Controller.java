@@ -117,7 +117,7 @@ public class Controller extends GameController implements ActionListener {
 			}
 		}
 		if (bplayer2) {
-			if (m_model.m_surfaceworld.m_enemies.get(m_model.m_surfaceworld.m_enemies.indexOf(player2)).m_keys
+			if (!m_model.m_surfaceworld.m_enemies.get(m_model.m_surfaceworld.m_enemies.indexOf(player2)).m_keys
 					.contains(k)) {
 				m_model.m_surfaceworld.m_enemies.get(m_model.m_surfaceworld.m_enemies.indexOf(player2)).m_keys.add(k);
 			}
@@ -364,6 +364,7 @@ public class Controller extends GameController implements ActionListener {
 		fabricationMenu();
 		inventory();
 		endgameMenu();
+		m_game.addNorth(m_model.m_timer);
 	}
 
 	public boolean free(GameEntity e) {
@@ -383,18 +384,18 @@ public class Controller extends GameController implements ActionListener {
 		switch (Direction.entityDir(m_model.m_player, dir)) {
 		case NORTH:
 			dx = 0;
-			dy = -ESize;
+			dy = -ESize - 1;
 			break;
 		case SOUTH:
 			dx = 0;
-			dy = ESize;
+			dy = ESize + 1;
 			break;
 		case WEST:
-			dx = -ESize;
+			dx = -ESize - 1;
 			dy = 0;
 			break;
 		case EAST:
-			dx = ESize;
+			dx = ESize + 1;
 			dy = 0;
 			break;
 		default:
@@ -404,25 +405,25 @@ public class Controller extends GameController implements ActionListener {
 		}
 		switch (name) {
 		case "Wall":
-			Wall w = new Wall(m_model, m_model.m_player.m_x + dx + 1, m_model.m_player.m_y + dy + 1, Options.HP[1],
+			Wall w = new Wall(m_model, m_model.m_player.m_x + dx, m_model.m_player.m_y + dy, Options.HP[1],
 					m_model.m_sprites.get("Wall"), new IAutomaton(Options.Entities.get("Wall")),
 					m_model.m_surfaceworld);
 			fabricationSubMenu(w);
 			break;
 		case "Barbed":
-			Barbed b = new Barbed(m_model, m_model.m_player.m_x + dx + 1, m_model.m_player.m_y + dy + 1, Options.HP[1],
+			Barbed b = new Barbed(m_model, m_model.m_player.m_x + dx, m_model.m_player.m_y + dy, Options.HP[1],
 					m_model.m_sprites.get("Barbed"), new IAutomaton(Options.Entities.get("Barbed")),
 					m_model.m_surfaceworld);
 			fabricationSubMenu(b);
 			break;
 		case "Tesla":
-			Turret t = new Turret(m_model, m_model.m_player.m_x + dx + 1, m_model.m_player.m_y + dy + 1, Options.HP[1],
+			Turret t = new Turret(m_model, m_model.m_player.m_x + dx, m_model.m_player.m_y + dy, Options.HP[1],
 					m_model.m_sprites.get("Tesla"), new IAutomaton(Options.Entities.get("Tesla")),
 					m_model.m_surfaceworld, m_model.m_surfaceworld.m_enemies);
 			fabricationSubMenu(t);
 			break;
 		case "ElectricalPost":
-			ElectricalPost p = new ElectricalPost(m_model, m_model.m_player.m_x + dx + 1, m_model.m_player.m_y + dy + 1,
+			ElectricalPost p = new ElectricalPost(m_model, m_model.m_player.m_x + dx, m_model.m_player.m_y + dy,
 					Options.HP[1], m_model.m_sprites.get("ElectricalPost"),
 					new IAutomaton(Options.Entities.get("Wall")), m_model.m_surfaceworld);
 			fabricationSubMenu(p);

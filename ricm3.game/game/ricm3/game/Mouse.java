@@ -38,7 +38,7 @@ public class Mouse extends Enemy {
 			m_elapsed = 0;
 		} else {
 			if (m_elapsed % 30 == 0) {
-				m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
+				//m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
 				m_idsprite = m_basesprite + m_spritechanger;
 			}
 			m_elapsed++;

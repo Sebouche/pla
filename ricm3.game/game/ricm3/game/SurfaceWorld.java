@@ -119,7 +119,7 @@ public class SurfaceWorld extends World {
 			if ((time[0] == 0 && time[1] == 0)) {
 				Options.day = !Options.day;
 				m_model.m_timer.setTime(2, 30);
-				if (Options.day) {
+				if (!Options.day) {
 					int type;
 					int i = 0;
 					type = r.nextInt() % 100;

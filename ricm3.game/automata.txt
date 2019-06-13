@@ -8,21 +8,17 @@ Player(Surface){
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Surface)
 	| Key(s) & !Cell(S,O,1) ? Move(S) :(Surface)
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Surface)
-	| Key(m) ? Throw(F) :(BuyMenu)
-	* (BuyMenu):
-	| !GotPower() ? Pick(N) :()
 	| Key(m) ? Throw(F) :(Surface)
 	* (Underground):
 	| !GotPower() ? Pick(N) :()
 	| Key(d) & Cell(E,G,1) ? Jump(F) :(Surface)
-	| Key(FR) & Cell(E,O,1) & Cell(S,O,1)? Pop(E) :(Underground)
-	| Key(FD) & Cell(S,O,1) & Cell(S,O,1)? Pop(S) :(Underground)
-	| Key(FU) & Cell(N,O,1) & Cell(S,O,1)? Pop(N) :(Underground)
-	| Key(FL) & Cell(W,O,1) & Cell(S,O,1)? Pop(W) :(Underground)
-	| !Cell(S,O,1) & !Cell(S,T,1) ? Move(S) :(Underground)
+	| Key(FR) & Cell(E,O,1) ? Pop(E) :(Underground)
+	| Key(FD) & Cell(S,O,1) ? Pop(S) :(Underground)
+	| Key(FU) & Cell(N,O,1) ? Pop(N) :(Underground)
+	| Key(FL) & Cell(W,O,1) ? Pop(W) :(Underground)
+	| !Cell(S,O,1) / Cell(F,T,0) / Cell(S,T,1)? Move(S) :(Underground)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
-	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
-	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
+	| Key(s) & !Cell(S,O,1) ? Move(S) :(Underground)
 	| Key(z) & !Cell(N,O,1) ? Move(N) :(Jumping)
 	| Key(w) ? Wizz(F) :(Underground)
 	| Key(q) & Cell(W,J,1) ? Move(W) :(Ladder)
@@ -62,6 +58,18 @@ Player(Surface){
 	* (InsideTurret):
 	| Key(ENTER) ? Pop(F) :(Surface)
 	* ()
+}
+
+
+Player2(Surface){
+	* (Surface):
+	| !GotPower() ? Get :()
+	| Key(v) ? Wizz(F) :(Surface)
+	| Key(i) & !Cell(N,O,1) ? Move(N) :(Surface)
+	| Key(j) & !Cell(W,O,1) ? Move(W) :(Surface)
+	| Key(k) & !Cell(S,O,1) ? Move(S) :(Surface)
+	| Key(l) & !Cell(E,O,1) ? Move(E) :(Surface)
+	| Key(n) ? Egg() :(Surface)
 }
 
 Bat(E1){
