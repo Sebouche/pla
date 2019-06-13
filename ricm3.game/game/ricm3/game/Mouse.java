@@ -19,30 +19,33 @@ public class Mouse extends Enemy {
 	}
 
 	public boolean move(Direction dir) {
-		Direction absoldir = Direction.entityDir(this, dir);
-		super.move(absoldir);
-		if (absoldir != m_lastdir) {
-			if (absoldir == Direction.EAST) {
-				m_basesprite = 0;
+		if (m_elapsed % 2 == 0) {
+			Direction absoldir = Direction.entityDir(this, dir);
+			super.move(dir);
+
+			if (absoldir != m_lastdir) {
+				if (absoldir == Direction.EAST) {
+					m_basesprite = 0;
+				}
+				if (absoldir == Direction.WEST) {
+					m_basesprite = 4;
+				}
+				if (absoldir == Direction.NORTH) {
+					m_basesprite = 12;
+				}
+				if (absoldir == Direction.SOUTH) {
+					m_basesprite = 8;
+				}
+				m_lastdir = absoldir;
+				m_elapsed = 0;
+			} else {
+				if (m_elapsed % 30 == 0) {
+					m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
+					m_idsprite = m_basesprite + m_spritechanger;
+				}
 			}
-			if (absoldir == Direction.WEST) {
-				m_basesprite = 4;
-			}
-			if (absoldir == Direction.NORTH) {
-				m_basesprite = 12;
-			}
-			if (absoldir == Direction.SOUTH) {
-				m_basesprite = 8;
-			}
-			m_lastdir = absoldir;
-			m_elapsed = 0;
-		} else {
-			if (m_elapsed % 30 == 0) {
-				m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
-				m_idsprite = m_basesprite + m_spritechanger;
-			}
-			m_elapsed++;
 		}
+		m_elapsed++;
 		return true;
 	}
 

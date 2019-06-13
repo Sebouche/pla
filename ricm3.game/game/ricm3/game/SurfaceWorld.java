@@ -29,7 +29,6 @@ public class SurfaceWorld extends World {
 	}
 
 	List<ChunkList> chunklists;
-	List<Line> blitz;
 
 	public SurfaceWorld(int radius, Model m) {
 		super(m);
@@ -48,7 +47,6 @@ public class SurfaceWorld extends World {
 		add(new Chunk(this, x, y, 1));
 		generateChunks(0, 0, radius);
 		m_bgmfile = new File("sprites/bgm_surface.wav");
-		blitz = new LinkedList<Line>();
 	}
 
 	public void add(Chunk c) {
@@ -120,42 +118,44 @@ public class SurfaceWorld extends World {
 				Options.day = !Options.day;
 				m_model.m_timer.setTime(0, 30);
 				if (!Options.day) {
-					int type;
-					int i = 0;
-					type = r.nextInt() % 100;
-					while (type >= Options.spawnerProba[i]) {
-						type -= Options.spawnerProba[i];
-						i++;
-					}
-					GameEntity e;
-					switch (Options.spawnerType[i]) {
-					case "Dog":
-						e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("Dog"),
-								new IAutomaton(Options.Entities.get("Dog")), m_model.m_surfaceworld, m_allies);
-						break;
-					case "Turtle":
-						e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("Turtle"),
-								new IAutomaton(Options.Entities.get("Turtle")), m_model.m_surfaceworld, m_allies);
-						break;
-					case "Mouse":
-						e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("Mouse"),
-								new IAutomaton(Options.Entities.get("Mouse")), m_model.m_surfaceworld, m_allies);
-						break;
-					case "Rabbit":
-						e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("Rabbit"),
-								new IAutomaton(Options.Entities.get("Rabbit")), m_model.m_surfaceworld, m_allies);
-						break;
-					default:
-						e = null;
-						break;
-					}
-					if (e != null) {
-						m_tmpadd.add(e);
-						return true;
+					for (int nbspawn = 0; nbspawn < 3; nbspawn++) {
+						int type;
+						int i = 0;
+						type = Math.floorMod(r.nextInt(), 100);
+						while (type >= Options.spawnerProba[i]) {
+							type -= Options.spawnerProba[i];
+							i++;
+						}
+						GameEntity e;
+						switch (Options.spawnerType[i]) {
+						case "Dog":
+							e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("Dog"),
+									new IAutomaton(Options.Entities.get("Dog")), m_model.m_surfaceworld, m_allies);
+							break;
+						case "Turtle":
+							e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("Turtle"),
+									new IAutomaton(Options.Entities.get("Turtle")), m_model.m_surfaceworld, m_allies);
+							break;
+						case "Mouse":
+							e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("Mouse"),
+									new IAutomaton(Options.Entities.get("Mouse")), m_model.m_surfaceworld, m_allies);
+							break;
+						case "Rabbit":
+							e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("Rabbit"),
+									new IAutomaton(Options.Entities.get("Rabbit")), m_model.m_surfaceworld, m_allies);
+							break;
+						default:
+							e = null;
+							break;
+						}
+						if (e != null) {
+							m_tmpadd.add(e);
+							//return true;
+						}
 					}
 				}
 			}
-			return false;
+			return true;
 		}
 	}
 
@@ -191,6 +191,7 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void changeWorld() {
+		m_model.m_player.m_keys = new LinkedList<Keys>();
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 128;
 		m_model.m_currentworld = m_model.m_undergroundworld;
@@ -238,55 +239,22 @@ public class SurfaceWorld extends World {
 				m_entities.remove(m_model.m_player);
 			}
 		}
+
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
-		Iterator<GameEntity> ite = m_entities.iterator();
-		while (ite.hasNext()) {
-			GameEntity e = ite.next();
-			if(!(e instanceof Ally) && !(e instanceof Enemy)) {
-				Graphics g_child;
-				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
-						(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
-				e.paint(g_child);
-				g_child.dispose();
-			}
-		}
-		Iterator<Ally> iter = m_allies.iterator();
+		Iterator<GameEntity> iter = m_entities.iterator();
+		GameEntity e;
+		Graphics g_child;
 		while (iter.hasNext()) {
-			GameEntity e = iter.next();
-			Graphics g_child;
+			e = iter.next();
 			g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
 					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			e.paint(g_child);
 			g_child.dispose();
 		}
-		Iterator<Enemy> itera = m_enemies.iterator();
-		while (itera.hasNext()) {
-			GameEntity e = itera.next();
-			Graphics g_child;
-			g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
-					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
-			e.paint(g_child);
-			g_child.dispose();
-		}		
-		/*
-		Iterator<Line> iter2 = blitz.iterator();
-		Line l;
-		g.setColor(Options.BlitzColor);
-		while (iter2.hasNext()) {
-			l = iter2.next();
-			g_child = g.create(Math.min(l.p1.x, l.p2.x) - cam_x + m_model.m_width / 2,
-					Math.min(l.p1.y, l.p2.y) - cam_y + m_model.m_height / 2,
-					Math.max(l.p1.x, l.p2.x) - Math.min(l.p1.x, l.p2.x),
-					Math.max(l.p1.y, l.p2.y) - Math.min(l.p1.y, l.p2.y));
-			g_child.drawLine(l.p1.x, l.p1.y, l.p2.x, l.p2.y);
-			g_child.dispose();
-		}
-		blitz = new LinkedList<Line>();
-		*/
 	}
 }
