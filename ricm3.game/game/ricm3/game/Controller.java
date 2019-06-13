@@ -81,6 +81,8 @@ public class Controller extends GameController implements ActionListener {
 	Font m_f1, m_f2;
 	JMenuItem m_quitbutton, m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau, m_m2_validate;
 	JPopupMenu fabricationSubMenu;
+	JPanel m_inventoryPanel;
+	JLabel in1, in2, in3, in4, in5, in6, in7, in8;
 
 	GameEntity currentEntity;
 
@@ -98,7 +100,7 @@ public class Controller extends GameController implements ActionListener {
 	public void step(long now) {
 		m_model.step(now);
 		m_view.step(now);
-		inventory();
+		updateInventory();
 	}
 
 	@Override
@@ -294,48 +296,54 @@ public class Controller extends GameController implements ActionListener {
 	}
 
 	public void inventory() {
-		JPanel Panel = new JPanel();
-		Panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		Panel.setBackground(Color.WHITE);
+		m_inventoryPanel = new JPanel();
+		m_inventoryPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		m_inventoryPanel.setBackground(Color.WHITE);
 
-		JLabel Label;
+		in1 = new JLabel("x" + m_model.m_player.blocs().get(Ladder.class));
+		in1.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[10]));
+		in1.setFont(m_f1);
+		m_inventoryPanel.add(in1);
 
-		Label = new JLabel("x" + m_model.m_player.blocs().get(Ladder.class));
-		Label.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[10]));
-		Label.setFont(m_f1);
-		Panel.add(Label);
+		in2 = new JLabel("x" + m_model.m_player.blocs().get(Dirt.class));
+		in2.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[0]));
+		in2.setFont(m_f1);
+		m_inventoryPanel.add(in2);
 
-		Label = new JLabel("x" + m_model.m_player.blocs().get(Dirt.class));
-		Label.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[0]));
-		Label.setFont(m_f1);
-		Panel.add(Label);
+		in3 = new JLabel("x" + m_model.m_player.blocs().get(Stone.class));
+		in3.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[2]));
+		in3.setFont(m_f1);
+		m_inventoryPanel.add(in3);
 
-		Label = new JLabel("x" + m_model.m_player.blocs().get(Stone.class));
-		Label.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[2]));
-		Label.setFont(m_f1);
-		Panel.add(Label);
+		in4 = new JLabel("x" + m_model.m_player.blocs().get(Coal.class));
+		in4.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[11]));
+		in4.setFont(m_f1);
+		m_inventoryPanel.add(in4);
 
-		Label = new JLabel("x" + m_model.m_player.blocs().get(Coal.class));
-		Label.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[11]));
-		Label.setFont(m_f1);
-		Panel.add(Label);
+		in5 = new JLabel("x" + m_model.m_player.blocs().get(Iron.class));
+		in5.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[5]));
+		in5.setFont(m_f1);
+		m_inventoryPanel.add(in5);
 
-		Label = new JLabel("x" + m_model.m_player.blocs().get(Iron.class));
-		Label.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[5]));
-		Label.setFont(m_f1);
-		Panel.add(Label);
+		in6 = new JLabel("x" + m_model.m_player.blocs().get(Copper.class));
+		in6.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[3]));
+		in6.setFont(m_f1);
+		m_inventoryPanel.add(in6);
 
-		Label = new JLabel("x" + m_model.m_player.blocs().get(Copper.class));
-		Label.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[3]));
-		Label.setFont(m_f1);
-		Panel.add(Label);
-
-		Label = new JLabel("x" + m_model.m_player.blocs().get(Uranium.class));
-		Label.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[4]));
-		Label.setFont(m_f1);
-		Panel.add(Label);
-
-		m_game.addSouth(Panel);
+		in7 = new JLabel("x" + m_model.m_player.blocs().get(Uranium.class));
+		in7.setIcon(new ImageIcon(m_model.m_sprites.get("Block")[4]));
+		in7.setFont(m_f1);
+		m_inventoryPanel.add(in7);
+	}
+	
+	public void updateInventory() {
+		in1.setText("x" + m_model.m_player.blocs().get(Ladder.class));
+		in2.setText("x" + m_model.m_player.blocs().get(Dirt.class));
+		in3.setText("x" + m_model.m_player.blocs().get(Stone.class));
+		in4.setText("x" + m_model.m_player.blocs().get(Coal.class));
+		in5.setText("x" + m_model.m_player.blocs().get(Iron.class));
+		in6.setText("x" + m_model.m_player.blocs().get(Copper.class));
+		in7.setText("x" + m_model.m_player.blocs().get(Uranium.class));
 	}
 
 	public void endgameMenu() {
@@ -363,6 +371,7 @@ public class Controller extends GameController implements ActionListener {
 		m_f2 = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 		fabricationMenu();
 		inventory();
+		m_game.addSouth(m_inventoryPanel);
 		endgameMenu();
 		m_game.addNorth(m_model.m_timer);
 	}
@@ -464,7 +473,6 @@ public class Controller extends GameController implements ActionListener {
 				m_model.m_surfaceworld.m_entities.add(currentEntity);
 				m_model.m_surfaceworld.m_allies.add((Ally) currentEntity);
 			}
-			inventory();
 		} else if ((s == m_quitbutton)) {
 			System.exit(0);
 		}
