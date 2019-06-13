@@ -66,7 +66,7 @@ public class Player extends Ally {
 	
 	@Override
 	public boolean Throw(Direction dir) {
-		m_model.m_player.m_keys = new LinkedList<Keys>();
+		m_model.m_keys = new LinkedList<Keys>();
 		m_model.fabricationMenu.show(m_model.m_view, (int) (m_model.m_view.getWidth() / 2 + Options.Entity_size * Options.Scale),
 				m_model.m_view.getHeight() / 2);
 		return true;
