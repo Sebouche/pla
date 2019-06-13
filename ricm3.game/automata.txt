@@ -15,10 +15,11 @@ Player(Surface){
 	* (Underground):
 	| !GotPower() ? Pick(N) :()
 	| Key(d) & Cell(E,G,1) ? Jump(F) :(Surface)
-	| Key(FR) & Cell(E,O,1) ? Pop(E) :(Underground)
-	| Key(FD) & Cell(S,O,1) ? Pop(S) :(Underground)
-	| Key(FU) & Cell(N,O,1) ? Pop(N) :(Underground)
-	| Key(FL) & Cell(W,O,1) ? Pop(W) :(Underground)
+	| Key(FR) & Cell(E,O,1) & Cell(S,O,1)? Pop(E) :(Underground)
+	| Key(FD) & Cell(S,O,1) & Cell(S,O,1)? Pop(S) :(Underground)
+	| Key(FU) & Cell(N,O,1) & Cell(S,O,1)? Pop(N) :(Underground)
+	| Key(FL) & Cell(W,O,1) & Cell(S,O,1)? Pop(W) :(Underground)
+	| !Cell(S,O,1) & !Cell(S,T,1) ? Move(S) :(Underground)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
@@ -29,7 +30,6 @@ Player(Surface){
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Underground)
 	| Key(m) ? Throw(F) :(Menu1)
-	| !Cell(S,O,1) ? Move(S) :(Underground)
 	* (Jumping):
 	| !GotPower() ? Pick(N) :()
 	| Cell(S,O,1) ? Protect() :(Underground)
