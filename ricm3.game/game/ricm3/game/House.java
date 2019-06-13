@@ -45,6 +45,7 @@ public class House extends Ally {
 	public void step() {
 		m_blocks[7].step();
 		if(m_hp<=0) {
+			m_model.m_gameon = false;
 			m_model.endgame();
 		}
 	}

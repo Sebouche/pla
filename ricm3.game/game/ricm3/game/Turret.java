@@ -56,24 +56,17 @@ public class Turret extends Ally {
 
 	@Override
 	public boolean hit(Direction d, int power) {
-		if(System.currentTimeMillis()>lastHit+500) {
+		if (System.currentTimeMillis() > lastHit + 500) {
 			lastHit = System.currentTimeMillis();
 			if (target != null) {
+				m_idsprite = ((m_idsprite+1)%2)+1;
 				target.damage_hp(this.m_dmg);
-				blitz = new Line(((int)(Options.Entity_size*Options.Scale))/2,0,target.m_x+((int)(Options.Entity_size*Options.Scale))-m_x,target.m_y+((int)(Options.Entity_size*Options.Scale))-m_y);
+				//m_model.m_surfaceworld.blitz.add(new Line(m_x + ((int) (Options.Entity_size * Options.Scale)) / 2, m_y, target.m_x + ((int) (Options.Entity_size * Options.Scale)), target.m_y + ((int) (Options.Entity_size * Options.Scale))));
 				return true;
-			}	
+			}
+			m_idsprite = 0;
 		}
 		return false;
-	}
-	
-	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
-		if(blitz!=null) {
-			g.setColor(Options.BlitzColor);
-			g.drawLine(blitz.p1.x, blitz.p1.y, blitz.p2.x, blitz.p2.y);
-		}
 	}
 
 }

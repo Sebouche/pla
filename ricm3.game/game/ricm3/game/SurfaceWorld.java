@@ -29,6 +29,7 @@ public class SurfaceWorld extends World {
 	}
 
 	List<ChunkList> chunklists;
+	List<Line> blitz;
 
 	public SurfaceWorld(int radius, Model m) {
 		super(m);
@@ -47,6 +48,7 @@ public class SurfaceWorld extends World {
 		add(new Chunk(this, x, y, 1));
 		generateChunks(0, 0, radius);
 		m_bgmfile = new File("sprites/bgm_surface.wav");
+		blitz = new LinkedList<Line>();
 	}
 
 	public void add(Chunk c) {
@@ -193,8 +195,8 @@ public class SurfaceWorld extends World {
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 128;
 		m_model.m_currentworld = m_model.m_undergroundworld;
-		m_model.m_undergroundplayer.blocs=m_model.m_player.blocs;
-		m_model.m_player=m_model.m_undergroundplayer;
+		m_model.m_undergroundplayer.blocs = m_model.m_player.blocs;
+		m_model.m_player = m_model.m_undergroundplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_camera.m_watched = m_model.m_player;
@@ -227,7 +229,7 @@ public class SurfaceWorld extends World {
 			m_entities.remove(e);
 		}
 		m_tmprm = new LinkedList<GameEntity>();
-		
+
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			if (!m_entities.contains(m_model.m_player)) {
 				m_entities.add(m_model.m_player);
@@ -244,15 +246,30 @@ public class SurfaceWorld extends World {
 	public void paint(Graphics g) {
 		int cam_x = m_model.m_camera.m_watched.m_x;
 		int cam_y = m_model.m_camera.m_watched.m_y;
-		Iterator<GameEntity> iter = m_entities.iterator();
+		Iterator<GameEntity> iter1 = m_entities.iterator();
 		GameEntity e;
 		Graphics g_child;
-		while (iter.hasNext()) {
-			e = iter.next();
+		while (iter1.hasNext()) {
+			e = iter1.next();
 			g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
 					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			e.paint(g_child);
 			g_child.dispose();
 		}
+		/*
+		Iterator<Line> iter2 = blitz.iterator();
+		Line l;
+		g.setColor(Options.BlitzColor);
+		while (iter2.hasNext()) {
+			l = iter2.next();
+			g_child = g.create(Math.min(l.p1.x, l.p2.x) - cam_x + m_model.m_width / 2,
+					Math.min(l.p1.y, l.p2.y) - cam_y + m_model.m_height / 2,
+					Math.max(l.p1.x, l.p2.x) - Math.min(l.p1.x, l.p2.x),
+					Math.max(l.p1.y, l.p2.y) - Math.min(l.p1.y, l.p2.y));
+			g_child.drawLine(l.p1.x, l.p1.y, l.p2.x, l.p2.y);
+			g_child.dispose();
+		}
+		blitz = new LinkedList<Line>();
+		*/
 	}
 }
