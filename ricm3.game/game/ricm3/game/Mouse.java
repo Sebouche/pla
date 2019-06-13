@@ -8,7 +8,7 @@ import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
 
 public class Mouse extends Enemy {
-	int m_spritevariation = 5;
+	int m_spritevariation = 4;
 	static Random r = new Random();
 
 	public Mouse(Model model, int x, int y, BufferedImage[] sprites, IAutomaton automate, World originWorld,
@@ -26,19 +26,19 @@ public class Mouse extends Enemy {
 				m_basesprite = 0;
 			}
 			if (absoldir == Direction.WEST) {
-				m_basesprite = 5;
+				m_basesprite = 4;
 			}
 			if (absoldir == Direction.NORTH) {
-				m_basesprite = 15;
+				m_basesprite = 12;
 			}
 			if (absoldir == Direction.SOUTH) {
-				m_basesprite = 10;
+				m_basesprite = 8;
 			}
 			m_lastdir = absoldir;
 			m_elapsed = 0;
 		} else {
 			if (m_elapsed % 30 == 0) {
-				//m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
+				m_spritechanger = (m_spritechanger + 1) % m_spritevariation;
 				m_idsprite = m_basesprite + m_spritechanger;
 			}
 			m_elapsed++;
