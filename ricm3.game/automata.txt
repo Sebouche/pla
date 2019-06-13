@@ -183,6 +183,13 @@ Water(Init){
 	* ()
 }
 
+Explosion(Init){
+	*(Init):
+	| !GotPower() ? :()
+	| GotPower() ? Wizz(N) : (Init)
+	* ()
+}
+
 Moving(Init){
 	* (Init):
 	| Key(z) & !Cell(N,O,1) / Cell(N,P,1) ? Move(N) :(Init)

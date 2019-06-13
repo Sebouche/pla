@@ -1,6 +1,7 @@
 package ricm3.game;
 
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.List;
 
 import ricm3.interpreter.Direction;
@@ -28,7 +29,7 @@ public class Turtle extends Enemy {
 				m_spritevariation = 5;
 			}
 			if (absoldir == Direction.NORTH) {
-				m_basesprite = 15;
+				m_basesprite = 14;
 				m_spritevariation = 4;
 			}
 			if (absoldir == Direction.SOUTH) {
@@ -44,6 +45,26 @@ public class Turtle extends Enemy {
 			}
 			m_elapsed++;
 		}
+		return true;
+	}
+	
+	@Override
+	public boolean get() {
+		Iterator<Ally> iter = m_originWorld.m_allies.iterator();
+		m_dmg=100;
+		double dis;
+		GameEntity e = null;
+		while (iter.hasNext()) {
+			e = iter.next();
+			dis = distance(e);
+			if (dis <= 50) {
+				e.damage_hp(m_dmg);
+				System.out.println(e.m_hp);
+			}
+		}
+		super.get();
+		Explosion expl = new Explosion(m_model,m_x,m_y,0, m_model.m_sprites.get("Explosion"),new IAutomaton(Options.Entities.get("Explosion")),m_model.m_surfaceworld);
+		m_originWorld.m_tmpadd.add(expl);
 		return true;
 	}
 }
