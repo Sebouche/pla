@@ -12,7 +12,6 @@ import ricm3.interpreter.Type;
 
 public class Wall extends Ally {
 
-	List<Ally> target;
 
 	public Wall(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
@@ -25,7 +24,7 @@ public class Wall extends Ally {
 
 	@Override
 	public boolean wizz(Direction dir) {
-		Iterator<Ally> iter = target.iterator();
+		Iterator<Enemy> iter = m_originWorld.m_enemies.iterator();
 		double dis;
 		GameEntity e = null;
 		while (iter.hasNext()) {

@@ -148,8 +148,9 @@ Block(Init){
 }
 	
 Barbed(Init){
-    * (Init): 
-    | !GotPower() ? Wizz() :()
+	* (Init): 
+	| !GotPower() ? Get() :()
+	| Cell(F,O,0) ? Pop() / Wizz() :(Init)
 	| True ? Pop() :(Init)
 	* ()
 }

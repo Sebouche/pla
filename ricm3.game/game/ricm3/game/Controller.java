@@ -379,7 +379,7 @@ public class Controller extends GameController implements ActionListener {
 
 	public void create(Direction dir, String name) {
 		int dx, dy;
-		int ESize = (int) (Options.Entity_size * Options.Scale);
+		int ESize = (int) (Options.Entity_size * Options.Scale)+1;
 		switch (Direction.entityDir(m_model.m_player, dir)) {
 		case NORTH:
 			dx = 0;

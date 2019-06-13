@@ -11,7 +11,6 @@ import ricm3.interpreter.IAutomaton;
 
 public class Barbed extends Ally {
 	
-	List<Ally> target;
 
 	public Barbed(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
@@ -21,7 +20,7 @@ public class Barbed extends Ally {
 	
 		@Override
 		public boolean pop(Direction dir) {
-			Iterator<Ally> iter = target.iterator();
+			Iterator<Enemy> iter = m_originWorld.m_enemies.iterator();
 			double dis;
 			GameEntity e = null;
 			while (iter.hasNext()) {
