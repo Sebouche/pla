@@ -154,7 +154,7 @@ Barbed(Init){
 
 Wall(Init){
 	* (Init): 
-    | !GotPower() ? Wizz() / Get() :()
+    | !GotPower() ? Get() / Wizz() :()
 	* ()
 }
 
