@@ -25,6 +25,7 @@ public class GameEntity {
 	public boolean m_collision = true;
 	Hashtable<String, Integer> m_recipe;
 	public boolean m_breakable = true;
+	long m_lastHit = 0;
 
 
 	public GameEntity(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate,
