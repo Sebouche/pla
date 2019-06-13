@@ -12,7 +12,6 @@ import ricm3.interpreter.Type;
 public class Enemy extends MovingEntity {
 
 	List<Ally> targets;
-	long lastHit = 0;
 
 	public Enemy(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld,
 			List<Ally> t) {
@@ -96,8 +95,8 @@ public class Enemy extends MovingEntity {
 
 	@Override
 	public boolean hit(Direction dir, int power) {
-		if (System.currentTimeMillis() > lastHit + 200) {
-			lastHit = System.currentTimeMillis();
+		if (System.currentTimeMillis() > m_lastHit + 200) {
+			m_lastHit = System.currentTimeMillis();
 			switch (dir) {
 			case NORTH:
 			case SOUTH:

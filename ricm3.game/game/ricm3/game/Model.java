@@ -247,6 +247,14 @@ public class Model extends GameModel {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
+		imageFile = new File("sprites/explosion.png");
+		try {
+			BufferedImage spritename = ImageIO.read(imageFile);
+			splitSprite("Explosion", spritename, 3, 3);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 	}
 
 	void splitSprite(String name, BufferedImage sprite, int rows, int cols) {

@@ -6,6 +6,8 @@ import ricm3.interpreter.IAutomaton;
 
 public class MovingEntity extends GameEntity {
 	Direction m_lastdir;
+	Direction m_lastdir2;
+	Direction m_lastdir3;
 	int m_elapsed;
 	int m_spritechanger;
 	int m_basesprite=0;

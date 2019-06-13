@@ -18,7 +18,7 @@ public class Wall extends Ally {
 		m_recipe = new Hashtable<String, Integer>();
 		m_recipe.put("Stone", 2);
 		m_type = Type.OBSTACLE;
-		m_dmg = 4;
+		m_dmg = 5;
 	}
 
 
@@ -30,9 +30,8 @@ public class Wall extends Ally {
 		while (iter.hasNext()) {
 			e = iter.next();
 			dis = distance(e);
-			if (dis <= 10) {
+			if (dis <= 64) {
 				e.damage_hp(m_dmg);
-				System.out.println(e.m_hp);
 			}
 		}
 		return true;

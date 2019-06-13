@@ -319,15 +319,16 @@ public class Ast {
 		
 public IExpression make() {
 			
-			IAction act = null;
+			IAction act = new IAction();
+			IAction act2 = null;
 			ICondition cond = null;
-			IExpression tmp = new IExpression();
+			IExpression tmp ;
 			if (left_operand instanceof FunCall) {
 				tmp = ((FunCall) left_operand).make();
 				if(tmp instanceof IAction) {
-					act = new IAction();
-					act.op = new IOperator(operator.make());
 					act.act = tmp;
+					act2= (IAction) act.act;
+					act.op = new IOperator(operator.make());
 				}
 				else {
 					cond = new ICondition();
@@ -338,9 +339,9 @@ public IExpression make() {
 			} else if (left_operand instanceof BinaryOp) {
 				tmp = ((BinaryOp) left_operand).make();
 				if(tmp instanceof IAction) {
-					act = new IAction();
-					act.op = new IOperator(operator.make());
 					act.act = tmp;
+					act2= (IAction) act.act;
+					act.op = new IOperator(operator.make());
 				}
 				else {
 					cond = new ICondition();
@@ -350,9 +351,9 @@ public IExpression make() {
 			} else {
 				tmp = ((UnaryOp) left_operand).make();
 				if(tmp instanceof IAction) {
-					act = new IAction();
-					act.op = new IOperator(operator.make());
 					act.act = tmp;
+					act2= (IAction) act.act;
+					act.op = new IOperator(operator.make());
 				}
 				else {
 					cond = new ICondition();
@@ -363,7 +364,8 @@ public IExpression make() {
 			if (right_operand instanceof FunCall) {
 				tmp = ((FunCall) right_operand).make();
 				if(tmp instanceof IAction) {
-					act.act = tmp;
+					act2.act = tmp;
+					act2.op = new IOperator(operator.make());
 				}
 				else {
 					cond.expr2 = tmp;
@@ -372,7 +374,8 @@ public IExpression make() {
 			} else if (right_operand instanceof BinaryOp) {
 				tmp = ((BinaryOp) right_operand).make();
 				if(tmp instanceof IAction) {
-					act.act = tmp;
+					act2.act = tmp;
+					act2.op = new IOperator(operator.make());
 				}
 				else {
 					cond.expr2 = tmp;
@@ -380,7 +383,8 @@ public IExpression make() {
 			} else {
 				tmp = ((UnaryOp) right_operand).make();
 				if(tmp instanceof IAction) {
-					act.act = tmp;
+					act2.act = tmp;
+					act2.op = new IOperator(operator.make());
 				}
 				else {
 					cond.expr2 = tmp;

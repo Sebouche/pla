@@ -6,13 +6,11 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
 
 import ricm3.game.Options;
 import ricm3.interpreter.IAutomaton;
 import ricm3.interpreter.Keys;
-import ricm3.interpreter.Type;
 
 public class SurfaceWorld extends World {
 
@@ -120,42 +118,44 @@ public class SurfaceWorld extends World {
 				Options.day = !Options.day;
 				m_model.m_timer.setTime(0, 30);
 				if (!Options.day) {
-					int type;
-					int i = 0;
-					type = r.nextInt() % 100;
-					while (type >= Options.spawnerProba[i]) {
-						type -= Options.spawnerProba[i];
-						i++;
-					}
-					GameEntity e;
-					switch (Options.spawnerType[i]) {
-					case "Dog":
-						e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("Dog"),
-								new IAutomaton(Options.Entities.get("Dog")), m_model.m_surfaceworld, m_allies);
-						break;
-					case "Turtle":
-						e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("Turtle"),
-								new IAutomaton(Options.Entities.get("Turtle")), m_model.m_surfaceworld, m_allies);
-						break;
-					case "Mouse":
-						e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("Mouse"),
-								new IAutomaton(Options.Entities.get("Mouse")), m_model.m_surfaceworld, m_allies);
-						break;
-					case "Rabbit":
-						e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("Rabbit"),
-								new IAutomaton(Options.Entities.get("Rabbit")), m_model.m_surfaceworld, m_allies);
-						break;
-					default:
-						e = null;
-						break;
-					}
-					if (e != null) {
-						m_tmpadd.add(e);
-						return true;
+					for (int nbspawn = 0; nbspawn < 3; nbspawn++) {
+						int type;
+						int i = 0;
+						type = Math.floorMod(r.nextInt(), 100);
+						while (type >= Options.spawnerProba[i]) {
+							type -= Options.spawnerProba[i];
+							i++;
+						}
+						GameEntity e;
+						switch (Options.spawnerType[i]) {
+						case "Dog":
+							e = new Dog(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_model.m_sprites.get("Dog"),
+									new IAutomaton(Options.Entities.get("Dog")), m_model.m_surfaceworld, m_allies);
+							break;
+						case "Turtle":
+							e = new Turtle(m_model,m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_model.m_sprites.get("Turtle"),
+									new IAutomaton(Options.Entities.get("Turtle")), m_model.m_surfaceworld, m_allies);
+							break;
+						case "Mouse":
+							e = new Mouse(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_model.m_sprites.get("Mouse"),
+									new IAutomaton(Options.Entities.get("Mouse")), m_model.m_surfaceworld, m_allies);
+							break;
+						case "Rabbit":
+							e = new Rabbit(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_model.m_sprites.get("Rabbit"),
+									new IAutomaton(Options.Entities.get("Rabbit")), m_model.m_surfaceworld, m_allies);
+							break;
+						default:
+							e = null;
+							break;
+						}
+						if (e != null) {
+							m_tmpadd.add(e);
+							// return true;
+						}
 					}
 				}
 			}
-			return false;
+			return true;
 		}
 	}
 
@@ -191,11 +191,12 @@ public class SurfaceWorld extends World {
 
 	@Override
 	public void changeWorld() {
+		m_model.m_player.m_keys = new LinkedList<Keys>();
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 128;
 		m_model.m_currentworld = m_model.m_undergroundworld;
-		m_model.m_undergroundplayer.blocs=m_model.m_player.blocs;
-		m_model.m_player=m_model.m_undergroundplayer;
+		m_model.m_undergroundplayer.blocs = m_model.m_player.blocs;
+		m_model.m_player = m_model.m_undergroundplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_camera.m_watched = m_model.m_player;
@@ -210,33 +211,35 @@ public class SurfaceWorld extends World {
 			m_model.endgame();
 		}
 		Iterator<GameEntity> iter = m_entities.iterator();
+		GameEntity e;
 		while (iter.hasNext()) {
-			GameEntity e = iter.next();
+			e = iter.next();
 			e.step();
 		}
 		iter = m_tmpadd.iterator();
 		while (iter.hasNext()) {
-			GameEntity e = iter.next();
+			e = iter.next();
 			m_entities.add(e);
 		}
 		m_tmpadd = new LinkedList<GameEntity>();
 
 		iter = m_tmprm.iterator();
 		while (iter.hasNext()) {
-			GameEntity e = iter.next();
+			e = iter.next();
 			m_entities.remove(e);
 		}
 		m_tmprm = new LinkedList<GameEntity>();
-		
-		if (!(m_model.m_currentworld instanceof SurfaceWorld)) {
-			if (m_entities.contains(m_model.m_player)) {
-				m_entities.remove(m_model.m_player);
-			}
-		} else {
+
+		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			if (!m_entities.contains(m_model.m_player)) {
 				m_entities.add(m_model.m_player);
 			}
+		} else {
+			if (m_entities.contains(m_model.m_player)) {
+				m_entities.remove(m_model.m_player);
+			}
 		}
+
 	}
 
 	@Override
@@ -246,7 +249,7 @@ public class SurfaceWorld extends World {
 		Iterator<GameEntity> ite = m_entities.iterator();
 		while (ite.hasNext()) {
 			GameEntity e = ite.next();
-			if(!(e instanceof Ally) && !(e instanceof Enemy)) {
+			if (!(e instanceof Ally) && !(e instanceof Enemy)) {
 				Graphics g_child;
 				g_child = g.create(e.m_x - cam_x + m_model.m_width / 2, e.m_y - cam_y + m_model.m_height / 2,
 						(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
@@ -271,6 +274,6 @@ public class SurfaceWorld extends World {
 					(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
 			e.paint(g_child);
 			g_child.dispose();
-		}		
+		}
 	}
 }
