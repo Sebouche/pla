@@ -2,6 +2,7 @@ package game.blocks;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Hashtable;
 
 import ricm3.game.*;
 import ricm3.interpreter.*;

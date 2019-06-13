@@ -46,7 +46,6 @@ public class SurfacePlayer extends Player {
 			m_controled.m_hp = Options.HP[1];
 			m_model.m_camera.m_watched = this;
 			m_controled.m_automate = Options.Entities.get("Tesla");
-			m_keys = new LinkedList<Keys>();
 			m_insideTurret = false;
 			return true;
 		}
@@ -71,8 +70,7 @@ public class SurfacePlayer extends Player {
 		default:
 			return false;
 		}
-/// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE LA TOURELLE  (GOTSTUFF maybe)
-		if (blocs().Exist(Copper.class, 1) && blocs().Exist(Iron.class, 2)) {
+		if (m_model.m_player.m_originWorld instanceof SurfaceWorld && blocs().Exist(Copper.class, 1) && blocs().Exist(Iron.class, 2)) {
 			blocs().decrements(Copper.class, 1);
 			blocs().decrements(Iron.class, 2);
 			Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("Tesla"),

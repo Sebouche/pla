@@ -6,18 +6,19 @@ import ricm3.interpreter.IAutomaton;
 
 public class MovingEntity extends GameEntity {
 	Direction m_lastdir;
+	Direction m_lastdir2;
+	Direction m_lastdir3;
 	int m_elapsed;
 	int m_spritechanger;
 	int m_basesprite=0;
 	int m_spritevariation;
 
-	int m_dx, m_dy;
-	int m_grav;
+
+
 
 	public MovingEntity(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate,
 			World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
-		m_grav = 0;
 	}
 
 	boolean collision(GameEntity ge, int x, int y) {

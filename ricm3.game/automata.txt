@@ -2,15 +2,12 @@ Player(Surface){
 	* (Surface):
 	| !GotPower() ? Pick(N) :()
 	| Key(z) & Cell(N,G,1) ? Jump(F) :(Underground)
-	| Key(w) & !Cell(F,O,64) / Cell(F,T,64) ? Wizz(F) :(Surface)
+	| Key(w) & !Cell(F,O,64) / Cell(F,T,64) / Cell(F,P,1) ? Wizz(F) :(Surface)
 	| Key(p) & Cell(F,T,1) ? Pop(F) :(InsideTurret)
-	| Key(z) & !Cell(N,O,1) ? Move(N) :(Surface)
-	| Key(q) & !Cell(W,O,1) ? Move(W) :(Surface)
-	| Key(s) & !Cell(S,O,1) ? Move(S) :(Surface)
-	| Key(d) & !Cell(E,O,1) ? Move(E) :(Surface)
-	| Key(m) ? Throw(F) :(BuyMenu)
-	* (BuyMenu):
-	| !GotPower() ? Pick(N) :()
+	| Key(z) & !Cell(N,O,1) / Cell(N,P,1) ? Move(N) :(Surface)
+	| Key(q) & !Cell(W,O,1) / Cell(W,P,1) ? Move(W) :(Surface)
+	| Key(s) & !Cell(S,O,1) / Cell(S,P,1) ? Move(S) :(Surface)
+	| Key(d) & !Cell(E,O,1) / Cell(E,P,1) ? Move(E) :(Surface)
 	| Key(m) ? Throw(F) :(Surface)
 	* (Underground):
 	| !GotPower() ? Pick(N) :()
@@ -19,17 +16,15 @@ Player(Surface){
 	| Key(FD) & Cell(S,O,1) ? Pop(S) :(Underground)
 	| Key(FU) & Cell(N,O,1) ? Pop(N) :(Underground)
 	| Key(FL) & Cell(W,O,1) ? Pop(W) :(Underground)
+	| !Cell(S,O,1) / Cell(F,T,0) / Cell(S,T,1)? Move(S) :(Underground)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
-	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
-	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
+	| Key(s) & !Cell(S,O,1) ? Move(S) :(Underground)
 	| Key(z) & !Cell(N,O,1) ? Move(N) :(Jumping)
 	| Key(w) ? Wizz(F) :(Underground)
 	| Key(q) & Cell(W,J,1) ? Move(W) :(Ladder)
 	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Underground)
-	| Key(m) ? Throw(F) :(Menu1)
-	| !Cell(S,O,1) ? Move(S) :(Underground)
 	* (Jumping):
 	| !GotPower() ? Pick(N) :()
 	| Cell(S,O,1) ? Protect() :(Underground)
@@ -64,27 +59,28 @@ Player(Surface){
 	* ()
 }
 
-Bat(E1){
-	* (E1):
-	| !GotPower() ? Get() :()
-	| True ? Pop() :(E2)
-	* (E2):
-	| !GotPower() ? Get() :() 
-	| Cell(F,V) ? Move(F) :(E1)
-	| Cell(F,@) ? Hit() :(E1)
-	| True ? Pop() :(E2)
-	* ():
+
+Player2(Surface){
+	* (Surface):
+	| !GotPower() ? Get :()
+	| Key(v) ? Wizz(F) :(Surface)
+	| Key(i) & !Cell(N,O,1) / Cell(N,P,1) ? Move(N) :(Surface)
+	| Key(j) & !Cell(W,O,1) / Cell(W,P,1) ? Move(W) :(Surface)
+	| Key(k) & !Cell(S,O,1) / Cell(S,P,1) ? Move(S) :(Surface)
+	| Key(l) & !Cell(E,O,1) / Cell(E,P,1) ? Move(E) :(Surface)
+	| Key(b) ? Hit() :(Surface)
+	| Key(n) ? Egg() :(Surface)
 }
 
 Mouse(E3){
 	* (E1):
 	| !GotPower() ? Get() :()
-	| Cell(F,O,1) ? Hit() :(E2)
+	| Cell(F,P,1) / Cell(F,O,1) ? Hit() :(E2)
 	| Cell(F,T,1) / Cell(F,@,1) ? Hit() :(E3)
-	| True ? Egg() :(E4)
+	| True ? Move(F) / Egg() :(E4)
 	* (E2):
 	| !GotPower() ? Get() :()
-	| Cell(F,O,1) ? Hit() :(E2)
+	| Cell(F,P,1) / Cell(F,O,1) ? Hit() :(E2)
 	| True ? Move(F) / Egg() :(E4)
 	* (E3):
 	| !GotPower() ? Get() :()
@@ -100,7 +96,7 @@ Mouse(E3){
 Dog(E2){
 	* (E1):
 	| !GotPower() ? Get() :()
-	| Cell(F,O,1) / Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
+	| Cell(F,P,1) / Cell(F,O,1) / Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
 	| True ? Move(F) :(E2)
 	* (E2):
 	| !GotPower() ? Get() :()
@@ -111,7 +107,8 @@ Dog(E2){
 Rabbit(E2){
 	* (E1):
 	| !GotPower() ? Get() :()
-	| Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
+	| Cell(F,O,1) / Cell(F,O,0) ? Move(F) :(E2)
+	| Cell(F,P,1) / Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
 	| True ? Move(F) :(E2)
 	* (E2):
 	| !GotPower() ? Get() :()
@@ -122,7 +119,7 @@ Rabbit(E2){
 Turtle(E1){
 	* (E1):
 	| !GotPower() ? Get() :()
-	| Cell(F,O,1) / Cell(F,T,1) / Cell(F,@,1) ? Hit() :(E1)
+	| Cell(F,O,1) / Cell(F,P,1) / Cell(F,T,1) / Cell(F,@,1) ? Hit() :(E1)
 	| True ? Move(F) :(E2)
 	* (E2):
 	| !GotPower() ? Get() :()
@@ -136,7 +133,7 @@ Tesla(E1){
 	| True ? Pop() :(E2)
 	* (E2):
 	| !GotPower() ? Get() :()
-	| True ? Hit(F) :(E1)
+	| True ? Hit() :(E1)
 	* ()
 }
 
@@ -148,16 +145,15 @@ Block(Init){
 }
 	
 Barbed(Init){
-    * (Init): 
-    | !GotPower() ? Wizz() :()
+	* (Init): 
+	| !GotPower() ? Get() :()
 	| True ? Pop() :(Init)
 	* ()
 }
 
 Wall(Init){
 	* (Init): 
-    | !GotPower() ? Pop() :()
-	| True ? Wizz() :(Init)
+    | !GotPower() ? Get() / Wizz() :()
 	* ()
 }
 
@@ -173,11 +169,18 @@ Water(Init){
 	* ()
 }
 
+Explosion(Init){
+	*(Init):
+	| !GotPower() ? :()
+	| GotPower() ? Wizz(N) : (Init)
+	* ()
+}
+
 Moving(Init){
 	* (Init):
-	| Key(z) & !Cell(N,O,1) ? Move(N) :(Init)
-	| Key(q) & !Cell(W,O,1) ? Move(W) :(Init)
-	| Key(s) & !Cell(S,O,1) ? Move(S) :(Init)
-	| Key(d) & !Cell(E,O,1) ? Move(E) :(Init)
+	| Key(z) & !Cell(N,O,1) / Cell(N,P,1) ? Move(N) :(Init)
+	| Key(q) & !Cell(W,O,1) / Cell(W,P,1) ? Move(W) :(Init)
+	| Key(s) & !Cell(S,O,1) / Cell(S,P,1) ? Move(S) :(Init)
+	| Key(d) & !Cell(E,O,1) / Cell(E,P,1) ? Move(E) :(Init)
 	* ()
 }

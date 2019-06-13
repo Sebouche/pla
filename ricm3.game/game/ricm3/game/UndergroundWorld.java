@@ -79,7 +79,9 @@ public class UndergroundWorld extends World {
 				m_grid[11][j] = b;
 			}
 		}
-		m_grid[11][1] = null;
+		m_grid[11][1] = new Ladder(m_model, Math.floorMod((1), 60) * (int) (Options.Scale * Options.Entity_size),
+				11 * (int) (Options.Scale * Options.Entity_size), 100, m_model.m_sprites.get("Block"),
+				new IAutomaton(Options.Entities.get("Block")), this);
 		// Generation minerais
 		for (int i = 12; i < 60; i++) {
 			for (int j = 0; j < 60; j++) {
@@ -147,11 +149,10 @@ public class UndergroundWorld extends World {
 	@Override
 	public void changeWorld() {
 		// A appeller lorsque le joueur passe par la porte
-		m_model.m_player.m_keys = new LinkedList<Keys>();
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_currentworld = m_model.m_surfaceworld;
-		m_model.m_surfaceplayer.blocs=m_model.m_player.blocs;
+		m_model.m_surfaceplayer.blocs = m_model.m_player.blocs;
 		m_model.m_player = m_model.m_surfaceplayer;
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 193;

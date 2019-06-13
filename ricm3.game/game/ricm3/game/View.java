@@ -69,9 +69,9 @@ public class View extends GameView {
 		// background
 		if (m_model.m_currentworld instanceof SurfaceWorld) {
 			for (int i = -(int) ((getWidth() / 2) / (Options.Entity_size * Options.Scale))
-					- 1; i <= (int) ((getWidth() / 2) / (Options.Entity_size * Options.Scale)) + 1; i++) {
+					- 2; i <= (int) ((getWidth() / 2) / (Options.Entity_size * Options.Scale)) + 1; i++) {
 				for (int j = -(int) ((getHeight() / 2) / (Options.Entity_size * Options.Scale))
-						- 1; j <= (int) ((getHeight() / 2) / (Options.Entity_size * Options.Scale)) + 1; j++) {
+						- 2; j <= (int) ((getHeight() / 2) / (Options.Entity_size * Options.Scale)) + 1; j++) {
 					g.drawImage(m_model.m_sprites.get("Grassbg")[0],
 							(i * (int) (Options.Entity_size * Options.Scale))
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
