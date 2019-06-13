@@ -69,6 +69,7 @@ Player2(Surface){
 	| Key(j) & !Cell(W,O,1) / Cell(W,P,1) ? Move(W) :(Surface)
 	| Key(k) & !Cell(S,O,1) / Cell(S,P,1) ? Move(S) :(Surface)
 	| Key(l) & !Cell(E,O,1) / Cell(E,P,1) ? Move(E) :(Surface)
+	| Key(b) ? Hit() :(Surface)
 	| Key(n) ? Egg() :(Surface)
 }
 
