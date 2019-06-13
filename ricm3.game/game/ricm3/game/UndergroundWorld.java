@@ -147,7 +147,6 @@ public class UndergroundWorld extends World {
 	@Override
 	public void changeWorld() {
 		// A appeller lorsque le joueur passe par la porte
-		m_model.m_player.m_keys = new LinkedList<Keys>();
 		m_model.m_player.m_x = 64;
 		m_model.m_player.m_y = 640;
 		m_model.m_currentworld = m_model.m_surfaceworld;

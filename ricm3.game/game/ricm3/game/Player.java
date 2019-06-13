@@ -22,7 +22,7 @@ public class Player extends Ally {
 
 	@Override
 	public boolean jump(Direction dir) {
-		m_originWorld.changeWorld();
+		m_model.m_player.m_originWorld.changeWorld();
 		return true;
 	}
 
