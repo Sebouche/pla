@@ -23,7 +23,6 @@ public class Explosion extends GameEntity {
 	public boolean wizz(Direction dir) {
 		if (m_elapsed == 20) {
 			m_hp--;
-			System.out.print("boum");
 			m_idsprite++;
 			m_elapsed=0;
 		}

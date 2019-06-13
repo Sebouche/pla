@@ -25,7 +25,6 @@ Player(Surface){
 	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Underground)
-	| Key(m) ? Throw(F) :(Menu1)
 	* (Jumping):
 	| !GotPower() ? Pick(N) :()
 	| Cell(S,O,1) ? Protect() :(Underground)

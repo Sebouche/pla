@@ -30,16 +30,9 @@ public class Barbed extends Ally {
 				if (dis <= 0) {
 					e.damage_hp(m_dmg);
 					damage_hp(5);
+					m_idsprite=(this.m_idsprite+1)%9;
 				}
 			}
-		}
-		return true;
-	}
-
-	public boolean wizz(Direction dir) {
-		this.m_idsprite++;
-		if (this.m_idsprite >= this.m_sprites.length) {
-			this.m_idsprite = 0;
 		}
 		return true;
 	}
