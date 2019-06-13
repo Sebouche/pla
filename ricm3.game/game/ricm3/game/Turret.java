@@ -28,11 +28,12 @@ public class Turret extends Ally {
 
 	@Override
 	public boolean pop(Direction d) {
+		System.out.println("Pop turret");
 		if ((target == null) || (target.m_hp <= 0) || (distance(target) > range)) {
 			target = null;
 			Iterator<Enemy> iter = targets.iterator();
 			Enemy e;
-			double dist = 1000000;
+			double dist = 2 * range;
 			double nd;
 			while (iter.hasNext()) {
 				e = iter.next();
@@ -44,17 +45,23 @@ public class Turret extends Ally {
 					dist = nd;
 				}
 			}
+			if (target != null) {
+				System.out.println(target.toString());
+			} else {
+				System.out.println("target = null");
+			}
 			return true;
 		}
 		return false;
 	}
 
 	public boolean hit(Direction d) {
+		System.out.println("Hit turret");
 		if (target != null) {
 			target.damage_hp(this.m_dmg);
 			return true;
 		}
 		return false;
 	}
-	
+
 }
