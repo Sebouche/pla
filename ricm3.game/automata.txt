@@ -89,7 +89,7 @@ Mouse(E3){
 	| !GotPower() ? Get() :()
 	| Cell(F,O,1) ? Hit() :(E2)
 	| Cell(F,T,1) / Cell(F,@,1) ? Hit() :(E3)
-	| True ? Egg() :(E4)
+	| True ? Move(F) / Egg() :(E4)
 	* (E2):
 	| !GotPower() ? Get() :()
 	| Cell(F,O,1) ? Hit() :(E2)
@@ -119,11 +119,15 @@ Dog(E2){
 Rabbit(E2){
 	* (E1):
 	| !GotPower() ? Get() :()
+	| Cell(F,O,1) ? :(E3)
 	| Cell(F,@,1) / Cell(F,T,1) ? Hit() :(E1)
 	| True ? Move(F) :(E2)
 	* (E2):
 	| !GotPower() ? Get() :()
 	| True ? Pop() :(E1)
+	* (E3):
+	| Cell(F,O,200) ? Hit() :(E1)
+	| True ? Move(F) :(E2) 
 	* ()
 }
 
@@ -165,7 +169,7 @@ Barbed(Init){
 
 Wall(Init){
 	* (Init): 
-    | !GotPower() ? Pop() :()
+    | !GotPower() ? Get() :()
 	| True ? Wizz() :(Init)
 	* ()
 }
