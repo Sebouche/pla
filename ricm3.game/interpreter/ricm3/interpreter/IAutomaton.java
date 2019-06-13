@@ -24,8 +24,9 @@ public class IAutomaton {
 		this.current = new IState(automaton.current);
 		this.behaviours = new LinkedList<IBehaviour>();
 		Iterator<IBehaviour> iter = automaton.behaviours.iterator();
+		IBehaviour b;
 		while (iter.hasNext()) {
-			IBehaviour b = iter.next();
+			b = iter.next();
 			this.behaviours.add(new IBehaviour(b));
 		}
 	}
@@ -35,11 +36,13 @@ public class IAutomaton {
 		// - effectue une transition
 		// - met à jour l'état courant
 		// - gère l'exception "aucune transition possible"
+		IBehaviour b;
+		IState target;
 		Iterator<IBehaviour> iter=behaviours.iterator();
 		while(iter.hasNext()) {
-			IBehaviour b=iter.next();
+			b=iter.next();
 			if(b.source.name.equals(this.current.name)) {
-					IState target=b.step(e);
+					target=b.step(e);
 					if(target!=null) {
 						this.current=target;
 						return true;
