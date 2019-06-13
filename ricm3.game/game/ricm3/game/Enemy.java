@@ -76,7 +76,7 @@ public class Enemy extends MovingEntity {
 		while (iter.hasNext()) {
 			e = iter.next();
 			de = distance(e);
-			if ((de < dt) || (dt < 0)) {
+			if (((de < dt) || (dt < 0)) && (!(e instanceof Wall) && !(e instanceof Barbed))) {
 				t = e;
 				dt = de;
 			}
