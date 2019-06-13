@@ -12,7 +12,7 @@ public class KeyP extends ICondition{
 	
 	@Override
 	public boolean eval(GameEntity e) {
-		if(e.keys().contains(k)) {
+		if(e.m_model.m_keys.contains(k)) {
 		return true;}
 		return false;
 	}

@@ -19,7 +19,7 @@ public class Mouse extends Enemy {
 	}
 
 	public boolean move(Direction dir) {
-		Direction absoldir= Direction.entityDir(this, dir);
+		Direction absoldir = Direction.entityDir(this, dir);
 		super.move(absoldir);
 		if (absoldir != m_lastdir) {
 			if (absoldir == Direction.EAST) {
@@ -48,10 +48,11 @@ public class Mouse extends Enemy {
 
 	@Override
 	public boolean egg() {
-		System.out.println("egg souris");
-		if ((r.nextInt()) % 100000 == 0) {
-			m_model.m_surfaceworld.m_entities
-					.add(new Mouse(m_model, m_x+(r.nextInt()%21)-10, m_y+(r.nextInt()%21)-10, m_sprites, m_automate, m_originWorld, targets));
+		if ((r.nextInt()) % 1000 == 0) {
+			Mouse m = new Mouse(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_sprites,
+					m_automate, m_originWorld, targets);
+			m_model.m_surfaceworld.m_tmpadd.add(m);
+			m_model.m_surfaceworld.m_enemies.add(m);
 			return true;
 		}
 		return false;

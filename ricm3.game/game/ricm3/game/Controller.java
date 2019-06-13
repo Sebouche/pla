@@ -112,17 +112,8 @@ public class Controller extends GameController implements ActionListener {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyPressed: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		Keys k = Keys.keyEventToKeys(e);
-		if (!m_model.m_camera.m_watched.m_keys.contains(k)) {
-			m_model.m_camera.m_watched.m_keys.add(k);
-			if (m_model.m_surfaceplayer.m_insideTurret) {
-				m_model.m_player.m_keys.add(k);
-			}
-		}
-		if (bplayer2) {
-			if (!m_model.m_surfaceworld.m_enemies.get(m_model.m_surfaceworld.m_enemies.indexOf(player2)).m_keys
-					.contains(k)) {
-				m_model.m_surfaceworld.m_enemies.get(m_model.m_surfaceworld.m_enemies.indexOf(player2)).m_keys.add(k);
-			}
+		if (!m_model.m_keys.contains(k)) {
+			m_model.m_keys.add(k);
 		}
 
 		if (e.getKeyChar() == 'u') {
@@ -159,17 +150,7 @@ public class Controller extends GameController implements ActionListener {
 		if (Options.ECHO_KEYBOARD)
 			System.out.println("KeyReleased: " + e.getKeyChar() + " code=" + e.getKeyCode());
 		Keys k = Keys.keyEventToKeys(e);
-		m_model.m_camera.m_watched.m_keys.remove(k);
-		if (m_model.m_surfaceplayer.m_insideTurret) {
-			m_model.m_player.m_keys.remove(k);
-		}
-		if (bplayer2) {
-			if (m_model.m_surfaceworld.m_enemies.get(m_model.m_surfaceworld.m_enemies.indexOf(player2)).m_keys
-					.contains(k)) {
-				m_model.m_surfaceworld.m_enemies.get(m_model.m_surfaceworld.m_enemies.indexOf(player2)).m_keys
-						.remove(k);
-			}
-		}
+		m_model.m_keys.remove(k);
 	}
 
 	@Override
