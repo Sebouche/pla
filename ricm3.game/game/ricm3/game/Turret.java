@@ -59,7 +59,7 @@ public class Turret extends Ally {
 		if (System.currentTimeMillis() > lastHit + 500) {
 			lastHit = System.currentTimeMillis();
 			if (target != null) {
-				m_idsprite = ((m_idsprite+1)%2)+1;
+				m_idsprite = (m_idsprite%2)+1;
 				target.damage_hp(this.m_dmg);
 				//m_model.m_surfaceworld.blitz.add(new Line(m_x + ((int) (Options.Entity_size * Options.Scale)) / 2, m_y, target.m_x + ((int) (Options.Entity_size * Options.Scale)), target.m_y + ((int) (Options.Entity_size * Options.Scale))));
 				return true;
