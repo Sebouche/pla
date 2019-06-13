@@ -32,7 +32,7 @@ public class Options {
 	public static int Entity_size = 32;
 	public static double Scale = 2;
 
-	public static int[] spawnerProba = { 50, 20, 5, 25 }; // Chien, Tortue, Souris, Lapin
+	public static int[] spawnerProba = { 50, 25, 0, 25 }; // Chien, Tortue, Souris, Lapin
 	public static String[] spawnerType = { "Dog", "Turtle", "Mouse", "Rabbit" };
 	public static int[] HP = { 25, 100, 2, 10 , 500};
 

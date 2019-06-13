@@ -26,7 +26,7 @@ public class SurfacePlayer extends Player {
 	public boolean pop(Direction dir) {
 		if (!m_insideTurret) {
 			Ally a = null;
-			IAutomaton moving = Options.Entities.get("Moving");
+			IAutomaton moving = new IAutomaton (Options.Entities.get("Moving"));
 			Iterator<Ally> iter = m_model.m_currentworld.m_allies.iterator();
 			while (iter.hasNext()) {
 				Ally tmp = iter.next();
@@ -45,7 +45,7 @@ public class SurfacePlayer extends Player {
 		} else {
 			m_controled.m_hp = Options.HP[1];
 			m_model.m_camera.m_watched = this;
-			m_controled.m_automate = Options.Entities.get("Tesla");
+			m_controled.m_automate = new IAutomaton (Options.Entities.get("Tesla"));
 			m_insideTurret = false;
 			return true;
 		}

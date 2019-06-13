@@ -129,19 +129,19 @@ public class SurfaceWorld extends World {
 						GameEntity e;
 						switch (Options.spawnerType[i]) {
 						case "Dog":
-							e = new Dog(m_model, m_x, m_y, m_model.m_sprites.get("Dog"),
+							e = new Dog(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_model.m_sprites.get("Dog"),
 									new IAutomaton(Options.Entities.get("Dog")), m_model.m_surfaceworld, m_allies);
 							break;
 						case "Turtle":
-							e = new Turtle(m_model, m_x, m_y, m_model.m_sprites.get("Turtle"),
+							e = new Turtle(m_model,m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_model.m_sprites.get("Turtle"),
 									new IAutomaton(Options.Entities.get("Turtle")), m_model.m_surfaceworld, m_allies);
 							break;
 						case "Mouse":
-							e = new Mouse(m_model, m_x, m_y, m_model.m_sprites.get("Mouse"),
+							e = new Mouse(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_model.m_sprites.get("Mouse"),
 									new IAutomaton(Options.Entities.get("Mouse")), m_model.m_surfaceworld, m_allies);
 							break;
 						case "Rabbit":
-							e = new Rabbit(m_model, m_x, m_y, m_model.m_sprites.get("Rabbit"),
+							e = new Rabbit(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_model.m_sprites.get("Rabbit"),
 									new IAutomaton(Options.Entities.get("Rabbit")), m_model.m_surfaceworld, m_allies);
 							break;
 						default:

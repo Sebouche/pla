@@ -117,7 +117,6 @@ public class Controller extends GameController implements ActionListener {
 					m_model.m_sprites.get("Mouse"), new IAutomaton(Options.Entities.get("Player2")),
 					m_model.m_surfaceworld, m_model.m_surfaceworld.m_allies);
 			m_model.m_player.m_originWorld.m_entities.add(player2);
-			m_model.m_player.m_originWorld.m_enemies.add(player2);
 		}
 	}
 
