@@ -24,11 +24,12 @@ public class House extends Ally {
 				Block b;
 				if (i == 2 && j == 1) {
 					b = new Gate(m_model, (int) (j * Options.Entity_size * Options.Scale)+x,
-							(int) (i * Options.Entity_size * Options.Scale)+y, 0, sprites, automate, originWorld);
+							(int) (i * Options.Entity_size * Options.Scale)+y, -1, sprites, automate, originWorld);
 					m_model.m_arrow = new Camera(m_model, b);
 				} else {
 					b = new Block(m_model, (int) (j * Options.Entity_size * Options.Scale)+x,
-							(int) (i * Options.Entity_size * Options.Scale)+y, 0, sprites, automate, originWorld);
+							(int) (i * Options.Entity_size * Options.Scale)+y, -1, sprites, automate, originWorld);
+					b.m_type = Type.PICKUP;
 				}
 				b.m_idsprite = i * 3 + j;
 				m_blocks[3*i+j] = b;
@@ -38,13 +39,14 @@ public class House extends Ally {
 		}
 		originWorld.m_allies.add(this);
 		originWorld.m_entities.add(this);
-		m_type = Type.OBSTACLE;
+		m_type = Type.PICKUP;
 	}
 
 	@Override
 	public void step() {
 		m_blocks[7].step();
 		if(m_hp<=0) {
+			m_model.m_gameon = false;
 			m_model.endgame();
 		}
 	}

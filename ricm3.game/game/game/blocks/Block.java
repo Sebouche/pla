@@ -8,7 +8,6 @@ import ricm3.game.*;
 import ricm3.interpreter.*;
 
 public class Block extends GameEntity {
-	boolean m_breakable = true;
 
 	public Block(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
@@ -28,18 +27,23 @@ public class Block extends GameEntity {
 				(int) Options.Scale * Options.Entity_size, null);
 	}
 
-	public void Pop() {
-
-		Fabrication bloc_player = m_model.m_player.blocs();
-		bloc_player.increments(this.getClass(), 1);
-
+	@Override
+	public boolean pop(Direction dir) {
+		if (m_breakable) {
+			Fabrication bloc_player = m_model.m_player.blocs();
+			bloc_player.increments(this.getClass(), 1);
+			int entity_size = (int) (Options.Scale * Options.Entity_size);
+			int pos_x = (int) (x() / entity_size);
+			int pos_y = (int) (y() / entity_size);
+			if (m_originWorld instanceof UndergroundWorld) {
+				((UndergroundWorld) m_originWorld).m_grid[pos_y][pos_x] = null;
+			}
+		}
+		return true;
 	}
 
-	public void Wizz() {
-		this.m_idsprite++;
-		if (this.m_idsprite >= this.m_sprites.length) {
-			this.m_idsprite = 0;
-		}
-
+	@Override
+	public boolean wizz(Direction dir) {
+		return true;
 	}
 }

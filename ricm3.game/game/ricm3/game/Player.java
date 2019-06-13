@@ -2,9 +2,11 @@ package ricm3.game;
 
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Keys;
 import ricm3.interpreter.Type;
 
 public class Player extends Ally {
@@ -14,13 +16,13 @@ public class Player extends Ally {
 	
 	public Player(Model model, int x, int y, int hp, BufferedImage[] sprites, IAutomaton automate, World originWorld) {
 		super(model, x, y, hp, sprites, automate, originWorld);
-		m_type = Type.PLAYER;
 		blocs = new Fabrication();
+		m_type = Type.PLAYER;
 	}
 
 	@Override
 	public boolean jump(Direction dir) {
-		m_originWorld.changeWorld();
+		m_model.m_player.m_originWorld.changeWorld();
 		return true;
 	}
 
@@ -58,14 +60,21 @@ public class Player extends Ally {
 		return true;
 	}
 	
-	@Override
-	public boolean Throw(Direction dir) {
-	//	m_model.menu_fabrication.show(m_view, (int) (m_view.getWidth() / 2 + Options.Entity_size * Options.Scale), m_view.getHeight() / 2);
-		return true;
-	}
-
-   public Fabrication blocs(){
-		return this.blocs;
+	public Fabrication blocs() {
+		return blocs;
 	}
 	
+	@Override
+	public boolean Throw(Direction dir) {
+		m_model.m_keys = new LinkedList<Keys>();
+		m_model.fabricationMenu.show(m_model.m_view, (int) (m_model.m_view.getWidth() / 2 + Options.Entity_size * Options.Scale),
+				m_model.m_view.getHeight() / 2);
+		return true;
+	}
+	@Override
+	public boolean pick(Direction dir) {
+		m_model.m_gameon=false;
+		m_model.endgame();
+		return true;
+	}
 }

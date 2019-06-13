@@ -2,9 +2,15 @@ package ricm3.game;
 
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
+import java.util.LinkedList;
 
+import game.blocks.Copper;
+import game.blocks.Dirt;
+import game.blocks.Iron;
+import game.blocks.Ladder;
 import ricm3.interpreter.Direction;
 import ricm3.interpreter.IAutomaton;
+import ricm3.interpreter.Keys;
 
 public class SurfacePlayer extends Player {
 
@@ -20,7 +26,7 @@ public class SurfacePlayer extends Player {
 	public boolean pop(Direction dir) {
 		if (!m_insideTurret) {
 			Ally a = null;
-			IAutomaton moving = Options.Entities.get("Moving");
+			IAutomaton moving = new IAutomaton (Options.Entities.get("Moving"));
 			Iterator<Ally> iter = m_model.m_currentworld.m_allies.iterator();
 			while (iter.hasNext()) {
 				Ally tmp = iter.next();
@@ -39,7 +45,7 @@ public class SurfacePlayer extends Player {
 		} else {
 			m_controled.m_hp = Options.HP[1];
 			m_model.m_camera.m_watched = this;
-			m_controled.m_automate = Options.Entities.get("tesla");
+			m_controled.m_automate = new IAutomaton (Options.Entities.get("Tesla"));
 			m_insideTurret = false;
 			return true;
 		}
@@ -64,13 +70,15 @@ public class SurfacePlayer extends Player {
 		default:
 			return false;
 		}
-/// RAJOUTER UN TEST DE SI ON A LES RESSOURCES POUR CONSTRUIRE LA TOURELLE  (GOTSTUFF maybe)
-
-		Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("tesla"),
-				Options.Entities.get("tesla"), m_originWorld, m_model.m_surfaceworld.m_enemies);
-		t.m_collision = false;
-		((SurfaceWorld) m_originWorld).m_tmp_ent.add(t);
-		m_originWorld.m_allies.add(t);
+		if (m_model.m_player.m_originWorld instanceof SurfaceWorld && blocs().Exist(Copper.class, 1) && blocs().Exist(Iron.class, 2)) {
+			blocs().decrements(Copper.class, 1);
+			blocs().decrements(Iron.class, 2);
+			Turret t = new Turret(m_model, posTourX, posTourY, Options.HP[1], m_model.m_sprites.get("Tesla"),
+					new IAutomaton(Options.Entities.get("Tesla")), m_originWorld, m_model.m_surfaceworld.m_enemies);
+			t.m_collision = false;
+			((SurfaceWorld) m_originWorld).m_tmpadd.add(t);
+			m_originWorld.m_allies.add(t);
+		}
 		return true;
 	}
 }
