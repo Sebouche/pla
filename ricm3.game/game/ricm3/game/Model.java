@@ -81,7 +81,7 @@ public class Model extends GameModel {
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
 		m_surfaceworld.m_entities.add(m_player);
 		m_undergroundworld.m_allies.add(m_undergroundplayer);
-		m_timer = new Timer(0, 10);
+		m_timer = new Timer(2, 30);
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class Model extends GameModel {
 			int[] time = m_timer.getTime();
 			if ((time[0] == 0 && time[1] == 0)) {
 				Options.day = !Options.day;
-				m_timer.setTime(0, 30);
+				m_timer.setTime(2, 30);
 			}
 		}
 	}

@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
-import com.sun.tools.javac.util.ArrayUtils;
-
 import game.blocks.*;
 import ricm3.interpreter.*;
 

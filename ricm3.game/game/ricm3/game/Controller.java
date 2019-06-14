@@ -93,7 +93,7 @@ public class Controller extends GameController implements ActionListener {
 			m_model.m_keys.add(k);
 		}
 
-		if (e.getKeyChar() == 'u') {
+		/*if (e.getKeyChar() == 'u') {
 			m_model.m_player.blocs().increments(Ladder.class, 1);
 			m_model.m_player.blocs().increments(Dirt.class, 1);
 			m_model.m_player.blocs().increments(Stone.class, 1);
@@ -129,7 +129,7 @@ public class Controller extends GameController implements ActionListener {
 		}
 		if (e.getKeyChar() == 'a') {
 			Options.day = !Options.day;
-		}
+		}*/
 	}
 
 	@Override
