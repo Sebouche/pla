@@ -28,7 +28,7 @@ public class Explosion extends GameEntity {
 		}
 		m_elapsed++;
 		if (m_hp<=0) {
-			m_originWorld.m_entities.remove(this);
+			m_originWorld.m_tmprm.add(this);
 		}
 		return true;
 	}
