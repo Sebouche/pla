@@ -63,7 +63,6 @@ public class Turtle extends Enemy {
 			dis = distance(e);
 			if (dis <= 64) {
 				e.damage_hp(m_dmg);
-				System.out.println(e.m_hp);
 			}
 		}
 		super.get();

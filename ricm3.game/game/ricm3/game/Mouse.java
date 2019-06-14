@@ -52,10 +52,9 @@ public class Mouse extends Enemy {
 	@Override
 	public boolean egg() {
 		if ((r.nextInt()) % 1000 == 0) {
-			Mouse m = new Mouse(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_sprites,
-					m_automate, m_originWorld, targets);
-			m_model.m_surfaceworld.m_tmpadd.add(m);
-			m_model.m_surfaceworld.m_enemies.add(m);
+			m_originWorld.m_tmpadd
+					.add(new Mouse(m_model, m_x + (r.nextInt() % 21) - 10, m_y + (r.nextInt() % 21) - 10, m_sprites,
+							new IAutomaton(m_automate), m_originWorld, targets));
 			return true;
 		}
 		return false;
