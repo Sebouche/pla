@@ -22,13 +22,13 @@ public class Water extends Block {
 			int pos_x = (int) (x() / (Options.Entity_size * Options.Scale));
 			int pos_y = (int) (y() / (Options.Entity_size * Options.Scale));
 			UndergroundWorld w = (UndergroundWorld) world();
-			if (w.m_grid[Math.floorMod((pos_y + 1), 60)][Math.floorMod((pos_x), 60)] == null) {
+			if (w.m_grid[Math.floorMod((pos_y + 1), w.m_grid.length)][Math.floorMod((pos_x), 60)] == null) {
 				Water wat=new Water(m_model,
 						(int) (pos_x * (Options.Entity_size * Options.Scale)),
-						(int) ((Math.floorMod((pos_y + 1), 60)) * (Options.Entity_size * Options.Scale)), hps(),
+						(int) ((Math.floorMod((pos_y + 1), w.m_grid.length)) * (Options.Entity_size * Options.Scale)), hps(),
 						m_sprites, m_automate, w);
 				wat.m_collision=false;
-				w.m_grid[Math.floorMod((pos_y + 1), 60)][Math.floorMod((pos_x), 60)] = wat;
+				w.m_grid[Math.floorMod((pos_y + 1), w.m_grid.length)][Math.floorMod((pos_x), 60)] = wat;
 				;
 				w.m_grid[pos_y][Math.floorMod((pos_x), 60)] = null;
 				return true;
@@ -49,13 +49,13 @@ public class Water extends Block {
 				w.m_grid[pos_y][Math.floorMod((pos_x + 1), 60)] = wat;
 				return true;
 			}
-			if (w.m_grid[Math.floorMod((pos_y - 1), 60)][Math.floorMod((pos_x), 60)] == null) {
+			if (w.m_grid[Math.floorMod((pos_y - 1), w.m_grid.length)][Math.floorMod((pos_x), 60)] == null) {
 				Water wat =new Water(m_model,
 						(int) (pos_x * (Options.Entity_size * Options.Scale)),
-						(int) (Math.floorMod((pos_y - 1), 60) * (Options.Entity_size * Options.Scale)), hps() - 1,
+						(int) (Math.floorMod((pos_y - 1), w.m_grid.length) * (Options.Entity_size * Options.Scale)), hps() - 1,
 						m_sprites, m_automate, w);
 				wat.m_collision=false;
-				w.m_grid[Math.floorMod((pos_y - 1), 60)][Math.floorMod((pos_x), 60)] = wat;
+				w.m_grid[Math.floorMod((pos_y - 1), w.m_grid.length)][Math.floorMod((pos_x), 60)] = wat;
 				return true;
 			}
 		}

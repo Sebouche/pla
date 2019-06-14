@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
+import com.sun.tools.javac.util.ArrayUtils;
+
 import game.blocks.*;
 import ricm3.interpreter.*;
 
@@ -133,7 +135,7 @@ public class UndergroundWorld extends World {
 								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("Block"),
 								new IAutomaton(Options.Entities.get("Block")), this);
 					}
-					if (randint >= 1000 && i<=58) {
+					if (randint >= 1000 && i <= 58) {
 						Water w = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
 								(int) (i * (Options.Entity_size * Options.Scale)), m_rand.nextInt(12),
 								m_model.m_sprites.get("Block"), Options.Entities.get("Water"), this);
@@ -144,6 +146,98 @@ public class UndergroundWorld extends World {
 				}
 			}
 		}
+	}
+
+	public void concatenate() {
+		System.out.println("generate");
+		int randint;
+		GameEntity[][] grid2 = new GameEntity[60][60];
+		for (int i = 0; i < 60; i++) {
+			for (int j = 0; j < 60; j++) {
+				grid2[i][j] = null;
+			}
+		}
+		for (int i = 0; i < 60; i++) {
+			for (int j = 0; j < 60; j++) {
+				if (grid2[i][j] == null) {
+					randint = m_rand.nextInt(1001);
+					if (randint >= 0 && randint < 850) {
+						if (m_rand.nextInt(40) >= 20) {
+							Block b = new Stone(m_model,
+(int) (Options.Entity_size * Options.Scale * (m_grid.length +j)),
+									(int) (i * Options.Entity_size * Options.Scale), 600,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							grid2[i][j] = b;
+						} else {
+							Block b = new Dirt(m_model,
+									(int) (j * Options.Entity_size * Options.Scale)
+											+ (int) (Options.Entity_size * Options.Scale * (m_grid.length +j)),
+									(int) (i * Options.Entity_size * Options.Scale), 300,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							grid2[i][j] = b;
+						}
+					}
+					if (randint >= 850 && randint < 950) {
+						int randint2 = m_rand.nextInt(3);
+						Block b;
+						if (randint2 == 2) {
+							b = new Copper(m_model,
+									(int) (j * Options.Entity_size * Options.Scale)
+											+ (int) (Options.Entity_size * Options.Scale * (m_grid.length +j)),
+									(int) (i * Options.Entity_size * Options.Scale), 700,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							grid2[i][j] = b;
+						} else if (randint2 == 1) {
+							b = new Iron(m_model,
+									(int) (j * Options.Entity_size * Options.Scale)
+											+ (int) (Options.Entity_size * Options.Scale * (m_grid.length +j)),
+									(int) (i * Options.Entity_size * Options.Scale), 800,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							grid2[i][j] = b;
+						} else {
+							b = new Coal(m_model,
+									(int) (j * Options.Entity_size * Options.Scale)
+											+ (int) (Options.Entity_size * Options.Scale * (m_grid.length +j)),
+									(int) (i * Options.Entity_size * Options.Scale), 500,
+									m_model.m_sprites.get("Block"), new IAutomaton(Options.Entities.get("Block")),
+									this);
+							grid2[i][j] = b;
+						}
+					}
+					if (randint >= 950 && randint < 999) {
+						grid2[i][j] = null;
+					}
+					if (randint >= 999 && i >= 30) {
+						grid2[i][j] = new Uranium(m_model,
+								(int) (j * Options.Entity_size * Options.Scale)
+										+ (int) (Options.Entity_size * Options.Scale * (m_grid.length +j)),
+								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("Block"),
+								new IAutomaton(Options.Entities.get("Block")), this);
+					}
+					if (randint >= 1000 && i <= 58) {
+						Water w = new Water(m_model,
+								(int) (j * (Options.Entity_size * Options.Scale))
+										+ (int) (Options.Entity_size * Options.Scale * (m_grid.length +j)),
+								(int) (i * Options.Entity_size * Options.Scale), m_rand.nextInt(12),
+								m_model.m_sprites.get("Block"), Options.Entities.get("Water"), this);
+						w.m_collision = false;
+						grid2[i][j] = w;
+
+					}
+				}
+			}
+		}
+		GameEntity[][] output = new GameEntity[m_grid.length + 60][60];
+
+		// copie du premier tableau
+		System.arraycopy(m_grid, 0, output, 0, m_grid.length);
+		// copie du deuxième tableau tableau
+		System.arraycopy(grid2, 0, output, m_grid.length, grid2.length);
+		m_grid = output;
 	}
 
 	@Override
@@ -168,14 +262,16 @@ public class UndergroundWorld extends World {
 
 		// step des blocs
 		int entity_size = (int) (Options.Scale * Options.Entity_size);
-		int distance = 10;
+		int distance = 20;
 		int pos_x = (int) (m_model.m_player.m_x / entity_size);
 		int pos_y = (int) (m_model.m_player.m_y / entity_size);
+		if (pos_y + distance >= m_grid.length) {
+			concatenate();
+		}
 		for (int i = -distance; i <= distance; i++) {
 			for (int j = -distance; j <= distance; j++) {
-				if ((pos_y + i) >= 0
-						&& m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)] != null) {
-					m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)].step();
+				if ((pos_y + i) >= 0 && m_grid[pos_y + i][Math.floorMod((pos_x + j), 60)] != null) {
+					m_grid[pos_y + i][Math.floorMod((pos_x + j), 60)].step();
 				}
 			}
 		}
@@ -214,11 +310,13 @@ public class UndergroundWorld extends World {
 		int cam_y = m_model.m_camera.m_watched.m_y;
 		int pos_x = (int) (m_model.m_player.m_x / (Options.Entity_size * Options.Scale));
 		int pos_y = (int) (m_model.m_player.m_y / (Options.Entity_size * Options.Scale));
-
+		if (pos_y + distance >= m_grid.length) {
+			concatenate();
+		}
 		// Affichage des blocs
 		for (int i = -distance; i <= distance; i++) {
 			for (int j = -distance; j <= distance; j++) {
-				if ((pos_y + i) < 0 || Math.floorMod((pos_y + i), 60) <= 10) {
+				if ((pos_y + i) < 0 || Math.floorMod((pos_y + i), m_grid.length) <= 10) {
 					g.drawImage(m_model.m_sprites.get("Block")[7],
 							(j * (int) (Options.Entity_size * Options.Scale))
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
@@ -234,14 +332,14 @@ public class UndergroundWorld extends World {
 							(int) Options.Scale * Options.Entity_size, (int) Options.Scale * Options.Entity_size, null);
 				}
 				if ((pos_y + i) >= 0
-						&& m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)] != null) {
+						&& m_grid[Math.floorMod((pos_y + i), m_grid.length)][Math.floorMod((pos_x + j), 60)] != null) {
 					Graphics g_child = g.create(
 							(j * (int) (Options.Entity_size * Options.Scale))
 									- (cam_x % (int) (Options.Entity_size * Options.Scale)) + m_model.m_width / 2,
 							(i * (int) (Options.Entity_size * Options.Scale))
 									- (cam_y % (int) (Options.Entity_size * Options.Scale)) + m_model.m_height / 2,
 							(int) (Options.Entity_size * Options.Scale), (int) (Options.Entity_size * Options.Scale));
-					m_grid[Math.floorMod((pos_y + i), 60)][Math.floorMod((pos_x + j), 60)].paint(g_child);
+					m_grid[Math.floorMod((pos_y + i), m_grid.length)][Math.floorMod((pos_x + j), 60)].paint(g_child);
 					g_child.dispose();
 				}
 			}

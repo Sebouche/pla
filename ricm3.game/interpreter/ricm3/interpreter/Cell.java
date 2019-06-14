@@ -76,12 +76,14 @@ public class Cell extends ICondition {
 			default:
 				break;
 			}
-			GameEntity f = ((UndergroundWorld) e.m_originWorld).m_grid[Math.floorMod(pos_y, 60)][Math.floorMod(pos_x,
-					60)];
+			GameEntity f = ((UndergroundWorld) e.m_originWorld).m_grid[Math.floorMod(pos_y,
+					((UndergroundWorld) e.m_originWorld).m_grid.length)][Math.floorMod(pos_x, 60)];
 			cellx = Math.floorMod(cellx, (int) (59 * Options.Entity_size * Options.Scale));
-			celly = Math.floorMod(celly, (int) (59 * Options.Entity_size * Options.Scale));
+			celly = Math.floorMod(celly, (int) ((((UndergroundWorld) e.m_originWorld).m_grid.length)
+					* Options.Entity_size * Options.Scale));
 			e.m_x = Math.floorMod(e.m_x, (int) (60 * Options.Entity_size * Options.Scale));
-			e.m_y = Math.floorMod(e.m_y, (int) (60 * Options.Entity_size * Options.Scale));
+			e.m_y = Math.floorMod(e.m_y,
+					(int) (((UndergroundWorld) e.m_originWorld).m_grid.length * Options.Entity_size * Options.Scale));
 			if (f != null) {
 				if ((f.m_collision || kind == Type.TEAM) && (isInside(f, cellx, celly) || isInside(f, e.m_x, e.m_y))) {
 					if (kind == Type.VOID) {
