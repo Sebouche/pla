@@ -53,6 +53,9 @@ public class World {
 				if (e instanceof MovingEntity) {
 					if (((MovingEntity) (e)).distance(ge) <= 1) {
 						e.damage_hp(ge.m_dmg);
+						if(e instanceof Player) {
+							m_model.m_player.m_hit=true;
+						}
 						b = true;
 					}
 				}

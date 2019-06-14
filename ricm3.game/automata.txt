@@ -25,7 +25,6 @@ Player(Surface){
 	| Key(d) & Cell(E,J,1) ? Move(E) :(Ladder)
 	| Key(q) & !Cell(W,O,1) ? Move(W) :(Underground)
 	| Key(d) & !Cell(E,O,1) ? Move(E) :(Underground)
-	| Key(m) ? Throw(F) :(Menu1)
 	* (Jumping):
 	| !GotPower() ? Pick(N) :()
 	| Cell(S,O,1) ? Protect() :(Underground)
@@ -71,18 +70,6 @@ Player2(Surface){
 	| Key(l) & !Cell(E,O,1) / Cell(E,P,1) ? Move(E) :(Surface)
 	| Key(b) ? Hit() :(Surface)
 	| Key(n) ? Egg() :(Surface)
-}
-
-Bat(E1){
-	* (E1):
-	| !GotPower() ? Get() :()
-	| True ? Pop() :(E2)
-	* (E2):
-	| !GotPower() ? Get() :() 
-	| Cell(F,V) ? Move(F) :(E1)
-	| Cell(F,@) ? Hit() :(E1)
-	| True ? Pop() :(E2)
-	* ():
 }
 
 Mouse(E3){
@@ -160,14 +147,13 @@ Block(Init){
 Barbed(Init){
 	* (Init): 
 	| !GotPower() ? Get() :()
-	| Cell(F,O,0) ? Pop() / Wizz() :(Init)
 	| True ? Pop() :(Init)
 	* ()
 }
 
 Wall(Init){
 	* (Init): 
-    | !GotPower() ? Wizz() / Get() :()
+    | !GotPower() ? Get() / Wizz() :()
 	* ()
 }
 
@@ -180,6 +166,13 @@ Spawner(Init){
 Water(Init){
 	* (Init): 
 	| True ? Egg() :(Init)
+	* ()
+}
+
+Explosion(Init){
+	*(Init):
+	| !GotPower() ? :()
+	| GotPower() ? Wizz(N) : (Init)
 	* ()
 }
 

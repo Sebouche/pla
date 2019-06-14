@@ -25,6 +25,7 @@ public class GameEntity {
 	public boolean m_collision = true;
 	Hashtable<String, Integer> m_recipe;
 	public boolean m_breakable = true;
+	long m_lastHit = 0;
 	int m_dx, m_dy;
 	int m_grav;
 
@@ -55,13 +56,15 @@ public class GameEntity {
 	public int hps() {
 		return this.m_hp;
 	}
-	
+
 	public World world() {
 		return this.m_originWorld;
 	}
+
 	public void damage_hp(int dmg) {
-		m_hp-=dmg;
+		m_hp -= dmg;
 	}
+
 	public int dmgs() {
 		return this.m_dmg;
 	}
@@ -119,10 +122,11 @@ public class GameEntity {
 		}
 		m_x += m_dx;
 		m_y += m_dy + m_grav;
-		m_dx=0;
-		m_dy=0;
+		m_dx = 0;
+		m_dy = 0;
 		return true;
 	}
+
 	public boolean jump(Direction dir) {
 		return true;
 	}
@@ -152,10 +156,12 @@ public class GameEntity {
 	}
 
 	public boolean get() {
-		if(m_breakable) {
-			m_originWorld.m_tmprm.add(this);
-			m_originWorld.m_allies.remove(this);
-			m_originWorld.m_enemies.remove(this);
+		if (m_breakable) {
+			while (m_originWorld.m_enemies.contains(this) || m_originWorld.m_allies.contains(this)) {
+				m_originWorld.m_tmprm.add(this);
+				m_originWorld.m_allies.remove(this);
+				m_originWorld.m_enemies.remove(this);
+			}
 		}
 		return true;
 	}
@@ -193,10 +199,10 @@ public class GameEntity {
 
 	public double distance(GameEntity e) {
 		double dx1, dx2, dy1, dy2;
-		dx1 = m_x - (e.m_x + Options.Entity_size*Options.Scale);
-		dx2 = e.m_x - (m_x + Options.Entity_size*Options.Scale);
-		dy1 = m_y - (e.m_y + Options.Entity_size*Options.Scale);
-		dy2 = e.m_y - (m_y + Options.Entity_size*Options.Scale);
+		dx1 = m_x - (e.m_x + Options.Entity_size * Options.Scale);
+		dx2 = e.m_x - (m_x + Options.Entity_size * Options.Scale);
+		dy1 = m_y - (e.m_y + Options.Entity_size * Options.Scale);
+		dy2 = e.m_y - (m_y + Options.Entity_size * Options.Scale);
 		if ((dx1 <= 0) && (dx2 <= 0) && (dy1 <= 0) && (dy2 <= 0)) {
 			return 0;
 		}
@@ -207,15 +213,15 @@ public class GameEntity {
 		}
 		if (dx1 > 0) {
 			if (dy1 > 0) {
-				return Math.sqrt(dx1*dx1+dy1*dy1);
+				return Math.sqrt(dx1 * dx1 + dy1 * dy1);
 			} else if (dy2 > 0) {
-				return Math.sqrt(dx1*dx1+dy2*dy2);
+				return Math.sqrt(dx1 * dx1 + dy2 * dy2);
 			}
 		} else if (dx2 > 0) {
 			if (dy1 > 0) {
-				return Math.sqrt(dx2*dx2+dy1*dy1);
+				return Math.sqrt(dx2 * dx2 + dy1 * dy1);
 			} else if (dy2 > 0) {
-				return Math.sqrt(dx2*dx2+dy2*dy2);
+				return Math.sqrt(dx2 * dx2 + dy2 * dy2);
 			}
 		}
 		return -1;
