@@ -133,7 +133,7 @@ public class UndergroundWorld extends World {
 								(int) (i * Options.Entity_size * Options.Scale), 900, m_model.m_sprites.get("Block"),
 								new IAutomaton(Options.Entities.get("Block")), this);
 					}
-					if (randint >= 1000) {
+					if (randint >= 1000 && i<=58) {
 						Water w = new Water(m_model, (int) (j * (Options.Entity_size * Options.Scale)),
 								(int) (i * (Options.Entity_size * Options.Scale)), m_rand.nextInt(12),
 								m_model.m_sprites.get("Block"), Options.Entities.get("Water"), this);

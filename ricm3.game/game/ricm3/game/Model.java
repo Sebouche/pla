@@ -52,7 +52,7 @@ public class Model extends GameModel {
 	Hashtable<String, BufferedImage[]> m_sprites = new Hashtable<String, BufferedImage[]>();
 	View m_view;
 	Timer m_timer;
-	boolean m_gameon=true;
+	boolean m_gameon = true;
 
 	JPopupMenu fabricationMenu;
 	JPopupMenu endmenu;
@@ -64,17 +64,20 @@ public class Model extends GameModel {
 		m_undergroundworld = new UndergroundWorld(this);
 		m_currentworld = m_surfaceworld;
 		IAutomaton player_automate = new IAutomaton(Options.Entities.get("Player1"));
-		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("Scientist"),player_automate, m_surfaceworld);
-		m_undergroundplayer =new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("Scientist"),player_automate, m_undergroundworld);
+		m_surfaceplayer = new SurfacePlayer(this, 64, 193, 500, m_sprites.get("Scientist"), player_automate,
+				m_surfaceworld);
+		m_undergroundplayer = new UndergroundPlayer(this, 64, 640, 500, m_sprites.get("Scientist"), player_automate,
+				m_undergroundworld);
 		m_player = m_surfaceplayer;
 		m_camera = new Camera(this, m_player);
 		m_lastStep = 0;
-		m_keys=new LinkedList<Keys>();
+		m_keys = new LinkedList<Keys>();
 		try {
 			Options.bgm.stop();
 			Options.bgm = new Music(m_currentworld.m_bgmfile);
 			Options.bgm.start();
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+		}
 		m_surfaceworld.m_allies.add(m_surfaceplayer);
 		m_surfaceworld.m_entities.add(m_player);
 		m_undergroundworld.m_allies.add(m_undergroundplayer);
@@ -98,6 +101,11 @@ public class Model extends GameModel {
 			m_lastStep = now;
 			m_surfaceworld.step();
 			m_undergroundworld.step();
+			int[] time = m_timer.getTime();
+			if ((time[0] == 0 && time[1] == 0)) {
+				Options.day = !Options.day;
+				m_timer.setTime(0, 30);
+			}
 		}
 	}
 
@@ -272,8 +280,8 @@ public class Model extends GameModel {
 		}
 		m_sprites.put(name, sprites);
 	}
-	
-	public void endgame()  {
-		endmenu.show(m_view, m_view.getWidth()/2-80, m_view.getHeight()/2-50);
+
+	public void endgame() {
+		endmenu.show(m_view, m_view.getWidth() / 2 - 80, m_view.getHeight() / 2 - 50);
 	}
 }
