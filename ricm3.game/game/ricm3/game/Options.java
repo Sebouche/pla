@@ -36,7 +36,7 @@ public class Options {
 	public static String[] spawnerType = { "Dog", "Turtle", "Mouse", "Rabbit" };
 	public static int[] HP = { 25, 100, 2, 10 , 500};
 
-	public static boolean day = true; // indique si on est la journée ou pas
+	public static boolean day = false; // indique si on est la journée ou pas
 	
 	public static LinkedList<IAutomaton> Automata;
 	

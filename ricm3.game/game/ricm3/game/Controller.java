@@ -53,6 +53,7 @@ public class Controller extends GameController implements ActionListener {
 	Model m_model;
 	View m_view;
 	Boolean bplayer2 = false;
+	Boolean settimer = true;
 	Enemy player2;
 	Font m_f1, m_f2;
 	JMenuItem m_quitbutton, m_m1_button_murs, m_m1_button_barbele, m_m1_button_tesla, m_m1_button_poteau, m_m2_validate;
@@ -117,6 +118,17 @@ public class Controller extends GameController implements ActionListener {
 					m_model.m_sprites.get("Mouse"), new IAutomaton(Options.Entities.get("Player2")),
 					m_model.m_surfaceworld, m_model.m_surfaceworld.m_allies);
 			m_model.m_player.m_originWorld.m_entities.add(player2);
+		}
+		if (e.getKeyChar() == 'r') {
+			if (settimer) {
+				m_model.m_timer.setTime(10, 0);
+			} else {
+				m_model.m_timer.setTime(0, 10);
+			}
+			settimer = !settimer;
+		}
+		if (e.getKeyChar() == 'a') {
+			Options.day = !Options.day;
 		}
 	}
 
@@ -291,7 +303,7 @@ public class Controller extends GameController implements ActionListener {
 		in7.setFont(m_f1);
 		m_inventoryPanel.add(in7);
 	}
-	
+
 	public void updateInventory() {
 		in1.setText("x" + m_model.m_player.blocs().get(Ladder.class));
 		in2.setText("x" + m_model.m_player.blocs().get(Dirt.class));
@@ -345,7 +357,7 @@ public class Controller extends GameController implements ActionListener {
 
 	public void create(Direction dir, String name) {
 		int dx, dy;
-		int ESize = (int) (Options.Entity_size * Options.Scale)+1;
+		int ESize = (int) (Options.Entity_size * Options.Scale) + 1;
 		switch (Direction.entityDir(m_model.m_player, dir)) {
 		case NORTH:
 			dx = 0;

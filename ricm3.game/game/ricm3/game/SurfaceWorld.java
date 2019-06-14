@@ -115,8 +115,6 @@ public class SurfaceWorld extends World {
 			Random r = new Random();
 			int[] time = m_model.m_timer.getTime();
 			if ((time[0] == 0 && time[1] == 0)) {
-				Options.day = !Options.day;
-				m_model.m_timer.setTime(0, 30);
 				if (!Options.day) {
 					for (int nbspawn = 0; nbspawn < 3; nbspawn++) {
 						int type;
