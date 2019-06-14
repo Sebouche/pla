@@ -26,10 +26,6 @@ public class Cell extends ICondition {
 		if (kind == Type.ANYTHING)
 			return true;
 		Direction dir = Direction.entityDir(e, direction);
-		if (e.m_originWorld instanceof UndergroundWorld) {
-			e.m_x = Math.floorMod(e.m_x, (int) (60 * Options.Entity_size * Options.Scale));
-			e.m_y = Math.floorMod(e.m_y, (int) (60 * Options.Entity_size * Options.Scale));
-		}
 		int cellx = e.x();
 		int celly = e.y();
 		switch (dir) {
@@ -82,8 +78,12 @@ public class Cell extends ICondition {
 			}
 			GameEntity f = ((UndergroundWorld) e.m_originWorld).m_grid[Math.floorMod(pos_y, 60)][Math.floorMod(pos_x,
 					60)];
+			cellx = Math.floorMod(cellx, (int) (59 * Options.Entity_size * Options.Scale));
+			celly = Math.floorMod(celly, (int) (59 * Options.Entity_size * Options.Scale));
+			e.m_x = Math.floorMod(e.m_x, (int) (60 * Options.Entity_size * Options.Scale));
+			e.m_y = Math.floorMod(e.m_y, (int) (60 * Options.Entity_size * Options.Scale));
 			if (f != null) {
-				if ((f.m_collision || kind == Type.TEAM) && isInside(f, cellx, celly)) {
+				if ((f.m_collision || kind == Type.TEAM) && (isInside(f, cellx, celly) || isInside(f, e.m_x, e.m_y))) {
 					if (kind == Type.VOID) {
 						if (kind != f.type())
 							return false;
